@@ -1,0 +1,132 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-forest: 50 92 67;
+  --color-walnut: 140 88 50;
+  --color-cream: 250 246 233;
+  --color-stone: 240 238 234;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: #fdfcf7;
+  color: #1f2e23;
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: #1f2e23;
+}
+
+.font-display {
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+.font-serif {
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-full bg-forest-700 px-7 py-3.5 text-sm font-medium uppercase tracking-[0.18em] text-cream-50 transition-all duration-300 hover:bg-forest-800 hover:shadow-lg active:scale-[0.98];
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center gap-2 rounded-full border border-forest-700/30 bg-transparent px-7 py-3.5 text-sm font-medium uppercase tracking-[0.18em] text-forest-800 transition-all duration-300 hover:bg-forest-700 hover:text-cream-50 hover:border-forest-700;
+}
+
+.btn-outline-light {
+  @apply inline-flex items-center justify-center gap-2 rounded-full border border-cream-50/50 bg-transparent px-7 py-3.5 text-sm font-medium uppercase tracking-[0.18em] text-cream-50 transition-all duration-300 hover:bg-cream-50 hover:text-forest-900;
+}
+
+.eyebrow {
+  @apply text-xs uppercase tracking-[0.32em] text-walnut-500 font-medium;
+}
+
+.eyebrow-light {
+  @apply text-xs uppercase tracking-[0.32em] text-cream-100/90 font-medium;
+}
+
+.section {
+  @apply py-20 md:py-28 lg:py-32;
+}
+
+.container-x {
+  @apply mx-auto max-w-7xl px-5 sm:px-8 lg:px-10;
+}
+
+.container-narrow {
+  @apply mx-auto max-w-5xl px-5 sm:px-8 lg:px-10;
+}
+
+.divider-gold {
+  @apply mx-auto h-px w-16 bg-walnut-500/60;
+}
+
+.shadow-soft {
+  box-shadow: 0 10px 40px -15px rgba(31, 46, 35, 0.18);
+}
+
+.shadow-card {
+  box-shadow: 0 12px 48px -18px rgba(31, 46, 35, 0.25);
+}
+
+.glass {
+  background: rgba(253, 252, 247, 0.86);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.aspect-portrait {
+  aspect-ratio: 4 / 5;
+}
+
+.aspect-landscape {
+  aspect-ratio: 16 / 10;
+}
+
+::selection {
+  background: #324c37;
+  color: #faf6e9;
+}
+
+.kenburns {
+  animation: kenburns 24s ease-in-out infinite alternate;
+}
+
+@keyframes kenburns {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+
+.fade-mask-bottom {
+  -webkit-mask-image: linear-gradient(180deg, black 60%, transparent 100%);
+  mask-image: linear-gradient(180deg, black 60%, transparent 100%);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track { background: #faf6e9; }
+::-webkit-scrollbar-thumb { background: #9bb799; border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: #6f9270; }
