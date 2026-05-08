@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import type { Apartment } from "@/lib/apartments";
 import StarRating from "./StarRating";
+import { useLang } from "./LanguageProvider";
 
 export default function ApartmentCard({
   apartment,
@@ -10,10 +13,11 @@ export default function ApartmentCard({
   apartment: Apartment;
   priority?: boolean;
 }) {
+  const { t } = useLang();
   return (
     <Link
       href={`/apartments/${apartment.slug}`}
-      className="group block rounded-2xl overflow-hidden bg-cream-50 shadow-soft hover:shadow-card transition-all duration-500"
+      className="card-lift group block rounded-2xl overflow-hidden bg-cream-50 shadow-soft"
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-stone-100">
         <Image
@@ -21,24 +25,27 @@ export default function ApartmentCard({
           alt={apartment.name}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover transition-transform duration-[1400ms] group-hover:scale-[1.04]"
+          className="object-cover transition-transform duration-[1400ms] group-hover:scale-[1.06]"
           priority={priority}
+          loading={priority ? "eager" : "lazy"}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-forest-950/40 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-forest-950/55 via-forest-950/0 to-transparent transition-opacity duration-500 group-hover:from-forest-950/65" />
         <div className="absolute top-4 left-4 rounded-full bg-cream-50/95 backdrop-blur px-3 py-1 text-xs font-medium text-forest-800 uppercase tracking-wider">
           {apartment.view}
         </div>
-        <div className="absolute bottom-4 right-4 rounded-full bg-walnut-500 px-4 py-1.5 text-xs font-medium text-cream-50">
-          de la €{apartment.pricePerNightEUR}/noapte
+        <div className="absolute bottom-4 right-4 rounded-full bg-walnut-500 px-4 py-1.5 text-xs font-medium text-cream-50 shadow-lg">
+          {t("common.from")} €{apartment.pricePerNightEUR}{t("common.perNight")}
         </div>
       </div>
       <div className="p-7">
         <div className="flex items-start justify-between gap-4 mb-2">
-          <h3 className="font-display text-2xl text-forest-900">{apartment.name}</h3>
+          <h3 className="font-display text-2xl text-forest-900 transition-colors group-hover:text-walnut-700">
+            {apartment.name}
+          </h3>
           <div className="flex flex-col items-end shrink-0 mt-1">
             <StarRating value={apartment.rating} size="sm" />
             <span className="text-xs text-stone-500 mt-1">
-              {apartment.rating} · {apartment.reviewsCount} recenzii
+              {apartment.rating} · {apartment.reviewsCount}
             </span>
           </div>
         </div>
@@ -50,13 +57,13 @@ export default function ApartmentCard({
         </p>
         <div className="flex items-center gap-4 pt-4 border-t border-stone-200 text-sm text-forest-700">
           <span className="flex items-center gap-1.5">
-            <BedIcon /> {apartment.beds} {apartment.beds === 1 ? "pat" : "paturi"}
+            <BedIcon /> {apartment.beds} {apartment.beds === 1 ? t("common.bed") : t("common.beds")}
           </span>
           <span className="flex items-center gap-1.5">
-            <BathIcon /> {apartment.bathrooms} {apartment.bathrooms === 1 ? "baie" : "băi"}
+            <BathIcon /> {apartment.bathrooms} {apartment.bathrooms === 1 ? t("common.bathroom") : t("common.bathrooms")}
           </span>
           <span className="flex items-center gap-1.5">
-            <GuestsIcon /> {apartment.guests} {apartment.guests === 1 ? "oaspete" : "oaspeți"}
+            <GuestsIcon /> {apartment.guests} {apartment.guests === 1 ? t("common.guest") : t("common.guests")}
           </span>
           <span className="flex items-center gap-1.5 ml-auto">{apartment.sizeSqm} m²</span>
         </div>

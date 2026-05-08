@@ -2,17 +2,11 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-const nav = [
-  { href: "/apartments", label: "Apartamente" },
-  { href: "/zone-turistice", label: "Zone turistice" },
-  { href: "/galerie", label: "Galerie" },
-  { href: "/recenzii", label: "Recenzii" },
-  { href: "/despre-noi", label: "Despre noi" },
-  { href: "/contact", label: "Contact" }
-];
+import { useLang } from "./LanguageProvider";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Header() {
+  const { t } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -23,10 +17,21 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const nav = [
+    { href: "/apartments", label: t("nav.apartments") },
+    { href: "/zone-turistice", label: t("nav.attractions") },
+    { href: "/galerie", label: t("nav.gallery") },
+    { href: "/recenzii", label: t("nav.reviews") },
+    { href: "/despre-noi", label: t("nav.about") },
+    { href: "/contact", label: t("nav.contact") }
+  ];
+
+  const dark = scrolled || open;
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled || open
+        dark
           ? "glass border-b border-walnut-200/40 py-3"
           : "bg-transparent py-5"
       }`}
@@ -35,7 +40,7 @@ export default function Header() {
         <Link href="/" className="group flex items-center gap-3">
           <div
             className={`grid h-10 w-10 place-items-center rounded-full border transition-colors duration-500 ${
-              scrolled || open
+              dark
                 ? "border-forest-700/30 bg-forest-700 text-cream-50"
                 : "border-cream-50/60 bg-cream-50/10 text-cream-50"
             }`}
@@ -45,14 +50,14 @@ export default function Header() {
           <div className="flex flex-col leading-tight">
             <span
               className={`font-display text-lg tracking-tight transition-colors ${
-                scrolled || open ? "text-forest-900" : "text-cream-50"
+                dark ? "text-forest-900" : "text-cream-50"
               }`}
             >
               Vaias Aparts
             </span>
             <span
               className={`text-[10px] uppercase tracking-[0.32em] transition-colors ${
-                scrolled || open ? "text-walnut-500" : "text-cream-100/80"
+                dark ? "text-walnut-500" : "text-cream-100/80"
               }`}
             >
               Boutique · Târgu Neamț
@@ -66,7 +71,7 @@ export default function Header() {
               key={item.href}
               href={item.href}
               className={`text-sm font-medium transition-colors ${
-                scrolled || open
+                dark
                   ? "text-forest-800 hover:text-walnut-600"
                   : "text-cream-50 hover:text-cream-200"
               }`}
@@ -76,42 +81,44 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden lg:flex items-center gap-3">
+          <LanguageSwitcher tone={dark ? "dark" : "light"} />
           <Link
             href="/rezervare"
-            className={
-              scrolled || open ? "btn-primary" : "btn-outline-light"
-            }
+            className={dark ? "btn-primary" : "btn-outline-light"}
           >
-            Rezervă acum
+            {t("nav.bookNow")}
           </Link>
         </div>
 
-        <button
-          aria-label="Meniu"
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-          className="lg:hidden p-2 -mr-2"
-        >
-          <span className="sr-only">Meniu</span>
-          <div className="flex flex-col gap-1.5">
-            <span
-              className={`block h-0.5 w-6 transition-all ${
-                scrolled || open ? "bg-forest-900" : "bg-cream-50"
-              } ${open ? "translate-y-2 rotate-45" : ""}`}
-            />
-            <span
-              className={`block h-0.5 w-6 transition-all ${
-                scrolled || open ? "bg-forest-900" : "bg-cream-50"
-              } ${open ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`block h-0.5 w-6 transition-all ${
-                scrolled || open ? "bg-forest-900" : "bg-cream-50"
-              } ${open ? "-translate-y-2 -rotate-45" : ""}`}
-            />
-          </div>
-        </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          <LanguageSwitcher tone={dark ? "dark" : "light"} />
+          <button
+            aria-label={t("nav.menu")}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+            className="p-2 -mr-2"
+          >
+            <span className="sr-only">{t("nav.menu")}</span>
+            <div className="flex flex-col gap-1.5">
+              <span
+                className={`block h-0.5 w-6 transition-all ${
+                  dark ? "bg-forest-900" : "bg-cream-50"
+                } ${open ? "translate-y-2 rotate-45" : ""}`}
+              />
+              <span
+                className={`block h-0.5 w-6 transition-all ${
+                  dark ? "bg-forest-900" : "bg-cream-50"
+                } ${open ? "opacity-0" : ""}`}
+              />
+              <span
+                className={`block h-0.5 w-6 transition-all ${
+                  dark ? "bg-forest-900" : "bg-cream-50"
+                } ${open ? "-translate-y-2 -rotate-45" : ""}`}
+              />
+            </div>
+          </button>
+        </div>
       </div>
 
       {open && (
@@ -132,7 +139,7 @@ export default function Header() {
               onClick={() => setOpen(false)}
               className="btn-primary mt-3 w-full"
             >
-              Rezervă acum
+              {t("nav.bookNow")}
             </Link>
           </div>
         </div>

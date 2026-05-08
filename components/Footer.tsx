@@ -1,9 +1,15 @@
+"use client";
+
 import Link from "next/link";
+import { useLang } from "./LanguageProvider";
 
 export default function Footer() {
+  const { t } = useLang();
+
   return (
-    <footer className="bg-forest-950 text-cream-100">
-      <div className="container-x py-20">
+    <footer className="bg-forest-950 text-cream-100 relative overflow-hidden">
+      <div className="absolute inset-0 pattern-moldavian-dark opacity-60 pointer-events-none" />
+      <div className="container-x py-20 relative">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <div className="flex items-center gap-3 mb-6">
@@ -18,8 +24,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="font-serif text-lg leading-relaxed text-cream-100/80 max-w-sm">
-              Apartamente boutique 4 stele cu suflet moldovenesc, la marginea Târgu Neamț —
-              aproape de mănăstirile Agapia și Văratec, Cetatea Neamț și Masivul Ceahlău.
+              {t("footer.tagline")}
             </p>
             <div className="mt-8 flex gap-3">
               <a
@@ -54,32 +59,32 @@ export default function Footer() {
           </div>
 
           <div className="lg:col-span-2">
-            <div className="text-xs uppercase tracking-[0.32em] text-walnut-300 mb-4">Pagini</div>
+            <div className="text-xs uppercase tracking-[0.32em] text-walnut-300 mb-4">{t("footer.pages")}</div>
             <ul className="space-y-3">
-              <li><Link href="/" className="text-cream-100/80 hover:text-cream-50 transition">Acasă</Link></li>
-              <li><Link href="/apartments" className="text-cream-100/80 hover:text-cream-50 transition">Apartamente</Link></li>
-              <li><Link href="/zone-turistice" className="text-cream-100/80 hover:text-cream-50 transition">Zone turistice</Link></li>
-              <li><Link href="/galerie" className="text-cream-100/80 hover:text-cream-50 transition">Galerie</Link></li>
-              <li><Link href="/recenzii" className="text-cream-100/80 hover:text-cream-50 transition">Recenzii</Link></li>
-              <li><Link href="/despre-noi" className="text-cream-100/80 hover:text-cream-50 transition">Despre noi</Link></li>
+              <li><Link href="/" className="text-cream-100/80 hover:text-cream-50 transition">{t("common.home")}</Link></li>
+              <li><Link href="/apartments" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.apartments")}</Link></li>
+              <li><Link href="/zone-turistice" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.attractions")}</Link></li>
+              <li><Link href="/galerie" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.gallery")}</Link></li>
+              <li><Link href="/recenzii" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.reviews")}</Link></li>
+              <li><Link href="/despre-noi" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.about")}</Link></li>
             </ul>
           </div>
 
           <div className="lg:col-span-3">
-            <div className="text-xs uppercase tracking-[0.32em] text-walnut-300 mb-4">Contact</div>
+            <div className="text-xs uppercase tracking-[0.32em] text-walnut-300 mb-4">{t("footer.contact")}</div>
             <ul className="space-y-3 text-cream-100/80">
               <li>
-                <span className="block text-cream-200/60 text-xs uppercase tracking-wider">Adresă</span>
+                <span className="block text-cream-200/60 text-xs uppercase tracking-wider">{t("footer.address")}</span>
                 Strada Boureni nr. 12<br />
                 Târgu Neamț, jud. Neamț<br />
                 România, 615200
               </li>
               <li>
-                <span className="block text-cream-200/60 text-xs uppercase tracking-wider mt-2">Telefon</span>
+                <span className="block text-cream-200/60 text-xs uppercase tracking-wider mt-2">{t("footer.phone")}</span>
                 <a href="tel:+40740000000" className="hover:text-cream-50">+40 740 000 000</a>
               </li>
               <li>
-                <span className="block text-cream-200/60 text-xs uppercase tracking-wider mt-2">Email</span>
+                <span className="block text-cream-200/60 text-xs uppercase tracking-wider mt-2">{t("footer.email")}</span>
                 <a href="mailto:contact@VaiasAparts.ro" className="hover:text-cream-50">contact@VaiasAparts.ro</a>
               </li>
               <li>
@@ -90,10 +95,9 @@ export default function Footer() {
           </div>
 
           <div className="lg:col-span-3">
-            <div className="text-xs uppercase tracking-[0.32em] text-walnut-300 mb-4">Newsletter</div>
+            <div className="text-xs uppercase tracking-[0.32em] text-walnut-300 mb-4">{t("footer.newsletter")}</div>
             <p className="text-cream-100/70 text-sm leading-relaxed mb-4">
-              Povești de pe valea Ozanei, oferte sezoniere și un cod de reducere pentru
-              prima rezervare directă.
+              {t("footer.newsletterText")}
             </p>
             <form className="flex gap-2">
               <input
@@ -110,16 +114,16 @@ export default function Footer() {
               </button>
             </form>
             <div className="mt-8 text-xs text-cream-200/60 leading-relaxed">
-              Booking direct = 5% reducere față de orice altă platformă.
+              {t("footer.discount")}
             </div>
           </div>
         </div>
 
         <div className="mt-16 pt-8 border-t border-forest-900 flex flex-col gap-4 md:flex-row md:items-center md:justify-between text-xs text-cream-100/60">
-          <div>© {new Date().getFullYear()} Vaias Aparts. Toate drepturile rezervate.</div>
+          <div>© {new Date().getFullYear()} Vaias Aparts. {t("footer.rights")}</div>
           <div className="flex gap-6">
-            <Link href="/politica-confidentialitate" className="hover:text-cream-50">Politica de confidențialitate</Link>
-            <Link href="/termeni-conditii" className="hover:text-cream-50">Termeni și condiții</Link>
+            <Link href="/politica-confidentialitate" className="hover:text-cream-50">{t("footer.privacy")}</Link>
+            <Link href="/termeni-conditii" className="hover:text-cream-50">{t("footer.terms")}</Link>
           </div>
         </div>
       </div>

@@ -46,19 +46,21 @@ export default function Gallery({ images, alt }: { images: string[]; alt: string
 
       {active !== null && (
         <div
-          className="fixed inset-0 z-[100] bg-forest-950/95 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] bg-forest-950/97 backdrop-blur-sm flex items-center justify-center p-4 lb-fade-enter lb-fade-enter-active"
           onClick={() => setActive(null)}
+          role="dialog"
+          aria-modal="true"
         >
           <button
-            aria-label="Închide"
-            className="absolute top-6 right-6 text-cream-50 text-3xl"
+            aria-label="Close"
+            className="absolute top-6 right-6 text-cream-50 text-3xl rounded-full h-12 w-12 grid place-items-center hover:bg-cream-50/10 transition"
             onClick={() => setActive(null)}
           >
             ×
           </button>
           <button
-            aria-label="Anterior"
-            className="absolute left-4 md:left-8 text-cream-50 text-4xl px-4 py-2"
+            aria-label="Previous"
+            className="absolute left-4 md:left-8 text-cream-50 text-4xl px-4 py-2 rounded-full hover:bg-cream-50/10 transition"
             onClick={(e) => {
               e.stopPropagation();
               setActive((i) => (i! - 1 + images.length) % images.length);
@@ -67,8 +69,8 @@ export default function Gallery({ images, alt }: { images: string[]; alt: string
             ‹
           </button>
           <button
-            aria-label="Următor"
-            className="absolute right-4 md:right-8 text-cream-50 text-4xl px-4 py-2"
+            aria-label="Next"
+            className="absolute right-4 md:right-8 text-cream-50 text-4xl px-4 py-2 rounded-full hover:bg-cream-50/10 transition"
             onClick={(e) => {
               e.stopPropagation();
               setActive((i) => (i! + 1) % images.length);
@@ -77,7 +79,8 @@ export default function Gallery({ images, alt }: { images: string[]; alt: string
             ›
           </button>
           <div
-            className="relative w-full max-w-5xl aspect-[3/2]"
+            key={active}
+            className="relative w-full max-w-5xl aspect-[3/2] img-fade-in"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
