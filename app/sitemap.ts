@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { apartments } from "@/lib/apartments";
+import { blogPosts } from "@/lib/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://vaiasaparts.ro";
@@ -13,13 +14,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/despre-noi",
     "/contact",
     "/rezervare",
+    "/blog",
+    "/diaspora",
+    "/pelerini",
+    "/afiliati",
+    "/experiente",
+    "/comenzi-mancare",
+    "/parteneri-restaurante",
     "/politica-confidentialitate",
     "/termeni-conditii"
   ].map((path) => ({
     url: `${base}${path}`,
     lastModified: now,
     changeFrequency: "weekly" as const,
-    priority: path === "" ? 1 : 0.8
+    priority: path === "" ? 1 : path === "/rezervare" ? 0.95 : path === "/apartments" ? 0.9 : 0.8
   }));
 
   const apartmentUrls = apartments.map((a) => ({
@@ -29,5 +37,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9
   }));
 
-  return [...staticUrls, ...apartmentUrls];
+  const blogUrls = blogPosts.map((p) => ({
+    url: `${base}/blog/${p.slug}`,
+    lastModified: new Date(p.publishedAt),
+    changeFrequency: "monthly" as const,
+    priority: 0.7
+  }));
+
+  return [...staticUrls, ...apartmentUrls, ...blogUrls];
 }

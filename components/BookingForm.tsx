@@ -39,13 +39,31 @@ export default function BookingForm() {
     return total;
   }, [nights, apartment]);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitting(true);
-    setTimeout(() => {
-      setSubmitted(true);
-      setSubmitting(false);
-    }, 800);
+    const fd = new FormData(e.currentTarget);
+    try {
+      await fetch("/api/booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          apartmentName: apartment.name,
+          apartmentSlug: apartment.slug,
+          guestName: fd.get("name"),
+          guestEmail: fd.get("email"),
+          guestPhone: fd.get("phone"),
+          checkIn: checkin,
+          checkOut: checkout,
+          nights,
+          guests,
+          totalEUR,
+          specialRequests: fd.get("requests")
+        })
+      });
+    } catch {}
+    setSubmitted(true);
+    setSubmitting(false);
   }
 
   if (submitted) {
@@ -60,7 +78,7 @@ export default function BookingForm() {
         <p className="mt-4 text-stone-600 max-w-md mx-auto">
           {t("booking.successText")} — <strong>{apartment.name}</strong>
         </p>
-        <a href="https://wa.me/40740000000" className="btn-primary mt-8">
+        <a href="https://wa.me/40738345330" className="btn-primary mt-8">
           {t("booking.continueWa")}
         </a>
       </div>
@@ -147,6 +165,7 @@ export default function BookingForm() {
             <label className="text-xs font-semibold text-forest-800 mb-1.5 block uppercase tracking-wider">{t("booking.phone")}*</label>
             <input
               type="tel"
+              name="phone"
               required
               placeholder="+40 7XX XXX XXX"
               className="w-full rounded-xl border border-stone-300 bg-cream-50 px-4 py-3.5 text-forest-900 placeholder:text-stone-400 focus:outline-none focus:border-walnut-500 focus:ring-2 focus:ring-walnut-500/15 transition"
@@ -159,6 +178,7 @@ export default function BookingForm() {
             <label className="text-xs font-semibold text-forest-800 mb-1.5 block uppercase tracking-wider">{t("booking.name")}*</label>
             <input
               type="text"
+              name="name"
               required
               className="w-full rounded-xl border border-stone-300 bg-cream-50 px-4 py-3.5 text-forest-900 focus:outline-none focus:border-walnut-500 focus:ring-2 focus:ring-walnut-500/15 transition"
             />
@@ -167,6 +187,7 @@ export default function BookingForm() {
             <label className="text-xs font-semibold text-forest-800 mb-1.5 block uppercase tracking-wider">{t("booking.emailLabel")}*</label>
             <input
               type="email"
+              name="email"
               required
               className="w-full rounded-xl border border-stone-300 bg-cream-50 px-4 py-3.5 text-forest-900 focus:outline-none focus:border-walnut-500 focus:ring-2 focus:ring-walnut-500/15 transition"
             />
@@ -177,6 +198,7 @@ export default function BookingForm() {
           <label className="text-xs font-semibold text-forest-800 mb-1.5 block uppercase tracking-wider">{t("booking.requests")}</label>
           <textarea
             rows={4}
+            name="requests"
             placeholder={t("booking.requestsPh")}
             className="w-full rounded-xl border border-stone-300 bg-cream-50 px-4 py-3.5 text-forest-900 placeholder:text-stone-400 focus:outline-none focus:border-walnut-500 focus:ring-2 focus:ring-walnut-500/15 transition"
           />

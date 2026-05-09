@@ -3,9 +3,10 @@ export type Review = {
   city: string;
   date: string;
   rating: number;
-  apartment: string;
+  apartment?: string;
   text: string;
   source: "Google" | "TripAdvisor" | "Booking" | "Direct";
+  platform?: string;
 };
 
 export const reviews: Review[] = [
@@ -14,9 +15,9 @@ export const reviews: Review[] = [
     city: "București",
     date: "Martie 2026",
     rating: 5,
-    apartment: "Apartament Ceahlău",
+    apartment: "Apartament 3",
     text:
-      "Un loc de poveste. Am stat patru zile cu familia și ne-am simțit ca acasă, dar mai bine. Detaliile contează: lenjeria de bumbac fin, cafeaua la espressor, micul dejun cu produse locale. Vom reveni cu siguranță.",
+      "Un loc de poveste. Am stat patru zile cu familia și ne-am simțit ca acasă, dar mai bine. Detaliile contează: lenjeria de bumbac, cafeaua la espressor, tot ce aveam nevoie gata pregătit. Vom reveni cu siguranță.",
     source: "Google"
   },
   {
@@ -24,9 +25,9 @@ export const reviews: Review[] = [
     city: "Berlin",
     date: "Februarie 2026",
     rating: 5,
-    apartment: "Apartament Agapia",
+    apartment: "Apartament 1",
     text:
-      "Possibly the most peaceful place we've stayed in Romania. The garden is enchanting, the host is warm and discreet, and the area around is full of history. A perfect honeymoon stay.",
+      "Possibly the most peaceful place we've stayed in Romania. The host is warm and discreet, and the area around is full of history. A perfect couple's stay.",
     source: "TripAdvisor"
   },
   {
@@ -34,9 +35,9 @@ export const reviews: Review[] = [
     city: "Iași",
     date: "Ianuarie 2026",
     rating: 5,
-    apartment: "Apartament Moldova",
+    apartment: "Apartament 4",
     text:
-      "Am sărbătorit 30 de ani de căsătorie cu părinții și copiii noștri. Apartamentul Moldova ne-a încăput pe toți confortabil, masa lungă din living a strâns trei generații. O experiență pe care nu o vom uita.",
+      "Am sărbătorit 30 de ani de căsătorie cu familia noastră — am rezervat două apartamente alăturate și a fost perfect. Gazda a gândit la fiecare detaliu. O experiență pe care nu o vom uita.",
     source: "Direct"
   },
   {
@@ -44,9 +45,9 @@ export const reviews: Review[] = [
     city: "Cluj-Napoca",
     date: "Noiembrie 2025",
     rating: 5,
-    apartment: "Apartament Neamț",
+    apartment: "Apartament 7",
     text:
-      "Garsoniera este perfectă pentru un weekend de explorat zona. Curat impecabil, design rafinat, foarte aproape de Cetatea Neamț. Recomand cu drag.",
+      "Apartamentul de la parter este perfect pentru nevoile noastre de accesibilitate. Curat impecabil, design rafinat, bucătăria comună (Kitchen for All) este bine dotată. Recomand cu drag.",
     source: "Booking"
   },
   {
@@ -54,9 +55,9 @@ export const reviews: Review[] = [
     city: "Lyon",
     date: "Octombrie 2025",
     rating: 5,
-    apartment: "Apartament Ceahlău",
+    apartment: "Apartament 5",
     text:
-      "Quel endroit magnifique! La vue sur les montagnes au matin est inoubliable. L'accueil de Vasi a été chaleureux et professionnel. Nous reviendrons absolument.",
+      "Quel endroit magnifique! L'appartement avec air conditionné au deuxième étage est parfait en été. L'accueil a été chaleureux et professionnel. Nous reviendrons absolument.",
     source: "TripAdvisor"
   },
   {
@@ -64,9 +65,9 @@ export const reviews: Review[] = [
     city: "Timișoara",
     date: "Septembrie 2025",
     rating: 5,
-    apartment: "Apartament Moldova",
+    apartment: "Apartament 3",
     text:
-      "Vacanță cu doi copii și bunicii — totul a mers perfect. Pătuțul pentru bebeluș, jocurile, grătarul în curte… s-a văzut că gazda gândește la fiecare detaliu. Un loc cu suflet.",
+      "Vacanță cu doi copii — totul a mers perfect. Paturile Emperor sunt incredibile, copiii au dormit imediat. Parcare privată gratuită, curte liniștită. S-a văzut că gazda gândește la fiecare detaliu.",
     source: "Google"
   },
   {
@@ -74,7 +75,7 @@ export const reviews: Review[] = [
     city: "Dublin",
     date: "August 2025",
     rating: 5,
-    apartment: "Apartament Agapia",
+    apartment: "Apartament 2",
     text:
       "An absolute gem. The aesthetic is refined without being precious, the linen is exquisite, and the area is dripping with history and natural beauty. Best stay we've had in Eastern Europe.",
     source: "TripAdvisor"
@@ -84,9 +85,9 @@ export const reviews: Review[] = [
     city: "București",
     date: "Iulie 2025",
     rating: 5,
-    apartment: "Apartament Neamț",
+    apartment: "Apartament 6",
     text:
-      "Un mic refugiu cu personalitate, în inima Târgu Neamț. Patul foarte bun, cafeaua excelentă, vederea spre cetate de neuitat. Mulțumesc, Vasi!",
+      "Apartamentul cu aer condiționat de la etaj 2 — excelent în iulie. Patul Emperor, aerul condiționat, liniștea — totul perfect. Mulțumim Echipei Vaias Aparts!",
     source: "Direct"
   },
   {
@@ -94,9 +95,39 @@ export const reviews: Review[] = [
     city: "Brașov",
     date: "Iunie 2025",
     rating: 5,
-    apartment: "Apartament Ceahlău",
+    apartment: "Apartament 1",
     text:
-      "Am venit pentru o săptămână și am plecat cu sufletul plin. Terasa, șemineul, plimbările pe la mănăstiri, mâncarea moldovenească din zona — totul a contribuit la o vacanță perfectă.",
+      "Am venit pentru o săptămână și am plecat cu sufletul plin. Plimbările pe la mănăstiri, mâncarea moldovenească din zonă, serile liniștite — totul a contribuit la o vacanță perfectă.",
     source: "Google"
+  },
+  {
+    name: "Isabela Florescu",
+    city: "Galați",
+    date: "Mai 2025",
+    rating: 5,
+    apartment: "Apartament 4",
+    text:
+      "Am venit cu mama și sora mea — două dormitoare separate, o singură bucătărie, și liniștea completă. Perfect pentru un weekend feminin de relaxare. Ne întoarcem în toamnă!",
+    source: "Google"
+  },
+  {
+    name: "Petra Novák",
+    city: "Bratislava",
+    date: "Aprilie 2025",
+    rating: 5,
+    apartment: "Apartament 5",
+    text:
+      "We found this gem while looking for accommodation near the monasteries. The apartment on the second floor is bright, comfortable, and the canapea extensibilă was perfect for our third guest. Highly recommend!",
+    source: "Booking"
+  },
+  {
+    name: "Marius Tăbăcaru",
+    city: "Suceava",
+    date: "Martie 2025",
+    rating: 5,
+    apartment: "Apartament 2",
+    text:
+      "Vin la Vaias Aparts de trei ori pe an pentru afaceri. Este singurul loc din Târgu Neamț unde mă simt cu adevărat odihnit. Patul Emperor este excepțional. Reducerea de 25% pentru oaspeții care revin este un gest frumos.",
+    source: "Direct"
   }
 ];

@@ -1,0 +1,338 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Apartment {
+  id           Int       @id @default(autoincrement())
+  slug         String    @unique
+  name         String
+  priceRON     Int
+  capacity     Int
+  capacityMax  Int
+  floor        String
+  hasAC        Boolean   @default(false)
+  accessible   Boolean   @default(false)
+  active       Boolean   @default(true)
+  bookings     Booking[]
+  blockedDates BlockedDate[]
+  createdAt    DateTime  @default(now())
+}
+
+model BlockedDate {
+  id          Int       @id @default(autoincrement())
+  apartment   Apartment @relation(fields: [apartmentId], references: [id])
+  apartmentId Int
+  date        DateTime
+  source      String    @default("manual")
+  createdAt   DateTime  @default(now())
+}
+
+model Guest {
+  id          Int       @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  email       String?
+  phone       String
+  whatsapp    String?
+  nationality String?
+  notes       String?
+  visits      Int       @default(0)
+  totalSpent  Float     @default(0)
+  lastVisit   DateTime?
+  isVIP       Boolean   @default(false)
+  bookings    Booking[]
+  messages    GuestMessage[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Booking {
+  id               Int           @id @default(autoincrement())
+  bookingRef       String        @unique @default(cuid())
+  apartment        Apartment     @relation(fields: [apartmentId], references: [id])
+  apartmentId      Int
+  guest            Guest?        @relation(fields: [guestId], references: [id])
+  guestId          Int?
+  guestName        String
+  guestEmail       String?
+  guestPhone       String
+  checkIn          DateTime
+  checkOut         DateTime
+  nights           Int
+  adults           Int           @default(2)
+  children         Int           @default(0)
+  pricePerNight    Float
+  totalPrice       Float
+  discountPct      Float         @default(0)
+  discountAmount   Float         @default(0)
+  finalPrice       Float
+  currency         String        @default("RON")
+  status           BookingStatus @default(PENDING)
+  source           String        @default("direct")
+  stripeSessionId  String?
+  paidAt           DateTime?
+  specialRequests  String?
+  internalNotes    String?
+  messages         GuestMessage[]
+  foodOrders       FoodOrder[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  PAID
+  CANCELLED
+  COMPLETED
+}
+
+model FoodOrder {
+  id          Int        @id @default(autoincrement())
+  booking     Booking    @relation(fields: [bookingId], references: [id])
+  bookingId   Int
+  items       FoodOrderItem[]
+  total       Float
+  status      OrderStatus @default(PENDING)
+  notes       String?
+  createdAt   DateTime   @default(now())
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  DELIVERED
+  CANCELLED
+}
+
+model FoodOrderItem {
+  id          Int        @id @default(autoincrement())
+  order       FoodOrder  @relation(fields: [orderId], references: [id])
+  orderId     Int
+  menuItem    FoodMenuItem @relation(fields: [menuItemId], references: [id])
+  menuItemId  Int
+  quantity    Int
+  unitPrice   Float
+  total       Float
+}
+
+model FoodMenuItem {
+  id          Int        @id @default(autoincrement())
+  name        String
+  nameEN      String?
+  description String?
+  category    String
+  priceRON    Float
+  available   Boolean    @default(true)
+  orderItems  FoodOrderItem[]
+  createdAt   DateTime   @default(now())
+}
+
+model GuestMessage {
+  id          Int          @id @default(autoincrement())
+  booking     Booking?     @relation(fields: [bookingId], references: [id])
+  bookingId   Int?
+  guest       Guest?       @relation(fields: [guestId], references: [id])
+  guestId     Int?
+  direction   MessageDir
+  channel     String
+  content     String
+  sentAt      DateTime     @default(now())
+  delivered   Boolean      @default(false)
+  read        Boolean      @default(false)
+}
+
+enum MessageDir {
+  INBOUND
+  OUTBOUND
+}
+
+model Review {
+  id          Int      @id @default(autoincrement())
+  platform    String
+  authorName  String
+  rating      Float
+  title       String?
+  body        String
+  apartment   String?
+  date        DateTime
+  verified    Boolean  @default(false)
+  featured    Boolean  @default(false)
+  reply       String?
+  createdAt   DateTime @default(now())
+}
+
+model RestaurantPartner {
+  id          Int      @id @default(autoincrement())
+  name        String
+  cuisine     String?
+  address     String?
+  phone       String?
+  website     String?
+  discount    String?
+  qrCode      String?
+  active      Boolean  @default(true)
+  visits      RestaurantVisit[]
+  createdAt   DateTime @default(now())
+}
+
+model RestaurantVisit {
+  id            Int               @id @default(autoincrement())
+  restaurant    RestaurantPartner @relation(fields: [restaurantId], references: [id])
+  restaurantId  Int
+  guestName     String?
+  visitDate     DateTime          @default(now())
+  commission    Float             @default(0)
+}
+
+model AffiliateAccount {
+  id          Int        @id @default(autoincrement())
+  name        String
+  email       String     @unique
+  phone       String?
+  tier        AffiliateTier @default(STANDARD)
+  commissionPct Float    @default(5)
+  totalEarned Float      @default(0)
+  totalPaid   Float      @default(0)
+  active      Boolean    @default(true)
+  referrals   AffiliateReferral[]
+  payments    AffiliatePayment[]
+  createdAt   DateTime   @default(now())
+}
+
+enum AffiliateTier {
+  STANDARD
+  SILVER
+  GOLD
+}
+
+model AffiliateReferral {
+  id          Int              @id @default(autoincrement())
+  affiliate   AffiliateAccount @relation(fields: [affiliateId], references: [id])
+  affiliateId Int
+  bookingRef  String?
+  guestName   String?
+  nights      Int?
+  value       Float?
+  commission  Float?
+  status      String           @default("pending")
+  createdAt   DateTime         @default(now())
+}
+
+model AffiliatePayment {
+  id          Int              @id @default(autoincrement())
+  affiliate   AffiliateAccount @relation(fields: [affiliateId], references: [id])
+  affiliateId Int
+  amount      Float
+  paidAt      DateTime         @default(now())
+  notes       String?
+}
+
+model Experience {
+  id          Int        @id @default(autoincrement())
+  slug        String     @unique
+  name        String
+  description String?
+  duration    String?
+  priceRON    Float
+  maxPeople   Int        @default(8)
+  active      Boolean    @default(true)
+  bookings    ExperienceBooking[]
+  createdAt   DateTime   @default(now())
+}
+
+model ExperienceBooking {
+  id           Int        @id @default(autoincrement())
+  experience   Experience @relation(fields: [experienceId], references: [id])
+  experienceId Int
+  guestName    String
+  guestPhone   String
+  guestEmail   String?
+  date         DateTime
+  people       Int
+  total        Float
+  status       String     @default("pending")
+  createdAt    DateTime   @default(now())
+}
+
+model BlogPost {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  title       String
+  titleEN     String?
+  excerpt     String?
+  body        String
+  bodyEN      String?
+  coverImage  String?
+  category    String?
+  tags        String[]
+  published   Boolean  @default(false)
+  publishedAt DateTime?
+  seoTitle    String?
+  seoDesc     String?
+  views       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AdminUser {
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  password    String
+  name        String?
+  role        String   @default("admin")
+  createdAt   DateTime @default(now())
+}
+
+model Lead {
+  id          Int      @id @default(autoincrement())
+  name        String?
+  email       String?
+  phone       String?
+  source      String?
+  status      String   @default("new")
+  notes       String?
+  createdAt   DateTime @default(now())
+}
+
+model PricingRule {
+  id          Int      @id @default(autoincrement())
+  name        String
+  startDate   DateTime?
+  endDate     DateTime?
+  multiplier  Float    @default(1)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model SeasonalMessage {
+  id          Int      @id @default(autoincrement())
+  name        String
+  triggerDate String
+  messageRO   String
+  messageEN   String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model NewsletterSubscriber {
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  name        String?
+  lang        String   @default("ro")
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model Setting {
+  id          Int      @id @default(autoincrement())
+  key         String   @unique
+  value       String
+  updatedAt   DateTime @updatedAt
+}

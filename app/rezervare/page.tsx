@@ -73,9 +73,9 @@ export default function ReservationPage() {
               <div className="rounded-2xl bg-forest-900 text-cream-100 p-7">
                 <div className="eyebrow-light mb-3">Preferi să vorbim?</div>
                 <a href="tel:+40740000000" className="font-display text-2xl text-cream-50 block mb-1">
-                  +40 740 000 000
+                  +40 738 345 330
                 </a>
-                <a href="https://wa.me/40740000000" className="text-walnut-300 hover:text-cream-50 text-sm">
+                <a href="https://wa.me/40738345330" className="text-walnut-300 hover:text-cream-50 text-sm">
                   WhatsApp →
                 </a>
               </div>

@@ -1,20 +1,40 @@
 {
-  "name": "vaias-aparts",
-  "version": "1.0.0",
+  "name": "vaias-aparts-platform",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "echo 'Dependencies installed'"
   },
   "dependencies": {
-    "next": "^16.2.6",
+    "@auth/prisma-adapter": "^2.7.4",
+    "@prisma/client": "^5.22.0",
+    "@stripe/stripe-js": "^4.9.0",
+    "bcryptjs": "^2.4.3",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^11.11.0",
+    "lucide-react": "^0.462.0",
+    "next": "14.2.18",
+    "next-auth": "^5.0.0-beta.25",
+    "nodemailer": "^6.9.16",
+    "prisma": "^5.22.0",
+    "qrcode": "^1.5.4",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.2",
+    "resend": "^4.0.1",
+    "stripe": "^17.3.1",
+    "twilio": "^5.3.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.16",
+    "@types/qrcode": "^1.5.5",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.19",

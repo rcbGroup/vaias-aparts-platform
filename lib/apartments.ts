@@ -4,13 +4,21 @@ export type Apartment = {
   tagline: string;
   shortDescription: string;
   description: string;
+  descriptionEN: string;
   bedrooms: number;
   beds: number;
   bathrooms: number;
   guests: number;
+  guestsMax: number;
   sizeSqm: number;
-  pricePerNightEUR: number;
+  floor: string;
+  hasAC: boolean;
+  hasTerrace: boolean;
+  accessible: boolean;
+  hasPrivateKitchen: boolean;
   pricePerNightRON: number;
+  pricePerNightEUR: number;
+  weekendPriceRON: number;
   weekendPriceEUR: number;
   weeklyDiscountPct: number;
   rating: number;
@@ -21,264 +29,461 @@ export type Apartment = {
   rules: string[];
   heroImage: string;
   gallery: string[];
+  youtubeId?: string;
+  matterportId?: string;
 };
 
-const stockGallery = [
-  "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"
+const BASE = "https://www.vaiasaparts.ro/wp-content/uploads";
+
+const defaultRules = [
+  "Check-in: după ora 14:00",
+  "Check-out: până la ora 11:00",
+  "Fără fumat în interior",
+  "Fără petreceri sau evenimente zgomotoase",
+  "Liniște după ora 22:00",
+  "Parcare gratuită disponibilă în curte — primul venit, primul servit",
+  "Animalele de companie acceptate la cerere, fără cost suplimentar",
+  "Self check-in cu ghidaj de la echipa noastră"
 ];
 
 export const apartments: Apartment[] = [
   {
-    slug: "ceahlau",
-    name: "Apartament Ceahlău",
-    tagline: "Două dormitoare cu vedere la munte",
+    slug: "apartament-1",
+    name: "Apartament 1",
+    tagline: "Intimitate și confort la capătul coridorului",
     shortDescription:
-      "Spațios apartament cu două dormitoare, terasă privată și o vedere impresionantă către Masivul Ceahlău.",
+      "Apartament elegant cu dormitor Emperor 2m×2m, living spațios cu canapea extensibilă și bucătărie complet utilată — la etaj 1, la capătul coridorului stâng.",
     description:
-      "Apartament Ceahlău este sufletul nostru deschis spre munte. Două dormitoare luminoase, lemn cald de nuc, textile naturale și o terasă privată cu fotolii din răchită — totul așezat în liniștea pădurilor de la marginea Târgu Neamț. Dimineața, soarele intră blând prin fereastra mare a livingului; seara, când luminile orașului se sting, se aud doar greierii și clopotele depărtate ale mănăstirii Agapia. Ideal pentru familii sau două cupluri care își doresc un sejur tihnit, cu mic dejun pe terasă și plimbări pe poteci de munte.",
+      "Apartament 1 vă primește cu liniștea etajului întâi, departe de zgomotul orașului. Poziționat la capătul coridorului stâng, dormitorul are un pat Emperor de 2m×2m cu lenjerie moale de bumbac premium, iar living-ul deschis invită la seri de relaxare. Canapea extensibilă dublă și fotoliul confortabil completează spațiul, perfect pentru 3 până la 5 oaspeți. Bucătăria proprie complet utilată include frigider mare, cuptor cu microunde, fierbător electric și prăjitor de pâine — tot ce vă trebuie pentru micul dejun de dimineață sau cina la lumina lumânărilor. Terasa privată vă oferă un colț al vostru sub cerul Moldovei. WiFi gratuit de mare viteză, televizor smart și tot confortul pentru un sejur tihnit în Târgu Neamț.",
+    descriptionEN:
+      "Apartment 1 welcomes you with the calm of the first floor, tucked away at the end of the left corridor. The bedroom features a 2m×2m Emperor bed with premium cotton bedding, while the open living room invites relaxing evenings. A double sofa bed and armchair complete the space, perfect for 3 to 5 guests. The fully equipped private kitchenette includes a large fridge, microwave, electric kettle and toaster. The private terrace gives you your own corner under the Moldavian sky. Free high-speed WiFi, smart TV, and every comfort for a restful stay in Târgu Neamț.",
+    bedrooms: 1,
+    beds: 2,
+    bathrooms: 1,
+    guests: 3,
+    guestsMax: 5,
+    sizeSqm: 52,
+    floor: "Etaj 1",
+    hasAC: false,
+    hasTerrace: true,
+    accessible: false,
+    hasPrivateKitchen: true,
+    pricePerNightRON: 280,
+    pricePerNightEUR: 56,
+    weekendPriceRON: 330,
+    weekendPriceEUR: 66,
+    weeklyDiscountPct: 15,
+    rating: 5.0,
+    reviewsCount: 97,
+    view: "Etaj 1 · Coridor stâng, capăt",
+    amenities: [
+      "WiFi gratuit de mare viteză",
+      "Pat Emperor 2m×2m",
+      "Canapea extensibilă dublă",
+      "Fotoliu",
+      "Bucătărie privată complet utilată",
+      "Frigider mare",
+      "Cuptor cu microunde",
+      "Fierbător electric",
+      "Prăjitor de pâine",
+      "Smart TV",
+      "Baie privată",
+      "Terasă privată",
+      "Parcare gratuită în curte",
+      "Lenjerie de bumbac premium",
+      "Prosoape incluse",
+      "CCTV 24/7 zone comune"
+    ],
+    rooms: [
+      { name: "Dormitor", description: "Pat Emperor 2m×2m, lenjerie de bumbac premium" },
+      { name: "Living", description: "Canapea extensibilă dublă, fotoliu, Smart TV" },
+      { name: "Bucătărie", description: "Frigider mare, microunde, fierbător, prăjitor de pâine" },
+      { name: "Baie", description: "Duș, lavoar, WC, prosoave incluse" },
+      { name: "Terasă privată", description: "Spațiu exterior privat" }
+    ],
+    rules: defaultRules,
+    heroImage: `${BASE}/2022/12/Apartament1_VaiasaAparts_01.webp`,
+    gallery: Array.from({ length: 19 }, (_, i) =>
+      `${BASE}/2022/12/Apartament1_VaiasaAparts_${String(i + 1).padStart(2, "0")}.webp`
+    )
+  },
+  {
+    slug: "apartament-2",
+    name: "Apartament 2",
+    tagline: "Spațiu propriu, liniște garantată la etaj 1",
+    shortDescription:
+      "Apartament cu dormitor Emperor 2m×2m, living cu canapea extensibilă, bucătărie proprie și terasă privată — etaj 1, coridor stâng.",
+    description:
+      "Apartament 2 este sora mai liniștită a primului — aceeași calitate, aceeași îngrijire, un alt unghi de lumină. Situat pe coridorul stâng al etajului 1, apartamentul oferă un dormitor cu pat Emperor de 2m×2m, living spațios cu canapea extensibilă dublă și fotoliu confortabil, plus o bucătărie proprie complet utilată cu frigider, microunde, fierbător și prăjitor. Terasa privată vă invită să admirați liniștea dimineții cu o cafea caldă. Capacitate 3-5 oaspeți. La ieșire, pe coridorul de la etaj, auziți uneori clopotele îndepărtate ale mănăstirii — un detaliu pe care oaspeții noștri îl menționează mereu.",
+    descriptionEN:
+      "Apartment 2 is the quieter sibling of the first — same quality, same care, a different angle of light. Located on the left corridor of the first floor, it offers a bedroom with a 2m×2m Emperor bed, a spacious living room with a double sofa bed and armchair, plus a fully equipped private kitchenette. The private terrace invites you to enjoy morning coffee in peace. Capacity 3–5 guests. On the corridor outside, you can sometimes hear distant monastery bells — a detail guests always mention.",
+    bedrooms: 1,
+    beds: 2,
+    bathrooms: 1,
+    guests: 3,
+    guestsMax: 5,
+    sizeSqm: 52,
+    floor: "Etaj 1",
+    hasAC: false,
+    hasTerrace: true,
+    accessible: false,
+    hasPrivateKitchen: true,
+    pricePerNightRON: 280,
+    pricePerNightEUR: 56,
+    weekendPriceRON: 330,
+    weekendPriceEUR: 66,
+    weeklyDiscountPct: 15,
+    rating: 5.0,
+    reviewsCount: 97,
+    view: "Etaj 1 · Coridor stâng",
+    amenities: [
+      "WiFi gratuit de mare viteză",
+      "Pat Emperor 2m×2m",
+      "Canapea extensibilă dublă",
+      "Fotoliu",
+      "Bucătărie privată complet utilată",
+      "Frigider mare",
+      "Cuptor cu microunde",
+      "Fierbător electric",
+      "Prăjitor de pâine",
+      "Smart TV",
+      "Baie privată",
+      "Terasă privată",
+      "Parcare gratuită în curte",
+      "Lenjerie de bumbac premium",
+      "Prosoave incluse"
+    ],
+    rooms: [
+      { name: "Dormitor", description: "Pat Emperor 2m×2m, lenjerie de bumbac premium" },
+      { name: "Living", description: "Canapea extensibilă dublă, fotoliu, Smart TV" },
+      { name: "Bucătărie", description: "Frigider mare, microunde, fierbător, prăjitor de pâine" },
+      { name: "Baie", description: "Duș, lavoar, WC, prosoave incluse" },
+      { name: "Terasă privată", description: "Spațiu exterior privat" }
+    ],
+    rules: defaultRules,
+    heroImage: `${BASE}/2022/12/Apartament2_VaiasaAparts_01.webp`,
+    gallery: Array.from({ length: 14 }, (_, i) =>
+      `${BASE}/2022/12/Apartament2_VaiasaAparts_${String(i + 1).padStart(2, "0")}.webp`
+    )
+  },
+  {
+    slug: "apartament-3",
+    name: "Apartament 3",
+    tagline: "Două dormitoare, primul la stânga după scări",
+    shortDescription:
+      "Apartament cu două dormitoare Emperor 2m×2m, living cu canapea extensibilă și terasă cu mobilier exterior — etaj 1, prima ușă la stânga.",
+    description:
+      "Apartament 3 este alegerea familiilor sau a grupurilor mici — două dormitoare cu paturi Emperor de 2m×2m, un living generos cu canapea extensibilă pentru oaspeți suplimentari și o bucătărie complet echipată. Terasa privată cu masă și scaune exterioare vă invită la micul dejun în aer liber sau la un pahar de vin la apus. Situat la primul etaj, prima ușă la stânga după urcarea scărilor principale, are o poziție privilegiată — luminos și prietenos. Capacitate 4-6 oaspeți. Copiii sunt bineveniți.",
+    descriptionEN:
+      "Apartment 3 is the perfect choice for families or small groups — two bedrooms with 2m×2m Emperor beds, a generous living room with a sofa bed for extra guests, and a fully equipped kitchenette. The private terrace with outdoor table and chairs invites breakfast in the fresh air or an evening glass of wine. Located on the first floor, first door on the left after climbing the main stairs. Capacity 4–6 guests. Children are very welcome.",
     bedrooms: 2,
     beds: 3,
-    bathrooms: 2,
-    guests: 5,
-    sizeSqm: 78,
-    pricePerNightEUR: 55,
-    pricePerNightRON: 274,
-    weekendPriceEUR: 65,
-    weeklyDiscountPct: 15,
-    rating: 4.9,
-    reviewsCount: 87,
-    view: "Vedere panoramică spre Masivul Ceahlău",
-    amenities: [
-      "WiFi de mare viteză",
-      "Aer condiționat",
-      "Bucătărie complet utilată",
-      "Mașină de spălat",
-      "Parcare privată",
-      "Terasă cu vedere",
-      "Șemineu",
-      "Smart TV",
-      "Cafetieră Nespresso",
-      "Lenjerie de bumbac fin",
-      "Prosoape pufoase",
-      "Produse cosmetice naturale"
-    ],
-    rooms: [
-      { name: "Dormitor principal", description: "Pat king-size, dressing, vedere spre munte" },
-      { name: "Al doilea dormitor", description: "Două paturi single, ideal pentru copii sau prieteni" },
-      { name: "Living", description: "Canapea extensibilă, șemineu, fotolii de citit" },
-      { name: "Bucătărie", description: "Plită cu inducție, cuptor, frigider mare, espressor" },
-      { name: "Baie principală", description: "Cadă, duș tip ploaie, încălzire în pardoseală" },
-      { name: "A doua baie", description: "Duș compact, finisaje în piatră naturală" },
-      { name: "Terasă", description: "12 m² privată, mobilier din răchită, masă rustică pentru cină" }
-    ],
-    rules: [
-      "Check-in: după ora 15:00",
-      "Check-out: până la ora 11:00",
-      "Fără fumat în interior (terasa este permisă)",
-      "Animalele de companie sunt acceptate la cerere",
-      "Fără petreceri sau evenimente",
-      "Liniște după ora 22:00"
-    ],
-    heroImage: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=2000&q=85",
-    gallery: [
-      "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1600&q=80"
-    ]
-  },
-  {
-    slug: "agapia",
-    name: "Apartament Agapia",
-    tagline: "Un dormitor cu grădină pentru reverii lente",
-    shortDescription:
-      "Cuib romantic cu un dormitor și acces direct în grădina interioară, perfect pentru cupluri în căutarea liniștii.",
-    description:
-      "Inspirat de smerenia mănăstirii vecine, Apartament Agapia este un cuib pentru două persoane. Pereți var natural, plapumă albă, parchet de stejar și o ușă glisantă care se deschide direct spre grădina interioară plină de lavandă și trandafiri vechi. Aici timpul se subțiază: cafeaua de dimineață se bea sub umbrarul de viță, iar seara se aude liniștea ca o catifea. Pentru luna de miere, aniversări sau pur și simplu pentru o pauză de la lume.",
-    bedrooms: 1,
-    beds: 1,
     bathrooms: 1,
-    guests: 2,
-    sizeSqm: 48,
-    pricePerNightEUR: 40,
-    pricePerNightRON: 199,
-    weekendPriceEUR: 48,
-    weeklyDiscountPct: 12,
-    rating: 4.8,
-    reviewsCount: 64,
-    view: "Acces grădină privată cu lavandă",
-    amenities: [
-      "WiFi de mare viteză",
-      "Aer condiționat",
-      "Bucătărie completă",
-      "Parcare privată",
-      "Acces grădină",
-      "Smart TV",
-      "Cafetieră",
-      "Lenjerie de in",
-      "Cosmetice locale",
-      "Prosoape pufoase",
-      "Mic dejun la cerere",
-      "Pat king-size"
-    ],
-    rooms: [
-      { name: "Dormitor", description: "Pat king-size, lenjerie de in, ferestre spre grădină" },
-      { name: "Living deschis", description: "Canapea joasă, măsuță de lemn masiv, bibliotecă selectă" },
-      { name: "Bucătărie", description: "Compactă dar completă: plită, cuptor mic, frigider, espressor" },
-      { name: "Baie", description: "Duș tip ploaie, gresie de piatră, săpunuri de casă" },
-      { name: "Grădină", description: "Acces privat, masă pentru două persoane, hamac între meri" }
-    ],
-    rules: [
-      "Check-in: după ora 15:00",
-      "Check-out: până la ora 11:00",
-      "Doar pentru adulți (max. 2 oaspeți)",
-      "Fără fumat",
-      "Fără animale de companie",
-      "Liniște după ora 22:00"
-    ],
-    heroImage: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=2000&q=85",
-    gallery: [
-      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&w=1600&q=80"
-    ]
-  },
-  {
-    slug: "neamt",
-    name: "Apartament Neamț",
-    tagline: "Garsonieră caldă, în inima poveștii",
-    shortDescription:
-      "Studio cochet la doar câțiva pași de Cetatea Neamț — perfect pentru călătorii scurte și escapade solo.",
-    description:
-      "Apartament Neamț este o garsonieră croită cu grijă pentru cei care călătoresc ușor. Cărămidă aparentă, lampadar de alamă, pat moale cu pernuțe brodate manual și o fereastră care încadrează cetatea ca un tablou. Bucătăria este mică dar bine gândită — ai tot ce-ți trebuie să faci o cafea bună sau o cină la lumina lumânărilor. Ideal pentru un weekend istoric, pentru jurnaliști în drum sau pentru oricine vrea să simtă pulsul vechi al Moldovei.",
-    bedrooms: 0,
-    beds: 1,
-    bathrooms: 1,
-    guests: 2,
-    sizeSqm: 32,
-    pricePerNightEUR: 30,
-    pricePerNightRON: 149,
-    weekendPriceEUR: 36,
-    weeklyDiscountPct: 10,
-    rating: 4.7,
-    reviewsCount: 112,
-    view: "Vedere către Cetatea Neamț",
-    amenities: [
-      "WiFi de mare viteză",
-      "Aer condiționat",
-      "Chicinetă echipată",
-      "Smart TV",
-      "Cafetieră",
-      "Birou de lucru",
-      "Parcare în zonă",
-      "Lenjerie premium",
-      "Prosoape pufoase",
-      "Cosmetice naturale",
-      "Self check-in"
-    ],
-    rooms: [
-      { name: "Spațiu deschis", description: "Pat queen-size, zonă de lucru, fotoliu de citit" },
-      { name: "Chicinetă", description: "Plită, frigider, espressor, vase pentru două persoane" },
-      { name: "Baie", description: "Duș compact, finisaje în piatră, încălzire în pardoseală" }
-    ],
-    rules: [
-      "Check-in: după ora 15:00",
-      "Check-out: până la ora 11:00",
-      "Maxim 2 oaspeți",
-      "Fără fumat",
-      "Fără animale",
-      "Liniște după ora 22:00"
-    ],
-    heroImage: "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=2000&q=85",
-    gallery: [
-      "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1600&q=80"
-    ]
-  },
-  {
-    slug: "moldova",
-    name: "Apartament Moldova",
-    tagline: "Suită familială cu trei dormitoare",
-    shortDescription:
-      "Apartamentul nostru cel mai generos — trei dormitoare, două băi și un living pentru întâlniri lungi cu dragii tăi.",
-    description:
-      "Apartament Moldova este pentru călătoriile mari — bunici, părinți, copii, cumetri. Trei dormitoare, două băi spațioase, un living cu masă lungă de stejar la care încap zece, și o bucătărie pregătită să gătească gulaș, sarmale, plăcinte. Aerul are mireasmă de mere coapte și de pâine proaspătă; copiii se pot juca în curtea interioară, iar adulții pot deschide o sticlă de vin de Cotnari pe terasa de la etaj. O suită de poveste pentru reuniuni de familie sau evenimente intime.",
-    bedrooms: 3,
-    beds: 5,
-    bathrooms: 2,
-    guests: 8,
-    sizeSqm: 110,
+    guests: 4,
+    guestsMax: 6,
+    sizeSqm: 70,
+    floor: "Etaj 1",
+    hasAC: false,
+    hasTerrace: true,
+    accessible: false,
+    hasPrivateKitchen: true,
+    pricePerNightRON: 375,
     pricePerNightEUR: 75,
-    pricePerNightRON: 374,
-    weekendPriceEUR: 89,
-    weeklyDiscountPct: 18,
+    weekendPriceRON: 450,
+    weekendPriceEUR: 90,
+    weeklyDiscountPct: 15,
     rating: 5.0,
-    reviewsCount: 53,
-    view: "Vedere dublă: curte interioară și dealuri",
+    reviewsCount: 97,
+    view: "Etaj 1 · Prima ușă stânga",
     amenities: [
-      "WiFi de mare viteză",
-      "Aer condiționat (toate camerele)",
-      "Bucătărie premium",
-      "Mașină de spălat & uscător",
-      "Parcare privată (2 mașini)",
-      "Două terase",
-      "Șemineu",
-      "Smart TV cu Netflix",
-      "Cafetieră premium",
-      "Lenjerie de in",
-      "Pătuț pentru copii",
-      "Scaun de masă pentru bebeluș",
-      "Jocuri de societate",
-      "Bibliotecă",
-      "Grătar privat",
-      "Mic dejun premium la cerere"
+      "WiFi gratuit de mare viteză",
+      "2 × Pat Emperor 2m×2m",
+      "Canapea extensibilă în living",
+      "Bucătărie privată complet utilată",
+      "Frigider mare",
+      "Cuptor cu microunde",
+      "Fierbător electric",
+      "Prăjitor de pâine",
+      "Smart TV",
+      "Baie privată",
+      "Terasă privată cu masă și scaune",
+      "Parcare gratuită în curte",
+      "Lenjerie de bumbac premium",
+      "Prosoave incluse"
     ],
     rooms: [
-      { name: "Dormitor principal", description: "Pat king-size, baie en-suite, dressing" },
-      { name: "Al doilea dormitor", description: "Pat queen-size, fereastră spre curte" },
-      { name: "Al treilea dormitor", description: "Două paturi single, ideal pentru copii" },
-      { name: "Living mare", description: "Masă pentru 10, șemineu, canapele generoase" },
-      { name: "Bucătărie premium", description: "Insula de gătit, două cuptoare, frigider mare" },
-      { name: "Baie principală", description: "Cadă cu hidromasaj, duș separat, două lavoare" },
-      { name: "A doua baie", description: "Duș tip ploaie, finisaje fine" },
-      { name: "Terasă superioară", description: "20 m², mobilier outdoor, vedere spre dealuri" },
-      { name: "Curte interioară", description: "Grătar, masă lungă, plante aromatice" }
+      { name: "Dormitor 1", description: "Pat Emperor 2m×2m, lenjerie de bumbac premium" },
+      { name: "Dormitor 2", description: "Pat Emperor 2m×2m, lenjerie de bumbac premium" },
+      { name: "Living", description: "Canapea extensibilă, Smart TV" },
+      { name: "Bucătărie", description: "Frigider mare, microunde, fierbător, prăjitor de pâine" },
+      { name: "Baie", description: "Duș, lavoar, WC, prosoave incluse" },
+      { name: "Terasă", description: "Masă și scaune exterioare" }
+    ],
+    rules: defaultRules,
+    heroImage: `${BASE}/2022/12/Apartament3_VaiasaAparts_01.webp`,
+    gallery: Array.from({ length: 17 }, (_, i) =>
+      `${BASE}/2022/12/Apartament3_VaiasaAparts_${String(i + 1).padStart(2, "0")}.webp`
+    )
+  },
+  {
+    slug: "apartament-4",
+    name: "Apartament 4",
+    tagline: "Două dormitoare generoase la etaj 1 dreapta",
+    shortDescription:
+      "Al doilea apartament cu două dormitoare Emperor 2m×2m la etaj 1, pe coridorul drept — spațiu generos pentru 4-6 oaspeți.",
+    description:
+      "Apartament 4 completează perechea apartamentelor cu două dormitoare de la etaj 1 — de data aceasta pe coridorul drept. Același spațiu generos, aceeași grijă pentru detalii — pat Emperor 2m×2m în fiecare dormitor, living cu canapea extensibilă, bucătărie proprie complet echipată cu frigider, microunde, fierbător și prăjitor de pâine, și o terasă privată. Baie privată cu cadă — o raritate printre apartamentele noastre. Ideal pentru familii cu copii sau pentru două cupluri care preferă independența. Capacitate 4-6 oaspeți.",
+    descriptionEN:
+      "Apartment 4 completes the pair of two-bedroom apartments on the first floor — this time on the right corridor. Same generous space, same attention to detail — 2m×2m Emperor bed in each bedroom, living room with sofa bed, fully equipped private kitchenette, and a private terrace. Private bathroom with bathtub — a rarity among our apartments. Ideal for families with children or two couples who prefer independence. Capacity 4–6 guests.",
+    bedrooms: 2,
+    beds: 3,
+    bathrooms: 1,
+    guests: 4,
+    guestsMax: 6,
+    sizeSqm: 70,
+    floor: "Etaj 1",
+    hasAC: false,
+    hasTerrace: true,
+    accessible: false,
+    hasPrivateKitchen: true,
+    pricePerNightRON: 375,
+    pricePerNightEUR: 75,
+    weekendPriceRON: 450,
+    weekendPriceEUR: 90,
+    weeklyDiscountPct: 15,
+    rating: 5.0,
+    reviewsCount: 97,
+    view: "Etaj 1 · Coridor drept",
+    amenities: [
+      "WiFi gratuit de mare viteză",
+      "2 × Pat Emperor 2m×2m",
+      "Canapea extensibilă în living",
+      "Bucătărie privată complet utilată",
+      "Frigider mare",
+      "Cuptor cu microunde",
+      "Fierbător electric",
+      "Prăjitor de pâine",
+      "Smart TV",
+      "Baie privată cu cadă",
+      "Terasă privată",
+      "Parcare gratuită în curte",
+      "Lenjerie de bumbac premium",
+      "Prosoave incluse"
+    ],
+    rooms: [
+      { name: "Dormitor 1", description: "Pat Emperor 2m×2m, lenjerie de bumbac premium" },
+      { name: "Dormitor 2", description: "Pat Emperor 2m×2m, lenjerie de bumbac premium" },
+      { name: "Living", description: "Canapea extensibilă, Smart TV" },
+      { name: "Bucătărie", description: "Frigider mare, microunde, fierbător, prăjitor de pâine" },
+      { name: "Baie", description: "Cadă, lavoar, WC, prosoave incluse" },
+      { name: "Terasă privată", description: "Spațiu exterior privat" }
+    ],
+    rules: defaultRules,
+    heroImage: `${BASE}/2022/12/Apartament4_VaiasaAparts_01.webp`,
+    gallery: Array.from({ length: 10 }, (_, i) =>
+      `${BASE}/2022/12/Apartament4_VaiasaAparts_${String(i + 1).padStart(2, "0")}.webp`
+    )
+  },
+  {
+    slug: "apartament-5",
+    name: "Apartament 5",
+    tagline: "Aer condiționat, canapea L și vedere largă la etaj 2",
+    shortDescription:
+      "Apartament cu aer condiționat, dormitor Emperor, canapea L extensibilă și bucătărie proprie — etaj 2, stânga. Capacitate 3-5 oaspeți.",
+    description:
+      "Apartament 5 este ales de cei care apreciază confortul termic în orice anotimp — singurul de la etaj 2 stânga cu aer condiționat propriu. Dormitorul cu pat Emperor 2m×2m se completează cu o canapea extensibilă tip L în living, perfectă pentru un al treilea, al patrulea sau al cincilea oaspete. Bucătăria proprie complet utilată include frigider mare, microunde, fierbător și prăjitor de pâine. Terasa privată oferă o privire mai largă asupra împrejurimilor — mai mult cer, mai mult verde. Capacitate 3-5 oaspeți.",
+    descriptionEN:
+      "Apartment 5 is chosen by those who appreciate thermal comfort in any season — the only apartment on the second floor left side with its own air conditioning. The bedroom with 2m×2m Emperor bed is complemented by an L-shaped sofa bed in the living room, perfect for a third, fourth, or fifth guest. The fully equipped private kitchenette includes a large fridge, microwave, electric kettle and toaster. The private terrace offers a wider view of the surroundings. Capacity 3–5 guests.",
+    bedrooms: 1,
+    beds: 2,
+    bathrooms: 1,
+    guests: 3,
+    guestsMax: 5,
+    sizeSqm: 52,
+    floor: "Etaj 2",
+    hasAC: true,
+    hasTerrace: true,
+    accessible: false,
+    hasPrivateKitchen: true,
+    pricePerNightRON: 310,
+    pricePerNightEUR: 62,
+    weekendPriceRON: 370,
+    weekendPriceEUR: 74,
+    weeklyDiscountPct: 15,
+    rating: 5.0,
+    reviewsCount: 97,
+    view: "Etaj 2 · Stânga · Aer condiționat",
+    amenities: [
+      "WiFi gratuit de mare viteză",
+      "Pat Emperor 2m×2m",
+      "Aer condiționat",
+      "Canapea extensibilă tip L",
+      "Bucătărie privată complet utilată",
+      "Frigider mare",
+      "Cuptor cu microunde",
+      "Fierbător electric",
+      "Prăjitor de pâine",
+      "Smart TV",
+      "Baie privată",
+      "Terasă privată",
+      "Parcare gratuită în curte",
+      "Lenjerie de bumbac premium",
+      "Prosoave incluse"
+    ],
+    rooms: [
+      { name: "Dormitor", description: "Pat Emperor 2m×2m, aer condiționat, lenjerie premium" },
+      { name: "Living", description: "Canapea extensibilă tip L, Smart TV" },
+      { name: "Bucătărie", description: "Frigider mare, microunde, fierbător, prăjitor de pâine" },
+      { name: "Baie", description: "Duș, lavoar, WC, prosoave incluse" },
+      { name: "Terasă privată", description: "Vedere spre împrejurimi" }
+    ],
+    rules: defaultRules,
+    heroImage: `${BASE}/2022/12/Apartament5_VaiasaAparts_01.webp`,
+    gallery: Array.from({ length: 17 }, (_, i) =>
+      `${BASE}/2022/12/Apartament5_VaiasaAparts_${String(i + 1).padStart(2, "0")}.webp`
+    ),
+    matterportId: "6xEQUdBSM9w"
+  },
+  {
+    slug: "apartament-6",
+    name: "Apartament 6",
+    tagline: "Răcoare și liniște la etaj 2, dreapta",
+    shortDescription:
+      "Apartament cu aer condiționat și pat Emperor la etaj 2 dreapta — confort complet pentru 3-5 oaspeți, cu terasă privată.",
+    description:
+      "Apartament 6 vă oferă intimitatea etajului 2 dreapta și răcoarea aerului condiționat în serile calde de vară. Dormitorul cu pat Emperor 2m×2m, living confortabil cu canapea extensibilă și TV smart, bucătărie proprie completă cu frigider, microunde, fierbător și prăjitor — tot ce aveți nevoie pentru un sejur fără griji. Terasa privată vă oferă un colț liniștit al vostru. La fel ca toate apartamentele noastre, este pregătit cu lenjerie moale și prosoave curate. Capacitate 3-5 oaspeți.",
+    descriptionEN:
+      "Apartment 6 offers the privacy of the second floor right side and the coolness of air conditioning on warm summer evenings. The bedroom with 2m×2m Emperor bed, comfortable living room with sofa bed and smart TV, fully equipped private kitchenette — everything you need for a worry-free stay. The private terrace offers your own quiet corner. Capacity 3–5 guests.",
+    bedrooms: 1,
+    beds: 2,
+    bathrooms: 1,
+    guests: 3,
+    guestsMax: 5,
+    sizeSqm: 50,
+    floor: "Etaj 2",
+    hasAC: true,
+    hasTerrace: true,
+    accessible: false,
+    hasPrivateKitchen: true,
+    pricePerNightRON: 310,
+    pricePerNightEUR: 62,
+    weekendPriceRON: 370,
+    weekendPriceEUR: 74,
+    weeklyDiscountPct: 15,
+    rating: 5.0,
+    reviewsCount: 97,
+    view: "Etaj 2 · Dreapta · Aer condiționat",
+    amenities: [
+      "WiFi gratuit de mare viteză",
+      "Pat Emperor 2m×2m",
+      "Aer condiționat",
+      "Canapea extensibilă",
+      "Bucătărie privată complet utilată",
+      "Frigider mare",
+      "Cuptor cu microunde",
+      "Fierbător electric",
+      "Prăjitor de pâine",
+      "Smart TV",
+      "Baie privată",
+      "Terasă privată",
+      "Parcare gratuită în curte",
+      "Lenjerie de bumbac premium",
+      "Prosoave incluse"
+    ],
+    rooms: [
+      { name: "Dormitor", description: "Pat Emperor 2m×2m, aer condiționat, lenjerie premium" },
+      { name: "Living", description: "Canapea extensibilă, Smart TV" },
+      { name: "Bucătărie", description: "Frigider mare, microunde, fierbător, prăjitor de pâine" },
+      { name: "Baie", description: "Duș, lavoar, WC, prosoave incluse" },
+      { name: "Terasă privată", description: "Spațiu exterior privat" }
+    ],
+    rules: defaultRules,
+    heroImage: `${BASE}/2022/12/Apartament6_VaiasaAparts_02.webp`,
+    gallery: [
+      `${BASE}/2022/12/Apartament6_VaiasaAparts_02.webp`,
+      `${BASE}/2022/12/Apartament6_VaiasaAparts_03.webp`,
+      `${BASE}/2022/12/Apartament6_VaiasaAparts_04.webp`,
+      `${BASE}/2022/12/Apartament6_VaiasaAparts_05.webp`,
+      `${BASE}/2022/12/Apartament6_VaiasaAparts_06.webp`,
+      `${BASE}/2022/12/Apartament6_VaiasaAparts_07.webp`,
+      `${BASE}/2022/12/Apartament6_VaiasaAparts_08.webp`,
+      `${BASE}/2022/12/Apartament6_VaiasaAparts_09.webp`,
+      `${BASE}/2022/12/Apartament6_VaiasaAparts_10.webp`,
+      `${BASE}/2022/12/Apartament6_VaiasaAparts_11.webp`,
+      `${BASE}/2022/12/Apartament6_VaiasaAparts_12.webp`
+    ]
+  },
+  {
+    slug: "apartament-7",
+    name: "Apartament 7",
+    tagline: "La parter, fără trepte — prietenos pentru toți",
+    shortDescription:
+      "Apartament la parter stânga, fără trepte, cu pat Emperor, baie privată, frigider și acces la Kitchen for All — ideal pentru mobilitate redusă. Capacitate 2-4 oaspeți.",
+    description:
+      "Apartament 7 este gândit cu grijă pentru oaspeții cu nevoi speciale de accesibilitate — situat la parter stânga, fără trepte, cu spații generoase. Dormitorul are pat Emperor 2m×2m cu lenjerie moale de bumbac, iar apartamentul include frigider propriu și baie privată. Pentru prepararea meselor, oaspeții de la Apartament 7 au acces la Kitchen for All — bucătăria comună a vilei, situată la parter, complet echipată și disponibilă tuturor oaspeților. Terasa privată vă invită la relaxare. Liniștit, discret și prietenos, Apartament 7 demonstrează că accesibilitatea și confortul merg mână în mână. Capacitate 2-4 oaspeți.",
+    descriptionEN:
+      "Apartment 7 is thoughtfully designed for guests with reduced mobility — located on the ground floor left side, with no stairs and generous spaces. The bedroom has a 2m×2m Emperor bed with soft cotton bedding. The apartment includes its own fridge and private bathroom. For meal preparation, guests of Apartment 7 have access to Kitchen for All — the villa's shared communal kitchen on the ground floor, fully equipped and available to all guests. The private terrace invites relaxation. Quiet, discreet and welcoming, Apartment 7 proves that accessibility and comfort go hand in hand. Capacity 2–4 guests.",
+    bedrooms: 1,
+    beds: 2,
+    bathrooms: 1,
+    guests: 2,
+    guestsMax: 4,
+    sizeSqm: 42,
+    floor: "Parter",
+    hasAC: false,
+    hasTerrace: true,
+    accessible: true,
+    hasPrivateKitchen: false,
+    pricePerNightRON: 250,
+    pricePerNightEUR: 50,
+    weekendPriceRON: 300,
+    weekendPriceEUR: 60,
+    weeklyDiscountPct: 15,
+    rating: 5.0,
+    reviewsCount: 97,
+    view: "Parter · Stânga · Accesibil",
+    amenities: [
+      "WiFi gratuit de mare viteză",
+      "Pat Emperor 2m×2m",
+      "Canapea extensibilă",
+      "Frigider propriu",
+      "Acces Kitchen for All (bucătăria comună)",
+      "Smart TV",
+      "Baie privată",
+      "Terasă privată",
+      "Fără trepte — parter",
+      "Spații generoase, prietenos mobilitate redusă",
+      "Parcare gratuită în curte",
+      "Lenjerie de bumbac premium",
+      "Prosoave incluse"
+    ],
+    rooms: [
+      { name: "Dormitor", description: "Pat Emperor 2m×2m, spațios, accesibil" },
+      { name: "Living", description: "Canapea extensibilă, Smart TV" },
+      { name: "Baie", description: "Duș accesibil, lavoar, WC, prosoave incluse" },
+      { name: "Frigider propriu", description: "Frigider în apartament" },
+      { name: "Kitchen for All", description: "Bucătăria comună a vilei — complet utilată, la parter" },
+      { name: "Terasă privată", description: "Spațiu exterior privat" }
     ],
     rules: [
-      "Check-in: după ora 15:00",
+      "Check-in: după ora 14:00",
       "Check-out: până la ora 11:00",
-      "Maxim 8 oaspeți",
-      "Copiii sunt foarte bineveniți",
-      "Animalele acceptate la cerere",
-      "Fără petreceri zgomotoase",
-      "Liniște după ora 22:00"
+      "Fără fumat în interior",
+      "Fără petreceri sau evenimente zgomotoase",
+      "Liniște după ora 22:00",
+      "Parcare gratuită disponibilă în curte — primul venit, primul servit",
+      "Animalele de companie acceptate la cerere, fără cost suplimentar",
+      "Self check-in cu ghidaj de la echipa noastră",
+      "Acces Kitchen for All inclus"
     ],
-    heroImage: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=85",
+    heroImage: "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/516492579_733556772950876_3694245894075396123_n.webp",
     gallery: [
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1600585152915-d208bec867a1?auto=format&fit=crop&w=1600&q=80"
+      "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/516492579_733556772950876_3694245894075396123_n.webp",
+      "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518199043_733557542950799_1039072054897679506_n.webp",
+      "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518272256_733556742950879_6883338769382424532_n.webp",
+      "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518277917_733556719617548_6039837942695933401_n.webp",
+      "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518333555_733556406284246_5206156284237423621_n.webp",
+      "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518335038_733557552950798_4553339340452107002_n.webp"
     ]
   }
 ];
@@ -291,4 +496,61 @@ export function getRelatedApartments(slug: string, count = 3): Apartment[] {
   return apartments.filter((a) => a.slug !== slug).slice(0, count);
 }
 
-export const stockGalleryImages = stockGallery;
+export function calculatePriceRON(
+  apartment: Apartment,
+  nights: number
+): {
+  basePrice: number;
+  totalBeforeDiscount: number;
+  discountPct: number;
+  discountLabel: string;
+  discount: number;
+  total: number;
+  currency: string;
+} {
+  const base = apartment.pricePerNightRON;
+  let discountPct = 0;
+  let discountLabel = "";
+
+  if (nights === 1) {
+    discountPct = 0;
+  } else if (nights <= 3) {
+    discountPct = 10;
+    discountLabel = "2-3 nopți";
+  } else if (nights <= 6) {
+    discountPct = 15;
+    discountLabel = "4-6 nopți";
+  } else {
+    discountPct = 25;
+    discountLabel = "Escapadă Săptămânală";
+  }
+
+  const totalBeforeDiscount = base * nights;
+  const discount = Math.round(totalBeforeDiscount * discountPct / 100);
+  const total = totalBeforeDiscount - discount;
+
+  return {
+    basePrice: base,
+    totalBeforeDiscount,
+    discountPct,
+    discountLabel,
+    discount,
+    total,
+    currency: "RON"
+  };
+}
+
+export const VILLA_PROPERTY_PHOTOS = [
+  `${BASE}/2022/12/Vaias_aparts_16.jpg`,
+  `${BASE}/2022/12/Vaias_aparts_11.jpg`,
+  `${BASE}/2022/12/Vaias_aparts_12.jpg`,
+  `${BASE}/2022/12/Vaias_aparts_7.jpg`,
+  `${BASE}/2022/12/Vaias_aparts_8.jpg`,
+  `${BASE}/2022/12/Vaias_aparts_6.jpg`,
+  `${BASE}/2022/12/Vaias_aparts_5.jpg`,
+  `${BASE}/2022/12/Vaias_aparts_4.jpg`,
+  `${BASE}/2022/12/Vaias_8.jpg`,
+  `${BASE}/2022/12/Vaias_7.jpg`,
+  `${BASE}/2022/12/Vaias_6.jpg`,
+  `${BASE}/2022/12/Vaias_4.jpg`
+];
