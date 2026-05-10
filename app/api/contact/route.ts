@@ -1,10 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export async function POST(req: NextRequest) {
   try {
     const { name, email, phone, subject, message } = await req.json();
     if (!name || !message) {
       return NextResponse.json({ error: "Date incomplete" }, { status: 400 });
+    }
+
+    // Persist lead to DB
+    try {
+      await prisma.lead.create({
+        data: { name, email: email ?? null, phone: phone ?? null, source: "contact-form", notes: `${subject ? subject + ": " : ""}${message}` }
+      });
+    } catch (dbErr) {
+      console.error("DB lead save error (non-fatal):", dbErr);
     }
 
     const apiKey = process.env.RESEND_API_KEY;
