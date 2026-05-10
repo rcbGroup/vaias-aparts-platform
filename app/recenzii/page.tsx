@@ -19,7 +19,7 @@ export default function ReviewsPage() {
         eyebrow="Recenzii"
         title="Cuvintele oaspeților noștri."
         subtitle={`Rating mediu ${avg} din 5, peste 300 de recenzii pe platforme externe — povești adevărate, scrise de oameni care au revenit.`}
-        image="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=2400&q=85"
+        image="https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_12.jpg"
       />
 
       <section className="bg-stone-50 py-14 border-b border-stone-100">

@@ -70,7 +70,7 @@ export default function ReservationPage() {
         eyebrow="Rezervare"
         title="Începe-ți povestea aici."
         subtitle="Completează datele și revenim cu confirmarea în câteva ore — direct de la noi, cu cel mai bun preț."
-        image="https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&w=2400&q=85"
+        image="https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Apartament1_VaiasaAparts_01.webp"
       />
 
       <section className="section bg-cream-50">

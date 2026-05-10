@@ -15,7 +15,7 @@ export default function ContactPage() {
         eyebrow="Contact"
         title="Vorbește direct cu noi."
         subtitle="Răspundem la toate mesajele în maxim 4 ore — și mai repede dacă scrii pe WhatsApp."
-        image="https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=2400&q=85"
+        image="https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_16.jpg"
       />
 
       <section className="section bg-cream-50">

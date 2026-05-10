@@ -628,8 +628,8 @@ export default function HomePage() {
       <section className="relative py-24 md:py-32 overflow-hidden bg-walnut-900">
         <div className="absolute inset-0 opacity-30">
           <Image
-            src="https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?auto=format&fit=crop&w=2400&q=85"
-            alt=""
+            src="https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_8.jpg"
+            alt="Vila Vaias Aparts exterior"
             fill
             sizes="100vw"
             className="object-cover"

@@ -15,7 +15,7 @@ export default function ApartmentsPage() {
         eyebrow={t("apartments.heroEyebrow")}
         title={t("apartments.heroTitle")}
         subtitle={t("apartments.heroSubtitle")}
-        image="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2400&q=85"
+        image="https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_11.jpg"
       />
 
       <section className="section bg-cream-50">
