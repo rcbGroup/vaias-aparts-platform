@@ -31,10 +31,9 @@ export default function Header() {
 
   return (
     <>
-      {/* Contact bar — visible on all screen sizes */}
-      {/* FIX 3: changed from "hidden lg:flex" to "flex flex-wrap"; FIX 1 & 2: 752 first, both WhatsApp links; FIX 6: lowercase email */}
-      <div className="fixed inset-x-0 top-0 z-[60] flex flex-wrap items-center justify-center lg:justify-end gap-3 lg:gap-6 bg-forest-900/95 backdrop-blur px-4 lg:px-8 py-1.5 text-xs text-cream-100/80">
-        {/* Primary: +40 752 388 388 (Anca) */}
+      {/* Contact bar — single line on all sizes */}
+      <div className="fixed inset-x-0 top-0 z-[60] flex items-center justify-center xl:justify-end gap-3 xl:gap-6 bg-forest-900/95 backdrop-blur px-4 xl:px-8 py-1.5 text-xs text-cream-100/80">
+        {/* Primary always visible */}
         <a
           href="tel:+40752388388"
           className="flex items-center gap-1.5 hover:text-cream-50 transition"
@@ -52,13 +51,11 @@ export default function Header() {
           WhatsApp
         </a>
 
-        {/* Separator */}
-        <span className="text-cream-100/40">|</span>
-
-        {/* Secondary: +40 738 345 330 (Vasi) */}
+        {/* Secondary + email — desktop only */}
+        <span className="hidden xl:block text-cream-100/40">|</span>
         <a
           href="tel:+40738345330"
-          className="flex items-center gap-1.5 hover:text-cream-50 transition"
+          className="hidden xl:flex items-center gap-1.5 hover:text-cream-50 transition"
         >
           <PhoneIcon />
           +40 738 345 330
@@ -67,17 +64,14 @@ export default function Header() {
           href="https://wa.me/40738345330"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 hover:text-green-300 transition"
+          className="hidden xl:flex items-center gap-1.5 hover:text-green-300 transition"
         >
           <WhatsAppIcon />
           WhatsApp
         </a>
-
-        {/* Email — hidden on mobile, visible on desktop */}
-        {/* FIX 6: lowercase email */}
         <a
           href="mailto:contact@vaiasaparts.ro"
-          className="hidden lg:flex items-center gap-1.5 hover:text-cream-50 transition"
+          className="hidden xl:flex items-center gap-1.5 hover:text-cream-50 transition"
         >
           contact@vaiasaparts.ro
         </a>
@@ -120,7 +114,7 @@ export default function Header() {
             </div>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden xl:flex items-center gap-6">
             {nav.map((item) => (
               <Link
                 key={item.href}
@@ -136,7 +130,7 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden xl:flex items-center gap-3">
             <LanguageSwitcher tone={dark ? "dark" : "light"} />
             <div className="relative">
               <Link
@@ -151,7 +145,7 @@ export default function Header() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center gap-2 xl:hidden">
             <LanguageSwitcher tone={dark ? "dark" : "light"} />
             <button
               aria-label={t("nav.menu")}
@@ -182,7 +176,7 @@ export default function Header() {
         </div>
 
         {open && (
-          <div className="lg:hidden border-t border-walnut-200/40 bg-cream-50/95 backdrop-blur-md">
+          <div className="xl:hidden border-t border-walnut-200/40 bg-cream-50/95 backdrop-blur-md">
             <div className="container-x py-4 flex flex-col gap-1">
               {/* FIX 5: 752 first, then 738, both with WhatsApp links */}
               {/* Primary: +40 752 388 388 (Anca) */}
