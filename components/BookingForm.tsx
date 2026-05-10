@@ -32,9 +32,9 @@ export default function BookingForm() {
     return Math.max(0, Math.round(ms / (1000 * 60 * 60 * 24)));
   }, [checkin, checkout]);
 
-  const totalEUR = useMemo(() => {
+  const totalRON = useMemo(() => {
     if (!nights) return 0;
-    let total = nights * apartment.pricePerNightEUR;
+    let total = nights * apartment.pricePerNightRON;
     if (nights >= 7) total = Math.round(total * (1 - apartment.weeklyDiscountPct / 100));
     return total;
   }, [nights, apartment]);
@@ -57,7 +57,7 @@ export default function BookingForm() {
           checkOut: checkout,
           nights,
           guests,
-          totalEUR,
+          totalRON,
           specialRequests: fd.get("requests")
         })
       });
@@ -78,7 +78,7 @@ export default function BookingForm() {
         <p className="mt-4 text-stone-600 max-w-md mx-auto">
           {t("booking.successText")} — <strong>{apartment.name}</strong>
         </p>
-        <a href="https://wa.me/40738345330" className="btn-primary mt-8">
+        <a href="https://wa.me/40752388388" className="btn-primary mt-8">
           {t("booking.continueWa")}
         </a>
       </div>
@@ -110,7 +110,7 @@ export default function BookingForm() {
               >
                 <div className="font-display text-lg text-forest-900">{a.name}</div>
                 <div className="text-sm text-stone-500 mt-1">
-                  {a.guests} {t("common.guests")} · {t("common.from")} €{a.pricePerNightEUR}{t("common.perNight")}
+                  {a.guests} {t("common.guests")} · {t("common.from")} {a.pricePerNightRON} RON{t("common.perNight")}
                 </div>
               </button>
             ))}
@@ -207,8 +207,8 @@ export default function BookingForm() {
         {nights > 0 && (
           <div className="rounded-xl bg-forest-50 border border-forest-200 p-5 animate-fade-in">
             <div className="flex justify-between text-sm">
-              <span className="text-forest-800">{nights} {nights === 1 ? t("booking.night") : t("booking.nights")} × €{apartment.pricePerNightEUR}</span>
-              <span className="text-forest-900">€{nights * apartment.pricePerNightEUR}</span>
+              <span className="text-forest-800">{nights} {nights === 1 ? t("booking.night") : t("booking.nights")} × {apartment.pricePerNightRON} RON</span>
+              <span className="text-forest-900">{nights * apartment.pricePerNightRON} RON</span>
             </div>
             {nights >= 7 && (
               <div className="flex justify-between text-sm text-walnut-600 mt-1">
@@ -218,7 +218,7 @@ export default function BookingForm() {
             )}
             <div className="flex justify-between font-display text-2xl text-forest-900 mt-3 pt-3 border-t border-forest-200">
               <span>{t("booking.totalEst")}</span>
-              <span>€{totalEUR}</span>
+              <span>{totalRON} RON</span>
             </div>
             <div className="text-xs text-stone-500 mt-1">{t("booking.finalNote")}</div>
           </div>
