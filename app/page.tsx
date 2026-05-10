@@ -14,7 +14,7 @@ import { useLang } from "@/components/LanguageProvider";
 
 export default function HomePage() {
   const { t } = useLang();
-  const featured = apartments.slice(0, 6);
+  const featured = apartments;
   const featuredAttractions = attractions.slice(0, 6);
   const highlights = guestHighlights.slice(0, 6);
   const activeOffers = getActiveOffers().slice(0, 6);
