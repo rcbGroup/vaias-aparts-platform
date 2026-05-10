@@ -193,7 +193,7 @@ export default function ApartmentPage({ params }: { params: { slug: string } }) 
             </h2>
             <div className="rounded-2xl overflow-hidden bg-stone-100 aspect-[16/9] relative shadow-soft">
               <iframe
-                src="https://www.openstreetmap.org/export/embed.html?bbox=26.30%2C47.16%2C26.42%2C47.24&amp;layer=mapnik&amp;marker=47.20%2C26.36"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=26.3543%2C47.2047%2C26.3646%2C47.2107&amp;layer=mapnik&amp;marker=47.2076828%2C26.3594528"
                 className="w-full h-full border-0"
                 loading="lazy"
                 title="Hartă Vaias Aparts"

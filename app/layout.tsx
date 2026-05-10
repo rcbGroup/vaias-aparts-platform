@@ -45,7 +45,7 @@ export const metadata: Metadata = {
       "7 apartamente boutique ultracentral în Târgu Neamț, la poalele Cetății Neamțului. Rezervare directă.",
     images: [
       {
-        url: "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_16.jpg",
+        url: "https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg",
         width: 1200,
         height: 630,
         alt: "Vila Vaias Aparts — Cazare boutique Târgu Neamț"
@@ -134,7 +134,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               description:
                 "7 apartamente boutique ultracentral în Târgu Neamț, la poalele Cetății Neamțului. Cazare 4 stele, clasificare certificat nr. 35332.",
               image:
-                "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_16.jpg",
+                "https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg",
               "@id": "https://vaias-aparts.vercel.app",
               url: "https://vaias-aparts.vercel.app",
               telephone: ["+40752388388", "+40738345330"],
