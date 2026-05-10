@@ -200,7 +200,7 @@ export default function ApartmentPage({ params }: { params: { slug: string } }) 
               />
             </div>
             <div className="mt-4 text-sm text-stone-500">
-              Strada Boureni nr. 12, Târgu Neamț, jud. Neamț, România · 5 min de Cetatea Neamț
+              Str. Sfântul Lazăr nr. 1, Târgu Neamț, jud. Neamț, România · 5 min de Cetatea Neamț
             </div>
           </div>
 
