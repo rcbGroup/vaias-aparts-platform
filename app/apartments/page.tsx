@@ -40,7 +40,7 @@ export default function ApartmentsPage() {
                   {t("apartments.unsureText")}
                 </p>
                 <div className="mt-8 flex flex-wrap justify-center gap-3">
-                  <a href="https://wa.me/40738345330" className="btn-primary bg-cream-50 text-forest-900 hover:bg-cream-100 hover:text-forest-900">
+                  <a href="https://wa.me/40752388388" target="_blank" rel="noopener noreferrer" className="btn-primary bg-cream-50 text-forest-900 hover:bg-cream-100 hover:text-forest-900">
                     WhatsApp
                   </a>
                   <Link href="/contact" className="btn-outline-light">

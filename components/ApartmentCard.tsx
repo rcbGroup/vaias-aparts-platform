@@ -22,7 +22,7 @@ export default function ApartmentCard({
       <div className="relative aspect-[4/5] overflow-hidden bg-stone-100">
         <Image
           src={apartment.heroImage}
-          alt={apartment.name}
+          alt={`${apartment.name} — ${apartment.tagline} · Vila Vaias Aparts Târgu Neamț`}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover transition-transform duration-[1400ms] group-hover:scale-[1.06]"

@@ -77,12 +77,24 @@ export default function ContactPage() {
             </div>
 
             <div>
-              <div className="eyebrow mb-3">Social</div>
+              <div className="eyebrow mb-3">Social și recenzii</div>
               <div className="flex flex-wrap gap-3">
-                <a href="https://facebook.com" className="btn-secondary">Facebook</a>
-                <a href="https://instagram.com" className="btn-secondary">Instagram</a>
-                <a href="https://tripadvisor.com" className="btn-secondary">TripAdvisor</a>
+                <a href="https://www.facebook.com/vaiasaparts" target="_blank" rel="noopener noreferrer" className="btn-secondary">Facebook</a>
+                <a href="https://www.youtube.com/@vaiasaparts" target="_blank" rel="noopener noreferrer" className="btn-secondary">YouTube</a>
+                <a href="https://www.tripadvisor.com/Profile/VaiasAparts" target="_blank" rel="noopener noreferrer" className="btn-secondary">TripAdvisor</a>
+                <a href="https://share.google/iFsW4iUjwIDgkgwZm" target="_blank" rel="noopener noreferrer" className="btn-secondary">Google Reviews</a>
               </div>
+            </div>
+
+            <div>
+              <div className="eyebrow mb-3">Facilități</div>
+              <ul className="space-y-2 text-sm text-forest-800">
+                <li>🔒 CCTV 24/7 în zonele comune — siguranță și liniște</li>
+                <li>🍳 Bucătăria pentru Toți — bucătărie comună la parter, disponibilă tuturor oaspeților</li>
+                <li>🚗 Parcare gratuită în curtea vilei</li>
+                <li>🐾 Animale acceptate la cerere, fără cost suplimentar</li>
+                <li>📄 Factură fiscală disponibilă la cerere</li>
+              </ul>
             </div>
 
             <div>

@@ -17,8 +17,9 @@ const galleryCategories = [
   { id: "apt4", label: "Apartament 4" },
   { id: "apt5", label: "Apartament 5" },
   { id: "apt6", label: "Apartament 6" },
-  { id: "apt7", label: "Apartament 7" },
+  { id: "apt7", label: "Apartament 7 — parter, fără trepte" },
   { id: "exterior", label: "Exterior și curte" },
+  { id: "bucatarie", label: "Bucătăria pentru Toți" },
 ];
 
 const galleryImages: GalleryImage[] = [
@@ -66,13 +67,16 @@ const galleryImages: GalleryImage[] = [
   { src: "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518333555_733556406284246_5206156284237423621_n.webp", alt: "Apartament 7 Vila Vaias Aparts — detaliu interior", category: "apt7" },
   { src: "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518335038_733557552950798_4553339340452107002_n.webp", alt: "Apartament 7 Vila Vaias Aparts — parter accesibil", category: "apt7" },
   // Exterior
-  { src: "https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg", alt: "Vila Vaias Aparts — vedere exterior față, flori pe balcoane, Târgu Neamț", category: "exterior" },
-  // Common areas & interiors used across apartment showcase
-  { src: `${BASE}/2022/12/Vaias_aparts_16.jpg`, alt: "Vila Vaias Aparts — dormitor apartament", category: "all" },
-  { src: `${BASE}/2022/12/Vaias_aparts_11.jpg`, alt: "Vila Vaias Aparts — living apartament", category: "all" },
-  { src: `${BASE}/2022/12/Vaias_aparts_12.jpg`, alt: "Vila Vaias Aparts — dormitor cu design elegant", category: "all" },
-  { src: `${BASE}/2022/12/Vaias_aparts_7.jpg`, alt: "Vila Vaias Aparts — dormitor confortabil", category: "all" },
-  { src: `${BASE}/2022/12/Vaias_aparts_8.jpg`, alt: "Vila Vaias Aparts — interior apartament boutique", category: "all" },
+  { src: "https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg", alt: "Vila Vaias Aparts — vedere exterior față, flori pe balcoane, ultracentral Târgu Neamț", category: "exterior" },
+  { src: `${BASE}/2022/12/Vaias_aparts_16.jpg`, alt: "Vila Vaias Aparts — exterior și curte, Str. Sfântul Lazăr nr. 1, Târgu Neamț", category: "exterior" },
+  { src: `${BASE}/2022/12/Vaias_aparts_11.jpg`, alt: "Vila Vaias Aparts — curtea vilei, parcare gratuită", category: "exterior" },
+  { src: `${BASE}/2022/12/Vaias_aparts_12.jpg`, alt: "Vila Vaias Aparts — intrare în vilă, Târgu Neamț", category: "exterior" },
+  { src: `${BASE}/2022/12/Vaias_aparts_7.jpg`, alt: "Vila Vaias Aparts — vedere spre vilă din curte", category: "exterior" },
+  { src: `${BASE}/2022/12/Vaias_aparts_8.jpg`, alt: "Vila Vaias Aparts — exterior vilă boutique Târgu Neamț", category: "exterior" },
+  // Bucătăria pentru Toți — bucătăria comună la parter
+  { src: `${BASE}/2022/12/Vaias_aparts_4.jpg`, alt: "Bucătăria pentru Toți — bucătăria comună Vila Vaias Aparts, parter, complet utilată", category: "bucatarie" },
+  { src: `${BASE}/2022/12/Vaias_aparts_5.jpg`, alt: "Bucătăria pentru Toți — zona de preparare mese, disponibilă tuturor oaspeților Vila Vaias Aparts", category: "bucatarie" },
+  { src: `${BASE}/2022/12/Vaias_aparts_6.jpg`, alt: "Bucătăria pentru Toți — Vila Vaias Aparts, parter, Târgu Neamț", category: "bucatarie" },
 ];
 
 export default function GalleryClient() {

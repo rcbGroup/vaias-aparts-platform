@@ -189,7 +189,7 @@ export default function ReservationPage() {
             <li>Sezon mare (15 iulie – 31 august, 1 decembrie – 7 ianuarie) — minim 3 nopți.</li>
             <li>Animalele de companie sunt acceptate la cerere în toate apartamentele, fără cost suplimentar.</li>
             <li>Fumatul este interzis în interior. Permis pe terase și în curte.</li>
-            <li>Plata în RON sau EUR, prin transfer bancar, card sau cash. Tichete de vacanță acceptate.</li>
+            <li>Plata în RON, prin transfer bancar, card sau cash. Tichete de vacanță (Pluxee, Up Romania, Edenred) acceptate.</li>
             <li>Factură fiscală disponibilă la cerere.</li>
           </ul>
           <p className="mt-6">

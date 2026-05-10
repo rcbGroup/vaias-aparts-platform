@@ -44,7 +44,7 @@ export default function TermsPage() {
               <ul className="list-disc pl-6 space-y-1.5">
                 <li>Acont 30% la confirmare; restul la check-in.</li>
                 <li>Plata se efectuează în lei (RON). Factura fiscală se emite în RON.</li>
-                <li>Acceptăm card (Visa, Mastercard), transfer bancar și numerar.</li>
+                <li>Acceptăm card (Visa, Mastercard), transfer bancar, numerar și tichete de vacanță (Pluxee, Up Romania, Edenred).</li>
                 <li>Factura fiscală se emite la check-out, la cerere.</li>
               </ul>
             </Section>
@@ -60,7 +60,7 @@ export default function TermsPage() {
 
             <Section title="5. Check-in și check-out">
               <ul className="list-disc pl-6 space-y-1.5">
-                <li>Check-in: după ora 15:00. Check-out: până la 11:00.</li>
+                <li>Check-in: după ora 14:00. Check-out: până la 11:00.</li>
                 <li>Late check-out la 13:00: gratuit pentru rezervări directe (sub rezerva disponibilității).</li>
                 <li>Self check-in disponibil 24/7 cu instrucțiuni primite cu o zi înainte.</li>
                 <li>La check-in, oaspetele majorează prezintă un act de identitate valabil.</li>
@@ -71,7 +71,7 @@ export default function TermsPage() {
               <ul className="list-disc pl-6 space-y-1.5">
                 <li>Liniște după ora 22:00.</li>
                 <li>Fumatul este interzis în interior; permis pe terase și în curte.</li>
-                <li>Animalele de companie sunt acceptate doar la cerere prealabilă (€10/noapte).</li>
+                <li>Animalele de companie sunt acceptate la cerere prealabilă, fără cost suplimentar, în toate apartamentele.</li>
                 <li>Nu sunt permise petreceri sau evenimente fără acord scris.</li>
                 <li>Numărul de oaspeți nu poate depăși capacitatea declarată în rezervare.</li>
               </ul>
@@ -89,8 +89,9 @@ export default function TermsPage() {
             <Section title="8. Garanție">
               <p>
                 Pentru sejururi de 7+ nopți sau grupuri mari, putem solicita o garanție
-                rambursabilă de 100-300 EUR, blocată pe card la check-in și deblocată la
-                check-out, dacă nu apar daune.
+                rambursabilă, blocată pe card la check-in și deblocată la
+                check-out, dacă nu apar daune. Valoarea garanției se stabilește de comun acord
+                la momentul confirmării rezervării.
               </p>
             </Section>
 

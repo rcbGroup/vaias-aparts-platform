@@ -95,7 +95,7 @@ export default function HomePage() {
           {[
             { v: "7", l: t("stats.apartments") },
             { v: "9.4", l: "Booking.com" },
-            { v: "97", l: "Recenzii Google 5★" },
+            { v: "99", l: "Recenzii Google 5★" },
             { v: "5.0", l: t("stats.rating") }
           ].map((s, i) => (
             <ScrollFade key={s.l} delay={i * 80}>
@@ -338,7 +338,7 @@ export default function HomePage() {
             <SectionHeader
               eyebrow="De ce ne aleg oaspeții"
               title="Experiența Vila Vaias Aparts"
-              subtitle="97 recenzii Google cu 5.0 stele. Iată ce apreciază cel mai mult oaspeții noștri."
+              subtitle="99 recenzii Google cu 5.0 stele. Iată ce apreciază cel mai mult oaspeții noștri."
             />
           </ScrollFade>
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -462,7 +462,7 @@ export default function HomePage() {
                 num: "01",
                 title: "Vila Vaias Aparts",
                 subtitle: "7 apartamente boutique",
-                desc: "Cea mai bine notată cazare din Târgu Neamț. 97 de recenzii Google la 5.0 stele. Booking.com 9.4. Fiecare apartament — un spațiu al tău.",
+                desc: "Cea mai bine notată cazare din Târgu Neamț. 99 de recenzii Google la 5.0 stele. Booking.com 9.4. Fiecare apartament — un spațiu al tău.",
                 cta: "Alege apartamentul",
                 href: "/apartments",
                 photo: "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_11.jpg"

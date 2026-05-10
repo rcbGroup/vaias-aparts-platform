@@ -134,6 +134,14 @@ export default function Footer() {
               >
                 Airbnb
               </a>
+              <a
+                href="https://travelminit.ro/apartamentele-vaias-targu-neamt"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-cream-100/70 hover:text-cream-50 transition"
+              >
+                Travelminit
+              </a>
             </div>
             <div className="mt-6 pt-6 border-t border-forest-900/60">
               <div className="text-xs uppercase tracking-[0.28em] text-walnut-300 mb-3">Recenzii verificate</div>

@@ -74,7 +74,7 @@ export const apartments: Apartment[] = [
     weekendPriceEUR: 0,
     weeklyDiscountPct: 15,
     rating: 5.0,
-    reviewsCount: 97,
+    reviewsCount: 99,
     view: "Etaj 1 · Coridor stâng, capăt",
     amenities: [
       "WiFi gratuit de mare viteză",
@@ -134,7 +134,7 @@ export const apartments: Apartment[] = [
     weekendPriceEUR: 0,
     weeklyDiscountPct: 15,
     rating: 5.0,
-    reviewsCount: 97,
+    reviewsCount: 99,
     view: "Etaj 1 · Coridor stâng",
     amenities: [
       "WiFi gratuit de mare viteză",
@@ -193,7 +193,7 @@ export const apartments: Apartment[] = [
     weekendPriceEUR: 0,
     weeklyDiscountPct: 15,
     rating: 5.0,
-    reviewsCount: 97,
+    reviewsCount: 99,
     view: "Etaj 1 · Prima ușă stânga",
     amenities: [
       "WiFi gratuit de mare viteză",
@@ -252,7 +252,7 @@ export const apartments: Apartment[] = [
     weekendPriceEUR: 0,
     weeklyDiscountPct: 15,
     rating: 5.0,
-    reviewsCount: 97,
+    reviewsCount: 99,
     view: "Etaj 1 · Coridor drept",
     amenities: [
       "WiFi gratuit de mare viteză",
@@ -311,7 +311,7 @@ export const apartments: Apartment[] = [
     weekendPriceEUR: 0,
     weeklyDiscountPct: 15,
     rating: 5.0,
-    reviewsCount: 97,
+    reviewsCount: 99,
     view: "Etaj 2 · Stânga · Aer condiționat",
     amenities: [
       "WiFi gratuit de mare viteză",
@@ -371,7 +371,7 @@ export const apartments: Apartment[] = [
     weekendPriceEUR: 0,
     weeklyDiscountPct: 15,
     rating: 5.0,
-    reviewsCount: 97,
+    reviewsCount: 99,
     view: "Etaj 2 · Dreapta · Aer condiționat",
     amenities: [
       "WiFi gratuit de mare viteză",
@@ -440,7 +440,7 @@ export const apartments: Apartment[] = [
     weekendPriceEUR: 0,
     weeklyDiscountPct: 15,
     rating: 5.0,
-    reviewsCount: 97,
+    reviewsCount: 99,
     view: "Parter · Stânga · Accesibil",
     amenities: [
       "WiFi gratuit de mare viteză",

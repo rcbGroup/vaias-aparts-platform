@@ -1,5 +1,5 @@
 // VERIFIED REVIEW DATA — only use figures confirmed from real platforms
-// Google: 97 reviews, 5.0 stars (verified)
+// Google: 99 reviews, 5.0 stars (owner-confirmed May 2026)
 // Booking.com: 9.4 score (verified)
 // Do NOT add review quotes, names, or counts that are not verified from official sources
 
@@ -25,8 +25,8 @@ export const platformBadges: PlatformBadge[] = [
     platform: "Google",
     score: 5.0,
     maxScore: 5.0,
-    reviewCount: 97,
-    label: "97 recenzii · 5.0 ★",
+    reviewCount: 99,
+    label: "99 recenzii · 5.0 ★",
     url: "https://share.google/iFsW4iUjwIDgkgwZm"
   },
   {

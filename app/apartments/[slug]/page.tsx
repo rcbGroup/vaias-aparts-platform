@@ -244,28 +244,19 @@ export default function ApartmentPage({ params }: { params: { slug: string } }) 
               </ul>
             </div>
 
-            <div className="rounded-xl border border-stone-200 bg-stone-50/50 p-4 mb-6">
-              <div className="text-xs uppercase tracking-[0.28em] text-stone-500 mb-3">Disponibilitate</div>
-              <div className="grid grid-cols-7 gap-1 text-center">
-                {Array.from({ length: 28 }).map((_, i) => {
-                  const occupied = [3, 4, 11, 17, 18, 19, 25].includes(i);
-                  return (
-                    <div
-                      key={i}
-                      className={`aspect-square rounded grid place-items-center text-[10px] ${
-                        occupied
-                          ? "bg-stone-200 text-stone-400 line-through"
-                          : "bg-forest-100 text-forest-800"
-                      }`}
-                    >
-                      {i + 1}
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="text-[10px] uppercase tracking-wider text-stone-500 mt-3 text-center">
-                Calendar orientativ — confirmă disponibilitatea
-              </div>
+            <div className="rounded-xl border border-forest-200 bg-forest-50/50 p-4 mb-6">
+              <div className="text-xs uppercase tracking-[0.28em] text-forest-700 mb-2">Disponibilitate în timp real</div>
+              <p className="text-sm text-forest-800 mb-3">
+                Verifică datele disponibile direct pe sistemul nostru de rezervări — actualizat în timp real.
+              </p>
+              <a
+                href="https://www.5stardesk.net/b/vaias-aparts"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary text-sm w-full text-center block"
+              >
+                Verifică disponibilitate live
+              </a>
             </div>
 
             {/* WhatsApp CTA */}
