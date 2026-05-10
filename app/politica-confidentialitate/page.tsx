@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 
 export const metadata: Metadata = {
-  title: "Politica de confidențialitate",
-  description: "Informații despre prelucrarea datelor cu caracter personal la Vaias Aparts."
+  title: "Politica de Confidențialitate | Vila Vaias Aparts",
+  description: "Politica de confidențialitate a site-ului Vila Vaias Aparts. Operator: VAIA RUSTIC SRL, CUI 36258605."
 };
 
 export default function PrivacyPage() {
@@ -28,9 +28,12 @@ export default function PrivacyPage() {
                 Operatorul datelor cu caracter personal colectate prin acest website este:
               </p>
               <p className="mt-2">
-                <strong>Vaias Aparts SRL</strong><br />
-                Strada Boureni nr. 12, Târgu Neamț, jud. Neamț, 615200<br />
-                CUI: RO 00000000 · Email: contact@VaiasAparts.ro
+                <strong>VAIA RUSTIC SRL</strong><br />
+                Sediu social: Str. Ștefan cel Mare Nr. 46, sat Nemțișor, Com. Vânători-Neamț, Jud. Neamț<br />
+                CUI: 36258605 · Nr. înreg.: J27/603/2016<br />
+                Proprietate turistică: Str. Sfântul Lazăr nr. 1, Târgu Neamț, România, 615200<br />
+                Email: contact@vaiasaparts.ro<br />
+                Telefon: +40 752 388 388
               </p>
             </Section>
 
@@ -92,7 +95,7 @@ export default function PrivacyPage() {
                 <li>Plângere la ANSPDCP (www.dataprotection.ro)</li>
               </ul>
               <p className="mt-3">
-                Pentru orice solicitare scrie-ne la <strong>contact@VaiasAparts.ro</strong> — răspundem în maxim 30 de zile.
+                Pentru orice solicitare scrie-ne la <strong>contact@vaiasaparts.ro</strong> — răspundem în maxim 30 de zile.
               </p>
             </Section>
 
@@ -114,7 +117,7 @@ export default function PrivacyPage() {
 
             <Section title="10. Contact">
               <p>
-                Pentru orice întrebare legată de prelucrarea datelor, scrie-ne la <strong>contact@VaiasAparts.ro</strong> sau sună la <strong>+40 740 000 000</strong>.
+                Pentru orice întrebare legată de prelucrarea datelor, scrie-ne la <strong>contact@vaiasaparts.ro</strong> sau sună la <strong>+40 752 388 388</strong>.
               </p>
             </Section>
           </article>

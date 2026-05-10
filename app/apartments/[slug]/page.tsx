@@ -25,11 +25,14 @@ export async function generateMetadata({
   const a = getApartmentBySlug(params.slug);
   if (!a) return {};
   return {
-    title: `${a.name} — ${a.tagline}`,
-    description: a.shortDescription,
+    title: `${a.name} — Vila Vaias Aparts Târgu Neamț`,
+    description: `${a.shortDescription} Rezervare directă pe WhatsApp: +40 752 388 388.`,
+    alternates: {
+      canonical: `https://vaias-aparts.vercel.app/apartments/${params.slug}`
+    },
     openGraph: {
-      title: `${a.name} | Vaias Aparts`,
-      description: a.shortDescription,
+      title: `${a.name} | Vila Vaias Aparts`,
+      description: `${a.shortDescription} Rezervare directă pe WhatsApp: +40 752 388 388.`,
       images: [a.heroImage]
     }
   };
@@ -41,6 +44,11 @@ export default function ApartmentPage({ params }: { params: { slug: string } }) 
 
   const related = getRelatedApartments(apartment.slug, 3);
   const apartmentReviews = reviews.filter((r) => r.apartment === apartment.name).slice(0, 3);
+
+  const whatsappMsg = encodeURIComponent(
+    `Bună ziua! Doresc să rezerv ${apartment.name} la Vila Vaias Aparts. Datele mele: Check-in: [DATA], Check-out: [DATA], [NR] adulți, [NR] copii. Vă rog să confirmați disponibilitatea și prețul.`
+  );
+  const whatsappUrl = `https://wa.me/40752388388?text=${whatsappMsg}`;
 
   return (
     <>
@@ -66,9 +74,10 @@ export default function ApartmentPage({ params }: { params: { slug: string } }) 
                 {apartment.rating} din 5 · {apartment.reviewsCount} recenzii
               </div>
               <div className="text-3xl font-display text-walnut-600 mt-2">
-                €{apartment.pricePerNightEUR}
+                de la {apartment.pricePerNightRON} RON
                 <span className="text-base text-stone-500 font-sans">/noapte</span>
               </div>
+              <div className="text-xs text-stone-400">* Prețul pentru o noapte. Tarife mai bune disponibile pentru 2+ nopți.</div>
             </div>
           </div>
         </div>
@@ -109,6 +118,18 @@ export default function ApartmentPage({ params }: { params: { slug: string } }) 
               {apartment.description}
             </p>
           </div>
+
+          {/* BUCĂTĂRIA PENTRU TOȚI — Apt 7 only */}
+          {!apartment.hasPrivateKitchen && (
+            <div className="rounded-xl bg-walnut-50 border border-walnut-200 p-4 mt-4">
+              <h4 className="font-display text-lg text-forest-900 mb-1">🍳 Bucătăria pentru Toți</h4>
+              <p className="text-sm text-stone-600">
+                Apartamentul 7 nu are bucătărie privată, dar are acces direct la <strong>Bucătăria pentru Toți</strong> —
+                bucătăria comună a vilei, situată la parter, complet utilată cu aragaz, cuptor, frigider mare,
+                ustensile și tot ce aveți nevoie pentru a pregăti masa.
+              </p>
+            </div>
+          )}
 
           {/* ROOMS */}
           <div>
@@ -209,16 +230,16 @@ export default function ApartmentPage({ params }: { params: { slug: string } }) 
         <aside className="lg:col-span-4">
           <div className="lg:sticky lg:top-28 rounded-2xl border border-stone-200 bg-cream-50 p-7 shadow-card">
             <div className="flex items-baseline gap-2 mb-1">
-              <span className="font-display text-4xl text-walnut-600">€{apartment.pricePerNightEUR}</span>
+              <span className="font-display text-4xl text-walnut-600">de la {apartment.pricePerNightRON} RON</span>
               <span className="text-stone-500">/noapte</span>
             </div>
-            <div className="text-sm text-stone-500 mb-6">{apartment.pricePerNightRON} RON · weekend €{apartment.weekendPriceEUR}</div>
+            <div className="text-xs text-stone-400 mb-4">* Prețul pentru o noapte. Tarife mai bune disponibile pentru 2+ nopți.</div>
 
             <div className="rounded-xl border border-stone-200 bg-stone-50/50 p-4 mb-5">
               <div className="text-xs uppercase tracking-[0.28em] text-stone-500 mb-3">Tarif</div>
               <ul className="space-y-2 text-sm">
-                <li className="flex justify-between"><span className="text-forest-800">Pe noapte</span><span className="font-medium">€{apartment.pricePerNightEUR}</span></li>
-                <li className="flex justify-between"><span className="text-forest-800">Weekend (vineri-sâmbătă)</span><span className="font-medium">€{apartment.weekendPriceEUR}</span></li>
+                <li className="flex justify-between"><span className="text-forest-800">Pe noapte</span><span className="font-medium">{apartment.pricePerNightRON} RON</span></li>
+                <li className="flex justify-between"><span className="text-forest-800">Weekend (vineri-sâmbătă)</span><span className="font-medium">{apartment.weekendPriceRON} RON</span></li>
                 <li className="flex justify-between"><span className="text-forest-800">Reducere săptămânală</span><span className="font-medium">−{apartment.weeklyDiscountPct}%</span></li>
               </ul>
             </div>
@@ -247,18 +268,54 @@ export default function ApartmentPage({ params }: { params: { slug: string } }) 
               </div>
             </div>
 
-            <Link href={`/rezervare?apartament=${apartment.slug}`} className="btn-primary w-full">
-              Rezervă acest apartament
-            </Link>
+            {/* WhatsApp CTA */}
             <a
-              href={`https://wa.me/40740000000?text=${encodeURIComponent(`Bună ziua! Sunt interesat(ă) de ${apartment.name}.`)}`}
-              className="btn-secondary w-full mt-3"
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary w-full text-center"
             >
-              WhatsApp
+              💬 Rezervă pe WhatsApp
             </a>
-            <div className="mt-5 text-center text-xs text-stone-500">
-              Check-in 15:00 · Check-out 11:00<br />
-              Booking direct = 5% reducere
+
+            {/* 5StarDesk availability */}
+            <a
+              href="https://www.5stardesk.net/b/vaias-aparts"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary w-full text-center mt-3"
+            >
+              Verifică disponibilitate live
+            </a>
+
+            {/* Phone CTAs */}
+            <div className="mt-4 flex flex-col gap-2">
+              <a href="tel:+40752388388" className="flex items-center gap-2 text-sm font-medium text-forest-700 hover:text-walnut-600">
+                📞 +40 752 388 388
+              </a>
+              <a href="tel:+40738345330" className="flex items-center gap-2 text-sm font-medium text-forest-700 hover:text-walnut-600">
+                📞 +40 738 345 330
+              </a>
+            </div>
+
+            {/* Trust note */}
+            <p className="text-xs text-stone-500 mt-2">🔒 CCTV 24/7 în zonele comune · Parcare gratuită · Animale acceptate la cerere</p>
+
+            {/* Direct booking proposition */}
+            <div className="rounded-xl bg-forest-50 border border-forest-200 p-4 mt-4">
+              <p className="text-sm text-forest-800">
+                <strong>💡 Rezervare directă:</strong> Rezervând direct pe WhatsApp, eviți comisionul platformelor (15–25%)
+                și beneficiezi de cel mai bun preț disponibil.
+              </p>
+            </div>
+
+            {/* Cancellation/payment summary */}
+            <div className="mt-4 rounded-xl bg-stone-50 border border-stone-200 p-4 text-sm text-stone-600 space-y-1">
+              <p>✓ <strong>Avans 30%</strong> la confirmare</p>
+              <p>✓ <strong>Rest la check-in</strong></p>
+              <p>✓ <strong>Check-in de la 14:00</strong> · Check-out până la 11:00</p>
+              <p>✓ <strong>Animale acceptate</strong> la cerere, fără cost suplimentar</p>
+              <p>✓ <strong>Factură fiscală</strong> disponibilă la cerere</p>
             </div>
           </div>
         </aside>

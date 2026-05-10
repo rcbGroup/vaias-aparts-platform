@@ -31,21 +31,37 @@ export default function Header() {
 
   return (
     <>
-      {/* Contact bar */}
-      <div className="fixed inset-x-0 top-0 z-[60] hidden lg:flex items-center justify-end gap-6 bg-forest-900/95 backdrop-blur px-8 py-1.5 text-xs text-cream-100/80">
-        <a
-          href="tel:+40738345330"
-          className="flex items-center gap-1.5 hover:text-cream-50 transition"
-        >
-          <PhoneIcon />
-          +40 738 345 330
-        </a>
+      {/* Contact bar — visible on all screen sizes */}
+      {/* FIX 3: changed from "hidden lg:flex" to "flex flex-wrap"; FIX 1 & 2: 752 first, both WhatsApp links; FIX 6: lowercase email */}
+      <div className="fixed inset-x-0 top-0 z-[60] flex flex-wrap items-center justify-center lg:justify-end gap-3 lg:gap-6 bg-forest-900/95 backdrop-blur px-4 lg:px-8 py-1.5 text-xs text-cream-100/80">
+        {/* Primary: +40 752 388 388 (Anca) */}
         <a
           href="tel:+40752388388"
           className="flex items-center gap-1.5 hover:text-cream-50 transition"
         >
           <PhoneIcon />
           +40 752 388 388
+        </a>
+        <a
+          href="https://wa.me/40752388388"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 hover:text-green-300 transition"
+        >
+          <WhatsAppIcon />
+          WhatsApp
+        </a>
+
+        {/* Separator */}
+        <span className="text-cream-100/40">|</span>
+
+        {/* Secondary: +40 738 345 330 (Vasi) */}
+        <a
+          href="tel:+40738345330"
+          className="flex items-center gap-1.5 hover:text-cream-50 transition"
+        >
+          <PhoneIcon />
+          +40 738 345 330
         </a>
         <a
           href="https://wa.me/40738345330"
@@ -56,20 +72,24 @@ export default function Header() {
           <WhatsAppIcon />
           WhatsApp
         </a>
+
+        {/* Email — hidden on mobile, visible on desktop */}
+        {/* FIX 6: lowercase email */}
         <a
-          href="mailto:contact@VaiasAparts.ro"
-          className="flex items-center gap-1.5 hover:text-cream-50 transition"
+          href="mailto:contact@vaiasaparts.ro"
+          className="hidden lg:flex items-center gap-1.5 hover:text-cream-50 transition"
         >
-          contact@VaiasAparts.ro
+          contact@vaiasaparts.ro
         </a>
       </div>
 
+      {/* FIX 4: top-[28px] on mobile (contact bar height), lg:top-[30px] on desktop */}
       <header
         className={`fixed inset-x-0 z-50 transition-all duration-500 ${
           dark
-            ? "glass border-b border-walnut-200/40 py-3 lg:top-[30px]"
-            : "bg-transparent py-5 lg:top-[30px]"
-        } top-0`}
+            ? "glass border-b border-walnut-200/40 py-3 top-[28px] lg:top-[30px]"
+            : "bg-transparent py-5 top-[28px] lg:top-[30px]"
+        }`}
       >
         <div className="container-x flex items-center justify-between gap-6">
           <Link href="/" className="group flex items-center gap-3">
@@ -164,11 +184,20 @@ export default function Header() {
         {open && (
           <div className="lg:hidden border-t border-walnut-200/40 bg-cream-50/95 backdrop-blur-md">
             <div className="container-x py-4 flex flex-col gap-1">
+              {/* FIX 5: 752 first, then 738, both with WhatsApp links */}
+              {/* Primary: +40 752 388 388 (Anca) */}
+              <a href="tel:+40752388388" className="flex items-center gap-2 py-2 px-2 text-sm text-forest-700 font-medium">
+                <PhoneIcon /> +40 752 388 388
+              </a>
+              <a href="https://wa.me/40752388388" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 py-2 px-2 text-sm text-green-700 font-medium">
+                <WhatsAppIcon /> WhatsApp (+40 752 388 388)
+              </a>
+              {/* Secondary: +40 738 345 330 (Vasi) */}
               <a href="tel:+40738345330" className="flex items-center gap-2 py-2 px-2 text-sm text-forest-700 font-medium">
                 <PhoneIcon /> +40 738 345 330
               </a>
-              <a href="https://wa.me/40738345330" className="flex items-center gap-2 py-2 px-2 text-sm text-green-700 font-medium">
-                <WhatsAppIcon /> WhatsApp
+              <a href="https://wa.me/40738345330" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 py-2 px-2 text-sm text-green-700 font-medium">
+                <WhatsAppIcon /> WhatsApp (+40 738 345 330)
               </a>
               <div className="h-px bg-walnut-200/40 my-1" />
               {nav.map((item) => (

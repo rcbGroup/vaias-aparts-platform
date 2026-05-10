@@ -33,8 +33,18 @@ export default function ApartmentCard({
         <div className="absolute top-4 left-4 rounded-full bg-cream-50/95 backdrop-blur px-3 py-1 text-xs font-medium text-forest-800 uppercase tracking-wider">
           {apartment.view}
         </div>
+        {apartment.hasAC && (
+          <div className="absolute top-4 right-4 rounded-full bg-blue-500/90 backdrop-blur px-3 py-1 text-xs font-medium text-white uppercase tracking-wider">
+            AC ❄️
+          </div>
+        )}
+        {!apartment.hasPrivateKitchen && (
+          <div className="absolute bottom-4 left-4 rounded-full bg-walnut-500/90 backdrop-blur px-3 py-1 text-[10px] font-medium text-cream-50 uppercase tracking-wider">
+            Bucătăria pentru Toți
+          </div>
+        )}
         <div className="absolute bottom-4 right-4 rounded-full bg-walnut-500 px-4 py-1.5 text-xs font-medium text-cream-50 shadow-lg">
-          {t("common.from")} €{apartment.pricePerNightEUR}{t("common.perNight")}
+          {t("common.from")} {apartment.pricePerNightRON} RON{t("common.perNight")}
         </div>
       </div>
       <div className="p-7">
@@ -63,7 +73,7 @@ export default function ApartmentCard({
             <BathIcon /> {apartment.bathrooms} {apartment.bathrooms === 1 ? t("common.bathroom") : t("common.bathrooms")}
           </span>
           <span className="flex items-center gap-1.5">
-            <GuestsIcon /> {apartment.guests} {apartment.guests === 1 ? t("common.guest") : t("common.guests")}
+            <GuestsIcon /> {apartment.guests}–{apartment.guestsMax} {t("common.guests")}
           </span>
           <span className="flex items-center gap-1.5 ml-auto">{apartment.sizeSqm} m²</span>
         </div>

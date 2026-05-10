@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { apartments, VILLA_PROPERTY_PHOTOS } from "@/lib/apartments";
+import { apartments } from "@/lib/apartments";
 import { attractions } from "@/lib/attractions";
-import { reviews } from "@/lib/reviews";
+import { platformBadges, guestHighlights } from "@/lib/reviews";
+import { guestAvatars } from "@/lib/guest-avatars";
+import { getActiveOffers } from "@/lib/seasonal-offers";
 import ApartmentCard from "@/components/ApartmentCard";
 import SectionHeader from "@/components/SectionHeader";
-import StarRating from "@/components/StarRating";
 import ScrollFade from "@/components/ScrollFade";
 import { useLang } from "@/components/LanguageProvider";
 
@@ -15,7 +16,8 @@ export default function HomePage() {
   const { t } = useLang();
   const featured = apartments.slice(0, 6);
   const featuredAttractions = attractions.slice(0, 6);
-  const homeReviews = reviews.slice(0, 3);
+  const highlights = guestHighlights.slice(0, 6);
+  const activeOffers = getActiveOffers().slice(0, 6);
 
   const whyItems = [
     { icon: "📍", k: "1" },
@@ -132,6 +134,42 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* SEASONAL OFFERS */}
+      <section className="section bg-cream-50">
+        <div className="container-x">
+          <ScrollFade>
+            <SectionHeader
+              eyebrow="Oferte directe"
+              title="Oferte și pachete speciale"
+              subtitle="Contactați-ne direct pe WhatsApp pentru cele mai bune tarife disponibile."
+            />
+          </ScrollFade>
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {activeOffers.map((offer, i) => (
+              <ScrollFade key={offer.id} delay={i * 60}>
+                <div className="card-lift rounded-2xl border border-stone-200 bg-stone-50 p-6 flex flex-col h-full">
+                  <h3 className="font-display text-xl text-forest-900 mb-2">{offer.titleRO}</h3>
+                  {offer.season && (
+                    <div className="text-xs uppercase tracking-wider text-walnut-500 mb-3">
+                      {offer.season}{offer.minNights ? ` · min. ${offer.minNights} nopți` : ""}
+                    </div>
+                  )}
+                  <p className="text-sm text-stone-600 leading-relaxed flex-1 mb-5">{offer.descriptionRO}</p>
+                  <a
+                    href={`https://wa.me/40752388388?text=${encodeURIComponent(offer.whatsappMessageRO)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-secondary text-sm text-center"
+                  >
+                    💬 {offer.ctaTextRO}
+                  </a>
+                </div>
+              </ScrollFade>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* WHY VAIAS APARTS */}
       <section className="section bg-cream-50">
         <div className="container-x">
@@ -156,6 +194,92 @@ export default function HomePage() {
                 </div>
               </ScrollFade>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* GUEST AVATARS */}
+      <section className="section bg-cream-50">
+        <div className="container-x">
+          <ScrollFade>
+            <SectionHeader
+              eyebrow="Vila Vaias Aparts este perfectă pentru"
+              title="Cine sunt oaspeții noștri"
+              subtitle="Familii, cupluri, pelerini, diaspora, grupuri și călători de afaceri — fiecare găsește la noi confortul potrivit."
+            />
+          </ScrollFade>
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {guestAvatars.map((avatar, i) => (
+              <ScrollFade key={avatar.id} delay={i * 60}>
+                <a
+                  href={`https://wa.me/40752388388?text=${encodeURIComponent(avatar.whatsappMessageRO)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="card-lift group block rounded-2xl bg-stone-50 border border-stone-100 p-6 h-full hover:border-walnut-300 transition"
+                >
+                  <div className="text-4xl mb-4" aria-hidden>{avatar.icon}</div>
+                  <h3 className="font-display text-xl text-forest-900 mb-2 group-hover:text-walnut-700 transition">{avatar.titleRO}</h3>
+                  <p className="text-sm text-stone-600 leading-relaxed mb-4">{avatar.descriptionRO}</p>
+                  <span className="text-xs font-medium text-walnut-600 uppercase tracking-wider">
+                    {avatar.ctaTextRO} →
+                  </span>
+                </a>
+              </ScrollFade>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DIRECT BOOKING */}
+      <section className="section bg-forest-950 text-cream-50 relative overflow-hidden">
+        <div className="absolute inset-0 pattern-moldavian-dark opacity-30 pointer-events-none" />
+        <div className="container-x relative">
+          <div className="max-w-3xl mx-auto text-center">
+            <ScrollFade>
+              <div className="eyebrow-light mb-6">Rezervare directă</div>
+              <h2 className="font-display text-4xl md:text-5xl text-cream-50 mb-6">
+                Cel mai bun preț — direct la noi.
+              </h2>
+              <p className="font-serif text-xl text-cream-100/80 leading-relaxed mb-8">
+                Rezervând direct pe WhatsApp sau telefon, eviți comisionul platformelor de rezervare (15–25%).
+                Comunicare directă cu familia care gestionează Vila Vaias Aparts, flexibilitate pentru cereri speciale
+                și confirmare rapidă.
+              </p>
+              <div className="grid sm:grid-cols-3 gap-6 mb-10 text-left">
+                {[
+                  { icon: "💚", title: "Cel mai bun preț direct", desc: "Fără comision OTA de 15–25%. Prețul pe care îl plătești vine în întregime la noi." },
+                  { icon: "⚡", title: "Confirmare rapidă", desc: "Răspundem în WhatsApp de regulă în câteva ore, între 08:00 și 22:00." },
+                  { icon: "🤝", title: "Comunicare directă", desc: "Vorbești direct cu familia care gestionează vila — nu cu un call center." }
+                ].map(item => (
+                  <div key={item.title} className="rounded-xl border border-cream-50/10 bg-cream-50/5 p-5">
+                    <div className="text-2xl mb-3" aria-hidden>{item.icon}</div>
+                    <h3 className="font-display text-lg text-cream-50 mb-2">{item.title}</h3>
+                    <p className="text-sm text-cream-100/70 leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                  href="https://wa.me/40752388388?text=Bun%C4%83%20ziua!%20Doresc%20s%C4%83%20rezerv%20un%20apartament%20la%20Vila%20Vaias%20Aparts.%20V%C4%83%20rog%20s%C4%83%20%C3%AEmi%20comunica%C8%9Bi%20disponibilitatea%20pentru%20datele%3A%20%5BDATA%20CHECK-IN%5D%20%E2%80%93%20%5BDATA%20CHECK-OUT%5D%2C%20%5BNR%5D%20persoane."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary"
+                >
+                  💬 Rezervă pe WhatsApp
+                </a>
+                <a href="tel:+40752388388" className="btn-outline-light">
+                  📞 +40 752 388 388
+                </a>
+                <a
+                  href="https://www.5stardesk.net/b/vaias-aparts"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-outline-light"
+                >
+                  Verifică disponibilitate
+                </a>
+              </div>
+            </ScrollFade>
           </div>
         </div>
       </section>
@@ -204,6 +328,47 @@ export default function HomePage() {
               </Link>
             </div>
           </ScrollFade>
+        </div>
+      </section>
+
+      {/* GUEST HIGHLIGHTS */}
+      <section className="section bg-stone-50">
+        <div className="container-x">
+          <ScrollFade>
+            <SectionHeader
+              eyebrow="De ce ne aleg oaspeții"
+              title="Experiența Vila Vaias Aparts"
+              subtitle="97 recenzii Google cu 5.0 stele. Iată ce apreciază cel mai mult oaspeții noștri."
+            />
+          </ScrollFade>
+          <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {highlights.map((h, i) => (
+              <ScrollFade key={h.theme} delay={i * 80}>
+                <div className="card-lift rounded-2xl bg-cream-50 border border-stone-100 p-7 h-full">
+                  <div className="text-3xl mb-4" aria-hidden>{h.icon}</div>
+                  <h3 className="font-display text-xl text-forest-900 mb-2">{h.titleRO}</h3>
+                  <p className="text-stone-600 text-sm leading-relaxed">{h.descriptionRO}</p>
+                </div>
+              </ScrollFade>
+            ))}
+          </div>
+          <div className="mt-10 flex justify-center gap-6 flex-wrap">
+            {platformBadges.map(b => (
+              <a
+                key={b.platform}
+                href={b.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 rounded-xl border border-stone-200 bg-cream-50 px-5 py-3 shadow-soft hover:shadow-md transition"
+              >
+                <span className="font-display text-2xl text-walnut-500">{b.score}</span>
+                <div>
+                  <div className="text-xs uppercase tracking-wider text-stone-500">{b.platform}</div>
+                  <div className="text-xs text-stone-600">{b.label}</div>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -416,41 +581,45 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* REVIEWS */}
-      <section className="section bg-cream-50">
+      {/* GROUP / FULL VILLA */}
+      <section className="section bg-stone-50">
         <div className="container-x">
-          <ScrollFade>
-            <SectionHeader
-              eyebrow={t("reviews.eyebrow")}
-              title={t("reviews.title")}
-              subtitle={t("reviews.subtitle")}
-            />
-          </ScrollFade>
-
-          <div className="mt-16 grid gap-7 md:grid-cols-3">
-            {homeReviews.map((r, i) => (
-              <ScrollFade key={i} delay={i * 100}>
-                <article className="card-lift h-full rounded-2xl bg-stone-50 border border-stone-100 p-8 shadow-soft flex flex-col">
-                  <StarRating value={r.rating} />
-                  <p className="mt-5 font-serif text-lg text-forest-800 leading-relaxed flex-1">
-                    „{r.text}"
-                  </p>
-                  <div className="mt-7 pt-6 border-t border-stone-200">
-                    <div className="font-display text-lg text-forest-900">{r.name}</div>
-                    <div className="text-xs uppercase tracking-wider text-stone-500 mt-1">
-                      {r.city} · {r.date}
-                    </div>
-                    <div className="text-xs text-walnut-500 mt-1">{r.apartment} · {r.source}</div>
-                  </div>
-                </article>
+          <div className="rounded-3xl bg-forest-900 text-cream-50 p-10 lg:p-16 relative overflow-hidden">
+            <div className="absolute inset-0 pattern-moldavian-dark opacity-20 pointer-events-none" />
+            <div className="relative max-w-2xl">
+              <ScrollFade>
+                <div className="eyebrow-light mb-4">Grupuri &amp; Rezervare Vilă Întreagă</div>
+                <h2 className="font-display text-4xl md:text-5xl text-cream-50 mb-5">
+                  Vila întreagă — pentru 22 până la 28 de persoane.
+                </h2>
+                <p className="font-serif text-lg text-cream-100/80 leading-relaxed mb-6">
+                  Vila Vaias Aparts poate fi rezervată integral — toate cele 7 apartamente independente
+                  pentru grupul dvs. Reuniuni de familie, nunți, echipe, pelerini sau prieteni — veniți împreună,
+                  cu confortul fiecăruia în apartamentul propriu.
+                </p>
+                <ul className="space-y-2 mb-8 text-sm text-cream-100/80">
+                  <li>✓ 7 apartamente independente în același complex</li>
+                  <li>✓ Capacitate optimă 22 persoane, maxim 26–28 (cu paturi extensibile)</li>
+                  <li>✓ Parcare gratuită în curtea vilei</li>
+                  <li>✓ Bucătăria pentru Toți — disponibilă tuturor oaspeților</li>
+                  <li>✓ Prețuri personalizate pentru grupuri</li>
+                  <li>✓ Confirmare rapidă pe WhatsApp</li>
+                </ul>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <a
+                    href="https://wa.me/40752388388?text=Bun%C4%83%20ziua!%20Suntem%20interesa%C8%9Bi%20s%C4%83%20rezerv%C4%83m%20%C3%AEntreaga%20vil%C4%83%20Vaias%20Aparts.%20Datele%3A%20%5BDATA%20CHECK-IN%5D%20%E2%80%93%20%5BDATA%20CHECK-OUT%5D.%20Total%20adul%C8%9Bi%3A%20%5BNR%5D.%20Total%20copii%3A%20%5BNR%5D.%20V%C4%83%20rog%20s%C4%83%20ne%20comunica%C8%9Bi%20disponibilitatea%20%C8%99i%20pre%C8%9Bul%20total."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary"
+                  >
+                    💬 Solicită ofertă vilă întreagă
+                  </a>
+                  <a href="tel:+40752388388" className="btn-outline-light">
+                    📞 Sună acum
+                  </a>
+                </div>
               </ScrollFade>
-            ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <Link href="/recenzii" className="btn-secondary">
-              {t("reviews.cta")}
-            </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -477,11 +646,11 @@ export default function HomePage() {
               {t("cta.subtitle")}
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
-              <a href="https://wa.me/40738345330" className="btn-primary bg-cream-50 text-forest-900 hover:bg-cream-100 hover:text-forest-900">
+              <a href="https://wa.me/40752388388" className="btn-primary bg-cream-50 text-forest-900 hover:bg-cream-100 hover:text-forest-900">
                 WhatsApp
               </a>
-              <a href="tel:+40738345330" className="btn-outline-light">
-                +40 738 345 330
+              <a href="tel:+40752388388" className="btn-outline-light">
+                +40 752 388 388
               </a>
             </div>
           </ScrollFade>

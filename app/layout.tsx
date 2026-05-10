@@ -10,13 +10,13 @@ import MobileBookFab from "@/components/MobileBookFab";
 const ChatWidget = dynamic(() => import("@/components/ChatWidget"), { ssr: false });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vaiasaparts.ro"),
+  metadataBase: new URL("https://vaias-aparts.vercel.app"),
   title: {
-    default: "Vaias Aparts — Apartamente boutique lângă Târgu Neamț",
-    template: "%s | Vaias Aparts"
+    default: "Vila Vaias Aparts — 7 Apartamente Boutique în Târgu Neamț | Lângă Cetatea Neamțului",
+    template: "%s | Vila Vaias Aparts Târgu Neamț"
   },
   description:
-    "Cazare boutique 4 stele la marginea Târgu Neamț — apartamente cu suflet moldovenesc, aproape de mănăstirile Agapia, Văratec și Cetatea Neamț. Rezervări directe.",
+    "Vila Vaias Aparts — 7 apartamente boutique ultracentral în Târgu Neamț, la poalele Cetății Neamțului. Aproape de Agapia, Văratec, Neamț și Ceahlău. Rezervare directă, cel mai bun preț.",
   keywords: [
     "cazare Târgu Neamț",
     "aparthotel Neamț",
@@ -24,18 +24,25 @@ export const metadata: Metadata = {
     "cazare boutique Moldova",
     "apartamente de închiriat Neamț",
     "cazare Agapia",
-    "Vaias Aparts"
+    "Vaias Aparts",
+    "Vila Vaias Aparts",
+    "cazare ultracentral Târgu Neamț",
+    "cazare lângă Cetatea Neamțului",
+    "cazare diaspora Neamț",
+    "cazare pelerini Neamț",
+    "7 apartamente Târgu Neamț",
+    "rezervare directă Neamț"
   ],
-  authors: [{ name: "Vaias Aparts" }],
+  authors: [{ name: "Vila Vaias Aparts" }],
   openGraph: {
     type: "website",
     locale: "ro_RO",
     alternateLocale: "en_US",
-    url: "https://vaiasaparts.ro",
-    siteName: "Vaias Aparts",
-    title: "Vaias Aparts — Boutique apartments in Moldova, Romania",
+    url: "https://vaias-aparts.vercel.app",
+    siteName: "Vila Vaias Aparts",
+    title: "Vila Vaias Aparts — 7 Apartamente Boutique în Târgu Neamț",
     description:
-      "Boutique holiday apartments near Târgu Neamț — refined comfort with genuine Moldavian soul.",
+      "7 apartamente boutique ultracentral în Târgu Neamț, la poalele Cetății Neamțului. Rezervare directă.",
     images: [
       {
         url: "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_16.jpg",
@@ -51,7 +58,7 @@ export const metadata: Metadata = {
     description: "Boutique apartments near Târgu Neamț, Romania"
   },
   alternates: {
-    canonical: "https://vaiasaparts.ro"
+    canonical: "https://vaias-aparts.vercel.app"
   },
   robots: { index: true, follow: true }
 };
@@ -123,16 +130,28 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LodgingBusiness",
-              name: "Vaias Aparts",
+              name: "Vila Vaias Aparts",
               description:
-                "Apartamente boutique 4 stele la marginea Târgu Neamț, județul Neamț, România.",
+                "7 apartamente boutique ultracentral în Târgu Neamț, la poalele Cetății Neamțului. Cazare 4 stele, clasificare certificat nr. 35332.",
               image:
                 "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_16.jpg",
-              "@id": "https://vaiasaparts.ro",
-              url: "https://vaiasaparts.ro",
-              telephone: "+40738345330",
+              "@id": "https://vaias-aparts.vercel.app",
+              url: "https://vaias-aparts.vercel.app",
+              telephone: ["+40752388388", "+40738345330"],
+              email: "contact@vaiasaparts.ro",
               priceRange: "€€",
-              starRating: { "@type": "Rating", ratingValue: "4" },
+              numberOfRooms: 7,
+              checkinTime: "14:00",
+              checkoutTime: "11:00",
+              petsAllowed: true,
+              starRating: { "@type": "Rating", ratingValue: "4", bestRating: "5" },
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: "5.0",
+                reviewCount: "97",
+                bestRating: "5",
+                worstRating: "1"
+              },
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "Strada Sfântul Lazăr Nr. 1",
@@ -147,10 +166,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 longitude: 26.3656
               },
               amenityFeature: [
-                { "@type": "LocationFeatureSpecification", name: "Free WiFi" },
-                { "@type": "LocationFeatureSpecification", name: "Free parking" },
-                { "@type": "LocationFeatureSpecification", name: "Air conditioning" },
-                { "@type": "LocationFeatureSpecification", name: "Kitchen" }
+                { "@type": "LocationFeatureSpecification", name: "Free WiFi", value: true },
+                { "@type": "LocationFeatureSpecification", name: "Free parking", value: true },
+                {
+                  "@type": "LocationFeatureSpecification",
+                  name: "Aer condiționat (Apartamentele 5 și 6)",
+                  value: true
+                },
+                { "@type": "LocationFeatureSpecification", name: "Kitchen", value: true },
+                { "@type": "LocationFeatureSpecification", name: "CCTV 24/7", value: true },
+                { "@type": "LocationFeatureSpecification", name: "Bucătăria pentru Toți", value: true }
               ]
             })
           }}

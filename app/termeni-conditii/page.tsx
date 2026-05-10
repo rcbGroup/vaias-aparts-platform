@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 
 export const metadata: Metadata = {
-  title: "Termeni și condiții",
-  description: "Condițiile de rezervare și utilizare ale serviciilor Vaias Aparts."
+  title: "Termeni și Condiții | Vila Vaias Aparts",
+  description: "Termeni și condiții de rezervare și cazare la Vila Vaias Aparts Târgu Neamț. VAIA RUSTIC SRL, CUI 36258605."
 };
 
 export default function TermsPage() {
@@ -25,8 +25,8 @@ export default function TermsPage() {
 
             <Section title="1. Definiții">
               <p>
-                <strong>Vaias Aparts</strong> — Vaias Aparts SRL, Strada Boureni nr. 12,
-                Târgu Neamț, jud. Neamț. <strong>Oaspete</strong> — persoana fizică sau
+                <strong>Vila Vaias Aparts</strong> — VAIA RUSTIC SRL, Str. Sfântul Lazăr nr. 1, Târgu Neamț, România, 615200.{" "}
+                <strong>Oaspete</strong> — persoana fizică sau
                 juridică care rezervă sau ocupă o unitate de cazare.
               </p>
             </Section>
@@ -43,7 +43,7 @@ export default function TermsPage() {
             <Section title="3. Plată">
               <ul className="list-disc pl-6 space-y-1.5">
                 <li>Acont 30% la confirmare; restul la check-in.</li>
-                <li>Plată în RON sau EUR la cursul BNR + 1%.</li>
+                <li>Plata se efectuează în lei (RON). Factura fiscală se emite în RON.</li>
                 <li>Acceptăm card (Visa, Mastercard), transfer bancar și numerar.</li>
                 <li>Factura fiscală se emite la check-out, la cerere.</li>
               </ul>
@@ -81,7 +81,7 @@ export default function TermsPage() {
               <p>
                 Oaspeții sunt responsabili pentru daunele produse din neglijență sau folosire
                 inadecvată. Costul reparațiilor poate fi reținut din garanție sau facturat
-                separat. Vaias Aparts nu este responsabil pentru obiectele personale
+                separat. Vila Vaias Aparts nu este responsabilă pentru obiectele personale
                 pierdute, dar oferă suport în recuperarea lor.
               </p>
             </Section>
@@ -104,7 +104,7 @@ export default function TermsPage() {
             <Section title="10. Reclamații">
               <p>
                 Orice reclamație se poate face în timpul sejurului către gazdă sau, ulterior,
-                la <strong>contact@VaiasAparts.ro</strong>. Răspundem în maxim 14 zile. ANPC: anpc.ro.
+                la <strong>contact@vaiasaparts.ro</strong>. Răspundem în maxim 14 zile. ANPC: anpc.ro.
               </p>
             </Section>
 
