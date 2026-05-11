@@ -28,7 +28,7 @@ export async function generateMetadata({
     title: `${a.name} — Vila Vaias Aparts Târgu Neamț`,
     description: `${a.shortDescription} Rezervare directă pe WhatsApp: +40 752 388 388.`,
     alternates: {
-      canonical: `https://vaias-aparts.vercel.app/apartments/${params.slug}`
+      canonical: `https://www.vaiasaparts.ro/apartments/${params.slug}`
     },
     openGraph: {
       title: `${a.name} | Vila Vaias Aparts`,

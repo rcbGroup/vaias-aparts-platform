@@ -149,7 +149,7 @@ export default function ContactPage() {
             name: "Vila Vaias Aparts",
             telephone: ["+40752388388", "+40738345330"],
             email: "contact@vaiasaparts.ro",
-            url: "https://vaias-aparts.vercel.app",
+            url: "https://www.vaiasaparts.ro",
             address: {
               "@type": "PostalAddress",
               streetAddress: "Str. Sfântul Lazăr nr. 1",

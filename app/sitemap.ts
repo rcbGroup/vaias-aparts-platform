@@ -3,7 +3,7 @@ import { apartments } from "@/lib/apartments";
 import { blogPosts } from "@/lib/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://vaias-aparts.vercel.app";
+  const base = "https://www.vaiasaparts.ro";
   const now = new Date();
   const staticUrls = [
     "",

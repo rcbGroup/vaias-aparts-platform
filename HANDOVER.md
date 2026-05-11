@@ -10,8 +10,8 @@
 
 | Environment | URL |
 |-------------|-----|
-| **Production** | https://vaias-aparts.vercel.app |
-| **Admin Dashboard** | https://vaias-aparts.vercel.app/admin |
+| **Production** | https://www.vaiasaparts.ro |
+| **Admin Dashboard** | https://www.vaiasaparts.ro/admin |
 | **GitHub Repository** | https://github.com/rcbGroup/vaias-aparts-platform |
 
 ---
@@ -93,7 +93,7 @@ DIRECT_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
 
 # NEXTAUTH
 NEXTAUTH_SECRET="[generate: openssl rand -base64 32]"
-NEXTAUTH_URL="https://vaias-aparts.vercel.app"
+NEXTAUTH_URL="https://www.vaiasaparts.ro"
 
 # OPENAI (required for AI Chat widget + all 7 Distribution Autopilot agents)
 OPENAI_API_KEY="sk-..."
@@ -146,7 +146,7 @@ NEXT_PUBLIC_GA_MEASUREMENT_ID="G-XXXXXXXXXX"
 NEXT_PUBLIC_GTM_ID="GTM-XXXXXXX"
 NEXT_PUBLIC_META_PIXEL_ID="XXXXXXXXXXXXXXXX"
 NEXT_PUBLIC_CLARITY_ID="XXXXXXXXXX"
-NEXT_PUBLIC_SITE_URL="https://vaias-aparts.vercel.app"
+NEXT_PUBLIC_SITE_URL="https://www.vaiasaparts.ro"
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_live_..."
 
 # Admin
@@ -182,7 +182,7 @@ CRON_SECRET="[generate: openssl rand -base64 32]"
 2. Go to Account Settings → API Credentials
 3. Copy Merchant ID, API Key, Public Key, Private Key → Vercel env vars
 4. Set NETOPIA_SANDBOX="false" for production
-5. Configure webhook URL in Netopia dashboard: `https://vaias-aparts.vercel.app/api/webhooks/netopia`
+5. Configure webhook URL in Netopia dashboard: `https://www.vaiasaparts.ro/api/webhooks/netopia`
 
 ---
 

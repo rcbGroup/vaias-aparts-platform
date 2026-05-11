@@ -10,7 +10,7 @@ import MobileBookFab from "@/components/MobileBookFab";
 const ChatWidget = dynamic(() => import("@/components/ChatWidget"), { ssr: false });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vaias-aparts.vercel.app"),
+  metadataBase: new URL("https://www.vaiasaparts.ro"),
   title: {
     default: "Vila Vaias Aparts — 7 Apartamente Boutique în Târgu Neamț | Lângă Cetatea Neamțului",
     template: "%s | Vila Vaias Aparts Târgu Neamț"
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ro_RO",
     alternateLocale: "en_US",
-    url: "https://vaias-aparts.vercel.app",
+    url: "https://www.vaiasaparts.ro",
     siteName: "Vila Vaias Aparts",
     title: "Vila Vaias Aparts — 7 Apartamente Boutique în Târgu Neamț",
     description:
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     description: "Boutique apartments near Târgu Neamț, Romania"
   },
   alternates: {
-    canonical: "https://vaias-aparts.vercel.app"
+    canonical: "https://www.vaiasaparts.ro"
   },
   robots: { index: true, follow: true }
 };
@@ -135,8 +135,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 "7 apartamente boutique ultracentral în Târgu Neamț, la poalele Cetății Neamțului. Cazare 4 stele, clasificare certificat nr. 35332.",
               image:
                 "https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg",
-              "@id": "https://vaias-aparts.vercel.app",
-              url: "https://vaias-aparts.vercel.app",
+              "@id": "https://www.vaiasaparts.ro",
+              url: "https://www.vaiasaparts.ro",
               telephone: ["+40752388388", "+40738345330"],
               email: "contact@vaiasaparts.ro",
               priceRange: "€€",
