@@ -1,34 +1,36 @@
 import type { MetadataRoute } from "next";
 import { apartments } from "@/lib/apartments";
 import { blogPosts } from "@/lib/blog";
+import { landingPages } from "@/lib/landing-pages";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://www.vaiasaparts.ro";
   const now = new Date();
   const staticUrls = [
-    "",
-    "/apartments",
-    "/zone-turistice",
-    "/galerie",
-    "/recenzii",
-    "/despre-noi",
-    "/contact",
-    "/rezervare",
-    "/blog",
-    "/diaspora",
-    "/pelerini",
-    "/han-rustic",
-    "/afiliati",
-    "/experiente",
-    "/comenzi-mancare",
-    "/parteneri-restaurante",
-    "/politica-confidentialitate",
-    "/termeni-conditii"
-  ].map((path) => ({
-    url: `${base}${path}`,
+    { p: "", priority: 1.0 },
+    { p: "/apartments", priority: 0.95 },
+    { p: "/rezervare", priority: 0.95 },
+    { p: "/cazare", priority: 0.9 },
+    { p: "/zone-turistice", priority: 0.85 },
+    { p: "/diaspora", priority: 0.85 },
+    { p: "/pelerini", priority: 0.85 },
+    { p: "/galerie", priority: 0.8 },
+    { p: "/recenzii", priority: 0.8 },
+    { p: "/despre-noi", priority: 0.7 },
+    { p: "/contact", priority: 0.7 },
+    { p: "/blog", priority: 0.7 },
+    { p: "/han-rustic", priority: 0.6 },
+    { p: "/afiliati", priority: 0.5 },
+    { p: "/experiente", priority: 0.7 },
+    { p: "/comenzi-mancare", priority: 0.5 },
+    { p: "/parteneri-restaurante", priority: 0.5 },
+    { p: "/politica-confidentialitate", priority: 0.3 },
+    { p: "/termeni-conditii", priority: 0.3 }
+  ].map(({ p, priority }) => ({
+    url: `${base}${p}`,
     lastModified: now,
     changeFrequency: "weekly" as const,
-    priority: path === "" ? 1 : path === "/rezervare" ? 0.95 : path === "/apartments" ? 0.9 : 0.8
+    priority
   }));
 
   const apartmentUrls = apartments.map((a) => ({
@@ -38,12 +40,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9
   }));
 
+  const landingUrls = landingPages.map((p) => ({
+    url: `${base}/cazare/${p.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.85
+  }));
+
   const blogUrls = blogPosts.map((p) => ({
     url: `${base}/blog/${p.slug}`,
     lastModified: new Date(p.publishedAt),
     changeFrequency: "monthly" as const,
-    priority: 0.7
+    priority: 0.6
   }));
 
-  return [...staticUrls, ...apartmentUrls, ...blogUrls];
+  return [...staticUrls, ...apartmentUrls, ...landingUrls, ...blogUrls];
 }

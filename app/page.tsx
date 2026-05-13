@@ -624,6 +624,151 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* CAZARE DESTINATIONS — internal linking for SEO */}
+      <section className="section bg-stone-50">
+        <div className="container-x">
+          <ScrollFade>
+            <SectionHeader
+              eyebrow="Cazare în zona Neamț"
+              title="Pentru ce ești la noi?"
+              subtitle="Alege motivul vizitei tale — îți pregătim o experiență potrivită."
+            />
+          </ScrollFade>
+          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              { href: "/cazare/cazare-cetatea-neamtului", title: "Cetatea Neamțului", text: "5 km · Cetatea lui Ștefan cel Mare", icon: "🏰" },
+              { href: "/cazare/cazare-manastirea-agapia", title: "Mănăstirea Agapia", text: "30 min · Picturile lui Grigorescu", icon: "⛪" },
+              { href: "/cazare/cazare-manastirea-varatec", title: "Mănăstirea Văratec", text: "35 min · Cea mai mare mănăstire de maici", icon: "🕊️" },
+              { href: "/cazare/cazare-manastirea-neamt", title: "Mănăstirea Neamț", text: "15 min · Ierusalimul ortodoxiei", icon: "📜" },
+              { href: "/cazare/cazare-ceahlau", title: "Masivul Ceahlău", text: "45 min · Muntele dacilor", icon: "⛰️" },
+              { href: "/cazare/cazare-grup-targu-neamt", title: "Grupuri · Vila întreagă", text: "22-28 persoane · Familie, parohie, corporate", icon: "👨‍👩‍👧‍👦" },
+              { href: "/cazare/cazare-diaspora-targu-neamt", title: "Diaspora", text: "Acasă în Moldova · Multilingv", icon: "🌍" },
+              { href: "/cazare/cazare-targu-neamt", title: "Ghidul complet", text: "Toate motivele · Toate detaliile", icon: "📖" }
+            ].map((d, i) => (
+              <ScrollFade key={d.href} delay={i * 60}>
+                <Link
+                  href={d.href}
+                  className="card-lift block h-full rounded-2xl bg-cream-50 border border-stone-100 p-6 hover:border-walnut-300 transition"
+                >
+                  <div className="text-3xl mb-3" aria-hidden>{d.icon}</div>
+                  <h3 className="font-display text-lg text-forest-900 mb-1">{d.title}</h3>
+                  <p className="text-xs text-stone-600 leading-relaxed">{d.text}</p>
+                  <span className="mt-3 inline-block text-xs uppercase tracking-wider text-walnut-600">Vezi cazare →</span>
+                </Link>
+              </ScrollFade>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="section bg-cream-50">
+        <div className="container-narrow">
+          <div className="eyebrow mb-3">Întrebări frecvente</div>
+          <h2 className="font-display text-3xl md:text-4xl text-forest-900 mb-10">
+            Ce întreabă oaspeții cel mai des
+          </h2>
+          <div className="space-y-4">
+            {[
+              {
+                q: "Care este cea mai bună cazare din Târgu Neamț?",
+                a: "Vila Vaias Aparts este cea mai bine notată cazare din Târgu Neamț — Booking.com 9.4 și 99 de recenzii Google la 5.0 stele. 7 apartamente boutique independente, fiecare cu baie privată și (cu o singură excepție) bucătărie proprie. Clasificare 4 stele, certificat 35332."
+              },
+              {
+                q: "Cât costă o noapte la Vila Vaias Aparts?",
+                a: "Apartamentele single (1 dormitor) pornesc de la 297 RON/noapte, cele cu 2 dormitoare de la 547 RON. Aplicăm 10% reducere pentru 2-3 nopți, 15% pentru 4-6 nopți, 25% pentru 7+ nopți. Cel mai bun preț — direct pe WhatsApp."
+              },
+              {
+                q: "La ce distanță sunteți de Cetatea Neamțului?",
+                a: "Doar 5 km (10 min cu mașina) de Cetatea Neamțului. Suntem și la 12 km de Mănăstirea Neamț, 14 km de Agapia, 18 km de Văratec și aproximativ 60 km de masivul Ceahlău."
+              },
+              {
+                q: "Acceptați animale de companie?",
+                a: "Da, animalele de companie sunt bine venite la cerere prealabilă, fără cost suplimentar. Vă rugăm să ne spuneți la rezervare ce animal aduceți."
+              },
+              {
+                q: "Există parcare?",
+                a: "Da, parcarea este gratuită în curtea vilei pentru toți oaspeții (primul venit, primul servit). Curtea este monitorizată CCTV 24/7."
+              },
+              {
+                q: "Putem rezerva întreaga vilă pentru un eveniment?",
+                a: "Da, vila întreagă (toate cele 7 apartamente) poate fi rezervată pentru grupuri de 22 până la 28 de persoane — reuniuni de familie, nunți, retrageri parohiale, team-building corporate. Tariful este personalizat — contactați-ne pe WhatsApp."
+              },
+              {
+                q: "Cum funcționează check-in-ul?",
+                a: "Check-in este după ora 14:00, check-out până la 11:00. Self check-in cu ghidaj — vă întâmpinăm sau vă transmitem instrucțiunile, cum vă este mai comod. Pentru zboruri târzii sau cazuri speciale, suntem flexibili."
+              },
+              {
+                q: "Care este avansul la rezervare?",
+                a: "Avansul este 30% din valoarea rezervării, plătibil prin transfer bancar sau card. Restul se achită la check-in. Emitem factură fiscală pentru orice rezervare."
+              }
+            ].map((f, i) => (
+              <details
+                key={i}
+                className="group rounded-2xl border border-stone-200 bg-cream-50 p-6 open:shadow-soft"
+              >
+                <summary className="cursor-pointer font-display text-lg text-forest-900 list-none flex items-center justify-between gap-4">
+                  <span>{f.q}</span>
+                  <span className="text-walnut-500 text-2xl transition-transform group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-4 text-forest-800/85 leading-relaxed">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: [
+                {
+                  "@type": "Question",
+                  name: "Care este cea mai bună cazare din Târgu Neamț?",
+                  acceptedAnswer: { "@type": "Answer", text: "Vila Vaias Aparts este cea mai bine notată cazare din Târgu Neamț — Booking.com 9.4 și 99 de recenzii Google la 5.0 stele. 7 apartamente boutique independente, clasificare 4 stele, certificat 35332." }
+                },
+                {
+                  "@type": "Question",
+                  name: "Cât costă o noapte la Vila Vaias Aparts?",
+                  acceptedAnswer: { "@type": "Answer", text: "Apartamentele single pornesc de la 297 RON/noapte, cele cu 2 dormitoare de la 547 RON. Reduceri: 10% pentru 2-3 nopți, 15% pentru 4-6 nopți, 25% pentru 7+ nopți. Cel mai bun preț direct pe WhatsApp." }
+                },
+                {
+                  "@type": "Question",
+                  name: "La ce distanță sunteți de Cetatea Neamțului?",
+                  acceptedAnswer: { "@type": "Answer", text: "5 km (10 min cu mașina) de Cetatea Neamțului. 12 km Mănăstirea Neamț, 14 km Agapia, 18 km Văratec, 60 km Ceahlău." }
+                },
+                {
+                  "@type": "Question",
+                  name: "Acceptați animale de companie?",
+                  acceptedAnswer: { "@type": "Answer", text: "Da, animalele de companie sunt bine venite la cerere prealabilă, fără cost suplimentar." }
+                },
+                {
+                  "@type": "Question",
+                  name: "Există parcare?",
+                  acceptedAnswer: { "@type": "Answer", text: "Da, parcarea este gratuită în curtea vilei pentru toți oaspeții. Curtea este monitorizată CCTV 24/7." }
+                },
+                {
+                  "@type": "Question",
+                  name: "Putem rezerva întreaga vilă pentru un eveniment?",
+                  acceptedAnswer: { "@type": "Answer", text: "Da, vila întreagă (7 apartamente) poate fi rezervată pentru grupuri de 22-28 persoane. Tariful este personalizat." }
+                },
+                {
+                  "@type": "Question",
+                  name: "Cum funcționează check-in-ul?",
+                  acceptedAnswer: { "@type": "Answer", text: "Check-in după 14:00, check-out până la 11:00. Self check-in cu ghidaj — vă întâmpinăm sau vă transmitem instrucțiunile." }
+                },
+                {
+                  "@type": "Question",
+                  name: "Care este avansul la rezervare?",
+                  acceptedAnswer: { "@type": "Answer", text: "Avansul este 30% din valoarea rezervării. Restul se achită la check-in. Emitem factură fiscală." }
+                }
+              ]
+            })
+          }}
+        />
+      </section>
+
       {/* CTA */}
       <section className="relative py-24 md:py-32 overflow-hidden bg-walnut-900">
         <div className="absolute inset-0 opacity-30">

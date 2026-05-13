@@ -12,6 +12,7 @@ import Gallery from "@/components/Gallery";
 import StarRating from "@/components/StarRating";
 import ApartmentCard from "@/components/ApartmentCard";
 import { AmenityIcon } from "@/components/AmenityIcon";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export async function generateStaticParams() {
   return apartments.map((a) => ({ slug: a.slug }));
@@ -24,15 +25,36 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const a = getApartmentBySlug(params.slug);
   if (!a) return {};
+  const title = `${a.name} Târgu Neamț — ${a.guests} oaspeți, ${a.bedrooms || 0} dormitor${(a.bedrooms || 0) === 1 ? "" : "e"} | Vila Vaias Aparts`;
+  const description = `${a.shortDescription} De la ${a.pricePerNightRON} RON/noapte. Booking 9.4, 99 recenzii Google 5.0. Rezervare directă WhatsApp +40 752 388 388.`;
   return {
-    title: `${a.name} — Vila Vaias Aparts Târgu Neamț`,
-    description: `${a.shortDescription} Rezervare directă pe WhatsApp: +40 752 388 388.`,
+    title,
+    description,
+    keywords: [
+      `cazare ${a.name} Târgu Neamț`,
+      `apartament ${a.bedrooms || 1} dormitor Târgu Neamț`,
+      `${a.name} Vaias Aparts`,
+      "cazare Târgu Neamț",
+      "apartamente Neamț",
+      a.accessible ? "cazare accesibilă Neamț" : "apartament boutique Neamț",
+      a.hasAC ? "apartament cu aer condiționat Târgu Neamț" : "apartament Târgu Neamț"
+    ],
     alternates: {
       canonical: `https://www.vaiasaparts.ro/apartments/${params.slug}`
     },
     openGraph: {
-      title: `${a.name} | Vila Vaias Aparts`,
-      description: `${a.shortDescription} Rezervare directă pe WhatsApp: +40 752 388 388.`,
+      type: "website",
+      locale: "ro_RO",
+      url: `https://www.vaiasaparts.ro/apartments/${params.slug}`,
+      siteName: "Vila Vaias Aparts",
+      title,
+      description,
+      images: [{ url: a.heroImage, width: 1200, height: 630, alt: a.name }]
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
       images: [a.heroImage]
     }
   };
@@ -50,8 +72,129 @@ export default function ApartmentPage({ params }: { params: { slug: string } }) 
   );
   const whatsappUrl = `https://wa.me/40752388388?text=${whatsappMsg}`;
 
+  const faqs = [
+    {
+      q: `Cât costă o noapte la ${apartment.name}?`,
+      a: `Tariful de bază este ${apartment.pricePerNightRON} RON/noapte, iar weekendul (vineri-sâmbătă) ${apartment.weekendPriceRON} RON. Pentru 2-3 nopți aplicăm 10% reducere, pentru 4-6 nopți 15%, pentru 7+ nopți 25%. Cele mai bune tarife le obțineți direct pe WhatsApp.`
+    },
+    {
+      q: `Câte persoane încap în ${apartment.name}?`,
+      a: `${apartment.name} are capacitate optimă pentru ${apartment.guests} oaspeți, maxim ${apartment.guestsMax} persoane folosind canapeaua extensibilă. ${apartment.bedrooms} dormitor${apartment.bedrooms === 1 ? "" : "e"} cu pat${apartment.bedrooms === 1 ? "" : "uri"} Emperor 2m×2m și ${apartment.bathrooms} baie privată.`
+    },
+    {
+      q: `Apartamentul are aer condiționat?`,
+      a: apartment.hasAC
+        ? `Da, ${apartment.name} are aer condiționat propriu — perfect pentru serile calde de vară.`
+        : `Nu, ${apartment.name} nu are aer condiționat. Pentru aer condiționat, recomandăm Apartament 5 sau Apartament 6 (singurele cu AC). În rest, vila este răcoroasă natural prin pereții groși.`
+    },
+    {
+      q: `Are bucătărie privată?`,
+      a: apartment.hasPrivateKitchen
+        ? `Da, ${apartment.name} are bucătărie proprie complet utilată — frigider mare, cuptor cu microunde, fierbător electric, prăjitor de pâine, veselă și tacâmuri pentru toți oaspeții.`
+        : `${apartment.name} nu are bucătărie privată, dar are frigider propriu și acces la Bucătăria pentru Toți — bucătăria comună a vilei la parter, complet utilată.`
+    },
+    {
+      q: `Acceptați animale de companie?`,
+      a: `Da, animalele de companie sunt bine venite la cerere prealabilă, fără cost suplimentar. Vă rugăm să ne spuneți la rezervare ce animal aduceți, pentru a vă pregăti apartamentul.`
+    },
+    {
+      q: `Cum se face check-in-ul?`,
+      a: `Check-in-ul este după ora 14:00, check-out până la 11:00. Self check-in cu ghidaj de la echipa noastră — vă întâmpinăm sau vă transmitem instrucțiunile cum vă este mai comod.`
+    }
+  ];
+
+  // Accommodation / Product JSON-LD with offers
+  const accommodationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Accommodation",
+    "@id": `https://www.vaiasaparts.ro/apartments/${apartment.slug}#accommodation`,
+    name: `${apartment.name} — Vila Vaias Aparts`,
+    description: apartment.description,
+    image: apartment.gallery.slice(0, 6),
+    url: `https://www.vaiasaparts.ro/apartments/${apartment.slug}`,
+    occupancy: {
+      "@type": "QuantitativeValue",
+      minValue: 1,
+      maxValue: apartment.guestsMax,
+      value: apartment.guests
+    },
+    numberOfBedrooms: apartment.bedrooms || 0,
+    numberOfBathroomsTotal: apartment.bathrooms,
+    floorSize: {
+      "@type": "QuantitativeValue",
+      value: apartment.sizeSqm,
+      unitCode: "MTK"
+    },
+    amenityFeature: apartment.amenities.map((a) => ({
+      "@type": "LocationFeatureSpecification",
+      name: a,
+      value: true
+    })),
+    petsAllowed: true,
+    smokingAllowed: false,
+    starRating: { "@type": "Rating", ratingValue: "4", bestRating: "5" },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: apartment.rating.toFixed(1),
+      reviewCount: apartment.reviewsCount,
+      bestRating: "5",
+      worstRating: "1"
+    },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Strada Sfântul Lazăr Nr. 1",
+      addressLocality: "Târgu Neamț",
+      addressRegion: "Neamț",
+      postalCode: "615200",
+      addressCountry: "RO"
+    },
+    geo: { "@type": "GeoCoordinates", latitude: 47.2014, longitude: 26.3656 }
+  };
+
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": `https://www.vaiasaparts.ro/apartments/${apartment.slug}#product`,
+    name: `${apartment.name} la Vila Vaias Aparts — cazare boutique Târgu Neamț`,
+    description: apartment.description,
+    image: apartment.gallery.slice(0, 6),
+    brand: { "@type": "Brand", name: "Vila Vaias Aparts" },
+    sku: apartment.slug,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: apartment.rating.toFixed(1),
+      reviewCount: apartment.reviewsCount
+    },
+    offers: {
+      "@type": "Offer",
+      url: `https://www.vaiasaparts.ro/apartments/${apartment.slug}`,
+      priceCurrency: "RON",
+      price: apartment.pricePerNightRON,
+      availability: "https://schema.org/InStock",
+      priceValidUntil: `${new Date().getFullYear() + 1}-12-31`
+    }
+  };
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a }
+    }))
+  };
+
   return (
     <>
+      <Breadcrumbs
+        items={[
+          { label: "Acasă", href: "/" },
+          { label: "Apartamente", href: "/apartments" },
+          { label: apartment.name }
+        ]}
+      />
+
       {/* HERO */}
       <section className="relative pt-32 pb-12 md:pt-40 md:pb-16 bg-cream-50">
         <div className="container-x">
@@ -312,6 +455,30 @@ export default function ApartmentPage({ params }: { params: { slug: string } }) 
         </aside>
       </section>
 
+      {/* FAQ */}
+      <section className="section bg-cream-50">
+        <div className="container-narrow">
+          <div className="eyebrow mb-3">Întrebări frecvente</div>
+          <h2 className="font-display text-3xl md:text-4xl text-forest-900 mb-10">
+            Ce întreabă oaspeții despre {apartment.name}
+          </h2>
+          <div className="space-y-4">
+            {faqs.map((f, i) => (
+              <details
+                key={i}
+                className="group rounded-2xl border border-stone-200 bg-cream-50 p-6 open:shadow-soft"
+              >
+                <summary className="cursor-pointer font-display text-lg text-forest-900 list-none flex items-center justify-between gap-4">
+                  <span>{f.q}</span>
+                  <span className="text-walnut-500 text-2xl transition-transform group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-4 text-forest-800/85 leading-relaxed">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* RELATED */}
       {related.length > 0 && (
         <section className="section bg-stone-50">
@@ -333,6 +500,20 @@ export default function ApartmentPage({ params }: { params: { slug: string } }) 
           </div>
         </section>
       )}
+
+      {/* JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(accommodationJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
     </>
   );
 }

@@ -129,21 +129,31 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "LodgingBusiness",
+              "@type": ["LodgingBusiness", "Hotel"],
               name: "Vila Vaias Aparts",
+              alternateName: ["Vaias Aparts", "Vaias Aparts Târgu Neamț"],
               description:
-                "7 apartamente boutique ultracentral în Târgu Neamț, la poalele Cetății Neamțului. Cazare 4 stele, clasificare certificat nr. 35332.",
-              image:
+                "Vila Vaias Aparts — 7 apartamente boutique ultracentral în Târgu Neamț, la poalele Cetății Neamțului. Cazare 4 stele, clasificare certificat nr. 35332. Aproape de mănăstirile Agapia, Văratec, Neamț și de masivul Ceahlău.",
+              image: [
                 "https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg",
+                "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_11.jpg",
+                "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_12.jpg",
+                "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_7.jpg",
+                "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_16.jpg"
+              ],
+              logo: "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_11.jpg",
               "@id": "https://www.vaiasaparts.ro",
               url: "https://www.vaiasaparts.ro",
               telephone: ["+40752388388", "+40738345330"],
               email: "contact@vaiasaparts.ro",
               priceRange: "€€",
+              currenciesAccepted: "RON, EUR",
+              paymentAccepted: "Cash, Credit Card, Bank Transfer",
               numberOfRooms: 7,
               checkinTime: "14:00",
               checkoutTime: "11:00",
               petsAllowed: true,
+              smokingAllowed: false,
               starRating: { "@type": "Rating", ratingValue: "4", bestRating: "5" },
               aggregateRating: {
                 "@type": "AggregateRating",
@@ -165,18 +175,110 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 latitude: 47.2014,
                 longitude: 26.3656
               },
+              hasMap: "https://www.google.com/maps/place/Vaias+Aparts/",
+              areaServed: [
+                { "@type": "City", name: "Târgu Neamț" },
+                { "@type": "AdministrativeArea", name: "Județul Neamț" },
+                { "@type": "Country", name: "România" }
+              ],
+              sameAs: [
+                "https://www.facebook.com/VaiasAparts",
+                "https://www.youtube.com/@VaiasAparts/videos",
+                "https://www.booking.com/hotel/ro/vaias-aparts-targu-neamt.html"
+              ],
               amenityFeature: [
                 { "@type": "LocationFeatureSpecification", name: "Free WiFi", value: true },
                 { "@type": "LocationFeatureSpecification", name: "Free parking", value: true },
-                {
-                  "@type": "LocationFeatureSpecification",
-                  name: "Aer condiționat (Apartamentele 5 și 6)",
-                  value: true
-                },
+                { "@type": "LocationFeatureSpecification", name: "Air conditioning (Apartments 5 & 6)", value: true },
                 { "@type": "LocationFeatureSpecification", name: "Kitchen", value: true },
+                { "@type": "LocationFeatureSpecification", name: "Communal kitchen (Bucătăria pentru Toți)", value: true },
                 { "@type": "LocationFeatureSpecification", name: "CCTV 24/7", value: true },
-                { "@type": "LocationFeatureSpecification", name: "Bucătăria pentru Toți", value: true }
+                { "@type": "LocationFeatureSpecification", name: "Pet-friendly", value: true },
+                { "@type": "LocationFeatureSpecification", name: "Family rooms", value: true },
+                { "@type": "LocationFeatureSpecification", name: "Wheelchair accessible (Apartment 7)", value: true },
+                { "@type": "LocationFeatureSpecification", name: "Smart TV in every apartment", value: true },
+                { "@type": "LocationFeatureSpecification", name: "Private bathroom in every apartment", value: true },
+                { "@type": "LocationFeatureSpecification", name: "Private terrace", value: true },
+                { "@type": "LocationFeatureSpecification", name: "Self check-in", value: true },
+                { "@type": "LocationFeatureSpecification", name: "Multilingual staff (RO/EN/IT/DE/FR)", value: true }
+              ],
+              makesOffer: {
+                "@type": "AggregateOffer",
+                priceCurrency: "RON",
+                lowPrice: 297,
+                highPrice: 580,
+                offerCount: 7,
+                availability: "https://schema.org/InStock"
+              },
+              potentialAction: {
+                "@type": "ReserveAction",
+                target: {
+                  "@type": "EntryPoint",
+                  urlTemplate: "https://wa.me/40752388388",
+                  inLanguage: "ro-RO",
+                  actionPlatform: [
+                    "http://schema.org/DesktopWebPlatform",
+                    "http://schema.org/MobileWebPlatform"
+                  ]
+                },
+                result: { "@type": "LodgingReservation", name: "Rezervare apartament Vaias Aparts" }
+              }
+            })
+          }}
+        />
+
+        {/* Organization JSON-LD — for entity graph & AI search */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Vila Vaias Aparts",
+              legalName: "Vaia Rustic SRL",
+              url: "https://www.vaiasaparts.ro",
+              logo: "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_11.jpg",
+              taxID: "36258605",
+              contactPoint: [
+                {
+                  "@type": "ContactPoint",
+                  telephone: "+40-752-388-388",
+                  contactType: "reservations",
+                  areaServed: ["RO", "EU"],
+                  availableLanguage: ["Romanian", "English", "Italian", "German", "French"]
+                },
+                {
+                  "@type": "ContactPoint",
+                  telephone: "+40-738-345-330",
+                  contactType: "customer support",
+                  areaServed: ["RO", "EU"],
+                  availableLanguage: ["Romanian", "English", "Italian", "German"]
+                }
+              ],
+              sameAs: [
+                "https://www.facebook.com/VaiasAparts",
+                "https://www.youtube.com/@VaiasAparts/videos",
+                "https://www.booking.com/hotel/ro/vaias-aparts-targu-neamt.html"
               ]
+            })
+          }}
+        />
+
+        {/* WebSite JSON-LD with SearchAction */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Vila Vaias Aparts",
+              url: "https://www.vaiasaparts.ro",
+              inLanguage: ["ro-RO", "en-US"],
+              publisher: {
+                "@type": "Organization",
+                name: "Vila Vaias Aparts",
+                logo: "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_11.jpg"
+              }
             })
           }}
         />
