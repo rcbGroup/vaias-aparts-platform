@@ -9,7 +9,16 @@ const nextConfig = {
       { protocol: "https", hostname: "i.ytimg.com" }
     ]
   },
-  reactStrictMode: true
+  reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: "/apartament-:n(\\d+)",
+        destination: "/apartments/apartament-:n",
+        permanent: true
+      }
+    ];
+  }
 };
 
 export default nextConfig;
