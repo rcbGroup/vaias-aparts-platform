@@ -119,7 +119,7 @@ export default function AdminApartamente() {
                 </div>
                 <div>
                   <span className="text-xs uppercase tracking-wider text-stone-400 block">Pat</span>
-                  <span className="text-forest-900">Emperor 2m×2m</span>
+                  <span className="text-forest-900">{activeApartment.slug === "apartament-7" ? "Dublu standard" : "Emperor 2m×2m"}</span>
                 </div>
                 <div>
                   <span className="text-xs uppercase tracking-wider text-stone-400 block">AC</span>

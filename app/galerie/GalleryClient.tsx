@@ -60,7 +60,7 @@ const galleryImages: GalleryImage[] = [
     category: "apt6",
   })),
   // Apartament 7 (6 images)
-  { src: "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/516492579_733556772950876_3694245894075396123_n.webp", alt: "Apartament 7 Vila Vaias Aparts — parter fără trepte — dormitor cu pat Emperor", category: "apt7" },
+  { src: "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/516492579_733556772950876_3694245894075396123_n.webp", alt: "Apartament 7 Vila Vaias Aparts — parter fără trepte — dormitor cu pat dublu standard", category: "apt7" },
   { src: "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518199043_733557542950799_1039072054897679506_n.webp", alt: "Apartament 7 Vila Vaias Aparts — living cu canapea extensibilă", category: "apt7" },
   { src: "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518272256_733556742950879_6883338769382424532_n.webp", alt: "Apartament 7 Vila Vaias Aparts — baie privată", category: "apt7" },
   { src: "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518277917_733556719617548_6039837942695933401_n.webp", alt: "Apartament 7 Vila Vaias Aparts — terasă privată", category: "apt7" },

@@ -22,12 +22,13 @@ Apartamentele Vila Vaias Aparts (1–7, NU există apartament 8. NICIODATĂ nu m
 | 7  | 2 persoane          | 4 persoane     | Parter | NU              | NU — folosește Kitchen for All (bucătărie comună la parter) | DA |
 
 IMPORTANT:
-- Toate apartamentele au pat Emperor exact 2m × 2m
+- Apartamentele 1-6 au pat Emperor exact 2m × 2m
+- Apartament 7 are un pat dublu standard (nu menționa dimensiunile specifice)
 - Aer condiționat NUMAI în Apartament 5 și Apartament 6, nicăieri altundeva
-- Apartament 7 NU are bucătărie privată — folosește Kitchen for All (bucătăria comună de la parter)
+- Apartament 7 NU are bucătărie privată — folosește Bucătăria pentru Toți (bucătăria comună de la parter)
 - Toate celelalte apartamente (1-6) au bucătărie privată complet utilată
 - Apartament 7 are frigider propriu, dar fără plită/microunde proprii
-- Capacitate totală vilă: 22 persoane optim, 26-28 maxim
+- Capacitate totală vilă: 22 persoane optim, 24 confortabil, 26-28 maxim (NICIODATĂ 30-33)
 `.trim();
 
 // ---------------------------------------------------------------------------

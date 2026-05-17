@@ -418,11 +418,11 @@ export const apartments: Apartment[] = [
     name: "Apartament 7",
     tagline: "La parter, fără trepte — prietenos pentru toți",
     shortDescription:
-      "Apartament la parter stânga, fără trepte, cu pat Emperor, baie privată, frigider și acces la Bucătăria pentru Toți — ideal pentru mobilitate redusă. Capacitate 2-4 oaspeți.",
+      "Apartament la parter stânga, fără trepte, cu pat dublu standard, baie privată, frigider și acces la Bucătăria pentru Toți — ideal pentru mobilitate redusă. Capacitate 2-4 oaspeți.",
     description:
-      "Apartament 7 este gândit cu grijă pentru oaspeții cu nevoi speciale de accesibilitate — situat la parter stânga, fără trepte, cu spații generoase. Dormitorul are pat Emperor 2m×2m cu lenjerie moale de bumbac, iar apartamentul include frigider propriu și baie privată. Pentru prepararea meselor, oaspeții de la Apartament 7 au acces la Bucătăria pentru Toți — bucătăria comună a vilei, situată la parter, complet echipată și disponibilă tuturor oaspeților. Terasa privată vă invită la relaxare. Liniștit, discret și prietenos, Apartament 7 demonstrează că accesibilitatea și confortul merg mână în mână. Capacitate 2-4 oaspeți.",
+      "Apartament 7 este gândit cu grijă pentru oaspeții cu nevoi speciale de accesibilitate — situat la parter stânga, fără trepte, cu spații generoase. Dormitorul are un pat dublu standard cu lenjerie moale de bumbac, iar apartamentul include frigider propriu și baie privată. Pentru prepararea meselor, oaspeții de la Apartament 7 au acces la Bucătăria pentru Toți — bucătăria comună a vilei, situată la parter, complet echipată și disponibilă tuturor oaspeților. Terasa privată vă invită la relaxare. Liniștit, discret și prietenos, Apartament 7 demonstrează că accesibilitatea și confortul merg mână în mână. Capacitate 2-4 oaspeți.",
     descriptionEN:
-      "Apartment 7 is thoughtfully designed for guests with reduced mobility — located on the ground floor left side, with no stairs and generous spaces. The bedroom has a 2m×2m Emperor bed with soft cotton bedding. The apartment includes its own fridge and private bathroom. For meal preparation, guests of Apartment 7 have access to Kitchen for All — the villa's shared communal kitchen on the ground floor, fully equipped and available to all guests. The private terrace invites relaxation. Quiet, discreet and welcoming, Apartment 7 proves that accessibility and comfort go hand in hand. Capacity 2–4 guests.",
+      "Apartment 7 is thoughtfully designed for guests with reduced mobility — located on the ground floor left side, with no stairs and generous spaces. The bedroom has a standard double bed with soft cotton bedding. The apartment includes its own fridge and private bathroom. For meal preparation, guests of Apartment 7 have access to Kitchen for All — the villa's shared communal kitchen on the ground floor, fully equipped and available to all guests. The private terrace invites relaxation. Quiet, discreet and welcoming, Apartment 7 proves that accessibility and comfort go hand in hand. Capacity 2–4 guests.",
     bedrooms: 1,
     beds: 2,
     bathrooms: 1,
@@ -444,7 +444,7 @@ export const apartments: Apartment[] = [
     view: "Parter · Stânga · Accesibil",
     amenities: [
       "WiFi gratuit de mare viteză",
-      "Pat Emperor 2m×2m",
+      "Pat dublu standard",
       "Canapea extensibilă",
       "Frigider propriu",
       "Acces Bucătăria pentru Toți",
@@ -458,7 +458,7 @@ export const apartments: Apartment[] = [
       "Prosoave incluse"
     ],
     rooms: [
-      { name: "Dormitor", description: "Pat Emperor 2m×2m, spațios, accesibil" },
+      { name: "Dormitor", description: "Pat dublu standard, spațios, accesibil" },
       { name: "Living", description: "Canapea extensibilă, Smart TV" },
       { name: "Baie", description: "Duș accesibil, lavoar, WC, prosoave incluse" },
       { name: "Frigider propriu", description: "Frigider în apartament" },

@@ -336,3 +336,139 @@ model Setting {
   value       String
   updatedAt   DateTime @updatedAt
 }
+
+// =============================================================================
+// VAIA OS — Hospitality Operating System
+// =============================================================================
+
+model WellnessParticipant {
+  id            Int       @id @default(autoincrement())
+  bookingRef    String?
+  guestName     String
+  guestPhone    String?
+  apartment     String?
+  service       WellnessService
+  scheduledFor  DateTime
+  durationMin   Int       @default(60)
+  status        WellnessStatus @default(REQUESTED)
+  priceRON      Float     @default(0)
+  notes         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+enum WellnessService {
+  JACUZZI
+  MASAJ
+  SAUNA
+  BBQ
+}
+
+enum WellnessStatus {
+  REQUESTED
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+model MaintenanceTicket {
+  id            Int       @id @default(autoincrement())
+  apartment     String?
+  area          String?
+  title         String
+  description   String?
+  severity      MaintenanceSeverity @default(NORMAL)
+  status        MaintenanceStatus   @default(OPEN)
+  reportedBy    String?
+  assignedTo    String?
+  costRON       Float?
+  resolvedAt    DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+enum MaintenanceSeverity {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum MaintenanceStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+model B2BPartner {
+  id            Int       @id @default(autoincrement())
+  name          String
+  category      B2BCategory
+  contactName   String?
+  email         String?
+  phone         String?
+  website       String?
+  city          String?
+  address       String?
+  commissionPct Float     @default(0)
+  notes         String?
+  active        Boolean   @default(true)
+  lastContacted DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+enum B2BCategory {
+  TRAVEL_AGENCY
+  TOUR_OPERATOR
+  CORPORATE
+  PILGRIMAGE
+  RESTAURANT
+  EXPERIENCE
+  DIASPORA
+  OTHER
+}
+
+model MessageSent {
+  id            Int       @id @default(autoincrement())
+  bookingRef    String?
+  guestName     String?
+  guestPhone    String?
+  guestEmail    String?
+  apartment     String?
+  templateKey   String
+  language      String    @default("ro")
+  channel       String    @default("whatsapp")
+  content       String
+  status        String    @default("queued")
+  delivered     Boolean   @default(false)
+  deliveredAt   DateTime?
+  providerId    String?
+  errorMessage  String?
+  createdAt     DateTime  @default(now())
+
+  @@index([bookingRef])
+  @@index([templateKey])
+}
+
+model PlatformReview {
+  id            Int       @id @default(autoincrement())
+  platform      String
+  externalId    String?
+  authorName    String
+  rating        Float
+  title         String?
+  body          String
+  apartment     String?
+  language      String?
+  reviewedAt    DateTime
+  fetchedAt     DateTime  @default(now())
+  responded     Boolean   @default(false)
+  responseBody  String?
+  responseAt    DateTime?
+
+  @@unique([platform, externalId])
+  @@index([platform])
+  @@index([reviewedAt])
+}
