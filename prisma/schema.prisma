@@ -307,8 +307,159 @@ model PricingRule {
   startDate   DateTime?
   endDate     DateTime?
   multiplier  Float    @default(1)
+  ruleType    String   @default("seasonal")  // seasonal | occupancy | gap | event | minLOS
+  description String?
+  apartmentSlug String?  // null = applies to all
+  minNights   Int?
+  minOccupancyPct Int?
+  maxOccupancyPct Int?
+  priority    Int      @default(100)
   active      Boolean  @default(true)
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model UpsellOffer {
+  id            Int       @id @default(autoincrement())
+  key           String    @unique
+  nameRO        String
+  nameEN        String?
+  category      String    // pre_arrival | in_stay | post_stay
+  priceRON      Float
+  active        Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  sold          UpsellSale[]
+}
+
+model UpsellSale {
+  id            Int       @id @default(autoincrement())
+  offer         UpsellOffer @relation(fields: [offerId], references: [id])
+  offerId       Int
+  bookingRef    String?
+  guestName     String?
+  priceRON      Float
+  status        String    @default("offered") // offered | accepted | paid | declined
+  acceptedAt    DateTime?
+  notes         String?
+  createdAt     DateTime  @default(now())
+
+  @@index([bookingRef])
+}
+
+model VoucherProvider {
+  id            Int       @id @default(autoincrement())
+  name          String    @unique
+  enabled       Boolean   @default(true)
+  notes         String?
+  createdAt     DateTime  @default(now())
+}
+
+model VoucherRedemption {
+  id            Int       @id @default(autoincrement())
+  provider      String
+  bookingRef    String?
+  guestName     String
+  guestEmail    String?
+  amountRON     Float
+  status        String    @default("requested") // requested | approved | redeemed
+  createdAt     DateTime  @default(now())
+}
+
+model WellnessProgram {
+  id            Int       @id @default(autoincrement())
+  slug          String    @unique
+  nameRO        String
+  nameEN        String?
+  category      String    // weight_loss | diabetes | detox | pilgrimage | women | men | couples | corporate
+  durationDays  Int
+  priceRON      Float
+  descriptionRO String
+  descriptionEN String?
+  inclusions    String[]
+  active        Boolean   @default(true)
+  applications  WellnessApplication[]
+  createdAt     DateTime  @default(now())
+}
+
+model WellnessApplication {
+  id            Int       @id @default(autoincrement())
+  program       WellnessProgram @relation(fields: [programId], references: [id])
+  programId     Int
+  guestName     String
+  guestEmail    String
+  guestPhone    String
+  preferredFrom DateTime?
+  message       String?
+  status        String    @default("new") // new | contacted | confirmed | declined
+  createdAt     DateTime  @default(now())
+}
+
+model Competitor {
+  id            Int       @id @default(autoincrement())
+  name          String    @unique
+  category      String    @default("hotel") // hotel | pension | apartments
+  city          String?
+  website       String?
+  basePriceRON  Float?
+  capacity      Int?
+  notes         String?
+  active        Boolean   @default(true)
+  snapshots     CompetitorSnapshot[]
+  createdAt     DateTime  @default(now())
+}
+
+model CompetitorSnapshot {
+  id            Int        @id @default(autoincrement())
+  competitor    Competitor @relation(fields: [competitorId], references: [id])
+  competitorId  Int
+  capturedAt    DateTime   @default(now())
+  priceRON      Float
+  availability  String?
+  source        String?
+  notes         String?
+}
+
+model RevenueSnapshot {
+  id            Int       @id @default(autoincrement())
+  date          DateTime  @unique
+  totalRevenueRON Float   @default(0)
+  occupancyPct  Float     @default(0)
+  adrRON        Float     @default(0)
+  revparRON     Float     @default(0)
+  directBookingPct Float  @default(0)
+  bookingsCount Int       @default(0)
+  createdAt     DateTime  @default(now())
+}
+
+model SocialPost {
+  id            Int       @id @default(autoincrement())
+  platform      String    // instagram | facebook | tiktok
+  contentRO     String
+  contentEN     String?
+  imageUrl      String?
+  scheduledFor  DateTime?
+  publishedAt   DateTime?
+  status        String    @default("draft") // draft | scheduled | published
+  category      String?   // apartment_showcase | review_repost | event | tip | season
+  createdAt     DateTime  @default(now())
+}
+
+model OutreachContact {
+  id            Int       @id @default(autoincrement())
+  segment       String    // diaspora_priest | school | police | corporate | medical | tour_operator
+  country       String?
+  city          String?
+  organization  String
+  contactName   String?
+  email         String?
+  phone         String?
+  notes         String?
+  status        String    @default("new") // new | contacted | replied | partnership | declined
+  lastContactedAt DateTime?
+  active        Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+
+  @@index([segment])
 }
 
 model SeasonalMessage {

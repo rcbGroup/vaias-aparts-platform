@@ -19,12 +19,12 @@ export default function Header() {
 
   const nav = [
     { href: "/apartments", label: t("nav.apartments") },
-    { href: "/cazare", label: "Cazare" },
+    { href: "/packages", label: "Pachete" },
+    { href: "/wellness", label: "Wellness" },
     { href: "/zone-turistice", label: t("nav.attractions") },
     { href: "/galerie", label: t("nav.gallery") },
     { href: "/recenzii", label: t("nav.reviews") },
     { href: "/blog", label: t("nav.blog") },
-    { href: "/despre-noi", label: t("nav.about") },
     { href: "/contact", label: t("nav.contact") }
   ];
 

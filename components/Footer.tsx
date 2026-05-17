@@ -77,6 +77,10 @@ export default function Footer() {
               <li><Link href="/despre-noi" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.about")}</Link></li>
               <li><Link href="/blog" className="text-cream-100/80 hover:text-cream-50 transition">Blog</Link></li>
               <li><Link href="/experiente" className="text-cream-100/80 hover:text-cream-50 transition">Experiențe</Link></li>
+              <li><Link href="/packages" className="text-cream-100/80 hover:text-cream-50 transition">Pachete</Link></li>
+              <li><Link href="/wellness" className="text-cream-100/80 hover:text-cream-50 transition">Wellness</Link></li>
+              <li><Link href="/refugiul-vaias" className="text-cream-100/80 hover:text-cream-50 transition">Refugiul Vaias</Link></li>
+              <li><Link href="/vouchere-vacanta" className="text-cream-100/80 hover:text-cream-50 transition">Vouchere vacanță</Link></li>
               <li><Link href="/afiliati" className="text-cream-100/80 hover:text-cream-50 transition">Afiliere</Link></li>
               <li><Link href="/rezervare" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.bookNow")}</Link></li>
             </ul>

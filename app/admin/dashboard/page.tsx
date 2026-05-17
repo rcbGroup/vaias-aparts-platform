@@ -63,6 +63,7 @@ const quickLinks = [
   { href: "/admin/apartamente", label: "Apartamente", icon: "🏠", desc: "Disponibilitate & blocare" },
   { href: "/admin/mesaje", label: "Mesaje oaspeți", icon: "💬", desc: "Comunicare automată" },
   { href: "/admin/crm", label: "CRM Oaspeți", icon: "👤", desc: "Baza de date clienți" },
+  { href: "/admin/intelligence", label: "Business Intelligence", icon: "📊", desc: "RevPAR, ADR, ocupare" },
   { href: "/admin/blog", label: "Blog & SEO", icon: "✍️", desc: "Articole & conținut" },
   { href: "/admin/notificari", label: "Notificări", icon: "🔔", desc: "Setări WhatsApp & email" },
 ];
