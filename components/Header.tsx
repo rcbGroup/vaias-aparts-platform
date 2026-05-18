@@ -22,6 +22,7 @@ export default function Header() {
     { href: "/packages", label: "Pachete" },
     { href: "/wellness", label: "Wellness" },
     { href: "/zone-turistice", label: t("nav.attractions") },
+    { href: "/cum-ajungi", label: "Cum ajungi" },
     { href: "/galerie", label: t("nav.gallery") },
     { href: "/recenzii", label: t("nav.reviews") },
     { href: "/blog", label: t("nav.blog") },
