@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
 
     // For the Booking Agent, inject live context (occupancy, gaps, metrics) so
     // the LLM grounds its answers in real numbers rather than guessing.
-    if (agent.api) {
+    if (agent.api && "status" in agent.api && typeof agent.api.status === "function") {
       try {
         const status = await agent.api.status();
         systemPrompt +=
