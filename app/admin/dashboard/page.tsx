@@ -59,6 +59,8 @@ type Overview = {
 };
 
 const quickLinks = [
+  { href: "/admin/booking-agent", label: "Booking Agent", icon: "🎯", desc: "AI 24/7 ocupare 100%" },
+  { href: "/admin/autopilot", label: "Autopilot AI", icon: "🤖", desc: "8 agenți specializați" },
   { href: "/admin/rezervari", label: "Rezervări", icon: "📋", desc: "Gestionare rezervări" },
   { href: "/admin/apartamente", label: "Apartamente", icon: "🏠", desc: "Disponibilitate & blocare" },
   { href: "/admin/mesaje", label: "Mesaje oaspeți", icon: "💬", desc: "Comunicare automată" },

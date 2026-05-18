@@ -60,6 +60,13 @@ const agents: Agent[] = [
     description: "Generates weekly summary reports covering occupancy, revenue, platform performance, and distribution health across all 7 apartments.",
     icon: "📊",
     color: "bg-forest-800"
+  },
+  {
+    id: "booking-agent",
+    name: "Booking Agent",
+    description: "Works 24/7 to maximize occupancy. Detects gaps, drafts last-minute / extended-stay / weekend / seasonal / diaspora campaigns, monitors rate parity, and never violates quiet hours or key-box rules.",
+    icon: "🎯",
+    color: "bg-walnut-700"
   }
 ];
 
@@ -76,7 +83,7 @@ type ChatState = {
 type Tab = "autopilot" | "platform-tracker" | "approval-queue";
 
 // Maps agent string IDs to numeric IDs expected by the API
-const AGENT_NUMERIC_ID: Record<string, 1 | 2 | 3 | 4 | 5 | 6 | 7> = {
+const AGENT_NUMERIC_ID: Record<string, 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8> = {
   "distribution-manager": 1,
   "platform-audit": 2,
   "platform-setup": 3,
@@ -84,6 +91,7 @@ const AGENT_NUMERIC_ID: Record<string, 1 | 2 | 3 | 4 | 5 | 6 | 7> = {
   "outreach": 5,
   "qa-safety": 6,
   "weekly-reporting": 7,
+  "booking-agent": 8,
 };
 
 export default function AutopilotPage() {
@@ -321,12 +329,22 @@ export default function AutopilotPage() {
                   </div>
                   <div className="px-5 py-4 flex flex-col flex-1 gap-4">
                     <p className="text-xs text-stone-500 leading-relaxed flex-1">{agent.description}</p>
-                    <button
-                      onClick={() => openChat(agent)}
-                      className="w-full rounded-xl bg-forest-900 text-cream-50 text-sm font-medium py-2.5 hover:bg-forest-800 transition"
-                    >
-                      Chat →
-                    </button>
+                    <div className="flex flex-col gap-2">
+                      <button
+                        onClick={() => openChat(agent)}
+                        className="w-full rounded-xl bg-forest-900 text-cream-50 text-sm font-medium py-2.5 hover:bg-forest-800 transition"
+                      >
+                        Chat →
+                      </button>
+                      {agent.id === "booking-agent" && (
+                        <Link
+                          href="/admin/booking-agent"
+                          className="w-full text-center rounded-xl bg-cream-100 text-forest-900 text-sm font-medium py-2.5 hover:bg-cream-200 transition border border-stone-200"
+                        >
+                          Deschide dashboard →
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
