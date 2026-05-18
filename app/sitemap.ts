@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { p: "/rezervare", priority: 0.95 },
     { p: "/cazare", priority: 0.9 },
     { p: "/zone-turistice", priority: 0.85 },
+    { p: "/cum-ajungi", priority: 0.9 },
     { p: "/diaspora", priority: 0.85 },
     { p: "/pelerini", priority: 0.85 },
     { p: "/galerie", priority: 0.8 },
