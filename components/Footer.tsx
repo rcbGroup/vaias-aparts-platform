@@ -123,38 +123,23 @@ export default function Footer() {
             <p className="text-cream-100/70 text-sm leading-relaxed mb-4">
               Rezervând direct, beneficiezi de cel mai bun preț disponibil — fără comisionul platformelor OTA.
             </p>
-            <div className="flex flex-col gap-2">
-              <a
-                href="https://www.5stardesk.net/b/vaias-aparts"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-walnut-500 px-5 py-2.5 text-sm uppercase tracking-wider text-cream-50 hover:bg-walnut-600 transition w-fit"
-              >
-                Verifică disponibilitate
-              </a>
-              <a
-                href="http://www.airbnb.com/p/vaiasaparts"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-cream-100/70 hover:text-cream-50 transition"
-              >
-                Airbnb
-              </a>
-              <a
-                href="https://travelminit.ro/apartamentele-vaias-targu-neamt"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-cream-100/70 hover:text-cream-50 transition"
-              >
-                Travelminit
-              </a>
-            </div>
+            <a
+              href="https://www.5stardesk.net/b/vaias-aparts"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-walnut-500 px-5 py-2.5 text-sm uppercase tracking-wider text-cream-50 hover:bg-walnut-600 transition w-fit"
+            >
+              Verifică disponibilitate
+            </a>
             <div className="mt-6 pt-6 border-t border-forest-900/60">
-              <div className="text-xs uppercase tracking-[0.28em] text-walnut-300 mb-3">Recenzii verificate</div>
+              <div className="text-xs uppercase tracking-[0.28em] text-walnut-300 mb-3">Găsește-ne online</div>
               <div className="flex flex-wrap gap-2">
                 <a href="https://www.booking.com/hotel/ro/vaias-aparts-targu-neamt.html" target="_blank" rel="noopener noreferrer" className="text-xs text-cream-100/60 hover:text-cream-50 border border-forest-800 rounded px-2 py-1 transition">Booking.com</a>
-                <a href="https://www.tripadvisor.com/Profile/VaiasAparts" target="_blank" rel="noopener noreferrer" className="text-xs text-cream-100/60 hover:text-cream-50 border border-forest-800 rounded px-2 py-1 transition">TripAdvisor</a>
+                <a href="http://www.airbnb.com/p/vaiasaparts" target="_blank" rel="noopener noreferrer" className="text-xs text-cream-100/60 hover:text-cream-50 border border-forest-800 rounded px-2 py-1 transition">Airbnb</a>
+                <a href="https://www.travelminit.ro/apartamente-vaias-targu-neamt" target="_blank" rel="noopener noreferrer" className="text-xs text-cream-100/60 hover:text-cream-50 border border-forest-800 rounded px-2 py-1 transition">TravelMinit</a>
                 <a href="https://share.google/iFsW4iUjwIDgkgwZm" target="_blank" rel="noopener noreferrer" className="text-xs text-cream-100/60 hover:text-cream-50 border border-forest-800 rounded px-2 py-1 transition">Google</a>
+                <a href="https://www.tripadvisor.com/Profile/VaiasAparts" target="_blank" rel="noopener noreferrer" className="text-xs text-cream-100/60 hover:text-cream-50 border border-forest-800 rounded px-2 py-1 transition">TripAdvisor</a>
+                <a href="https://www.facebook.com/vaiasaparts" target="_blank" rel="noopener noreferrer" className="text-xs text-cream-100/60 hover:text-cream-50 border border-forest-800 rounded px-2 py-1 transition">Facebook</a>
                 <a href="https://www.youtube.com/@vaiasaparts" target="_blank" rel="noopener noreferrer" className="text-xs text-cream-100/60 hover:text-cream-50 border border-forest-800 rounded px-2 py-1 transition">YouTube</a>
               </div>
             </div>
