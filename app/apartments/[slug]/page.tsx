@@ -79,7 +79,7 @@ export default function ApartmentPage({ params }: { params: { slug: string } }) 
     },
     {
       q: `Câte persoane încap în ${apartment.name}?`,
-      a: `${apartment.name} are capacitate optimă pentru ${apartment.guests} oaspeți, maxim ${apartment.guestsMax} persoane folosind canapeaua extensibilă. ${apartment.bedrooms} dormitor${apartment.bedrooms === 1 ? "" : "e"} cu pat${apartment.bedrooms === 1 ? "" : "uri"} Emperor 2m×2m și ${apartment.bathrooms} baie privată.`
+      a: `Acesta este un APARTAMENT COMPLET PRIVAT de ${apartment.sizeSqm} mp — nu o cameră de hotel. ${apartment.name} are capacitate optimă pentru ${apartment.guests} oaspeți, maxim ${apartment.guestsMax} persoane folosind canapeaua extensibilă (+${apartment.extraPersonRON} RON/noapte persoana suplimentară). ${apartment.bedrooms} dormitor${apartment.bedrooms === 1 ? "" : "e"} cu pat dublu, living separat, ${apartment.hasPrivateKitchen ? "bucătărie proprie complet utilată" : "frigider + microunde în apartament + bucătărie mare alături"} și ${apartment.bathrooms} baie privată.`
     },
     {
       q: `Apartamentul are aer condiționat?`,
@@ -257,6 +257,19 @@ export default function ApartmentPage({ params }: { params: { slug: string } }) 
             <h2 className="font-display text-3xl md:text-4xl text-forest-900">
               Despre acest apartament
             </h2>
+
+            {/* "Complete apartment" banner */}
+            <div className="mt-6 rounded-2xl border-2 border-walnut-500 bg-walnut-50 p-5">
+              <div className="font-display text-xl text-walnut-700 mb-1">
+                🔑 Apartament COMPLET PRIVAT — nu o cameră de hotel
+              </div>
+              <p className="text-sm text-forest-800/90 leading-relaxed">
+                Primești ușa ta, cheia ta și {apartment.sizeSqm} mp doar pentru tine:
+                {" "}{apartment.bedrooms} dormitor{apartment.bedrooms === 1 ? "" : "e"} + living + {apartment.hasPrivateKitchen ? "bucătărie proprie" : "bucătărie alături"} + baie privată.
+                Fără holuri comune, fără vecini de cameră, fără recepție.
+              </p>
+            </div>
+
             <p className="mt-6 font-serif text-lg text-forest-800/90 leading-relaxed">
               {apartment.description}
             </p>
@@ -383,6 +396,7 @@ export default function ApartmentPage({ params }: { params: { slug: string } }) 
               <ul className="space-y-2 text-sm">
                 <li className="flex justify-between"><span className="text-forest-800">Pe noapte</span><span className="font-medium">{apartment.pricePerNightRON} RON</span></li>
                 <li className="flex justify-between"><span className="text-forest-800">Weekend (vineri-sâmbătă)</span><span className="font-medium">{apartment.weekendPriceRON} RON</span></li>
+                <li className="flex justify-between"><span className="text-forest-800">Persoană suplimentară (canapea)</span><span className="font-medium">+{apartment.extraPersonRON} RON/noapte</span></li>
                 <li className="flex justify-between"><span className="text-forest-800">Reducere săptămânală</span><span className="font-medium">−{apartment.weeklyDiscountPct}%</span></li>
               </ul>
             </div>
