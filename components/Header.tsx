@@ -21,10 +21,10 @@ export default function Header() {
     { href: "/apartments", label: t("nav.apartments") },
     { href: "/cazare", label: "Cazare" },
     { href: "/zone-turistice", label: t("nav.attractions") },
+    { href: "/cum-ajungi", label: "Cum ajungi" },
     { href: "/galerie", label: t("nav.gallery") },
     { href: "/recenzii", label: t("nav.reviews") },
     { href: "/blog", label: t("nav.blog") },
-    { href: "/despre-noi", label: t("nav.about") },
     { href: "/contact", label: t("nav.contact") }
   ];
 
