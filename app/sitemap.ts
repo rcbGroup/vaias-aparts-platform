@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticUrls = [
     { p: "", priority: 1.0 },
     { p: "/apartments", priority: 0.95 },
+    { p: "/vila-completa", priority: 0.95 },
     { p: "/rezervare", priority: 0.95 },
     { p: "/cazare", priority: 0.9 },
     { p: "/zone-turistice", priority: 0.85 },

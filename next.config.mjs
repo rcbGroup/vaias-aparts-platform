@@ -16,6 +16,16 @@ const nextConfig = {
         source: "/apartament-:n(\\d+)",
         destination: "/apartments/apartament-:n",
         permanent: true
+      },
+      {
+        source: "/toata-vila",
+        destination: "/vila-completa",
+        permanent: true
+      },
+      {
+        source: "/vila-intreaga",
+        destination: "/vila-completa",
+        permanent: true
       }
     ];
   }

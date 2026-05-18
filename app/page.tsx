@@ -77,7 +77,17 @@ export default function HomePage() {
                 <Link href="/rezervare" className="btn-outline-light">
                   {t("hero.cta2")}
                 </Link>
+                <Link
+                  href="/vila-completa"
+                  className="btn-outline-light border-walnut-300/80 text-walnut-100 hover:bg-walnut-500 hover:border-walnut-500 hover:text-cream-50"
+                >
+                  🏡 Rezervă toată vila
+                </Link>
               </div>
+              <p className="mt-4 text-sm text-cream-100/80">
+                Prețuri de la <strong className="text-cream-50">295 RON/noapte</strong> · Toată vila — de la{" "}
+                <strong className="text-cream-50">2.665 RON/noapte</strong>
+              </p>
             </div>
           </div>
         </div>
@@ -586,36 +596,40 @@ export default function HomePage() {
         <div className="container-x">
           <div className="rounded-3xl bg-forest-900 text-cream-50 p-10 lg:p-16 relative overflow-hidden">
             <div className="absolute inset-0 pattern-moldavian-dark opacity-20 pointer-events-none" />
-            <div className="relative max-w-2xl">
+            <div className="relative max-w-3xl">
               <ScrollFade>
-                <div className="eyebrow-light mb-4">Grupuri &amp; Rezervare Vilă Întreagă</div>
+                <div className="flex flex-wrap items-center gap-3 mb-4">
+                  <div className="eyebrow-light">Grupuri &amp; Vila Întreagă</div>
+                  <span className="rounded-full bg-walnut-500 px-3 py-1 text-[10px] uppercase tracking-wider text-cream-50 font-medium">
+                    Nou · Calculator preț
+                  </span>
+                </div>
                 <h2 className="font-display text-4xl md:text-5xl text-cream-50 mb-5">
-                  Vila întreagă — pentru 22 până la 28 de persoane.
+                  Rezervă toată Vila Vaias — pentru 18 până la 28 de persoane.
                 </h2>
                 <p className="font-serif text-lg text-cream-100/80 leading-relaxed mb-6">
-                  Vila Vaias Aparts poate fi rezervată integral — toate cele 7 apartamente independente
-                  pentru grupul dvs. Reuniuni de familie, nunți, echipe, pelerini sau prieteni — veniți împreună,
-                  cu confortul fiecăruia în apartamentul propriu.
+                  Toate cele 7 apartamente, o singură rezervare. Reduceri progresive pentru sejururi
+                  mai lungi — de la <strong className="text-cream-50">2.665 RON/noapte</strong> direct.
+                  Perfect pentru reuniuni de familie, retreaturi, team building.
                 </p>
                 <ul className="space-y-2 mb-8 text-sm text-cream-100/80">
-                  <li>✓ 7 apartamente independente în același complex</li>
-                  <li>✓ Capacitate optimă 22 persoane, maxim 26–28 (cu paturi extensibile)</li>
-                  <li>✓ Parcare gratuită în curtea vilei</li>
-                  <li>✓ Bucătăria pentru Toți — disponibilă tuturor oaspeților</li>
-                  <li>✓ Prețuri personalizate pentru grupuri</li>
-                  <li>✓ Confirmare rapidă pe WhatsApp</li>
+                  <li>✓ 7 apartamente independente · 18–28 persoane</li>
+                  <li>✓ Reducere progresivă: 5% la 2 nopți → 17.5% la 7+ nopți</li>
+                  <li>✓ Calculator preț pe site — vezi tariful tău imediat</li>
+                  <li>✓ Cel mai bun preț — direct la noi, fără markup OTA</li>
+                  <li>✓ Bucătăria pentru Toți + parcare gratuită CCTV 24/7</li>
                 </ul>
                 <div className="flex flex-col sm:flex-row gap-4">
+                  <Link href="/vila-completa" className="btn-primary">
+                    🏡 Vezi pagina Vila Completă
+                  </Link>
                   <a
                     href="https://wa.me/40752388388?text=Bun%C4%83%20ziua!%20Suntem%20interesa%C8%9Bi%20s%C4%83%20rezerv%C4%83m%20%C3%AEntreaga%20vil%C4%83%20Vaias%20Aparts.%20Datele%3A%20%5BDATA%20CHECK-IN%5D%20%E2%80%93%20%5BDATA%20CHECK-OUT%5D.%20Total%20adul%C8%9Bi%3A%20%5BNR%5D.%20Total%20copii%3A%20%5BNR%5D.%20V%C4%83%20rog%20s%C4%83%20ne%20comunica%C8%9Bi%20disponibilitatea%20%C8%99i%20pre%C8%9Bul%20total."
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-primary"
+                    className="btn-outline-light"
                   >
-                    💬 Solicită ofertă vilă întreagă
-                  </a>
-                  <a href="tel:+40752388388" className="btn-outline-light">
-                    📞 Sună acum
+                    💬 WhatsApp
                   </a>
                 </div>
               </ScrollFade>
@@ -676,7 +690,7 @@ export default function HomePage() {
               },
               {
                 q: "Cât costă o noapte la Vila Vaias Aparts?",
-                a: "Apartamentele single (1 dormitor) pornesc de la 297 RON/noapte, cele cu 2 dormitoare de la 547 RON. Aplicăm 10% reducere pentru 2-3 nopți, 15% pentru 4-6 nopți, 25% pentru 7+ nopți. Cel mai bun preț — direct pe WhatsApp."
+                a: "Apartamentele single (1 dormitor) pornesc de la 295 RON/noapte, cele cu 2 dormitoare de la 595 RON. Aplicăm 10% reducere pentru 2-3 nopți, 15% pentru 4-6 nopți, 25% pentru 7+ nopți. Toată vila — de la 2.665 RON/noapte. Cel mai bun preț — direct pe WhatsApp."
               },
               {
                 q: "La ce distanță sunteți de Cetatea Neamțului?",
@@ -731,7 +745,7 @@ export default function HomePage() {
                 {
                   "@type": "Question",
                   name: "Cât costă o noapte la Vila Vaias Aparts?",
-                  acceptedAnswer: { "@type": "Answer", text: "Apartamentele single pornesc de la 297 RON/noapte, cele cu 2 dormitoare de la 547 RON. Reduceri: 10% pentru 2-3 nopți, 15% pentru 4-6 nopți, 25% pentru 7+ nopți. Cel mai bun preț direct pe WhatsApp." }
+                  acceptedAnswer: { "@type": "Answer", text: "Apartamentele single pornesc de la 295 RON/noapte, cele cu 2 dormitoare de la 595 RON. Toată vila — de la 2.665 RON/noapte. Reduceri: 10% pentru 2-3 nopți, 15% pentru 4-6 nopți, 25% pentru 7+ nopți. Cel mai bun preț direct pe WhatsApp." }
                 },
                 {
                   "@type": "Question",

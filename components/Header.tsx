@@ -19,6 +19,7 @@ export default function Header() {
 
   const nav = [
     { href: "/apartments", label: t("nav.apartments") },
+    { href: "/vila-completa", label: "Toată Vila" },
     { href: "/packages", label: "Pachete" },
     { href: "/wellness", label: "Wellness" },
     { href: "/zone-turistice", label: t("nav.attractions") },

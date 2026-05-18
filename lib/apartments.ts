@@ -16,11 +16,14 @@ export type Apartment = {
   hasTerrace: boolean;
   accessible: boolean;
   hasPrivateKitchen: boolean;
+  /** Direct-booking base price (RON/night). Cheapest channel. */
   pricePerNightRON: number;
   pricePerNightEUR: number;
   weekendPriceRON: number;
   weekendPriceEUR: number;
   weeklyDiscountPct: number;
+  /** Hard floor — never quote below this RON/night for this apartment. */
+  floorPriceRON: number;
   rating: number;
   reviewsCount: number;
   view: string;
@@ -32,6 +35,27 @@ export type Apartment = {
   youtubeId?: string;
   matterportId?: string;
 };
+
+/**
+ * Commission rate per channel — used to compute the channel-displayed price
+ * so the host nets the same direct rate after commission.
+ *
+ * Use `priceForChannel(apt, "booking")` to get the price shown on each OTA.
+ */
+export const CHANNEL_MARKUP_PCT = {
+  direct: 0,
+  airbnb: 5,
+  travelminit: 15,
+  h2b: 18,
+  booking: 20,
+} as const;
+
+export type ChannelKey = keyof typeof CHANNEL_MARKUP_PCT;
+
+export function priceForChannel(apt: Apartment, channel: ChannelKey): number {
+  const markup = CHANNEL_MARKUP_PCT[channel];
+  return Math.round(apt.pricePerNightRON * (1 + markup / 100));
+}
 
 const BASE = "https://www.vaiasaparts.ro/wp-content/uploads";
 
@@ -68,11 +92,12 @@ export const apartments: Apartment[] = [
     hasTerrace: true,
     accessible: false,
     hasPrivateKitchen: true,
-    pricePerNightRON: 297,
+    pricePerNightRON: 295,
     pricePerNightEUR: 0,
     weekendPriceRON: 320,
     weekendPriceEUR: 0,
     weeklyDiscountPct: 15,
+    floorPriceRON: 200,
     rating: 5.0,
     reviewsCount: 99,
     view: "Etaj 1 · Coridor stâng, capăt",
@@ -128,11 +153,12 @@ export const apartments: Apartment[] = [
     hasTerrace: true,
     accessible: false,
     hasPrivateKitchen: true,
-    pricePerNightRON: 297,
+    pricePerNightRON: 295,
     pricePerNightEUR: 0,
     weekendPriceRON: 320,
     weekendPriceEUR: 0,
     weeklyDiscountPct: 15,
+    floorPriceRON: 200,
     rating: 5.0,
     reviewsCount: 99,
     view: "Etaj 1 · Coridor stâng",
@@ -187,11 +213,12 @@ export const apartments: Apartment[] = [
     hasTerrace: true,
     accessible: false,
     hasPrivateKitchen: true,
-    pricePerNightRON: 547,
+    pricePerNightRON: 595,
     pricePerNightEUR: 0,
-    weekendPriceRON: 580,
+    weekendPriceRON: 620,
     weekendPriceEUR: 0,
     weeklyDiscountPct: 15,
+    floorPriceRON: 400,
     rating: 5.0,
     reviewsCount: 99,
     view: "Etaj 1 · Prima ușă stânga",
@@ -246,11 +273,12 @@ export const apartments: Apartment[] = [
     hasTerrace: true,
     accessible: false,
     hasPrivateKitchen: true,
-    pricePerNightRON: 547,
+    pricePerNightRON: 595,
     pricePerNightEUR: 0,
-    weekendPriceRON: 580,
+    weekendPriceRON: 620,
     weekendPriceEUR: 0,
     weeklyDiscountPct: 15,
+    floorPriceRON: 400,
     rating: 5.0,
     reviewsCount: 99,
     view: "Etaj 1 · Coridor drept",
@@ -305,11 +333,12 @@ export const apartments: Apartment[] = [
     hasTerrace: true,
     accessible: false,
     hasPrivateKitchen: true,
-    pricePerNightRON: 297,
+    pricePerNightRON: 295,
     pricePerNightEUR: 0,
     weekendPriceRON: 320,
     weekendPriceEUR: 0,
     weeklyDiscountPct: 15,
+    floorPriceRON: 200,
     rating: 5.0,
     reviewsCount: 99,
     view: "Etaj 2 · Stânga · Aer condiționat",
@@ -365,11 +394,12 @@ export const apartments: Apartment[] = [
     hasTerrace: true,
     accessible: false,
     hasPrivateKitchen: true,
-    pricePerNightRON: 297,
+    pricePerNightRON: 295,
     pricePerNightEUR: 0,
     weekendPriceRON: 320,
     weekendPriceEUR: 0,
     weeklyDiscountPct: 15,
+    floorPriceRON: 200,
     rating: 5.0,
     reviewsCount: 99,
     view: "Etaj 2 · Dreapta · Aer condiționat",
@@ -434,11 +464,12 @@ export const apartments: Apartment[] = [
     hasTerrace: true,
     accessible: true,
     hasPrivateKitchen: false,
-    pricePerNightRON: 297,
+    pricePerNightRON: 295,
     pricePerNightEUR: 0,
     weekendPriceRON: 320,
     weekendPriceEUR: 0,
     weeklyDiscountPct: 15,
+    floorPriceRON: 200,
     rating: 5.0,
     reviewsCount: 99,
     view: "Parter · Stânga · Accesibil",
