@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
           `Revenue MTD: ${status.metrics.revenueThisMonth} RON · ` +
           `Leads/7d: ${status.metrics.leadsThisWeek} · ` +
           `Paused: ${status.state.paused ? "YES" : "no"} · ` +
-          `Quiet hours: ${status.quietHours ? "ACTIVE" : "inactive"}.\n` +
+          `Mode: 24/7/365 (no quiet hours).\n` +
           `Top gaps:\n` +
           status.upcomingGaps
             .slice(0, 6)

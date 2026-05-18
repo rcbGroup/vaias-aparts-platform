@@ -1,14 +1,13 @@
 // Channel distribution helpers. Sending is gated by:
 //  (a) the agent not being paused,
-//  (b) quiet hours (23:00–07:00 Europe/Bucharest),
-//  (c) per-channel env credentials being present.
+//  (b) per-channel env credentials being present.
 //
+// 24/7/365 — no quiet hours. The agent responds at any hour, instantly.
 // Where credentials are missing we return a "skipped" result with the
 // rendered message so the admin UI can still preview what would have gone
 // out and operators can copy-send manually.
 
 import { prisma } from "@/lib/prisma";
-import { isQuietHour, QUIET_HOURS_LABEL } from "./quietHours";
 import type { CampaignChannel, CampaignDraft } from "./types";
 
 export type DispatchResult = {
@@ -96,20 +95,7 @@ export async function dispatchCampaign(
   const messageEN = campaign.whatsappMessageEN || campaign.messageEN;
   const body = lang === "ro" ? messageRO : messageEN;
 
-  // Quiet hours — capture but do not send.
-  if (isQuietHour()) {
-    await logMessage(
-      campaign.channel,
-      `[QUIET HOURS — captured for next window] ${body}`,
-    );
-    return {
-      channel: campaign.channel,
-      campaignId: campaign.id,
-      status: "queued",
-      reason: `Quiet hours (${QUIET_HOURS_LABEL}) — captured but not sent.`,
-      preview: body,
-    };
-  }
+  // 24/7/365 — quiet-hours gate intentionally removed per owner directive.
 
   if (options.dryRun) {
     return {

@@ -64,7 +64,7 @@ type Status = {
   blackouts: string[];
   feeds: Record<string, string[]>;
   upcomingGaps: Gap[];
-  quietHours: boolean;
+  mode: "24/7/365";
 };
 
 type RunResult = {
@@ -206,10 +206,13 @@ export default function BookingAgentDashboard() {
           <div>
             <h1 className="font-display text-2xl flex items-center gap-2">
               <span>🎯</span> Booking Agent
+              <span className="text-xs bg-emerald-400/20 text-emerald-100 px-2 py-0.5 rounded-full font-medium border border-emerald-300/30">
+                24/7/365
+              </span>
             </h1>
             <p className="text-cream-100/70 text-sm mt-1">
-              Lucrează 24/7 pentru ocupare 100%. Detectează goluri, generează campanii,
-              respectă orele de liniște (23:00–07:00) și nu trimite niciodată codul cutiei de chei.
+              Lucrează 24/7/365 pentru ocupare 100% — răspunde instant la orice oră, fără pauze.
+              Detectează goluri, generează campanii și nu trimite niciodată codul cutiei de chei.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -294,16 +297,10 @@ export default function BookingAgentDashboard() {
                 className={`text-xs px-2.5 py-1 rounded-full font-medium ${
                   status?.state.paused
                     ? "bg-red-100 text-red-700"
-                    : status?.quietHours
-                    ? "bg-yellow-100 text-yellow-800"
                     : "bg-emerald-100 text-emerald-700"
                 }`}
               >
-                {status?.state.paused
-                  ? "ÎN PAUZĂ"
-                  : status?.quietHours
-                  ? "ORE LINIȘTITE (23:00–07:00)"
-                  : "ACTIV"}
+                {status?.state.paused ? "ÎN PAUZĂ" : "ACTIV 24/7/365"}
               </span>
             </div>
             <dl className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
@@ -336,7 +333,7 @@ export default function BookingAgentDashboard() {
           <div className="rounded-2xl bg-forest-900 text-cream-50 shadow-soft p-6">
             <h2 className="font-display text-xl mb-3">Reguli active</h2>
             <ul className="space-y-2 text-sm text-cream-100/80">
-              <li>• Ore liniștite: 23:00–07:00 (Europa/București) — capturăm, nu trimitem.</li>
+              <li>• 24/7/365 — răspuns instant la orice oră, fără pauze.</li>
               <li>• Cod cutie chei (0623#): NICIODATĂ în mesaje outbound.</li>
               <li>• Recenzii negative: nu se postează automat.</li>
               <li>• 5% taxă locală/adult/noapte la cotații.</li>

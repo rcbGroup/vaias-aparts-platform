@@ -3,8 +3,9 @@
 // Goal: maintain ~100% occupancy across 7 apartments year-round by detecting
 // gaps, drafting targeted campaigns, and orchestrating distribution.
 //
-// Design constraints (from the master prompt):
-//   - Quiet hours 23:00–07:00 Europe/Bucharest: capture, never send.
+// Design constraints (from the master prompt + 2026-05-18 owner directive):
+//   - 24/7/365 operation — respond to every inquiry instantly, at any hour.
+//     No quiet hours. The previous 23:00–07:00 window has been lifted.
 //   - Never include the key-box code (0623#) in any outbound message.
 //   - Never auto-post anything that looks like a negative review.
 //   - 5% local tax / adult / night, 30% deposit on direct bookings.
@@ -28,7 +29,6 @@ import {
   STANDARD_ENGAGEMENT_SEQUENCE,
 } from "./campaigns";
 import { dispatchCampaign } from "./distribution";
-import { isQuietHour, QUIET_HOURS_LABEL } from "./quietHours";
 import { resolveOrigin } from "./leadOrigin";
 import { suggestPriceFor } from "./pricingEngine";
 import { addDays, toISODate } from "./calendar";
@@ -61,16 +61,17 @@ export const BOOKING_AGENT_META = {
   systemPrompt:
     `You are the Vila Vaias Booking Agent. Your single objective is to drive ` +
     `direct bookings and fill gaps across our 7 apartments in Târgu Neamț, ` +
-    `Romania. You output: detected gaps (apartment + date range + severity), ` +
-    `proposed campaigns (channel + message + discount), and required ` +
-    `approvals. NEVER quote the key-box code (0623#). NEVER message guests ` +
-    `between 23:00 and 07:00 Europe/Bucharest. NEVER undercut Booking.com/Airbnb ` +
-    `parity. ALWAYS prefer direct booking via WhatsApp +40 738 345 330. ` +
-    `Apply 30% deposit on direct bookings and 5% tourist tax per adult per ` +
-    `night when quoting totals. Routes you orchestrate: last-minute (≤7 days), ` +
-    `extended stay (5+ nights), weekend packages, seasonal (holidays/peak), ` +
-    `diaspora (parishes & city breaks abroad), corporate/retreat (midweek). ` +
-    `Speak in the guest's language when known. Tone: warm, family-run, rustic-modern.`,
+    `Romania. You operate 24/7/365 — respond to every inquiry instantly, at ` +
+    `any hour of day or night, including 23:00-07:00. The agent never sleeps. ` +
+    `You output: detected gaps (apartment + date range + severity), proposed ` +
+    `campaigns (channel + message + discount), and required approvals. NEVER ` +
+    `quote the key-box code (0623#). NEVER undercut Booking.com/Airbnb parity. ` +
+    `ALWAYS prefer direct booking via WhatsApp +40 738 345 330. Apply 30% ` +
+    `deposit on direct bookings and 5% tourist tax per adult per night when ` +
+    `quoting totals. Routes you orchestrate: last-minute (≤7 days), extended ` +
+    `stay (5+ nights), weekend packages, seasonal (holidays/peak), diaspora ` +
+    `(parishes & city breaks abroad), corporate/retreat (midweek). Speak in ` +
+    `the guest's language when known. Tone: warm, family-run, rustic-modern.`,
 } as const;
 
 const STATE_KEY = "booking_agent_state";
@@ -234,8 +235,7 @@ export async function runBookingAgent(opts: RunOptions = {}): Promise<RunResult>
     summary:
       `Occupancy ${occ.occupancyPct}% / 30d · ` +
       `${gaps.length} gaps · ${campaigns.length} campaigns drafted · ` +
-      `${messagesSent} sent · ${messagesScheduled} queued` +
-      (isQuietHour() ? ` · QUIET HOURS (${QUIET_HOURS_LABEL})` : ""),
+      `${messagesSent} sent · ${messagesScheduled} queued (24/7 mode)`,
   };
 
   const nextState: AgentState = {
@@ -273,7 +273,7 @@ export async function getAgentStatus(): Promise<{
   blackouts: string[];
   feeds: Record<string, string[]>;
   upcomingGaps: OccupancyGap[];
-  quietHours: boolean;
+  mode: "24/7/365";
 }> {
   const [state, blackouts, feeds] = await Promise.all([
     loadState(),
@@ -298,7 +298,7 @@ export async function getAgentStatus(): Promise<{
     blackouts: Array.from(blackouts).sort(),
     feeds,
     upcomingGaps: gaps.slice(0, 20),
-    quietHours: isQuietHour(),
+    mode: "24/7/365",
   };
 }
 
