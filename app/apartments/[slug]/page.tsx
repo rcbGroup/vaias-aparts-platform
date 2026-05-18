@@ -21,9 +21,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const a = getApartmentBySlug(params.slug);
+  const { slug } = await params;
+  const a = getApartmentBySlug(slug);
   if (!a) return {};
   const title = `${a.name} Târgu Neamț — ${a.guests} oaspeți, ${a.bedrooms || 0} dormitor${(a.bedrooms || 0) === 1 ? "" : "e"} | Vila Vaias Aparts`;
   const description = `${a.shortDescription} De la ${a.pricePerNightRON} RON/noapte. Booking 9.4, 99 recenzii Google 5.0. Rezervare directă WhatsApp +40 752 388 388.`;
@@ -60,8 +61,13 @@ export async function generateMetadata({
   };
 }
 
-export default function ApartmentPage({ params }: { params: { slug: string } }) {
-  const apartment = getApartmentBySlug(params.slug);
+export default async function ApartmentPage({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const apartment = getApartmentBySlug(slug);
   if (!apartment) notFound();
 
   const related = getRelatedApartments(apartment.slug, 3);
