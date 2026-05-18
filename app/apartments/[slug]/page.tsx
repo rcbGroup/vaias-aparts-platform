@@ -41,12 +41,12 @@ export async function generateMetadata({
       a.hasAC ? "apartament cu aer condiționat Târgu Neamț" : "apartament Târgu Neamț"
     ],
     alternates: {
-      canonical: `https://www.vaiasaparts.ro/apartments/${params.slug}`
+      canonical: `https://www.vaiasaparts.ro/apartments/${slug}`
     },
     openGraph: {
       type: "website",
       locale: "ro_RO",
-      url: `https://www.vaiasaparts.ro/apartments/${params.slug}`,
+      url: `https://www.vaiasaparts.ro/apartments/${slug}`,
       siteName: "Vila Vaias Aparts",
       title,
       description,
