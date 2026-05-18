@@ -13,7 +13,7 @@ import AirportExplorer from "./AirportExplorer";
 
 const PAGE_URL = "https://www.vaiasaparts.ro/cum-ajungi";
 const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=2400&q=85";
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Targu_Neamt%2C_foto_Curcan_Ionel_%281%29.jpg/1920px-Targu_Neamt%2C_foto_Curcan_Ionel_%281%29.jpg";
 
 export const metadata: Metadata = {
   title:

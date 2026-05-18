@@ -46,8 +46,8 @@ export default function HomePage() {
       {/* HERO — full viewport, parallax-style background */}
       <section className="relative h-screen min-h-[680px] w-full overflow-hidden bg-forest-950">
         <Image
-          src="https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg"
-          alt="Vila Vaias Aparts — Târgu Neamț, Moldova, România"
+          src="/photos/vila-drone-front.jpg"
+          alt="Vila Vaias Aparts — vedere aeriană, Târgu Neamț, Moldova, România"
           fill
           priority
           sizes="100vw"

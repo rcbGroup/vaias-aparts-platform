@@ -24,8 +24,8 @@ export default function PeleriniPage() {
       <section className="relative min-h-[70vh] flex items-end bg-forest-950 pt-32 pb-20">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1559348349-86f1f65817fe?auto=format&fit=crop&w=2400&q=85"
-            alt="Mănăstirile Moldovei"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Neamt_Monastery.jpg/1920px-Neamt_Monastery.jpg"
+            alt="Mănăstirea Neamț — Moldova, România"
             fill
             className="object-cover opacity-25"
             priority

@@ -13,7 +13,7 @@ export default function PrivacyPage() {
         eyebrow="Legal"
         title="Politica de confidențialitate"
         subtitle="Cum colectăm, folosim și protejăm datele tale personale."
-        image="https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=2400&q=85"
+        image="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Ceahlau-mountains-romania-august-2017-0001.jpg/1920px-Ceahlau-mountains-romania-august-2017-0001.jpg"
       />
 
       <section className="section bg-cream-50">

@@ -24,8 +24,8 @@ export default function DiasporaPage() {
       <section className="relative min-h-[70vh] flex items-center bg-forest-950 pt-32 pb-20">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?auto=format&fit=crop&w=2400&q=85"
-            alt="Moldova autentică"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cetatea_Neamtului_-_exterior.jpg/1920px-Cetatea_Neamtului_-_exterior.jpg"
+            alt="Cetatea Neamț — Moldova autentică, România"
             fill
             className="object-cover opacity-30"
             priority
@@ -134,10 +134,10 @@ export default function DiasporaPage() {
           </div>
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {[
-              { name: "Mănăstirea Agapia", dist: "30 min", img: "https://images.unsplash.com/photo-1559348349-86f1f65817fe?auto=format&fit=crop&w=800&q=80" },
-              { name: "Cetatea Neamț", dist: "5 min", img: "https://images.unsplash.com/photo-1583425423320-d40d80d12af9?auto=format&fit=crop&w=800&q=80" },
-              { name: "Masivul Ceahlău", dist: "55 min", img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" },
-              { name: "Cheile Bicazului", dist: "50 min", img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80" }
+              { name: "Mănăstirea Agapia", dist: "30 min", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Manastirea_Agapia_-_panoramio.jpg/1600px-Manastirea_Agapia_-_panoramio.jpg" },
+              { name: "Cetatea Neamț", dist: "5 min", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cetatea_Neamtului_-_exterior.jpg/1600px-Cetatea_Neamtului_-_exterior.jpg" },
+              { name: "Masivul Ceahlău", dist: "55 min", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Ceahlau-mountains-romania-august-2017-0001.jpg/1600px-Ceahlau-mountains-romania-august-2017-0001.jpg" },
+              { name: "Cheile Bicazului", dist: "50 min", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Bicaz_Gorges_%2843574913021%29.jpg/1600px-Bicaz_Gorges_%2843574913021%29.jpg" }
             ].map((p) => (
               <div key={p.name} className="relative aspect-[4/5] rounded-2xl overflow-hidden group">
                 <Image src={p.img} alt={p.name} fill sizes="300px" className="object-cover transition-transform duration-700 group-hover:scale-105" />

@@ -11,8 +11,7 @@ import {
   VILLA_FROM_PRICE_LABEL,
 } from "@/lib/villa-pricing";
 
-const VILLA_HERO_IMAGE =
-  "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_11.jpg";
+const VILLA_HERO_IMAGE = "/photos/vila-drone-aerial.jpg";
 
 const directNightly = villaBasePerNight("direct");
 const bookingNightly = villaBasePerNight("booking");
