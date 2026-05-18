@@ -10,6 +10,7 @@ import { getActiveOffers } from "@/lib/seasonal-offers";
 import ApartmentCard from "@/components/ApartmentCard";
 import SectionHeader from "@/components/SectionHeader";
 import ScrollFade from "@/components/ScrollFade";
+import HeroSlideshow from "@/components/HeroSlideshow";
 import { useLang } from "@/components/LanguageProvider";
 
 export default function HomePage() {
@@ -43,61 +44,8 @@ export default function HomePage() {
 
   return (
     <>
-      {/* HERO — full viewport, parallax-style background */}
-      <section className="relative h-screen min-h-[680px] w-full overflow-hidden bg-forest-950">
-        <Image
-          src="https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg"
-          alt="Vila Vaias Aparts — Târgu Neamț, Moldova, România"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover kenburns"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-forest-950/30 via-forest-950/40 to-forest-950/85" />
-        <div className="absolute inset-0 pattern-moldavian-dark opacity-40 mix-blend-overlay" />
-
-        <div className="absolute inset-0 flex items-center">
-          <div className="container-x">
-            <div className="max-w-3xl text-cream-50 animate-slide-up">
-              <div className="eyebrow-light mb-6">{t("hero.eyebrow")}</div>
-              <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[92px] leading-[0.98] tracking-tight text-cream-50 text-balance">
-                {t("hero.title1")}
-                <br className="hidden md:block" /> {t("hero.title2")}
-              </h1>
-              <p className="mt-7 font-serif text-xl md:text-2xl text-cream-100/95 max-w-2xl leading-relaxed">
-                {t("hero.subtitle")}
-              </p>
-              <p className="mt-3 italic font-serif text-lg text-cream-100/70">
-                {t("hero.subtitleEn")}
-              </p>
-              <div className="mt-10 flex flex-wrap gap-4">
-                <Link href="/apartments" className="btn-primary">
-                  {t("hero.cta1")}
-                </Link>
-                <Link href="/rezervare" className="btn-outline-light">
-                  {t("hero.cta2")}
-                </Link>
-                <Link
-                  href="/vila-completa"
-                  className="btn-outline-light border-walnut-300/80 text-walnut-100 hover:bg-walnut-500 hover:border-walnut-500 hover:text-cream-50"
-                >
-                  🏡 Rezervă toată vila
-                </Link>
-              </div>
-              <p className="mt-4 text-sm text-cream-100/80">
-                Prețuri de la <strong className="text-cream-50">295 RON/noapte</strong> · Toată vila — de la{" "}
-                <strong className="text-cream-50">2.665 RON/noapte</strong>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-cream-50/70 animate-fade-in">
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.32em]">{t("common.scroll")}</span>
-            <span className="block h-10 w-px bg-cream-100/50" />
-          </div>
-        </div>
-      </section>
+      {/* HERO — full viewport sliding photo gallery */}
+      <HeroSlideshow />
 
       {/* INTRO STRIP */}
       <section className="bg-cream-50 py-14 border-b border-stone-100 relative">
@@ -605,15 +553,16 @@ export default function HomePage() {
                   </span>
                 </div>
                 <h2 className="font-display text-4xl md:text-5xl text-cream-50 mb-5">
-                  Rezervă toată Vila Vaias — pentru 18 până la 28 de persoane.
+                  Rezervă toată Vila Vaias — pentru 22 până la 28 de persoane.
                 </h2>
                 <p className="font-serif text-lg text-cream-100/80 leading-relaxed mb-6">
-                  Toate cele 7 apartamente, o singură rezervare. Reduceri progresive pentru sejururi
-                  mai lungi — de la <strong className="text-cream-50">2.665 RON/noapte</strong> direct.
-                  Perfect pentru reuniuni de familie, retreaturi, team building.
+                  Toate cele 7 apartamente, o singură rezervare. De la{" "}
+                  <strong className="text-cream-50">2.065 RON/noapte</strong> (luni–joi) ·{" "}
+                  <strong className="text-cream-50">2.450 RON/noapte</strong> (weekend).
+                  Perfect pentru nunți, petreceri, team building și reuniuni de familie.
                 </p>
                 <ul className="space-y-2 mb-8 text-sm text-cream-100/80">
-                  <li>✓ 7 apartamente independente · 18–28 persoane</li>
+                  <li>✓ 7 apartamente independente · 22–28 persoane</li>
                   <li>✓ Reducere progresivă: 5% la 2 nopți → 17.5% la 7+ nopți</li>
                   <li>✓ Calculator preț pe site — vezi tariful tău imediat</li>
                   <li>✓ Cel mai bun preț — direct la noi, fără markup OTA</li>
@@ -690,7 +639,7 @@ export default function HomePage() {
               },
               {
                 q: "Cât costă o noapte la Vila Vaias Aparts?",
-                a: "Apartamentele single (1 dormitor) pornesc de la 295 RON/noapte, cele cu 2 dormitoare de la 595 RON. Aplicăm 10% reducere pentru 2-3 nopți, 15% pentru 4-6 nopți, 25% pentru 7+ nopți. Toată vila — de la 2.665 RON/noapte. Cel mai bun preț — direct pe WhatsApp."
+                a: "Apartamentele single (1 dormitor) pornesc de la 295 RON/noapte, cele cu 2 dormitoare de la 595 RON. Aplicăm 10% reducere pentru 2-3 nopți, 15% pentru 4-6 nopți, 25% pentru 7+ nopți. Toată vila — de la 2.065 RON/noapte (luni–joi), 2.450 RON/noapte (weekend). Cel mai bun preț — direct pe WhatsApp."
               },
               {
                 q: "La ce distanță sunteți de Cetatea Neamțului?",
@@ -745,7 +694,7 @@ export default function HomePage() {
                 {
                   "@type": "Question",
                   name: "Cât costă o noapte la Vila Vaias Aparts?",
-                  acceptedAnswer: { "@type": "Answer", text: "Apartamentele single pornesc de la 295 RON/noapte, cele cu 2 dormitoare de la 595 RON. Toată vila — de la 2.665 RON/noapte. Reduceri: 10% pentru 2-3 nopți, 15% pentru 4-6 nopți, 25% pentru 7+ nopți. Cel mai bun preț direct pe WhatsApp." }
+                  acceptedAnswer: { "@type": "Answer", text: "Apartamentele single pornesc de la 295 RON/noapte, cele cu 2 dormitoare de la 595 RON. Toată vila — de la 2.065 RON/noapte (luni–joi), 2.450 RON/noapte (weekend). Reduceri: 10% pentru 2-3 nopți, 15% pentru 4-6 nopți, 25% pentru 7+ nopți. Cel mai bun preț direct pe WhatsApp." }
                 },
                 {
                   "@type": "Question",
