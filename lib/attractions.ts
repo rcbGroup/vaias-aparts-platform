@@ -20,7 +20,7 @@ export const attractions: Attraction[] = [
     distance: "5 km",
     drivingTime: "10 min",
     category: "Cetate",
-    image: "https://images.unsplash.com/photo-1583425423320-d40d80d12af9?auto=format&fit=crop&w=1600&q=80"
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cetatea_Neamtului_-_exterior.jpg/1600px-Cetatea_Neamtului_-_exterior.jpg"
   },
   {
     slug: "manastirea-agapia",
@@ -32,7 +32,7 @@ export const attractions: Attraction[] = [
     distance: "10 km",
     drivingTime: "15 min",
     category: "Mănăstire",
-    image: "https://images.unsplash.com/photo-1559348349-86f1f65817fe?auto=format&fit=crop&w=1600&q=80"
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Manastirea_Agapia_-_panoramio.jpg/1600px-Manastirea_Agapia_-_panoramio.jpg"
   },
   {
     slug: "manastirea-varatec",
@@ -44,7 +44,7 @@ export const attractions: Attraction[] = [
     distance: "14 km",
     drivingTime: "20 min",
     category: "Mănăstire",
-    image: "https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?auto=format&fit=crop&w=1600&q=80"
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/M15_-_Manastir_Varatek%2C_monasko_selo.jpg/1600px-M15_-_Manastir_Varatek%2C_monasko_selo.jpg"
   },
   {
     slug: "muntele-ceahlau",
@@ -56,7 +56,7 @@ export const attractions: Attraction[] = [
     distance: "60 km",
     drivingTime: "45 min",
     category: "Munte",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80"
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Ceahlau-mountains-romania-august-2017-0001.jpg/1600px-Ceahlau-mountains-romania-august-2017-0001.jpg"
   },
   {
     slug: "cheile-bicazului",
@@ -68,7 +68,7 @@ export const attractions: Attraction[] = [
     distance: "75 km",
     drivingTime: "1 h",
     category: "Natură",
-    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1600&q=80"
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Bicaz_Gorges_%2843574913021%29.jpg/1600px-Bicaz_Gorges_%2843574913021%29.jpg"
   },
   {
     slug: "targu-neamt",
@@ -80,7 +80,7 @@ export const attractions: Attraction[] = [
     distance: "1 km",
     drivingTime: "5 min",
     category: "Oraș",
-    image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1600&q=80"
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Targu_Neamt%2C_foto_Curcan_Ionel_%281%29.jpg/1600px-Targu_Neamt%2C_foto_Curcan_Ionel_%281%29.jpg"
   },
   {
     slug: "casa-memoriala-creanga",
@@ -92,7 +92,7 @@ export const attractions: Attraction[] = [
     distance: "3 km",
     drivingTime: "7 min",
     category: "Oraș",
-    image: "https://images.unsplash.com/photo-1502780402662-acc01917ddc5?auto=format&fit=crop&w=1600&q=80"
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Casa_memorial%C4%83_Ion_Creang%C4%83_din_Humule%C8%99ti%2C_Targu_Neamt.jpg/1600px-Casa_memorial%C4%83_Ion_Creang%C4%83_din_Humule%C8%99ti%2C_Targu_Neamt.jpg"
   },
   {
     slug: "manastirea-neamt",
@@ -104,6 +104,62 @@ export const attractions: Attraction[] = [
     distance: "12 km",
     drivingTime: "18 min",
     category: "Mănăstire",
-    image: "https://images.unsplash.com/photo-1510906594845-bc082582c8cc?auto=format&fit=crop&w=1600&q=80"
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Neamt_Monastery.jpg/1600px-Neamt_Monastery.jpg"
+  }
+];
+
+/**
+ * Photo credits — all attraction images sourced from Wikimedia Commons under
+ * Creative Commons or Public Domain licenses. See app/credite-foto for full
+ * attribution required by CC-BY / CC-BY-SA licenses.
+ */
+export const attractionImageCredits = [
+  {
+    slug: "cetatea-neamt",
+    author: "DanyellM",
+    license: "CC-BY-SA-3.0-RO",
+    source: "https://commons.wikimedia.org/wiki/File:Cetatea_Neamtului_-_exterior.jpg"
+  },
+  {
+    slug: "manastirea-agapia",
+    author: "mihai moise",
+    license: "CC-BY-3.0",
+    source: "https://commons.wikimedia.org/wiki/File:Manastirea_Agapia_-_panoramio.jpg"
+  },
+  {
+    slug: "manastirea-varatec",
+    author: "Misa.stefanovic.07",
+    license: "CC-BY-SA-4.0",
+    source: "https://commons.wikimedia.org/wiki/File:M15_-_Manastir_Varatek,_monasko_selo.jpg"
+  },
+  {
+    slug: "muntele-ceahlau",
+    author: "Giuseppe Milo",
+    license: "CC-BY-2.0",
+    source: "https://commons.wikimedia.org/wiki/File:Ceahlau-mountains-romania-august-2017-0001.jpg"
+  },
+  {
+    slug: "cheile-bicazului",
+    author: "Robert Anders",
+    license: "CC-BY-2.0",
+    source: "https://commons.wikimedia.org/wiki/File:Bicaz_Gorges_(43574913021).jpg"
+  },
+  {
+    slug: "targu-neamt",
+    author: "Curcan Ionel",
+    license: "CC-BY-SA-4.0",
+    source: "https://commons.wikimedia.org/wiki/File:Targu_Neamt,_foto_Curcan_Ionel_(1).jpg"
+  },
+  {
+    slug: "casa-memoriala-creanga",
+    author: "Cipriancobuz",
+    license: "CC-BY-SA-3.0",
+    source: "https://commons.wikimedia.org/wiki/File:Casa_memorial%C4%83_Ion_Creang%C4%83_din_Humule%C8%99ti,_Targu_Neamt.jpg"
+  },
+  {
+    slug: "manastirea-neamt",
+    author: "Acristianas (modified by Ghirlandajo)",
+    license: "CC-BY-SA-4.0",
+    source: "https://commons.wikimedia.org/wiki/File:Neamt_Monastery.jpg"
   }
 ];

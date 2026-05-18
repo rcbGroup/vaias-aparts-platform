@@ -6,7 +6,8 @@ const nextConfig = {
       { protocol: "https", hostname: "plus.unsplash.com" },
       { protocol: "https", hostname: "vaiasaparts.ro" },
       { protocol: "https", hostname: "www.vaiasaparts.ro" },
-      { protocol: "https", hostname: "i.ytimg.com" }
+      { protocol: "https", hostname: "i.ytimg.com" },
+      { protocol: "https", hostname: "upload.wikimedia.org" }
     ]
   },
   reactStrictMode: true,

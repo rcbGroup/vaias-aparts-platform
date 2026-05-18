@@ -27,8 +27,8 @@ export default function ExperientsePage() {
       {/* ─── HERO ─────────────────────────────────────────────────────── */}
       <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-forest-950">
         <Image
-          src="https://images.unsplash.com/photo-1559348349-86f1f65817fe?auto=format&fit=crop&w=2400&q=80"
-          alt="Moldova — peisaj de excepție"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Ceahlau-mountains-romania-august-2017-0001.jpg/1920px-Ceahlau-mountains-romania-august-2017-0001.jpg"
+          alt="Masivul Ceahlău — Moldova, peisaj de excepție"
           fill
           className="object-cover kenburns opacity-30"
           priority
@@ -81,7 +81,7 @@ export default function ExperientsePage() {
             <div className="relative">
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-card">
                 <Image
-                  src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80"
+                  src="https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_11.jpg"
                   alt="Vila Vaias Aparts — exterior"
                   fill
                   className="object-cover card-lift"

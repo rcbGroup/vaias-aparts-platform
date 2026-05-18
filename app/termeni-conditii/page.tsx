@@ -13,7 +13,7 @@ export default function TermsPage() {
         eyebrow="Legal"
         title="Termeni și condiții"
         subtitle="Reguli simple, scrise pe înțelesul tuturor — pentru ca sejurul tău să fie liniștit pentru toată lumea."
-        image="https://images.unsplash.com/photo-1502780402662-acc01917ddc5?auto=format&fit=crop&w=2400&q=85"
+        image="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Ceahlau-mountains-romania-august-2017-0001.jpg/1920px-Ceahlau-mountains-romania-august-2017-0001.jpg"
       />
 
       <section className="section bg-cream-50">

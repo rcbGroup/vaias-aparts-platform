@@ -169,6 +169,7 @@ export default function Footer() {
             <Link href="/politica-confidentialitate" className="hover:text-cream-50">{t("footer.privacy")}</Link>
             <Link href="/termeni-conditii" className="hover:text-cream-50">{t("footer.terms")}</Link>
             <Link href="/politica-cookies" className="hover:text-cream-50">Politică Cookies</Link>
+            <Link href="/credite-foto" className="hover:text-cream-50">Credite foto</Link>
           </div>
         </div>
       </div>
