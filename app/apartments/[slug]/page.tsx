@@ -471,6 +471,23 @@ export default async function ApartmentPage({
               <p>✓ <strong>Animale acceptate</strong> la cerere, fără cost suplimentar</p>
               <p>✓ <strong>Factură fiscală</strong> disponibilă la cerere</p>
             </div>
+
+            {/* Cross-sell: whole villa */}
+            <Link
+              href="/vila-completa"
+              className="mt-4 block rounded-xl border border-walnut-300 bg-walnut-50 p-4 hover:bg-walnut-100 transition group"
+            >
+              <div className="text-xs uppercase tracking-wider text-walnut-700 font-semibold mb-1">
+                🏡 Grup mai mare?
+              </div>
+              <p className="text-sm text-walnut-900 leading-snug">
+                <strong>Sau închiriază întreaga vilă</strong> — 7 apartamente, 22–28 persoane,
+                de la 2.065 RON/noapte.
+              </p>
+              <span className="mt-2 inline-block text-xs font-medium text-walnut-700 group-hover:underline">
+                Vezi pagina întregii vile →
+              </span>
+            </Link>
           </div>
         </aside>
       </section>
