@@ -4,8 +4,19 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import PageHero from "@/components/PageHero";
 import ScrollFade from "@/components/ScrollFade";
-
-const BASE = "https://www.vaiasaparts.ro/wp-content/uploads";
+import {
+  APT1_PHOTOS,
+  APT2_PHOTOS,
+  APT3_PHOTOS,
+  APT4_PHOTOS,
+  APT5_PHOTOS,
+  APT6_PHOTOS,
+  APT7_PHOTOS,
+  EXTERIOR_PHOTOS,
+  DRONE_DAY_PHOTOS,
+  DRONE_NIGHT_PHOTOS,
+  HERO_EXTERIOR_PRIMARY,
+} from "@/lib/photos";
 
 type GalleryImage = { src: string; alt: string; category: string };
 
@@ -19,64 +30,60 @@ const galleryCategories = [
   { id: "apt6", label: "Apartament 6" },
   { id: "apt7", label: "Apartament 7 — parter, fără trepte" },
   { id: "exterior", label: "Exterior și curte" },
-  { id: "bucatarie", label: "Bucătăria pentru Toți" },
+  { id: "drone", label: "Vedere aeriană (dronă)" },
 ];
 
 const galleryImages: GalleryImage[] = [
-  // Apartament 1 (19 images)
-  ...Array.from({ length: 19 }, (_, i) => ({
-    src: `${BASE}/2022/12/Apartament1_VaiasaAparts_${String(i + 1).padStart(2, "0")}.webp`,
+  ...APT1_PHOTOS.map((src, i) => ({
+    src,
     alt: `Apartament 1 Vila Vaias Aparts Târgu Neamț — fotografie ${i + 1}`,
     category: "apt1",
   })),
-  // Apartament 2 (14 images)
-  ...Array.from({ length: 14 }, (_, i) => ({
-    src: `${BASE}/2022/12/Apartament2_VaiasaAparts_${String(i + 1).padStart(2, "0")}.webp`,
+  ...APT2_PHOTOS.map((src, i) => ({
+    src,
     alt: `Apartament 2 Vila Vaias Aparts Târgu Neamț — fotografie ${i + 1}`,
     category: "apt2",
   })),
-  // Apartament 3 (17 images)
-  ...Array.from({ length: 17 }, (_, i) => ({
-    src: `${BASE}/2022/12/Apartament3_VaiasaAparts_${String(i + 1).padStart(2, "0")}.webp`,
-    alt: `Apartament 3 Vila Vaias Aparts Târgu Neamț — fotografie ${i + 1}`,
+  ...APT3_PHOTOS.map((src, i) => ({
+    src,
+    alt: `Apartament 3 Vila Vaias Aparts Târgu Neamț — cel mai mare apartament — fotografie ${i + 1}`,
     category: "apt3",
   })),
-  // Apartament 4 (10 images)
-  ...Array.from({ length: 10 }, (_, i) => ({
-    src: `${BASE}/2022/12/Apartament4_VaiasaAparts_${String(i + 1).padStart(2, "0")}.webp`,
-    alt: `Apartament 4 Vila Vaias Aparts Târgu Neamț — fotografie ${i + 1}`,
+  ...APT4_PHOTOS.map((src, i) => ({
+    src,
+    alt: `Apartament 4 Vila Vaias Aparts Târgu Neamț — 2 dormitoare cu patio — fotografie ${i + 1}`,
     category: "apt4",
   })),
-  // Apartament 5 (17 images)
-  ...Array.from({ length: 17 }, (_, i) => ({
-    src: `${BASE}/2022/12/Apartament5_VaiasaAparts_${String(i + 1).padStart(2, "0")}.webp`,
-    alt: `Apartament 5 Vila Vaias Aparts Târgu Neamț — aer condiționat — fotografie ${i + 1}`,
+  ...APT5_PHOTOS.map((src, i) => ({
+    src,
+    alt: `Apartament 5 Vila Vaias Aparts Târgu Neamț — aer condiționat, etaj 2 — exterior ${i + 1}`,
     category: "apt5",
   })),
-  // Apartament 6 (11 images, starts at _02)
-  ...Array.from({ length: 11 }, (_, i) => ({
-    src: `${BASE}/2022/12/Apartament6_VaiasaAparts_${String(i + 2).padStart(2, "0")}.webp`,
-    alt: `Apartament 6 Vila Vaias Aparts Târgu Neamț — aer condiționat — fotografie ${i + 2}`,
+  ...APT6_PHOTOS.map((src, i) => ({
+    src,
+    alt: `Apartament 6 Vila Vaias Aparts Târgu Neamț — aer condiționat, etaj 2 — exterior ${i + 1}`,
     category: "apt6",
   })),
-  // Apartament 7 (6 images)
-  { src: "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/516492579_733556772950876_3694245894075396123_n.webp", alt: "Apartament 7 Vila Vaias Aparts — parter fără trepte — dormitor cu pat dublu standard", category: "apt7" },
-  { src: "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518199043_733557542950799_1039072054897679506_n.webp", alt: "Apartament 7 Vila Vaias Aparts — living cu canapea extensibilă", category: "apt7" },
-  { src: "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518272256_733556742950879_6883338769382424532_n.webp", alt: "Apartament 7 Vila Vaias Aparts — baie privată", category: "apt7" },
-  { src: "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518277917_733556719617548_6039837942695933401_n.webp", alt: "Apartament 7 Vila Vaias Aparts — terasă privată", category: "apt7" },
-  { src: "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518333555_733556406284246_5206156284237423621_n.webp", alt: "Apartament 7 Vila Vaias Aparts — detaliu interior", category: "apt7" },
-  { src: "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518335038_733557552950798_4553339340452107002_n.webp", alt: "Apartament 7 Vila Vaias Aparts — parter accesibil", category: "apt7" },
-  // Exterior
-  { src: "https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg", alt: "Vila Vaias Aparts — vedere exterior față, flori pe balcoane, ultracentral Târgu Neamț", category: "exterior" },
-  { src: `${BASE}/2022/12/Vaias_aparts_16.jpg`, alt: "Vila Vaias Aparts — exterior și curte, Str. Sfântul Lazăr nr. 1, Târgu Neamț", category: "exterior" },
-  { src: `${BASE}/2022/12/Vaias_aparts_11.jpg`, alt: "Vila Vaias Aparts — curtea vilei, parcare gratuită", category: "exterior" },
-  { src: `${BASE}/2022/12/Vaias_aparts_12.jpg`, alt: "Vila Vaias Aparts — intrare în vilă, Târgu Neamț", category: "exterior" },
-  { src: `${BASE}/2022/12/Vaias_aparts_7.jpg`, alt: "Vila Vaias Aparts — vedere spre vilă din curte", category: "exterior" },
-  { src: `${BASE}/2022/12/Vaias_aparts_8.jpg`, alt: "Vila Vaias Aparts — exterior vilă boutique Târgu Neamț", category: "exterior" },
-  // Bucătăria pentru Toți — bucătăria comună la parter
-  { src: `${BASE}/2022/12/Vaias_aparts_4.jpg`, alt: "Bucătăria pentru Toți — bucătăria comună Vila Vaias Aparts, parter, complet utilată", category: "bucatarie" },
-  { src: `${BASE}/2022/12/Vaias_aparts_5.jpg`, alt: "Bucătăria pentru Toți — zona de preparare mese, disponibilă tuturor oaspeților Vila Vaias Aparts", category: "bucatarie" },
-  { src: `${BASE}/2022/12/Vaias_aparts_6.jpg`, alt: "Bucătăria pentru Toți — Vila Vaias Aparts, parter, Târgu Neamț", category: "bucatarie" },
+  ...APT7_PHOTOS.map((src, i) => ({
+    src,
+    alt: `Apartament 7 Vila Vaias Aparts — parter fără trepte — exterior ${i + 1}`,
+    category: "apt7",
+  })),
+  ...EXTERIOR_PHOTOS.map((src, i) => ({
+    src,
+    alt: `Vila Vaias Aparts — fațadă boutique, Str. Sfântul Lazăr nr. 1, Târgu Neamț — fotografie ${i + 1}`,
+    category: "exterior",
+  })),
+  ...DRONE_DAY_PHOTOS.map((src, i) => ({
+    src,
+    alt: `Vila Vaias Aparts — vedere aeriană dronă în Târgu Neamț, la poalele Cetății Neamțului — fotografie ${i + 1}`,
+    category: "drone",
+  })),
+  ...DRONE_NIGHT_PHOTOS.map((src, i) => ({
+    src,
+    alt: `Vila Vaias Aparts — vedere aeriană pe timp de noapte, Târgu Neamț — fotografie ${i + 1}`,
+    category: "drone",
+  })),
 ];
 
 export default function GalleryClient() {
@@ -105,13 +112,15 @@ export default function GalleryClient() {
     };
   }, [lightbox, images.length]);
 
+  const apt567Active = active === "apt5" || active === "apt6" || active === "apt7";
+
   return (
     <>
       <PageHero
         eyebrow="Galerie foto"
         title="O privire peste casele noastre."
         subtitle="Apartamente, exterior, curte și împrejurimi — Vila Vaias Aparts în imagini."
-        image="https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg"
+        image={HERO_EXTERIOR_PRIMARY}
       />
 
       <section className="section bg-cream-50">
@@ -134,6 +143,19 @@ export default function GalleryClient() {
               </button>
             ))}
           </div>
+
+          {apt567Active && (
+            <div className="mb-8 rounded-2xl border border-walnut-200 bg-walnut-50 p-5 max-w-3xl mx-auto text-center">
+              <div className="font-display text-lg text-walnut-700 mb-1">
+                📸 Fotografii interior noi în curând
+              </div>
+              <p className="text-sm text-forest-800/85">
+                Apartamentele 5, 6 și 7 sunt în programul nostru de fotografie profesională.
+                Până atunci, vedeți aici exteriorul și amplasarea pe vilă.{" "}
+                {active === "apt5" && "Pentru Apartament 5 aveți disponibil un tur virtual 3D pe pagina dedicată."}
+              </p>
+            </div>
+          )}
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {images.map((img, i) => (

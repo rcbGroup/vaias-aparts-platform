@@ -26,11 +26,11 @@ export type LandingPage = {
   whatsappMessage: string;
 };
 
-const VILLA_PHOTO_1 = "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_11.jpg";
-const VILLA_PHOTO_2 = "https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg";
-const VILLA_PHOTO_3 = "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_12.jpg";
-const VILLA_PHOTO_4 = "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_7.jpg";
-const VILLA_PHOTO_5 = "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_16.jpg";
+const VILLA_PHOTO_1 = "/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg";
+const VILLA_PHOTO_2 = "/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-2.jpg";
+const VILLA_PHOTO_3 = "/gallery/vila-vaias-aparts-targu-neamt-vedere-aeriana-drona-1.jpg";
+const VILLA_PHOTO_4 = "/gallery/vila-vaias-aparts-targu-neamt-vedere-aeriana-noapte-1.jpg";
+const VILLA_PHOTO_5 = "/gallery/vila-vaias-aparts-targu-neamt-vedere-aeriana-drona-5.jpg";
 
 export const landingPages: LandingPage[] = [
   {

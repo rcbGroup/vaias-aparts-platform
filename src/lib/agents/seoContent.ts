@@ -249,7 +249,7 @@ export function generateBlogPost(req: SEOBlogRequest): SEOBlogResult {
       name: "Vila Vaias Aparts",
       logo: {
         "@type": "ImageObject",
-        url: "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/vaias-aparts-logo.png",
+        url: "https://www.vaiasaparts.ro/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg",
       },
     },
     mainEntityOfPage: `https://www.vaiasaparts.ro/blog/${slug}`,
@@ -276,7 +276,7 @@ export function generateBlogPost(req: SEOBlogRequest): SEOBlogResult {
     body,
     keywords,
     schemaJsonLd,
-    ogImage: apartment?.heroImage ?? "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_16.jpg",
+    ogImage: apartment?.heroImage ?? "https://www.vaiasaparts.ro/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg",
     estimatedWordCount: wordCount,
   };
 }

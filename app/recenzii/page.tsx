@@ -17,7 +17,7 @@ export default function ReviewsPage() {
         eyebrow="Recenzii"
         title="Ce spun oaspeții noștri."
         subtitle="99 recenzii Google cu 5.0 stele. Scor 9.4 pe Booking.com. Iată de ce ne aleg din nou și din nou."
-        image="https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg"
+        image="/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg"
       />
 
       {/* VERIFIED PLATFORM BADGES */}

@@ -15,7 +15,7 @@ export default function ApartmentsPage() {
         eyebrow={t("apartments.heroEyebrow")}
         title={t("apartments.heroTitle")}
         subtitle={t("apartments.heroSubtitle")}
-        image="https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg"
+        image="/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg"
       />
 
       <section className="section bg-cream-50">

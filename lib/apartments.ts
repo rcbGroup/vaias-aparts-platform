@@ -58,7 +58,18 @@ export function priceForChannel(apt: Apartment, channel: ChannelKey): number {
   return Math.round(apt.pricePerNightRON * (1 + markup / 100));
 }
 
-const BASE = "https://www.vaiasaparts.ro/wp-content/uploads";
+import {
+  APT1_PHOTOS,
+  APT2_PHOTOS,
+  APT3_PHOTOS,
+  APT4_PHOTOS,
+  APT5_PHOTOS,
+  APT6_PHOTOS,
+  APT7_PHOTOS,
+  EXTERIOR_PHOTOS,
+  DRONE_DAY_PHOTOS,
+  DRONE_NIGHT_PHOTOS,
+} from "./photos";
 
 const defaultRules = [
   "Check-in: după ora 14:00",
@@ -96,7 +107,7 @@ export const apartments: Apartment[] = [
     hasPrivateKitchen: true,
     pricePerNightRON: 295,
     pricePerNightEUR: 0,
-    weekendPriceRON: 320,
+    weekendPriceRON: 350,
     weekendPriceEUR: 0,
     extraPersonRON: 50,
     weeklyDiscountPct: 15,
@@ -134,10 +145,8 @@ export const apartments: Apartment[] = [
       { name: "Terasă privată", description: "Spațiu exterior privat" }
     ],
     rules: defaultRules,
-    heroImage: `${BASE}/2022/12/Apartament1_VaiasaAparts_01.webp`,
-    gallery: Array.from({ length: 19 }, (_, i) =>
-      `${BASE}/2022/12/Apartament1_VaiasaAparts_${String(i + 1).padStart(2, "0")}.webp`
-    )
+    heroImage: APT1_PHOTOS[0],
+    gallery: APT1_PHOTOS,
   },
   {
     slug: "apartament-2",
@@ -162,7 +171,7 @@ export const apartments: Apartment[] = [
     hasPrivateKitchen: true,
     pricePerNightRON: 295,
     pricePerNightEUR: 0,
-    weekendPriceRON: 320,
+    weekendPriceRON: 350,
     weekendPriceEUR: 0,
     extraPersonRON: 50,
     weeklyDiscountPct: 15,
@@ -196,10 +205,8 @@ export const apartments: Apartment[] = [
       { name: "Terasă privată", description: "Spațiu exterior privat" }
     ],
     rules: defaultRules,
-    heroImage: `${BASE}/2022/12/Apartament2_VaiasaAparts_01.webp`,
-    gallery: Array.from({ length: 14 }, (_, i) =>
-      `${BASE}/2022/12/Apartament2_VaiasaAparts_${String(i + 1).padStart(2, "0")}.webp`
-    )
+    heroImage: APT2_PHOTOS[0],
+    gallery: APT2_PHOTOS,
   },
   {
     slug: "apartament-3",
@@ -224,7 +231,7 @@ export const apartments: Apartment[] = [
     hasPrivateKitchen: true,
     pricePerNightRON: 595,
     pricePerNightEUR: 0,
-    weekendPriceRON: 620,
+    weekendPriceRON: 695,
     weekendPriceEUR: 0,
     extraPersonRON: 50,
     weeklyDiscountPct: 15,
@@ -262,10 +269,8 @@ export const apartments: Apartment[] = [
       { name: "Terasă privată", description: "Masă și scaune exterioare" }
     ],
     rules: defaultRules,
-    heroImage: `${BASE}/2022/12/Apartament3_VaiasaAparts_01.webp`,
-    gallery: Array.from({ length: 17 }, (_, i) =>
-      `${BASE}/2022/12/Apartament3_VaiasaAparts_${String(i + 1).padStart(2, "0")}.webp`
-    )
+    heroImage: APT3_PHOTOS[0],
+    gallery: APT3_PHOTOS,
   },
   {
     slug: "apartament-4",
@@ -290,7 +295,7 @@ export const apartments: Apartment[] = [
     hasPrivateKitchen: true,
     pricePerNightRON: 595,
     pricePerNightEUR: 0,
-    weekendPriceRON: 620,
+    weekendPriceRON: 695,
     weekendPriceEUR: 0,
     extraPersonRON: 50,
     weeklyDiscountPct: 15,
@@ -325,10 +330,8 @@ export const apartments: Apartment[] = [
       { name: "Patio/terasă privată", description: "Spațiu exterior privat" }
     ],
     rules: defaultRules,
-    heroImage: `${BASE}/2022/12/Apartament4_VaiasaAparts_01.webp`,
-    gallery: Array.from({ length: 10 }, (_, i) =>
-      `${BASE}/2022/12/Apartament4_VaiasaAparts_${String(i + 1).padStart(2, "0")}.webp`
-    )
+    heroImage: APT4_PHOTOS[0],
+    gallery: APT4_PHOTOS,
   },
   {
     slug: "apartament-5",
@@ -353,7 +356,7 @@ export const apartments: Apartment[] = [
     hasPrivateKitchen: true,
     pricePerNightRON: 295,
     pricePerNightEUR: 0,
-    weekendPriceRON: 320,
+    weekendPriceRON: 350,
     weekendPriceEUR: 0,
     extraPersonRON: 50,
     weeklyDiscountPct: 15,
@@ -385,10 +388,8 @@ export const apartments: Apartment[] = [
       { name: "Baie privată", description: "Duș, lavoar, WC, prosoape incluse" }
     ],
     rules: defaultRules,
-    heroImage: `${BASE}/2022/12/Apartament5_VaiasaAparts_01.webp`,
-    gallery: Array.from({ length: 17 }, (_, i) =>
-      `${BASE}/2022/12/Apartament5_VaiasaAparts_${String(i + 1).padStart(2, "0")}.webp`
-    ),
+    heroImage: APT5_PHOTOS[0],
+    gallery: APT5_PHOTOS,
     matterportId: "6xEQUdBSM9w"
   },
   {
@@ -414,7 +415,7 @@ export const apartments: Apartment[] = [
     hasPrivateKitchen: true,
     pricePerNightRON: 295,
     pricePerNightEUR: 0,
-    weekendPriceRON: 320,
+    weekendPriceRON: 350,
     weekendPriceEUR: 0,
     extraPersonRON: 50,
     weeklyDiscountPct: 15,
@@ -446,20 +447,8 @@ export const apartments: Apartment[] = [
       { name: "Baie privată", description: "Duș, lavoar, WC, prosoape incluse" }
     ],
     rules: defaultRules,
-    heroImage: `${BASE}/2022/12/Apartament6_VaiasaAparts_02.webp`,
-    gallery: [
-      `${BASE}/2022/12/Apartament6_VaiasaAparts_02.webp`,
-      `${BASE}/2022/12/Apartament6_VaiasaAparts_03.webp`,
-      `${BASE}/2022/12/Apartament6_VaiasaAparts_04.webp`,
-      `${BASE}/2022/12/Apartament6_VaiasaAparts_05.webp`,
-      `${BASE}/2022/12/Apartament6_VaiasaAparts_06.webp`,
-      `${BASE}/2022/12/Apartament6_VaiasaAparts_07.webp`,
-      `${BASE}/2022/12/Apartament6_VaiasaAparts_08.webp`,
-      `${BASE}/2022/12/Apartament6_VaiasaAparts_09.webp`,
-      `${BASE}/2022/12/Apartament6_VaiasaAparts_10.webp`,
-      `${BASE}/2022/12/Apartament6_VaiasaAparts_11.webp`,
-      `${BASE}/2022/12/Apartament6_VaiasaAparts_12.webp`
-    ]
+    heroImage: APT6_PHOTOS[0],
+    gallery: APT6_PHOTOS,
   },
   {
     slug: "apartament-7",
@@ -484,7 +473,7 @@ export const apartments: Apartment[] = [
     hasPrivateKitchen: false,
     pricePerNightRON: 295,
     pricePerNightEUR: 0,
-    weekendPriceRON: 320,
+    weekendPriceRON: 350,
     weekendPriceEUR: 0,
     extraPersonRON: 50,
     weeklyDiscountPct: 15,
@@ -529,15 +518,8 @@ export const apartments: Apartment[] = [
       "Persoană suplimentară pe canapeaua extensibilă: +50 RON/noapte",
       "Acces la bucătăria mare comunitară de alături — inclus"
     ],
-    heroImage: "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/516492579_733556772950876_3694245894075396123_n.webp",
-    gallery: [
-      "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/516492579_733556772950876_3694245894075396123_n.webp",
-      "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518199043_733557542950799_1039072054897679506_n.webp",
-      "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518272256_733556742950879_6883338769382424532_n.webp",
-      "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518277917_733556719617548_6039837942695933401_n.webp",
-      "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518333555_733556406284246_5206156284237423621_n.webp",
-      "https://www.vaiasaparts.ro/wp-content/uploads/2026/04/518335038_733557552950798_4553339340452107002_n.webp"
-    ]
+    heroImage: APT7_PHOTOS[0],
+    gallery: APT7_PHOTOS,
   }
 ];
 
@@ -594,16 +576,7 @@ export function calculatePriceRON(
 }
 
 export const VILLA_PROPERTY_PHOTOS = [
-  `${BASE}/2022/12/Vaias_aparts_16.jpg`,
-  `${BASE}/2022/12/Vaias_aparts_11.jpg`,
-  `${BASE}/2022/12/Vaias_aparts_12.jpg`,
-  `${BASE}/2022/12/Vaias_aparts_7.jpg`,
-  `${BASE}/2022/12/Vaias_aparts_8.jpg`,
-  `${BASE}/2022/12/Vaias_aparts_6.jpg`,
-  `${BASE}/2022/12/Vaias_aparts_5.jpg`,
-  `${BASE}/2022/12/Vaias_aparts_4.jpg`,
-  `${BASE}/2022/12/Vaias_8.jpg`,
-  `${BASE}/2022/12/Vaias_7.jpg`,
-  `${BASE}/2022/12/Vaias_6.jpg`,
-  `${BASE}/2022/12/Vaias_4.jpg`
+  ...EXTERIOR_PHOTOS,
+  ...DRONE_DAY_PHOTOS.slice(0, 4),
+  ...DRONE_NIGHT_PHOTOS,
 ];

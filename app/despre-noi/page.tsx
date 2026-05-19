@@ -35,7 +35,7 @@ export default function AboutPage() {
         eyebrow="Cine suntem"
         title="Vila Vaias Aparts — o casă deschisă în inima Moldovei."
         subtitle="7 apartamente boutique ultracentral în Târgu Neamț, la poalele Cetății Neamțului. Clasificare oficială 4 stele."
-        image="https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg"
+        image="/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg"
       />
 
       {/* STORY */}

@@ -249,7 +249,7 @@ export default function HomePage() {
           <ScrollFade className="lg:col-span-5 relative">
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-card">
               <Image
-                src="https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_12.jpg"
+                src="/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-2.jpg"
                 alt="Vila Vaias Aparts — curte și exterior"
                 fill
                 sizes="(max-width: 1024px) 100vw, 40vw"
@@ -258,7 +258,7 @@ export default function HomePage() {
             </div>
             <div className="absolute -bottom-10 -right-6 hidden md:block w-56 aspect-square rounded-2xl overflow-hidden shadow-card border-8 border-cream-50">
               <Image
-                src="https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Apartament1_VaiasaAparts_01.webp"
+                src="/gallery/vila-vaias-aparts-targu-neamt-apartament-1-living-1.jpg"
                 alt="Interior apartament Vaias Aparts"
                 fill
                 sizes="220px"
@@ -334,7 +334,7 @@ export default function HomePage() {
       <section className="section bg-forest-900 text-cream-50 relative overflow-hidden">
         <div className="absolute inset-0 opacity-15">
           <Image
-            src="https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_7.jpg"
+            src="/gallery/vila-vaias-aparts-targu-neamt-vedere-aeriana-drona-1.jpg"
             alt=""
             fill
             sizes="100vw"
@@ -423,7 +423,7 @@ export default function HomePage() {
                 desc: "Cea mai bine notată cazare din Târgu Neamț. 99 de recenzii Google la 5.0 stele. Booking.com 9.4. Fiecare apartament — un spațiu al tău.",
                 cta: "Alege apartamentul",
                 href: "/apartments",
-                photo: "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_11.jpg"
+                photo: "/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg"
               },
               {
                 num: "02",
@@ -736,7 +736,7 @@ export default function HomePage() {
       <section className="relative py-24 md:py-32 overflow-hidden bg-walnut-900">
         <div className="absolute inset-0 opacity-30">
           <Image
-            src="https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg"
+            src="/gallery/vila-vaias-aparts-targu-neamt-vedere-aeriana-noapte-1.jpg"
             alt="Vila Vaias Aparts exterior"
             fill
             sizes="100vw"

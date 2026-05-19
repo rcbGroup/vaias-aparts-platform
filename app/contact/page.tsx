@@ -15,7 +15,7 @@ export default function ContactPage() {
         eyebrow="Contact"
         title="Vorbește direct cu noi."
         subtitle="Răspundem la toate mesajele în maxim 4 ore — și mai repede dacă scrii pe WhatsApp."
-        image="https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg"
+        image="/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg"
       />
 
       <section className="section bg-cream-50">

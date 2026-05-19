@@ -81,7 +81,7 @@ export default function ExperientsePage() {
             <div className="relative">
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-card">
                 <Image
-                  src="https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_11.jpg"
+                  src="/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg"
                   alt="Vila Vaias Aparts — exterior"
                   fill
                   className="object-cover card-lift"

@@ -45,7 +45,7 @@ export const metadata: Metadata = {
       "7 apartamente boutique ultracentral în Târgu Neamț, la poalele Cetății Neamțului. Rezervare directă.",
     images: [
       {
-        url: "https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg",
+        url: "https://www.vaiasaparts.ro/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg",
         width: 1200,
         height: 630,
         alt: "Vila Vaias Aparts — Cazare boutique Târgu Neamț"
@@ -135,13 +135,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               description:
                 "Vila Vaias Aparts — 7 apartamente boutique ultracentral în Târgu Neamț, la poalele Cetății Neamțului. Cazare 4 stele, clasificare certificat nr. 35332. Aproape de mănăstirile Agapia, Văratec, Neamț și de masivul Ceahlău.",
               image: [
-                "https://vaiasaparts.ro/wp-content/uploads/2026/04/352052228_271844338750141_8938143583258797514_n.jpg",
-                "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_11.jpg",
-                "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_12.jpg",
-                "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_7.jpg",
-                "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_16.jpg"
+                "https://www.vaiasaparts.ro/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg",
+                "https://www.vaiasaparts.ro/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-2.jpg",
+                "https://www.vaiasaparts.ro/gallery/vila-vaias-aparts-targu-neamt-vedere-aeriana-drona-1.jpg",
+                "https://www.vaiasaparts.ro/gallery/vila-vaias-aparts-targu-neamt-vedere-aeriana-noapte-1.jpg",
+                "https://www.vaiasaparts.ro/gallery/vila-vaias-aparts-targu-neamt-apartament-1-living-1.jpg"
               ],
-              logo: "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_11.jpg",
+              logo: "https://www.vaiasaparts.ro/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg",
               "@id": "https://www.vaiasaparts.ro",
               url: "https://www.vaiasaparts.ro",
               telephone: ["+40752388388", "+40738345330"],
@@ -206,7 +206,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 "@type": "AggregateOffer",
                 priceCurrency: "RON",
                 lowPrice: 295,
-                highPrice: 620,
+                highPrice: 695,
                 offerCount: 7,
                 availability: "https://schema.org/InStock"
               },
@@ -237,7 +237,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               name: "Vila Vaias Aparts",
               legalName: "Vaia Rustic SRL",
               url: "https://www.vaiasaparts.ro",
-              logo: "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_11.jpg",
+              logo: "https://www.vaiasaparts.ro/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg",
               taxID: "36258605",
               contactPoint: [
                 {
@@ -277,7 +277,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               publisher: {
                 "@type": "Organization",
                 name: "Vila Vaias Aparts",
-                logo: "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_11.jpg"
+                logo: "https://www.vaiasaparts.ro/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg"
               }
             })
           }}

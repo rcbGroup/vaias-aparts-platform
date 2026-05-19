@@ -70,7 +70,7 @@ export default function ReservationPage() {
         eyebrow="Rezervare"
         title="Începe-ți povestea aici."
         subtitle="Completează datele și revenim cu confirmarea în câteva ore — direct de la noi, cu cel mai bun preț."
-        image="https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Apartament1_VaiasaAparts_01.webp"
+        image="/gallery/vila-vaias-aparts-targu-neamt-apartament-1-living-1.jpg"
       />
 
       <section className="section bg-cream-50">

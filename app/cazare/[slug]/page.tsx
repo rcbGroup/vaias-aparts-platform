@@ -74,7 +74,7 @@ export default function LandingPage({ params }: { params: { slug: string } }) {
       name: "Vila Vaias Aparts",
       logo: {
         "@type": "ImageObject",
-        url: "https://www.vaiasaparts.ro/wp-content/uploads/2022/12/Vaias_aparts_11.jpg"
+        url: "https://www.vaiasaparts.ro/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg"
       }
     },
     mainEntityOfPage: `https://www.vaiasaparts.ro/cazare/${params.slug}`
