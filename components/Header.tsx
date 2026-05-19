@@ -34,8 +34,12 @@ export default function Header() {
 
   return (
     <>
-      {/* Contact bar — single line on all sizes */}
-      <div className="fixed inset-x-0 top-0 z-[60] flex items-center justify-center xl:justify-end gap-3 xl:gap-6 bg-forest-900/95 backdrop-blur px-4 xl:px-8 py-1.5 text-xs text-cream-100/80">
+      {/* Contact bar — semi-transparent at top so the hero shows through, opaque on scroll */}
+      <div
+        className={`fixed inset-x-0 top-0 z-[60] flex items-center justify-center xl:justify-end gap-3 xl:gap-6 backdrop-blur px-4 xl:px-8 py-1.5 text-xs text-cream-100/80 transition-colors duration-500 ${
+          dark ? "bg-forest-900/95" : "bg-forest-900/30"
+        }`}
+      >
         {/* Primary always visible */}
         <a
           href="tel:+40752388388"
@@ -88,10 +92,10 @@ export default function Header() {
             : "bg-transparent py-5 top-[28px] lg:top-[30px]"
         }`}
       >
-        <div className="container-x flex items-center justify-between gap-4 2xl:gap-6">
-          <Link href="/" className="group flex items-center gap-3 shrink-0">
+        <div className="container-x flex items-center justify-between gap-3 2xl:gap-6">
+          <Link href="/" className="group flex items-center gap-2.5 2xl:gap-3 shrink-0">
             <div
-              className={`grid h-10 w-10 place-items-center rounded-full border transition-colors duration-500 ${
+              className={`grid h-9 w-9 2xl:h-10 2xl:w-10 place-items-center rounded-full border transition-colors duration-500 ${
                 dark
                   ? "border-forest-700/30 bg-forest-700 text-cream-50"
                   : "border-cream-50/60 bg-cream-50/10 text-cream-50"
@@ -101,14 +105,15 @@ export default function Header() {
             </div>
             <div className="flex flex-col leading-tight">
               <span
-                className={`font-display text-lg tracking-tight transition-colors ${
+                className={`font-display text-base 2xl:text-lg tracking-tight transition-colors ${
                   dark ? "text-forest-900" : "text-cream-50"
                 }`}
               >
                 Vaias Aparts
               </span>
+              {/* Tagline hidden at xl (1280-1535px) so nav fits, shown again at 2xl */}
               <span
-                className={`text-[10px] uppercase tracking-[0.32em] transition-colors ${
+                className={`hidden 2xl:block text-[10px] uppercase tracking-[0.32em] transition-colors ${
                   dark ? "text-walnut-500" : "text-cream-100/80"
                 }`}
               >
@@ -117,12 +122,12 @@ export default function Header() {
             </div>
           </Link>
 
-          <nav className="hidden xl:flex items-center gap-3 2xl:gap-6 flex-1 justify-center min-w-0">
+          <nav className="hidden xl:flex items-center gap-2 2xl:gap-5 flex-1 justify-center min-w-0">
             {nav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-[13px] 2xl:text-sm font-medium whitespace-nowrap transition-colors ${
+                className={`text-[12px] 2xl:text-sm font-medium whitespace-nowrap transition-colors ${
                   dark
                     ? "text-forest-800 hover:text-walnut-600"
                     : "text-cream-50 hover:text-cream-200"
@@ -133,16 +138,17 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="hidden xl:flex items-center gap-3 shrink-0">
+          <div className="hidden xl:flex items-center gap-2 2xl:gap-3 shrink-0">
             <LanguageSwitcher tone={dark ? "dark" : "light"} />
             <div className="relative">
               <Link
                 href="/rezervare"
-                className={dark ? "btn-primary" : "btn-outline-light"}
+                className={`${dark ? "btn-primary" : "btn-outline-light"} !px-4 2xl:!px-7 !py-2.5 2xl:!py-3.5 !text-xs 2xl:!text-sm`}
               >
                 {t("nav.bookNow")}
               </Link>
-              <span className="absolute -top-2 -right-2 rounded-full bg-walnut-500 px-1.5 py-0.5 text-[9px] uppercase tracking-wide text-cream-50 font-medium whitespace-nowrap">
+              {/* Badge hidden at xl, shown at 2xl */}
+              <span className="hidden 2xl:inline-block absolute -top-2 -right-2 rounded-full bg-walnut-500 px-1.5 py-0.5 text-[9px] uppercase tracking-wide text-cream-50 font-medium whitespace-nowrap">
                 Cel mai mic preț
               </span>
             </div>

@@ -233,9 +233,37 @@ export default async function ApartmentPage({
       </section>
 
       {/* GALLERY */}
-      <section className="container-x mb-16">
+      <section className="container-x mb-8">
         <Gallery images={apartment.gallery} alt={apartment.name} />
       </section>
+
+      {/* VIDEO / VIRTUAL TOUR — shown only when an apartment has a youtubeId or matterportId */}
+      {(apartment.youtubeId || apartment.matterportId) && (
+        <section className="container-x mb-16">
+          <div className="flex flex-wrap gap-3 justify-center">
+            {apartment.matterportId && (
+              <a
+                href={`https://my.matterport.com/show/?m=${apartment.matterportId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary"
+              >
+                🎥 Tur virtual 3D
+              </a>
+            )}
+            {apartment.youtubeId && (
+              <a
+                href={`https://www.youtube.com/watch?v=${apartment.youtubeId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary"
+              >
+                ▶️ Vezi pe YouTube
+              </a>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* DETAILS */}
       <section className="container-x grid gap-14 lg:grid-cols-12 mb-20">
