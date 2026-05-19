@@ -88,8 +88,8 @@ export default function Header() {
             : "bg-transparent py-5 top-[28px] lg:top-[30px]"
         }`}
       >
-        <div className="container-x flex items-center justify-between gap-6">
-          <Link href="/" className="group flex items-center gap-3">
+        <div className="container-x flex items-center justify-between gap-4 2xl:gap-6">
+          <Link href="/" className="group flex items-center gap-3 shrink-0">
             <div
               className={`grid h-10 w-10 place-items-center rounded-full border transition-colors duration-500 ${
                 dark
@@ -117,12 +117,12 @@ export default function Header() {
             </div>
           </Link>
 
-          <nav className="hidden xl:flex items-center gap-6">
+          <nav className="hidden xl:flex items-center gap-3 2xl:gap-6 flex-1 justify-center min-w-0">
             {nav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-sm font-medium transition-colors ${
+                className={`text-[13px] 2xl:text-sm font-medium whitespace-nowrap transition-colors ${
                   dark
                     ? "text-forest-800 hover:text-walnut-600"
                     : "text-cream-50 hover:text-cream-200"
@@ -133,7 +133,7 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="hidden xl:flex items-center gap-3">
+          <div className="hidden xl:flex items-center gap-3 shrink-0">
             <LanguageSwitcher tone={dark ? "dark" : "light"} />
             <div className="relative">
               <Link

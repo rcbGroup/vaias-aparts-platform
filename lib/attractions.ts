@@ -20,7 +20,7 @@ export const attractions: Attraction[] = [
     distance: "5 km",
     drivingTime: "10 min",
     category: "Cetate",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cetatea_Neamtului_-_exterior.jpg/1600px-Cetatea_Neamtului_-_exterior.jpg"
+    image: "/attractions/cetatea-neamt.jpg"
   },
   {
     slug: "manastirea-agapia",
@@ -32,7 +32,7 @@ export const attractions: Attraction[] = [
     distance: "10 km",
     drivingTime: "15 min",
     category: "Mănăstire",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Manastirea_Agapia_-_panoramio.jpg/1600px-Manastirea_Agapia_-_panoramio.jpg"
+    image: "/attractions/manastirea-agapia.jpg"
   },
   {
     slug: "manastirea-varatec",
@@ -44,7 +44,7 @@ export const attractions: Attraction[] = [
     distance: "14 km",
     drivingTime: "20 min",
     category: "Mănăstire",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/M15_-_Manastir_Varatek%2C_monasko_selo.jpg/1600px-M15_-_Manastir_Varatek%2C_monasko_selo.jpg"
+    image: "/attractions/manastirea-varatec.jpg"
   },
   {
     slug: "muntele-ceahlau",
@@ -56,7 +56,7 @@ export const attractions: Attraction[] = [
     distance: "60 km",
     drivingTime: "45 min",
     category: "Munte",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Ceahlau-mountains-romania-august-2017-0001.jpg/1600px-Ceahlau-mountains-romania-august-2017-0001.jpg"
+    image: "/attractions/muntele-ceahlau.jpg"
   },
   {
     slug: "cheile-bicazului",
@@ -68,7 +68,7 @@ export const attractions: Attraction[] = [
     distance: "75 km",
     drivingTime: "1 h",
     category: "Natură",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Bicaz_Gorges_%2843574913021%29.jpg/1600px-Bicaz_Gorges_%2843574913021%29.jpg"
+    image: "/attractions/cheile-bicazului.jpg"
   },
   {
     slug: "targu-neamt",
@@ -80,7 +80,7 @@ export const attractions: Attraction[] = [
     distance: "1 km",
     drivingTime: "5 min",
     category: "Oraș",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Targu_Neamt%2C_foto_Curcan_Ionel_%281%29.jpg/1600px-Targu_Neamt%2C_foto_Curcan_Ionel_%281%29.jpg"
+    image: "/attractions/targu-neamt.jpg"
   },
   {
     slug: "casa-memoriala-creanga",
@@ -92,7 +92,7 @@ export const attractions: Attraction[] = [
     distance: "3 km",
     drivingTime: "7 min",
     category: "Oraș",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Casa_memorial%C4%83_Ion_Creang%C4%83_din_Humule%C8%99ti%2C_Targu_Neamt.jpg/1600px-Casa_memorial%C4%83_Ion_Creang%C4%83_din_Humule%C8%99ti%2C_Targu_Neamt.jpg"
+    image: "/attractions/casa-memoriala-creanga.jpg"
   },
   {
     slug: "manastirea-neamt",
@@ -104,7 +104,7 @@ export const attractions: Attraction[] = [
     distance: "12 km",
     drivingTime: "18 min",
     category: "Mănăstire",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Neamt_Monastery.jpg/1600px-Neamt_Monastery.jpg"
+    image: "/attractions/manastirea-neamt.jpg"
   }
 ];
 

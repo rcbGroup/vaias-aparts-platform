@@ -18,7 +18,7 @@ export default function AttractionsPage() {
         eyebrow="Zone turistice"
         title="Țara de Sus, deschisă de la poarta noastră."
         subtitle="Mănăstiri pictate, cetăți medievale, munți cu legende — Moldova autentică, la o oră distanță."
-        image="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Bicaz_Gorges_%2843574913021%29.jpg/1920px-Bicaz_Gorges_%2843574913021%29.jpg"
+        image="/attractions/cheile-bicazului.jpg"
       />
 
       {/* CATEGORY STRIP */}
