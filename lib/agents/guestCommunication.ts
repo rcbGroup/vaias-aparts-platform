@@ -8,6 +8,23 @@
  * (Twilio) + email (Resend), logging every send to MessageSent and
  * GuestMessage so the admin dashboard can show progress.
  *
+ * Compressed message flow (5 messages for a standard stay):
+ *   A1 confirmation        — immediate
+ *   A2 pre-arrival info    — 24h before check-in, 10:00 local
+ *   A3 welcome check       — Day 1 evening, 20:00 local (SKIPPED if guest
+ *                             has already sent us a message)
+ *   A4 checkout reminder   — evening before check-out, 20:00 local
+ *   A5 review request      — 48h after check-out
+ *
+ * Same-day booking (≤36h to check-in) → 4 messages: B1 (immediate, fuses
+ * A1+A2), A3, A4, A5.  One-night stay → 3 messages: C1 (immediate), A4
+ * (20:00 same evening), A5 (48h after).
+ *
+ * Returning guests, groups (≥5), and international guests use the same
+ * 5-message keys; the renderer adjusts tone/content via flags on
+ * TemplateVars.  International guests also receive multilingual stacks via
+ * {@link detectGuestLanguages}.
+ *
  * Master-prompt rules enforced here:
  *   • Gate code 0623# IS allowed in messages.
  *   • The door / key-box code is NEVER allowed in messages — verbal only.
@@ -49,16 +66,21 @@ export const GUEST_COMMS_AGENT_META = {
   numericId: GUEST_COMMS_AGENT_NUMERIC_ID,
   name: "Guest Communication Agent",
   description:
-    "Handles every outbound guest message — confirmations, pre-arrival info, " +
-    "in-stay touchpoints, departure procedure, and review requests. Operates " +
-    "24/7/365, never sends the door code, never breaks language rules.",
+    "Sends a compressed 5-message journey from booking to post-stay review " +
+    "(3 for one-night stays, 4 for same-day bookings). Operates 24/7/365, " +
+    "never sends the door code, never breaks language rules.",
   icon: "💬",
   color: "bg-emerald-700",
   systemPrompt:
     `You are the Vila Vaias Aparts Guest Communication Agent. ` +
-    `You message every guest from booking to post-stay review across six ` +
-    `scenarios (Standard 9-msg, Same-day 4-msg, One-night 4-msg, Returning, ` +
-    `Group/full villa, International multilingual). ` +
+    `You message every guest from booking to post-stay review using a ` +
+    `compressed 5-message journey: confirmation, pre-arrival info bundle ` +
+    `(24h before, 10:00), welcome check (Day 1 evening, 20:00 — skip if the ` +
+    `guest already messaged), checkout reminder (evening before, 20:00), ` +
+    `review request (48h after checkout). ` +
+    `Same-day bookings collapse to 4 messages (combined confirmation+arrival, ` +
+    `then welcome check + checkout + review). One-night stays collapse to 3 ` +
+    `(combined arrival, checkout reminder same evening 20:00, review 48h). ` +
     `ALWAYS sign as "Echipa Vaias Aparts". ` +
     `The vehicle gate code 0623# IS allowed in messages. The door / key-box ` +
     `code is NEVER sent — it is delivered verbally on arrival only. ` +
@@ -74,41 +96,44 @@ export const GUEST_COMMS_AGENT_META = {
 // Scenario classification
 // ---------------------------------------------------------------------------
 
-export type Scenario = "A" | "B" | "C" | "D" | "E" | "F";
+/**
+ *   A = Standard 3+ nights (5 messages)
+ *   B = Same-day / last-minute, ≤36h to check-in (4 messages)
+ *   C = One-night stay (3 messages)
+ *
+ * Returning guest (D), group of 5+ (E), international (F) modulate the
+ * rendered content but do NOT change the number of messages sent.  We
+ * expose them as flags on the plan so the dashboard can colour-code rows.
+ */
+export type Scenario = "A" | "B" | "C";
+export type ScenarioFlag = "returning" | "group" | "international";
 
 export type ScenarioPlan = {
   scenario: Scenario;
+  flags: ScenarioFlag[];
   templates: TemplateKey[];
 };
 
 const SCENARIO_A_TEMPLATES: TemplateKey[] = [
-  "A1_booking_confirmed",
-  "A2_week_before",
-  "A3_three_days",
-  "A4_day_before",
-  "A5_arrival_morning",
-  "A6_post_checkin",
-  "A7_mid_stay",
-  "A8_checkout_morning",
-  "A9_post_stay_review",
+  "A1_confirmation",
+  "A2_pre_arrival",
+  "A3_welcome_check",
+  "A4_checkout_reminder",
+  "A5_review_request",
 ];
 
 const SCENARIO_B_TEMPLATES: TemplateKey[] = [
-  "B1_lastminute_confirmed",
-  "B2_arrival_imminent",
-  "B3_post_checkin",
-  "B4_post_stay_review",
+  "B1_combined_confirm_arrival",
+  "A3_welcome_check",
+  "A4_checkout_reminder",
+  "A5_review_request",
 ];
 
 const SCENARIO_C_TEMPLATES: TemplateKey[] = [
-  "C1_booking_confirmed",
-  "C2_arrival_morning",
-  "C3_post_checkin",
-  "C4_post_stay_review",
+  "C1_combined_confirm_arrival",
+  "A4_checkout_reminder",
+  "A5_review_request",
 ];
-
-// D/E/F are layered on top of A/B/C (returning, group, intl) rather than
-// replacing them — but we still emit a dedicated first-touch from those keys.
 
 export function classifyBookingScenario(booking: {
   checkIn: Date;
@@ -126,39 +151,29 @@ export function classifyBookingScenario(booking: {
   const hoursToCheckIn =
     (booking.checkIn.getTime() - booking.createdAt.getTime()) / 3_600_000;
 
-  // E — group / full villa (5 or more guests OR booking spans multiple
-  // apartments at once, signalled by groupSize > apartment capacity).
-  if (
-    (booking.groupSize ?? booking.adults + booking.children) >= 10 ||
-    (booking.groupSize ?? 0) >= 5 && (booking.groupSize ?? 0) === (booking.adults + booking.children)
-  ) {
-    return { scenario: "E", templates: ["E1_group_coordinator", ...SCENARIO_A_TEMPLATES] };
-  }
+  const flags: ScenarioFlag[] = [];
+  if ((booking.previousVisits ?? 0) > 0) flags.push("returning");
+  if ((booking.groupSize ?? booking.adults + booking.children) >= 5) flags.push("group");
+  const isInternational = !/^(\+?40|0)/.test(
+    booking.guestPhone.replace(/\s/g, ""),
+  );
+  if (isInternational) flags.push("international");
 
-  // D — returning guest (CRM has > 0 prior visits).
-  if ((booking.previousVisits ?? 0) > 0) {
-    return { scenario: "D", templates: ["D1_returning_welcome_back", ...SCENARIO_A_TEMPLATES] };
-  }
+  let scenario: Scenario;
+  let templates: TemplateKey[];
 
-  // F — international / non-Romanian phone, get the multilingual welcome on
-  // top of the standard journey.
-  const isInternational = !/^(\+?40|0)/.test(booking.guestPhone.replace(/\s/g, ""));
-  if (isInternational && booking.nights > 1 && hoursToCheckIn > 36) {
-    return { scenario: "F", templates: ["F1_intl_pre_arrival", ...SCENARIO_A_TEMPLATES] };
-  }
-
-  // C — one-night stay.
   if (booking.nights <= 1) {
-    return { scenario: "C", templates: SCENARIO_C_TEMPLATES };
+    scenario = "C";
+    templates = SCENARIO_C_TEMPLATES;
+  } else if (hoursToCheckIn <= 36) {
+    scenario = "B";
+    templates = SCENARIO_B_TEMPLATES;
+  } else {
+    scenario = "A";
+    templates = SCENARIO_A_TEMPLATES;
   }
 
-  // B — same-day / last-minute (≤ 36h between booking and arrival).
-  if (hoursToCheckIn <= 36) {
-    return { scenario: "B", templates: SCENARIO_B_TEMPLATES };
-  }
-
-  // A — standard reservation.
-  return { scenario: "A", templates: SCENARIO_A_TEMPLATES };
+  return { scenario, flags, templates };
 }
 
 // ---------------------------------------------------------------------------
@@ -167,11 +182,9 @@ export function classifyBookingScenario(booking: {
 
 /**
  * Returns the scheduled UTC moment a given template should be dispatched for
- * a booking, or null if the template does not have a calendar-based trigger
- * (e.g. it is sent immediately on booking creation by the booking webhook).
- *
- * All offsets are evaluated against check-in / check-out as UTC dates; the
- * cron picks templates whose due time is in the past.
+ * a booking.  Romania is UTC+2/UTC+3; we approximate to UTC+3 (summer) when
+ * mapping local hour to UTC because the agent runs in the cron tick and a
+ * small drift across DST is acceptable for these courtesy messages.
  */
 export function scheduledFor(
   key: TemplateKey,
@@ -181,69 +194,38 @@ export function scheduledFor(
   const checkOut = booking.checkOut;
   const created = booking.createdAt;
 
-  const dayBefore = (d: Date, days: number, hour: number) => {
+  const localHourUtc = (d: Date, offsetDays: number, localHour: number) => {
     const out = new Date(d);
-    out.setUTCDate(out.getUTCDate() - days);
-    out.setUTCHours(hour - 3, 0, 0, 0); // Romania is UTC+2/UTC+3 → 10:00 local ≈ 07:00 UTC
-    return out;
-  };
-  const dayAfter = (d: Date, days: number, hour: number) => {
-    const out = new Date(d);
-    out.setUTCDate(out.getUTCDate() + days);
-    out.setUTCHours(hour - 3, 0, 0, 0);
+    out.setUTCDate(out.getUTCDate() + offsetDays);
+    out.setUTCHours(localHour - 3, 0, 0, 0);
     return out;
   };
 
   switch (key) {
-    // Confirmations are due immediately on booking creation.
-    case "A1_booking_confirmed":
-    case "B1_lastminute_confirmed":
-    case "C1_booking_confirmed":
-    case "D1_returning_welcome_back":
-    case "E1_group_coordinator":
-    case "F1_intl_pre_arrival":
+    // Immediate-on-create messages.
+    case "A1_confirmation":
+    case "B1_combined_confirm_arrival":
+    case "C1_combined_confirm_arrival":
       return created;
 
-    // Standard journey schedule.
-    case "A2_week_before":
-      return dayBefore(checkIn, 7, 10);
-    case "A3_three_days":
-      return dayBefore(checkIn, 3, 10);
-    case "A4_day_before":
-      return dayBefore(checkIn, 1, 17); // 17:00 local
-    case "A5_arrival_morning":
-    case "C2_arrival_morning":
-      return dayBefore(checkIn, 0, 9); // 09:00 local on arrival day
-    case "A6_post_checkin":
-    case "B3_post_checkin":
-    case "C3_post_checkin": {
-      // 3h after standard check-in (14:00 local) → 17:00 local
-      const arr = new Date(checkIn);
-      arr.setUTCHours(14, 0, 0, 0);
-      return new Date(arr.getTime() + 3 * 3600 * 1000);
-    }
-    case "A7_mid_stay": {
-      // Halfway through the stay, 11:00 local.
-      const midMs = (checkIn.getTime() + checkOut.getTime()) / 2;
-      const mid = new Date(midMs);
-      mid.setUTCHours(8, 0, 0, 0);
-      return mid;
-    }
-    case "A8_checkout_morning":
-      return dayBefore(checkOut, 0, 9);
+    // 24h before check-in, 10:00 local.
+    case "A2_pre_arrival":
+      return localHourUtc(checkIn, -1, 10);
 
-    // Review requests — sent the morning AFTER check-out at 10:00 local.
-    case "A9_post_stay_review":
-    case "B4_post_stay_review":
-    case "C4_post_stay_review":
-      return dayAfter(checkOut, 1, 10);
+    // Evening of Day 1, 20:00 local.
+    case "A3_welcome_check":
+      return localHourUtc(checkIn, 0, 20);
 
-    // Last-minute "ETA confirmation" — 2h before scheduled check-in window.
-    case "B2_arrival_imminent": {
-      const arr = new Date(checkIn);
-      arr.setUTCHours(11, 0, 0, 0); // 14:00 local = 11:00 UTC (summer)
-      return arr;
-    }
+    // Evening before check-out, 20:00 local.  For a one-night stay this is
+    // the same calendar evening as check-in (handled naturally because the
+    // C scenario only sends C1, A4, A5 — A4 lands at 20:00 on the check-in
+    // day because that is the evening "before" the next-morning check-out).
+    case "A4_checkout_reminder":
+      return localHourUtc(checkOut, -1, 20);
+
+    // 48h after check-out — float to 10:00 local so it lands in waking hours.
+    case "A5_review_request":
+      return localHourUtc(checkOut, 2, 10);
   }
 }
 
@@ -257,7 +239,6 @@ export function pickChannel(booking: {
   guestPhone: string;
   guestEmail?: string | null;
 }): Channel {
-  // WhatsApp first if we have a phone, otherwise email fallback.
   return booking.guestPhone?.trim() ? "whatsapp" : "email";
 }
 
@@ -265,16 +246,9 @@ export function pickChannel(booking: {
 // Send guards
 // ---------------------------------------------------------------------------
 
-/**
- * Final guardrail before any send. Catches the door-code, blank bodies and
- * over-length WhatsApp payloads. Returns null on success, an error string
- * on rejection.
- */
 function validateBody(body: string, channel: Channel): string | null {
   if (!body || body.trim().length < 40) return "body too short";
   if (containsBannedSecrets(body)) return "body contained banned secret pattern";
-  // WhatsApp body limit is 1600 chars per template message — we soft-cap at
-  // 3500 to allow multi-language stacks but keep email-only ones safe.
   if (channel === "whatsapp" && body.length > 3500) return "whatsapp body too long";
   return null;
 }
@@ -357,7 +331,6 @@ async function sendEmail(
 }
 
 function bodyToEmailHtml(body: string): string {
-  // WhatsApp uses *bold* — convert and preserve newlines for HTML.
   const escaped = body
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -373,39 +346,19 @@ function bodyToEmailHtml(body: string): string {
 
 function emailSubject(key: TemplateKey, apartment: string): string {
   switch (key) {
-    case "A1_booking_confirmed":
-    case "B1_lastminute_confirmed":
-    case "C1_booking_confirmed":
+    case "A1_confirmation":
       return `Confirmare rezervare — ${apartment} | Booking confirmed`;
-    case "A2_week_before":
-      return `Bun venit într-o săptămână — ${apartment}`;
-    case "A3_three_days":
-      return `Informații pentru check-in — ${apartment}`;
-    case "A4_day_before":
-      return `Mâine ne vedem — ${apartment}`;
-    case "A5_arrival_morning":
-    case "C2_arrival_morning":
-      return `Astăzi sunteți așteptat — ${apartment}`;
-    case "A6_post_checkin":
-    case "B3_post_checkin":
-    case "C3_post_checkin":
-      return `Tot ce trebuie să știți pentru sejur — ${apartment}`;
-    case "A7_mid_stay":
-      return `Idei pentru sejurul dumneavoastră — ${apartment}`;
-    case "A8_checkout_morning":
-      return `Plecare astăzi — ${apartment}`;
-    case "A9_post_stay_review":
-    case "B4_post_stay_review":
-    case "C4_post_stay_review":
-      return `Mulțumim de vizită — vă rugăm să ne lăsați o recenzie`;
-    case "D1_returning_welcome_back":
-      return `Bine ați revenit la Vila Vaias Aparts`;
-    case "E1_group_coordinator":
-      return `Coordonare grup — Vila Vaias Aparts`;
-    case "B2_arrival_imminent":
-      return `Sunteți așteptat — instrucțiuni de sosire`;
-    case "F1_intl_pre_arrival":
-      return `Welcome to Vila Vaias Aparts — arrival info`;
+    case "A2_pre_arrival":
+      return `Informații pentru sosire — ${apartment}`;
+    case "A3_welcome_check":
+      return `V-ați instalat bine? — ${apartment}`;
+    case "A4_checkout_reminder":
+      return `Reamintire check-out — ${apartment}`;
+    case "A5_review_request":
+      return `Mulțumim! Lăsați-ne o recenzie — ${apartment}`;
+    case "B1_combined_confirm_arrival":
+    case "C1_combined_confirm_arrival":
+      return `Confirmare + informații sosire — ${apartment}`;
   }
 }
 
@@ -425,9 +378,24 @@ async function alreadySent(bookingRef: string, key: TemplateKey): Promise<boolea
     });
     return !!row;
   } catch {
-    // If the table query fails (e.g. schema not migrated yet) we conservatively
-    // assume the message was already sent so we don't spam guests.
     return true;
+  }
+}
+
+/**
+ * Has the guest ever sent us an inbound message on this booking?  Used to
+ * suppress the A3_welcome_check ping — if they've already reached out we
+ * don't pile on with a check-in question.
+ */
+async function guestHasInboundMessage(bookingId: number): Promise<boolean> {
+  try {
+    const row = await prisma.guestMessage.findFirst({
+      where: { bookingId, direction: "INBOUND" },
+      select: { id: true },
+    });
+    return !!row;
+  } catch {
+    return false;
   }
 }
 
@@ -441,10 +409,10 @@ type LoadedBooking = Booking & {
 };
 
 async function loadDueBookings(now: Date): Promise<LoadedBooking[]> {
-  // Window: any active booking from 8 days before check-in to 3 days after
-  // check-out (covers all template triggers).
+  // Window: from any active check-in to 3 days after check-out (covers A1..A5
+  // including the 48h-after review request).
   const lower = new Date(now.getTime() - 3 * 86_400_000);
-  const upper = new Date(now.getTime() + 8 * 86_400_000);
+  const upper = new Date(now.getTime() + 2 * 86_400_000);
 
   const rows = await prisma.booking.findMany({
     where: {
@@ -463,7 +431,7 @@ async function loadDueBookings(now: Date): Promise<LoadedBooking[]> {
   return rows as LoadedBooking[];
 }
 
-function buildVars(b: LoadedBooking): TemplateVars {
+function buildVars(b: LoadedBooking, flags: ScenarioFlag[]): TemplateVars {
   const adults = Math.max(1, b.adults);
   const nights = Math.max(1, b.nights);
   return {
@@ -477,7 +445,10 @@ function buildVars(b: LoadedBooking): TemplateVars {
     children: b.children,
     cityTaxTotal: adults * nights * CITY_TAX_PER_ADULT_PER_NIGHT,
     source: b.source,
-    previousVisits: b.guest?.visits ?? 0,
+    isReturning: flags.includes("returning"),
+    isGroup: flags.includes("group"),
+    totalPrice: typeof b.finalPrice === "number" ? b.finalPrice : undefined,
+    currency: b.currency ?? "RON",
   };
 }
 
@@ -485,6 +456,7 @@ export type DispatchPlan = {
   bookingRef: string;
   templateKey: TemplateKey;
   scenario: Scenario;
+  flags: ScenarioFlag[];
   channel: Channel;
   languages: Language[];
   scheduledFor: Date;
@@ -504,18 +476,17 @@ async function dispatchOne(
   channel: Channel,
   vars: TemplateVars,
   scenario: Scenario,
+  flags: ScenarioFlag[],
   dryRun: boolean,
 ): Promise<DispatchOutcomeRecord> {
-  // Build review-link block lazily for review templates.
   let renderVars: TemplateVars = vars;
-  if (
-    key === "A9_post_stay_review" ||
-    key === "B4_post_stay_review" ||
-    key === "C4_post_stay_review"
-  ) {
+  if (key === "A5_review_request") {
     renderVars = {
       ...vars,
-      reviewLinksBlock: renderReviewLinksBlock(booking.source as BookingSource, languages),
+      reviewLinksBlock: renderReviewLinksBlock(
+        booking.source as BookingSource,
+        languages,
+      ),
     };
   }
 
@@ -525,6 +496,7 @@ async function dispatchOne(
     bookingRef: booking.bookingRef,
     templateKey: key,
     scenario,
+    flags,
     channel,
     languages,
     scheduledFor: scheduledFor(key, booking),
@@ -543,7 +515,6 @@ async function dispatchOne(
   if (channel === "whatsapp") {
     outcome = await sendWhatsApp(booking.guestPhone, body);
     if (!outcome.ok && booking.guestEmail) {
-      // Fall back to email if WhatsApp credentials are missing or send failed.
       outcome = await sendEmail(booking.guestEmail, emailSubject(key, booking.apartment.name), body);
       if (outcome.ok) {
         await persistAttempt(booking, key, languages, "email", body, "sent", undefined, outcome.providerId);
@@ -622,13 +593,9 @@ async function persistAttempt(
 // ---------------------------------------------------------------------------
 
 export type GuestCommsRunOptions = {
-  /** Run without dispatching — useful for previewing in the admin UI. */
   dryRun?: boolean;
-  /** Override "now" — primarily for tests. */
   now?: Date;
-  /** Only process a single booking ref. */
   bookingRef?: string;
-  /** Only emit a single template key for a booking. */
   templateKey?: TemplateKey;
 };
 
@@ -673,7 +640,7 @@ export async function runGuestCommunicationAgent(
 
     const languages = detectGuestLanguages(booking.guestPhone);
     const channel = pickChannel(booking);
-    const vars = buildVars(booking);
+    const vars = buildVars(booking, plan.flags);
 
     for (const key of plan.templates) {
       if (opts.templateKey && opts.templateKey !== key) continue;
@@ -682,10 +649,25 @@ export async function runGuestCommunicationAgent(
       if (due > now) continue; // not yet — pick up on a future tick
       if (await alreadySent(booking.bookingRef, key)) continue;
 
+      // A3 welcome check is suppressed if the guest already reached out.
+      if (key === "A3_welcome_check" && (await guestHasInboundMessage(booking.id))) {
+        await persistAttempt(
+          booking,
+          key,
+          languages,
+          channel,
+          "",
+          "skipped",
+          "guest already messaged — welcome check suppressed",
+        );
+        continue;
+      }
+
       duePlans.push({
         bookingRef: booking.bookingRef,
         templateKey: key,
         scenario: plan.scenario,
+        flags: plan.flags,
         channel,
         languages,
         scheduledFor: due,
@@ -699,6 +681,7 @@ export async function runGuestCommunicationAgent(
         channel,
         vars,
         plan.scenario,
+        plan.flags,
         Boolean(opts.dryRun),
       );
       outcomes.push(outcome);
@@ -759,16 +742,16 @@ export async function previewUpcomingMessages(
     });
     const languages = detectGuestLanguages(booking.guestPhone);
     const channel = pickChannel(booking);
-    const vars = buildVars(booking);
+    const vars = buildVars(booking, scenarioPlan.flags);
     for (const key of scenarioPlan.templates) {
       const due = scheduledFor(key, booking);
       if (due > horizon || due < lower) continue;
-      const sent = await alreadySent(booking.bookingRef, key);
-      if (sent) continue;
+      if (await alreadySent(booking.bookingRef, key)) continue;
       plans.push({
         bookingRef: booking.bookingRef,
         templateKey: key,
         scenario: scenarioPlan.scenario,
+        flags: scenarioPlan.flags,
         channel,
         languages,
         scheduledFor: due,
@@ -803,15 +786,10 @@ export async function getReviewRequestStatusBoard(daysBack = 30) {
     take: 100,
   });
 
-  const reviewKeys: TemplateKey[] = [
-    "A9_post_stay_review",
-    "B4_post_stay_review",
-    "C4_post_stay_review",
-  ];
   const messageSends = await prisma.messageSent.findMany({
     where: {
       bookingRef: { in: bookings.map((b) => b.bookingRef) },
-      templateKey: { in: reviewKeys },
+      templateKey: "A5_review_request",
     },
     select: { bookingRef: true, templateKey: true, status: true, deliveredAt: true },
   });

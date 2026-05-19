@@ -3,10 +3,13 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 
+type ScenarioFlag = "returning" | "group" | "international";
+
 type Plan = {
   bookingRef: string;
   templateKey: string;
-  scenario: "A" | "B" | "C" | "D" | "E" | "F";
+  scenario: "A" | "B" | "C";
+  flags?: ScenarioFlag[];
   channel: "whatsapp" | "email";
   languages: string[];
   scheduledFor: string;
@@ -47,21 +50,37 @@ type Payload = {
 };
 
 const SCENARIO_LABEL: Record<Plan["scenario"], string> = {
-  A: "Standard (9 mesaje)",
-  B: "Last-minute",
-  C: "O noapte",
-  D: "Returning",
-  E: "Grup/Vilă",
-  F: "Internațional",
+  A: "Standard (5 mesaje)",
+  B: "Same-day (4 mesaje)",
+  C: "O noapte (3 mesaje)",
 };
 
 const SCENARIO_COLOR: Record<Plan["scenario"], string> = {
   A: "bg-forest-100 text-forest-800",
   B: "bg-amber-100 text-amber-800",
   C: "bg-blue-100 text-blue-800",
-  D: "bg-purple-100 text-purple-800",
-  E: "bg-pink-100 text-pink-800",
-  F: "bg-cyan-100 text-cyan-800",
+};
+
+const FLAG_LABEL: Record<ScenarioFlag, string> = {
+  returning: "Revine",
+  group: "Grup 5+",
+  international: "Internațional",
+};
+
+const FLAG_COLOR: Record<ScenarioFlag, string> = {
+  returning: "bg-purple-100 text-purple-800",
+  group: "bg-pink-100 text-pink-800",
+  international: "bg-cyan-100 text-cyan-800",
+};
+
+const TEMPLATE_LABEL: Record<string, string> = {
+  A1_confirmation: "1. Confirmare",
+  A2_pre_arrival: "2. Pre-sosire (-24h)",
+  A3_welcome_check: "3. Check Day 1",
+  A4_checkout_reminder: "4. Reamintire check-out",
+  A5_review_request: "5. Cerere recenzie",
+  B1_combined_confirm_arrival: "1. Confirmare + sosire",
+  C1_combined_confirm_arrival: "1. Confirmare + sosire",
 };
 
 function statusBadge(status: string): string {
@@ -175,8 +194,14 @@ export default function GuestCommsDashboard() {
               💬 Comunicare oaspeți
             </h1>
             <p className="mt-1 text-sm text-stone-600">
-              Agentul rulează 24/7/365 și trimite mesaje pe baza orei de check-in / check-out.
-              Codul cutiei cu chei NU este permis în mesaje — doar codul porții (0623#).
+              Flux compact: <strong>5 mesaje</strong> pentru sejur standard (3+ nopți),
+              <strong> 4</strong> pentru same-day, <strong>3</strong> pentru o noapte.
+              Agentul rulează 24/7/365. Codul cutiei cu chei NU este permis în mesaje —
+              doar codul porții (0623#).
+            </p>
+            <p className="mt-1 text-xs text-stone-500">
+              Standard: confirmare → pre-sosire (-24h, 10:00) → check Day 1 (20:00, sărit dacă
+              oaspetele a scris) → reamintire check-out (seara, 20:00) → recenzie (+48h).
             </p>
           </div>
           <div className="flex gap-2">
@@ -214,7 +239,7 @@ export default function GuestCommsDashboard() {
         {/* Scenario breakdown */}
         {upcoming.length > 0 && (
           <div className="flex flex-wrap gap-2">
-            {(["A", "B", "C", "D", "E", "F"] as const).map((s) =>
+            {(["A", "B", "C"] as const).map((s) =>
               totalsByScenario[s] ? (
                 <span
                   key={s}
@@ -287,13 +312,25 @@ export default function GuestCommsDashboard() {
                       <td className="px-4 py-3 text-stone-700">{formatDateTime(p.scheduledFor)}</td>
                       <td className="px-4 py-3 font-mono text-xs text-stone-600">{p.bookingRef}</td>
                       <td className="px-4 py-3">
-                        <span
-                          className={`rounded-full px-2 py-0.5 text-xs ${SCENARIO_COLOR[p.scenario]}`}
-                        >
-                          {p.scenario}
-                        </span>
+                        <div className="flex flex-wrap items-center gap-1">
+                          <span
+                            className={`rounded-full px-2 py-0.5 text-xs ${SCENARIO_COLOR[p.scenario]}`}
+                          >
+                            {p.scenario}
+                          </span>
+                          {(p.flags ?? []).map((f) => (
+                            <span
+                              key={f}
+                              className={`rounded-full px-2 py-0.5 text-[10px] ${FLAG_COLOR[f]}`}
+                            >
+                              {FLAG_LABEL[f]}
+                            </span>
+                          ))}
+                        </div>
                       </td>
-                      <td className="px-4 py-3 text-stone-700">{p.templateKey}</td>
+                      <td className="px-4 py-3 text-stone-700">
+                        {TEMPLATE_LABEL[p.templateKey] ?? p.templateKey}
+                      </td>
                       <td className="px-4 py-3 text-stone-700">{p.languages.join(" + ")}</td>
                       <td className="px-4 py-3 text-stone-700">{p.channel}</td>
                       <td className="px-4 py-3 text-right">
@@ -356,7 +393,9 @@ export default function GuestCommsDashboard() {
                       <td className="px-4 py-3 text-stone-700">{formatDateTime(r.createdAt)}</td>
                       <td className="px-4 py-3 text-stone-700">{r.guestName ?? "—"}</td>
                       <td className="px-4 py-3 text-stone-700">{r.apartment ?? "—"}</td>
-                      <td className="px-4 py-3 font-mono text-xs text-stone-700">{r.templateKey}</td>
+                      <td className="px-4 py-3 text-stone-700">
+                        {TEMPLATE_LABEL[r.templateKey] ?? r.templateKey}
+                      </td>
                       <td className="px-4 py-3 text-stone-700">{r.channel}</td>
                       <td className="px-4 py-3">
                         <span className={`rounded-full px-2 py-0.5 text-xs ${statusBadge(r.status)}`}>

@@ -1,14 +1,28 @@
 /**
- * VAIA OS — Guest journey message templates.
+ * VAIA OS — Guest journey message templates (compressed 5-message flow).
  *
- * Each template is keyed by scenario (A/B/C/D/E/F) + step (A1..F1) and is
- * rendered through {@link renderTemplate} which stacks Romanian + English
- * (+ native language when applicable) in a single WhatsApp/email body.
+ * Standard stay (3+ nights) → exactly 5 messages:
+ *   1. A1_confirmation        — booking confirmation, immediate
+ *   2. A2_pre_arrival         — practical info bundle, 24h before, 10:00 local
+ *   3. A3_welcome_check       — "settled in OK?", Day 1 evening 20:00 (skipped
+ *                                by the agent if the guest already messaged)
+ *   4. A4_checkout_reminder   — checkout procedure, evening before, 20:00
+ *   5. A5_review_request      — thank-you + platform-specific links, 48h after
+ *
+ * Same-day booking (≤36h to check-in) → 4 messages:
+ *   B1_combined_confirm_arrival (immediate, fuses A1 + A2), then A3, A4, A5
+ *
+ * One-night stay → 3 messages:
+ *   C1_combined_confirm_arrival (immediate), A4 (20:00 same evening), A5 (48h)
+ *
+ * Returning guests, groups, international: same template keys with the
+ * scenario flag set so renderers can warm the tone, add coordination details,
+ * or stack additional languages.
  *
  * SECURITY:
  *   • The vehicle gate code 0623# IS allowed in messages.
  *   • The door / key-box code is NEVER in this file or any template — it is
- *     delivered verbally by the host once arrival + ID are confirmed.
+ *     delivered verbally on arrival.
  */
 
 import {
@@ -25,8 +39,9 @@ export const GATE_CODE = "0623#";
 export const WIFI_SSID = "Vaias Aparts";
 export const WIFI_PASSWORD = "VaiasAparts";
 export const CITY_TAX_PER_ADULT_PER_NIGHT = 5; // lei
-export const HOST_PHONE_PRIMARY = "+40 738 345 330";
-export const HOST_PHONE_SECONDARY = "+40 752 388 388";
+// Anca is the primary host contact; Vasi is the secondary.
+export const HOST_PHONE_PRIMARY = "+40 752 388 388";
+export const HOST_PHONE_SECONDARY = "+40 738 345 330";
 export const HOST_EMAIL = "contact@VaiasAparts.ro";
 export const ADDRESS = "Strada Sfântul Lazăr Nr. 1, Târgu Neamț";
 export const SIGNATURE = "— Echipa Vaias Aparts";
@@ -69,46 +84,41 @@ export type TemplateVars = {
   adults: number;
   children: number;
   cityTaxTotal: number; // adults * nights * 5
-  expectedArrivalLabel?: string;
-  matterportUrl?: string;
   source?: string; // "direct" | "booking" | "airbnb" | "travelminit" | "h2b"
-  previousVisits?: number;
   reviewLinksBlock?: string; // pre-rendered, language-aware
-  groupApartments?: string[]; // for Scenario E
-  ownerName?: string; // optional human signing the message
+  // Scenario modifiers — renderer adjusts tone/content but keeps the same template key.
+  isReturning?: boolean;
+  isGroup?: boolean;
+  groupApartments?: string[];
+  totalPrice?: number;
+  currency?: string; // defaults to "RON"
 };
 
 // ---------------------------------------------------------------------------
-// Template keys
+// Template keys (compressed)
 // ---------------------------------------------------------------------------
 
 export type TemplateKey =
-  // Scenario A — standard reservation (9 messages)
-  | "A1_booking_confirmed"
-  | "A2_week_before"
-  | "A3_three_days"
-  | "A4_day_before"
-  | "A5_arrival_morning"
-  | "A6_post_checkin"
-  | "A7_mid_stay"
-  | "A8_checkout_morning"
-  | "A9_post_stay_review"
-  // Scenario B — same-day / last-minute (4 messages)
-  | "B1_lastminute_confirmed"
-  | "B2_arrival_imminent"
-  | "B3_post_checkin"
-  | "B4_post_stay_review"
-  // Scenario C — one-night stay (4 messages)
-  | "C1_booking_confirmed"
-  | "C2_arrival_morning"
-  | "C3_post_checkin"
-  | "C4_post_stay_review"
-  // Scenario D — returning guest
-  | "D1_returning_welcome_back"
-  // Scenario E — group / full villa
-  | "E1_group_coordinator"
-  // Scenario F — international (multilingual welcome)
-  | "F1_intl_pre_arrival";
+  // Standard 5-message flow (used by all scenarios; tone modulated via flags)
+  | "A1_confirmation"
+  | "A2_pre_arrival"
+  | "A3_welcome_check"
+  | "A4_checkout_reminder"
+  | "A5_review_request"
+  // Same-day fused message (immediate; replaces A1+A2)
+  | "B1_combined_confirm_arrival"
+  // One-night fused arrival message (immediate; replaces A1+A2)
+  | "C1_combined_confirm_arrival";
+
+export const TEMPLATE_KEYS: TemplateKey[] = [
+  "A1_confirmation",
+  "A2_pre_arrival",
+  "A3_welcome_check",
+  "A4_checkout_reminder",
+  "A5_review_request",
+  "B1_combined_confirm_arrival",
+  "C1_combined_confirm_arrival",
+];
 
 // ---------------------------------------------------------------------------
 // Per-language renderers
@@ -118,1555 +128,857 @@ type Renderer = (vars: TemplateVars, lang: Language) => string;
 
 const r = (s: string) => s.trim();
 
+const priceLine = (v: TemplateVars, lang: Language): string => {
+  if (!v.totalPrice) return "";
+  const ccy = v.currency ?? "RON";
+  switch (lang) {
+    case "ro":
+      return `• Total: ${v.totalPrice} ${ccy}`;
+    case "en":
+      return `• Total: ${v.totalPrice} ${ccy}`;
+    case "fr":
+      return `• Total : ${v.totalPrice} ${ccy}`;
+    case "de":
+      return `• Gesamt: ${v.totalPrice} ${ccy}`;
+    case "it":
+      return `• Totale: ${v.totalPrice} ${ccy}`;
+    case "es":
+      return `• Total: ${v.totalPrice} ${ccy}`;
+    case "hu":
+      return `• Összesen: ${v.totalPrice} ${ccy}`;
+  }
+};
+
+// Practical info bundle reused by A2, B1, C1.
+const practicalInfoBlock = (v: TemplateVars, lang: Language): string => {
+  const groupExtra: Record<Language, string> = {
+    ro:
+      "👥 *Pentru grupul dvs.:* aveți la dispoziție mai multe locuri de parcare " +
+      "în curte; vă rugăm să țineți cont de liniștea celorlalți oaspeți, mai ales " +
+      "după ora 22:00. Bucătăria de la parter („Bucătăria pentru Toți”) este " +
+      "comună — folosiți-o liber.",
+    en:
+      "👥 *For your group:* there are several parking spots in the courtyard; " +
+      "please keep noise down after 22:00 out of consideration for other guests. " +
+      "The ground-floor kitchen (“Kitchen for All”) is shared — feel free to use it.",
+    fr:
+      "👥 *Pour votre groupe :* plusieurs places de parking dans la cour ; merci " +
+      "de respecter le calme après 22h. La cuisine du rez-de-chaussée est partagée.",
+    de:
+      "👥 *Für Ihre Gruppe:* mehrere Parkplätze im Innenhof; bitte nach 22:00 Uhr " +
+      "Rücksicht nehmen. Die Küche im Erdgeschoss ist Gemeinschaftsküche.",
+    it:
+      "👥 *Per il vostro gruppo:* diversi posti auto in cortile; per favore " +
+      "rispettate il silenzio dopo le 22:00. Cucina al piano terra in condivisione.",
+    es:
+      "👥 *Para su grupo:* varias plazas de aparcamiento en el patio; por favor " +
+      "respeten el silencio después de las 22:00. Cocina compartida en planta baja.",
+    hu:
+      "👥 *A csoportja számára:* több parkolóhely az udvarban; kérjük, 22:00 " +
+      "után tartsák tiszteletben a csendet. Földszinti közös konyha.",
+  };
+
+  switch (lang) {
+    case "ro":
+      return r(`
+📋 *Tot ce aveți nevoie pentru sosire*
+
+🚪 *Cod poartă auto (glisantă, automată):* ${GATE_CODE}
+🚗 *Parcare:* gratuită în curte, intrare prin poarta principală.
+📍 *Adresa:* ${ADDRESS}.
+🕑 *Check-in:* după ora 14:00.
+🔑 *Cheile / accesul în apartament* — vă vom înmâna codul la sosire (din motive de siguranță nu îl trimitem pe mesaj).
+📶 *WiFi:* ${WIFI_SSID} / parolă: ${WIFI_PASSWORD}
+🧾 *Taxă oraș:* ${CITY_TAX_PER_ADULT_PER_NIGHT} lei/adult/noapte (${v.cityTaxTotal} lei pentru sejurul dvs.), se achită la check-in.
+📞 *Contact:* ${HOST_PHONE_PRIMARY} (Anca, principal) / ${HOST_PHONE_SECONDARY} (Vasi)
+${v.isGroup ? "\n" + groupExtra.ro : ""}`);
+    case "en":
+      return r(`
+📋 *Everything you need for arrival*
+
+🚪 *Vehicle gate code (auto sliding):* ${GATE_CODE}
+🚗 *Parking:* free in the courtyard, enter through the main gate.
+📍 *Address:* ${ADDRESS}.
+🕑 *Check-in:* from 14:00.
+🔑 *Apartment access code* — we will give it to you on arrival (for security we never send it by message).
+📶 *WiFi:* ${WIFI_SSID} / password: ${WIFI_PASSWORD}
+🧾 *City tax:* ${CITY_TAX_PER_ADULT_PER_NIGHT} lei/adult/night (${v.cityTaxTotal} lei for your stay), paid at check-in.
+📞 *Contact:* ${HOST_PHONE_PRIMARY} (Anca, primary) / ${HOST_PHONE_SECONDARY} (Vasi)
+${v.isGroup ? "\n" + groupExtra.en : ""}`);
+    case "fr":
+      return r(`
+📋 *Tout ce qu'il vous faut pour l'arrivée*
+
+🚪 *Code portail (coulissant automatique) :* ${GATE_CODE}
+🚗 *Parking :* gratuit dans la cour.
+📍 *Adresse :* ${ADDRESS}.
+🕑 *Arrivée :* à partir de 14h00.
+🔑 *Code de l'appartement* — remis à l'arrivée (jamais par message, par sécurité).
+📶 *WiFi :* ${WIFI_SSID} / ${WIFI_PASSWORD}
+🧾 *Taxe de séjour :* ${CITY_TAX_PER_ADULT_PER_NIGHT} lei/adulte/nuit (${v.cityTaxTotal} lei), à l'arrivée.
+📞 *Contact :* ${HOST_PHONE_PRIMARY} (Anca) / ${HOST_PHONE_SECONDARY} (Vasi)
+${v.isGroup ? "\n" + groupExtra.fr : ""}`);
+    case "de":
+      return r(`
+📋 *Alles für Ihre Ankunft*
+
+🚪 *Toröffnungscode (automatisches Schiebetor):* ${GATE_CODE}
+🚗 *Parken:* kostenlos im Innenhof.
+📍 *Adresse:* ${ADDRESS}.
+🕑 *Check-in:* ab 14:00 Uhr.
+🔑 *Apartment-Zugangscode* — wird bei der Ankunft persönlich übergeben (aus Sicherheitsgründen nie per Nachricht).
+📶 *WiFi:* ${WIFI_SSID} / ${WIFI_PASSWORD}
+🧾 *Kurtaxe:* ${CITY_TAX_PER_ADULT_PER_NIGHT} lei/Erwachsener/Nacht (${v.cityTaxTotal} lei).
+📞 *Kontakt:* ${HOST_PHONE_PRIMARY} (Anca) / ${HOST_PHONE_SECONDARY} (Vasi)
+${v.isGroup ? "\n" + groupExtra.de : ""}`);
+    case "it":
+      return r(`
+📋 *Tutto per il vostro arrivo*
+
+🚪 *Codice cancello (scorrevole automatico):* ${GATE_CODE}
+🚗 *Parcheggio:* gratuito nel cortile.
+📍 *Indirizzo:* ${ADDRESS}.
+🕑 *Check-in:* dalle 14:00.
+🔑 *Codice dell'appartamento* — vi sarà consegnato all'arrivo (mai via messaggio, per sicurezza).
+📶 *WiFi:* ${WIFI_SSID} / ${WIFI_PASSWORD}
+🧾 *Tassa di soggiorno:* ${CITY_TAX_PER_ADULT_PER_NIGHT} lei/adulto/notte (${v.cityTaxTotal} lei).
+📞 *Contatto:* ${HOST_PHONE_PRIMARY} (Anca) / ${HOST_PHONE_SECONDARY} (Vasi)
+${v.isGroup ? "\n" + groupExtra.it : ""}`);
+    case "es":
+      return r(`
+📋 *Todo para su llegada*
+
+🚪 *Código del portón (corredera automática):* ${GATE_CODE}
+🚗 *Aparcamiento:* gratuito en el patio.
+📍 *Dirección:* ${ADDRESS}.
+🕑 *Check-in:* a partir de las 14:00.
+🔑 *Código del apartamento* — se entrega a la llegada (nunca por mensaje, por seguridad).
+📶 *WiFi:* ${WIFI_SSID} / ${WIFI_PASSWORD}
+🧾 *Tasa turística:* ${CITY_TAX_PER_ADULT_PER_NIGHT} lei/adulto/noche (${v.cityTaxTotal} lei).
+📞 *Contacto:* ${HOST_PHONE_PRIMARY} (Anca) / ${HOST_PHONE_SECONDARY} (Vasi)
+${v.isGroup ? "\n" + groupExtra.es : ""}`);
+    case "hu":
+      return r(`
+📋 *Minden, amire az érkezéshez szüksége van*
+
+🚪 *Autóskapu kódja (automata toló):* ${GATE_CODE}
+🚗 *Parkolás:* ingyenes az udvarban.
+📍 *Cím:* ${ADDRESS}.
+🕑 *Bejelentkezés:* 14:00 után.
+🔑 *Apartman belépőkód* — érkezéskor adjuk át (biztonsági okból soha nem üzenetben).
+📶 *WiFi:* ${WIFI_SSID} / ${WIFI_PASSWORD}
+🧾 *Idegenforgalmi adó:* ${CITY_TAX_PER_ADULT_PER_NIGHT} lej/felnőtt/éj (${v.cityTaxTotal} lej).
+📞 *Kapcsolat:* ${HOST_PHONE_PRIMARY} (Anca) / ${HOST_PHONE_SECONDARY} (Vasi)
+${v.isGroup ? "\n" + groupExtra.hu : ""}`);
+  }
+};
+
 const renderers: Record<TemplateKey, Record<Language, Renderer>> = {
   // =========================================================================
-  // A1 — Booking confirmation
+  // A1 — Booking confirmation (immediate)
   // =========================================================================
-  A1_booking_confirmed: {
+  A1_confirmation: {
     ro: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Vă confirmăm rezervarea la *Vila Vaias Aparts* — ${v.apartmentName}.
+${v.isReturning ? "Ce bucurie să vă revedem!" : "Vă mulțumim pentru rezervarea la *Vila Vaias Aparts*."}
+Confirmare pentru *${v.apartmentName}*${v.apartmentFloor ? ` (${v.apartmentFloor})` : ""}.
 
-📅 *Detalii*
+📅 *Sejurul dumneavoastră*
 • Check-in: ${formatGuestDate(v.checkIn, l)} (după ora 14:00)
 • Check-out: ${formatGuestDate(v.checkOut, l)} (până la ora 11:00)
 • Nopți: ${v.nights}
 • Adulți: ${v.adults}${v.children ? ` · Copii: ${v.children}` : ""}
+${priceLine(v, l)}
 
-📍 Adresa: ${ADDRESS}.
-Cu câteva zile înainte de sosire vă vom trimite toate detaliile pentru un check-in cât mai liniștit.
-
-Dacă aveți întrebări, ne găsiți oricând la ${HOST_PHONE_PRIMARY} (WhatsApp) sau ${HOST_EMAIL}.
+Cu 24 de ore înainte de sosire vă vom trimite toate detaliile practice (cod poartă, WiFi, parcare, contact).
 
 ${SIGNATURE}
 `),
     en: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}! 🌿
 
-We're confirming your booking at *Vila Vaias Aparts* — ${v.apartmentName}.
+${v.isReturning ? "Wonderful to welcome you back!" : "Thank you for booking *Vila Vaias Aparts*."}
+Confirmation for *${v.apartmentName}*${v.apartmentFloor ? ` (${v.apartmentFloor})` : ""}.
 
 📅 *Your stay*
 • Check-in: ${formatGuestDate(v.checkIn, l)} (from 14:00)
 • Check-out: ${formatGuestDate(v.checkOut, l)} (until 11:00)
 • Nights: ${v.nights}
 • Adults: ${v.adults}${v.children ? ` · Children: ${v.children}` : ""}
+${priceLine(v, l)}
 
-📍 Address: ${ADDRESS}.
-A few days before arrival we'll send you everything you need for a smooth check-in.
-
-You can reach us anytime at ${HOST_PHONE_PRIMARY} (WhatsApp) or ${HOST_EMAIL}.
+24 hours before arrival we'll send everything you need (gate code, WiFi, parking, contact).
 
 ${SIGNATURE}
 `),
     fr: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName} ! 🌿
 
-Nous confirmons votre réservation à *Vila Vaias Aparts* — ${v.apartmentName}.
+Merci pour votre réservation à *Vila Vaias Aparts* — *${v.apartmentName}*.
 
 📅 *Votre séjour*
 • Arrivée : ${formatGuestDate(v.checkIn, l)} (à partir de 14h00)
 • Départ : ${formatGuestDate(v.checkOut, l)} (avant 11h00)
 • Nuits : ${v.nights}
-• Adultes : ${v.adults}${v.children ? ` · Enfants : ${v.children}` : ""}
+${priceLine(v, l)}
 
-📍 Adresse : ${ADDRESS}.
-Quelques jours avant l'arrivée, nous vous enverrons toutes les informations nécessaires.
-
-À tout moment : ${HOST_PHONE_PRIMARY} (WhatsApp) ou ${HOST_EMAIL}.
+24 heures avant l'arrivée nous vous enverrons toutes les informations pratiques.
 
 ${SIGNATURE}
 `),
     de: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Wir bestätigen Ihre Buchung bei *Vila Vaias Aparts* — ${v.apartmentName}.
+Vielen Dank für Ihre Buchung bei *Vila Vaias Aparts* — *${v.apartmentName}*.
 
 📅 *Ihr Aufenthalt*
-• Check-in: ${formatGuestDate(v.checkIn, l)} (ab 14:00 Uhr)
-• Check-out: ${formatGuestDate(v.checkOut, l)} (bis 11:00 Uhr)
+• Check-in: ${formatGuestDate(v.checkIn, l)} (ab 14:00)
+• Check-out: ${formatGuestDate(v.checkOut, l)} (bis 11:00)
 • Nächte: ${v.nights}
-• Erwachsene: ${v.adults}${v.children ? ` · Kinder: ${v.children}` : ""}
+${priceLine(v, l)}
 
-📍 Adresse: ${ADDRESS}.
-Wenige Tage vor Ihrer Ankunft senden wir Ihnen alle Details für einen reibungslosen Check-in.
-
-Sie erreichen uns jederzeit unter ${HOST_PHONE_PRIMARY} (WhatsApp) oder ${HOST_EMAIL}.
+24 Stunden vor Anreise senden wir Ihnen alle praktischen Infos.
 
 ${SIGNATURE}
 `),
     it: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Confermiamo la sua prenotazione presso *Vila Vaias Aparts* — ${v.apartmentName}.
+Grazie per aver prenotato *Vila Vaias Aparts* — *${v.apartmentName}*.
 
-📅 *Il suo soggiorno*
+📅 *Il vostro soggiorno*
 • Check-in: ${formatGuestDate(v.checkIn, l)} (dalle 14:00)
 • Check-out: ${formatGuestDate(v.checkOut, l)} (entro le 11:00)
 • Notti: ${v.nights}
-• Adulti: ${v.adults}${v.children ? ` · Bambini: ${v.children}` : ""}
+${priceLine(v, l)}
 
-📍 Indirizzo: ${ADDRESS}.
-Pochi giorni prima dell'arrivo le invieremo tutte le informazioni utili.
-
-In qualunque momento: ${HOST_PHONE_PRIMARY} (WhatsApp) o ${HOST_EMAIL}.
+24 ore prima dell'arrivo vi invieremo tutte le informazioni pratiche.
 
 ${SIGNATURE}
 `),
     es: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}. 🌿
 
-Le confirmamos su reserva en *Vila Vaias Aparts* — ${v.apartmentName}.
+Gracias por reservar en *Vila Vaias Aparts* — *${v.apartmentName}*.
 
 📅 *Su estancia*
-• Llegada: ${formatGuestDate(v.checkIn, l)} (desde las 14:00)
-• Salida: ${formatGuestDate(v.checkOut, l)} (antes de las 11:00)
+• Check-in: ${formatGuestDate(v.checkIn, l)} (a partir de las 14:00)
+• Check-out: ${formatGuestDate(v.checkOut, l)} (hasta las 11:00)
 • Noches: ${v.nights}
-• Adultos: ${v.adults}${v.children ? ` · Niños: ${v.children}` : ""}
+${priceLine(v, l)}
 
-📍 Dirección: ${ADDRESS}.
-Unos días antes de la llegada le enviaremos toda la información para un check-in tranquilo.
-
-Estamos disponibles en ${HOST_PHONE_PRIMARY} (WhatsApp) o ${HOST_EMAIL}.
+24 horas antes de la llegada le enviaremos toda la información práctica.
 
 ${SIGNATURE}
 `),
     hu: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Megerősítjük foglalását a *Vila Vaias Aparts* — ${v.apartmentName} apartmanban.
+Köszönjük a foglalást a *Vila Vaias Aparts*-nál — *${v.apartmentName}*.
 
-📅 *Tartózkodás*
-• Érkezés: ${formatGuestDate(v.checkIn, l)} (14:00-tól)
-• Távozás: ${formatGuestDate(v.checkOut, l)} (11:00-ig)
+📅 *Az Ön tartózkodása*
+• Bejelentkezés: ${formatGuestDate(v.checkIn, l)} (14:00 után)
+• Kijelentkezés: ${formatGuestDate(v.checkOut, l)} (11:00-ig)
 • Éjszakák: ${v.nights}
-• Felnőttek: ${v.adults}${v.children ? ` · Gyermekek: ${v.children}` : ""}
+${priceLine(v, l)}
 
-📍 Cím: ${ADDRESS}.
-Néhány nappal az érkezés előtt elküldjük az összes részletet a zökkenőmentes érkezéshez.
-
-Bármikor elérhetők vagyunk: ${HOST_PHONE_PRIMARY} (WhatsApp) vagy ${HOST_EMAIL}.
+24 órával az érkezés előtt minden gyakorlati információt elküldünk.
 
 ${SIGNATURE}
 `),
   },
 
   // =========================================================================
-  // A2 — 7 days before
+  // A2 — Pre-arrival info bundle (24h before, 10:00 local)
   // =========================================================================
-  A2_week_before: {
-    ro: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
+  A2_pre_arrival: {
+    ro: (v, l) =>
+      v.isReturning
+        ? r(`
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Mai sunt 7 zile până la sosirea dumneavoastră în ${v.apartmentName} (${formatGuestDate(v.checkIn, l)}). 🗓️
+Mâine vă așteptăm din nou la *Vila Vaias Aparts* — *${v.apartmentName}*.
+Aceleași detalii ca data trecută: cod poartă *${GATE_CODE}*, parcare în curte, check-in după 14:00.
+Codul de acces în apartament vi-l dăm la sosire.
 
-• Doriți să rezervăm o experiență locală — mănăstiri, Cetatea Neamț, masaj, jacuzzi sau BBQ pe terasă?
-• Aveți alergii, restricții alimentare sau cerințe speciale de care să știm?
-• Călătoriți cu un cățel? Acceptăm animale de companie fără cost suplimentar.
+Dacă aveți nevoie de ceva, suntem la ${HOST_PHONE_PRIMARY} (Anca) sau ${HOST_PHONE_SECONDARY} (Vasi).
+Drum bun!
 
-Vă răspundem cu plăcere oricând la ${HOST_PHONE_PRIMARY}.
+${SIGNATURE}
+`)
+        : r(`
+${timeGreeting(l)}, ${v.guestName}! 🌿
+
+Mâine vă așteptăm la *Vila Vaias Aparts* — *${v.apartmentName}*.
+
+${practicalInfoBlock(v, l)}
+
+Drum bun! Pe mâine!
 
 ${SIGNATURE}
 `),
-    en: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
+    en: (v, l) =>
+      v.isReturning
+        ? r(`
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-There are 7 days left until your arrival at ${v.apartmentName} (${formatGuestDate(v.checkIn, l)}). 🗓️
+We're looking forward to having you back tomorrow at *Vila Vaias Aparts* — *${v.apartmentName}*.
+Same as last time: gate code *${GATE_CODE}*, courtyard parking, check-in from 14:00.
+We'll hand you the apartment access code on arrival.
 
-• Would you like us to arrange a local experience — monasteries, Neamț Citadel, massage, jacuzzi, or terrace BBQ?
-• Any allergies, dietary needs or special requests we should know about?
-• Travelling with a pet? They're welcome at no extra cost.
-
-We're always happy to help — ${HOST_PHONE_PRIMARY}.
-
-${SIGNATURE}
-`),
-    fr: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName} !
-
-Plus que 7 jours avant votre arrivée à ${v.apartmentName} (${formatGuestDate(v.checkIn, l)}). 🗓️
-
-• Souhaitez-vous une expérience locale — monastères, Citadelle de Neamț, massage, jacuzzi ou BBQ ?
-• Allergies, restrictions alimentaires ou demandes spéciales ?
-• Vous voyagez avec un animal ? Bienvenue, sans frais supplémentaires.
-
-À votre service : ${HOST_PHONE_PRIMARY}.
+Anything you need, we're at ${HOST_PHONE_PRIMARY} (Anca) or ${HOST_PHONE_SECONDARY} (Vasi).
+Safe travels!
 
 ${SIGNATURE}
-`),
-    de: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
+`)
+        : r(`
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Noch 7 Tage bis zu Ihrer Ankunft in ${v.apartmentName} (${formatGuestDate(v.checkIn, l)}). 🗓️
+We're looking forward to welcoming you tomorrow at *Vila Vaias Aparts* — *${v.apartmentName}*.
 
-• Möchten Sie ein lokales Erlebnis — Klöster, Festung Neamț, Massage, Whirlpool oder BBQ?
-• Allergien, Ernährungswünsche oder besondere Bitten?
-• Reisen Sie mit Haustier? Wir freuen uns, ohne Aufpreis.
-
-Wir sind für Sie da: ${HOST_PHONE_PRIMARY}.
-
-${SIGNATURE}
-`),
-    it: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-Mancano 7 giorni al suo arrivo a ${v.apartmentName} (${formatGuestDate(v.checkIn, l)}). 🗓️
-
-• Desidera che organizziamo un'esperienza locale — monasteri, Cittadella di Neamț, massaggio, jacuzzi o BBQ?
-• Allergie, esigenze alimentari o richieste speciali?
-• Viaggia con un animale? È il benvenuto, senza costi aggiuntivi.
-
-A sua disposizione: ${HOST_PHONE_PRIMARY}.
-
-${SIGNATURE}
-`),
-    es: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}.
-
-Faltan 7 días para su llegada a ${v.apartmentName} (${formatGuestDate(v.checkIn, l)}). 🗓️
-
-• ¿Le organizamos una experiencia local — monasterios, Ciudadela de Neamț, masaje, jacuzzi o BBQ?
-• ¿Alergias, restricciones alimentarias o solicitudes especiales?
-• ¿Viaja con mascota? Bienvenida, sin coste adicional.
-
-A su disposición: ${HOST_PHONE_PRIMARY}.
-
-${SIGNATURE}
-`),
-    hu: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-7 nap van hátra az érkezéséig (${formatGuestDate(v.checkIn, l)}, ${v.apartmentName}). 🗓️
-
-• Szeretne helyi élményt — kolostorok, Neamț Vára, masszázs, pezsgőfürdő, BBQ?
-• Allergia, étrend, különleges kérés?
-• Háziállattal érkezik? Szívesen látjuk, díjmentesen.
-
-Rendelkezésére állunk: ${HOST_PHONE_PRIMARY}.
-
-${SIGNATURE}
-`),
-  },
-
-  // =========================================================================
-  // A3 — 3 days before
-  // =========================================================================
-  A3_three_days: {
-    ro: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! ✨
-
-Mai sunt 3 zile până vă întâmpinăm la ${v.apartmentName}. Iată informațiile esențiale:
-
-📍 *Adresa & parcare*
-${ADDRESS} — poarta verde de lemn.
-Parcare gratuită în curte. Codul porții auto: *${GATE_CODE}* (tastați și apăsați tasta verde).
-
-🔑 *Self check-in*
-Codul de la cutia cu chei vă va fi comunicat verbal sau prin mesaj imediat ce confirmați sosirea (după 14:00). Vă rugăm anunțați-ne cu 30–60 minute înainte.
-
-📶 *WiFi*
-Rețea: ${WIFI_SSID} · Parolă: ${WIFI_PASSWORD}
-
-💶 *Taxa de stațiune*
-${CITY_TAX_PER_ADULT_PER_NIGHT} lei / adult / noapte · achitabilă la sosire (numerar sau card). Total estimat: ${v.cityTaxTotal} lei.
-
-🍽️ *Mic dejun & dineu*
-Putem comanda mâncare proaspătă pregătită de bucătăriile noastre partenere — anunțați-ne dacă doriți.
-
-${SIGNATURE}
-`),
-    en: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! ✨
-
-3 days until we welcome you to ${v.apartmentName}. Here are the essentials:
-
-📍 *Address & parking*
-${ADDRESS} — green wooden gate.
-Free parking inside the courtyard. Vehicle gate code: *${GATE_CODE}* (enter the digits, press the green key).
-
-🔑 *Self check-in*
-The key-box code is shared verbally or by message once you confirm your arrival window (from 14:00). Please let us know 30–60 minutes before arrival.
-
-📶 *WiFi*
-Network: ${WIFI_SSID} · Password: ${WIFI_PASSWORD}
-
-💶 *City tax*
-${CITY_TAX_PER_ADULT_PER_NIGHT} lei / adult / night · paid on arrival (cash or card). Estimated total: ${v.cityTaxTotal} lei.
-
-🍽️ *Food & drinks*
-We can arrange fresh meals from our partner kitchens — just let us know.
-
-${SIGNATURE}
-`),
-    fr: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName} ! ✨
-
-J-3 avant votre arrivée à ${v.apartmentName}. Voici l'essentiel :
-
-📍 *Adresse & stationnement*
-${ADDRESS} — portail vert en bois. Parking gratuit dans la cour. Code du portail : *${GATE_CODE}*.
-
-🔑 *Self check-in*
-Le code de la boîte à clés sera communiqué oralement ou par message dès que vous confirmez l'heure d'arrivée (à partir de 14h00). Merci de prévenir 30 à 60 minutes avant.
-
-📶 *WiFi*
-Réseau : ${WIFI_SSID} · Mot de passe : ${WIFI_PASSWORD}
-
-💶 *Taxe de séjour*
-${CITY_TAX_PER_ADULT_PER_NIGHT} lei / adulte / nuit · à payer à l'arrivée. Total estimé : ${v.cityTaxTotal} lei.
-
-🍽️ *Repas*
-Nous pouvons commander des plats frais auprès de nos cuisines partenaires — n'hésitez pas.
-
-${SIGNATURE}
-`),
-    de: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! ✨
-
-Noch 3 Tage bis zu Ihrer Ankunft in ${v.apartmentName}. Das Wichtigste:
-
-📍 *Adresse & Parken*
-${ADDRESS} — grünes Holztor. Kostenfreies Parken im Innenhof. Tor-Code: *${GATE_CODE}*.
-
-🔑 *Self-Check-in*
-Den Code des Schlüsselkastens senden wir mündlich oder per Nachricht, sobald Sie die Ankunftszeit bestätigen (ab 14:00 Uhr). Bitte 30–60 Minuten vor Ankunft Bescheid geben.
-
-📶 *WLAN*
-Netzwerk: ${WIFI_SSID} · Passwort: ${WIFI_PASSWORD}
-
-💶 *Kurtaxe*
-${CITY_TAX_PER_ADULT_PER_NIGHT} Lei / Erwachsener / Nacht · Zahlung bei Ankunft. Geschätzte Summe: ${v.cityTaxTotal} Lei.
-
-🍽️ *Essen*
-Wir organisieren frische Speisen aus unseren Partner­küchen — sagen Sie uns Bescheid.
-
-${SIGNATURE}
-`),
-    it: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! ✨
-
-3 giorni al suo arrivo a ${v.apartmentName}. Le informazioni essenziali:
-
-📍 *Indirizzo & parcheggio*
-${ADDRESS} — cancello verde in legno. Parcheggio gratuito nel cortile. Codice cancello: *${GATE_CODE}*.
-
-🔑 *Self check-in*
-Il codice della cassetta delle chiavi le sarà comunicato verbalmente o via messaggio non appena confermerà l'orario di arrivo (dalle 14:00). Ci avvisi 30–60 minuti prima.
-
-📶 *WiFi*
-Rete: ${WIFI_SSID} · Password: ${WIFI_PASSWORD}
-
-💶 *Tassa di soggiorno*
-${CITY_TAX_PER_ADULT_PER_NIGHT} lei / adulto / notte · pagamento all'arrivo. Totale stimato: ${v.cityTaxTotal} lei.
-
-🍽️ *Pasti*
-Possiamo organizzare pasti freschi dalle cucine partner — ce lo faccia sapere.
-
-${SIGNATURE}
-`),
-    es: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}. ✨
-
-Faltan 3 días para su llegada a ${v.apartmentName}. Información esencial:
-
-📍 *Dirección & aparcamiento*
-${ADDRESS} — portón verde de madera. Aparcamiento gratuito en el patio. Código del portón: *${GATE_CODE}*.
-
-🔑 *Self check-in*
-Le enviaremos el código del buzón de llaves verbalmente o por mensaje en cuanto confirme la hora de llegada (desde las 14:00). Avísenos 30–60 minutos antes.
-
-📶 *WiFi*
-Red: ${WIFI_SSID} · Contraseña: ${WIFI_PASSWORD}
-
-💶 *Tasa turística*
-${CITY_TAX_PER_ADULT_PER_NIGHT} lei / adulto / noche · pago a la llegada. Total estimado: ${v.cityTaxTotal} lei.
-
-🍽️ *Comidas*
-Podemos organizar platos frescos de nuestras cocinas asociadas — háganoslo saber.
-
-${SIGNATURE}
-`),
-    hu: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! ✨
-
-3 nap az érkezéséig (${v.apartmentName}). A lényeg:
-
-📍 *Cím & parkolás*
-${ADDRESS} — zöld fakapu. Ingyenes parkolás az udvarban. Kapukód: *${GATE_CODE}*.
-
-🔑 *Self check-in*
-A kulcsdoboz kódját szóban vagy üzenetben küldjük, miután megerősíti az érkezési időt (14:00-tól). Kérjük, érkezés előtt 30–60 perccel jelezze.
-
-📶 *WiFi*
-Hálózat: ${WIFI_SSID} · Jelszó: ${WIFI_PASSWORD}
-
-💶 *Idegenforgalmi adó*
-${CITY_TAX_PER_ADULT_PER_NIGHT} lej / felnőtt / éjszaka · érkezéskor fizetendő. Becsült összeg: ${v.cityTaxTotal} lej.
-
-🍽️ *Étkezés*
-Friss ételeket tudunk szervezni partner­konyháinkból — szóljon, ha érdekli.
-
-${SIGNATURE}
-`),
-  },
-
-  // =========================================================================
-  // A4 — Day before
-  // =========================================================================
-  A4_day_before: {
-    ro: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🚪
-
-Mâine vă întâmpinăm la ${v.apartmentName}.
-
-• Check-in: după ora 14:00. Vă rugăm să ne anunțați estimativ ora sosirii.
-• Adresa: ${ADDRESS}. Cod poartă auto: *${GATE_CODE}*.
-• La sosire, vă vom trimite codul cutiei cu chei prin mesaj sau verbal.
-
-Drum bun și ne vedem mâine!
-
-${SIGNATURE}
-`),
-    en: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🚪
-
-Tomorrow we welcome you to ${v.apartmentName}.
-
-• Check-in: from 14:00. Could you share an estimated arrival time?
-• Address: ${ADDRESS}. Vehicle gate code: *${GATE_CODE}*.
-• On arrival we'll share the key-box code by message or verbally.
+${practicalInfoBlock(v, l)}
 
 Safe travels — see you tomorrow!
 
 ${SIGNATURE}
 `),
     fr: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName} ! 🚪
+${timeGreeting(l)}, ${v.guestName} ! 🌿
 
-Demain, nous vous accueillons à ${v.apartmentName}.
+Nous vous attendons demain à *Vila Vaias Aparts* — *${v.apartmentName}*.
 
-• Arrivée : à partir de 14h00. Pouvez-vous nous indiquer une heure approximative ?
-• Adresse : ${ADDRESS}. Code du portail : *${GATE_CODE}*.
-• À l'arrivée, nous vous communiquerons le code de la boîte à clés.
+${practicalInfoBlock(v, l)}
 
 Bon voyage — à demain !
 
 ${SIGNATURE}
 `),
     de: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🚪
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Morgen begrüßen wir Sie in ${v.apartmentName}.
+Wir freuen uns auf Sie morgen bei *Vila Vaias Aparts* — *${v.apartmentName}*.
 
-• Check-in: ab 14:00 Uhr. Können Sie eine ungefähre Ankunftszeit nennen?
-• Adresse: ${ADDRESS}. Tor-Code: *${GATE_CODE}*.
-• Bei Ankunft senden wir den Schlüsselkasten-Code per Nachricht oder mündlich.
+${practicalInfoBlock(v, l)}
 
 Gute Reise — bis morgen!
 
 ${SIGNATURE}
 `),
     it: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🚪
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Domani la accogliamo a ${v.apartmentName}.
+Vi aspettiamo domani a *Vila Vaias Aparts* — *${v.apartmentName}*.
 
-• Check-in: dalle 14:00. Può indicarci un orario approssimativo?
-• Indirizzo: ${ADDRESS}. Codice cancello: *${GATE_CODE}*.
-• All'arrivo le comunicheremo il codice della cassetta delle chiavi.
+${practicalInfoBlock(v, l)}
 
 Buon viaggio — a domani!
 
 ${SIGNATURE}
 `),
     es: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}. 🚪
+${timeGreeting(l)}, ${v.guestName}. 🌿
 
-Mañana le damos la bienvenida a ${v.apartmentName}.
+Le esperamos mañana en *Vila Vaias Aparts* — *${v.apartmentName}*.
 
-• Check-in: desde las 14:00. ¿Puede indicarnos la hora estimada?
-• Dirección: ${ADDRESS}. Código del portón: *${GATE_CODE}*.
-• A la llegada le enviaremos el código del buzón de llaves.
+${practicalInfoBlock(v, l)}
 
 ¡Buen viaje — hasta mañana!
 
 ${SIGNATURE}
 `),
     hu: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🚪
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Holnap fogadjuk Önt itt: ${v.apartmentName}.
+Holnap várjuk a *Vila Vaias Aparts*-ban — *${v.apartmentName}*.
 
-• Érkezés: 14:00-tól. Meg tudja becsülni az érkezési időt?
-• Cím: ${ADDRESS}. Kapukód: *${GATE_CODE}*.
-• Érkezéskor üzenetben vagy szóban közöljük a kulcsdoboz kódját.
+${practicalInfoBlock(v, l)}
 
-Jó utat — holnap találkozunk!
+Jó utat — viszlát holnap!
 
 ${SIGNATURE}
 `),
   },
 
   // =========================================================================
-  // A5 — Arrival morning
+  // A3 — Welcome check (Day 1 evening, 20:00; SKIPPED if guest messaged us)
   // =========================================================================
-  A5_arrival_morning: {
-    ro: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🌞
-
-Ne bucurăm că vă vom întâmpina astăzi la ${v.apartmentName}.
-• Apartamentul este pregătit începând cu ora 14:00.
-• Adresa: ${ADDRESS}. Cod poartă auto: *${GATE_CODE}*.
-• Anunțați-ne 30–60 minute înainte de sosire pentru codul cutiei cu chei.
-
-WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-Drum bun!
-
-${SIGNATURE}
-`),
-    en: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🌞
-
-We can't wait to welcome you today at ${v.apartmentName}.
-• Apartment ready from 14:00.
-• Address: ${ADDRESS}. Vehicle gate code: *${GATE_CODE}*.
-• Please ping us 30–60 minutes before arrival for the key-box code.
-
-WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-Safe travels!
-
-${SIGNATURE}
-`),
-    fr: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName} ! 🌞
-
-Heureux de vous accueillir aujourd'hui à ${v.apartmentName}.
-• Appartement prêt à partir de 14h00.
-• Adresse : ${ADDRESS}. Code portail : *${GATE_CODE}*.
-• Prévenez-nous 30 à 60 minutes avant pour le code de la boîte à clés.
-
-WiFi : ${WIFI_SSID} / ${WIFI_PASSWORD}.
-Bon voyage !
-
-${SIGNATURE}
-`),
-    de: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🌞
-
-Wir freuen uns auf Ihre Ankunft heute in ${v.apartmentName}.
-• Apartment ab 14:00 Uhr bezugsfertig.
-• Adresse: ${ADDRESS}. Tor-Code: *${GATE_CODE}*.
-• 30–60 Minuten vor Ankunft melden für den Schlüsselkasten-Code.
-
-WLAN: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-Gute Reise!
-
-${SIGNATURE}
-`),
-    it: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🌞
-
-Felici di accoglierla oggi a ${v.apartmentName}.
-• Appartamento pronto dalle 14:00.
-• Indirizzo: ${ADDRESS}. Codice cancello: *${GATE_CODE}*.
-• Ci avvisi 30–60 minuti prima dell'arrivo per il codice della cassetta delle chiavi.
-
-WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-Buon viaggio!
-
-${SIGNATURE}
-`),
-    es: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}. 🌞
-
-Felices de recibirle hoy en ${v.apartmentName}.
-• Apartamento listo desde las 14:00.
-• Dirección: ${ADDRESS}. Código del portón: *${GATE_CODE}*.
-• Avísenos 30–60 minutos antes para el código del buzón de llaves.
-
-WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-¡Buen viaje!
-
-${SIGNATURE}
-`),
-    hu: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🌞
-
-Várjuk Önt ma a ${v.apartmentName} apartmanban.
-• Az apartman 14:00-tól készen áll.
-• Cím: ${ADDRESS}. Kapukód: *${GATE_CODE}*.
-• Érkezés előtt 30–60 perccel jelezze a kulcsdoboz kódjához.
-
-WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-Jó utat!
-
-${SIGNATURE}
-`),
-  },
-
-  // =========================================================================
-  // A6 — Post check-in (within 2-4h)
-  // =========================================================================
-  A6_post_checkin: {
-    ro: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-V-ați acomodat? 🌿
-• Apa caldă vine din boilere proprii — vă rugăm nu modificați termostatul (este reglat optim).
-• Smart TV, baie privată, terasă. Lenjerie premium și prosoape proaspete.
-• WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-
-Dacă aveți nevoie de ceva, scrieți-ne oricând — suntem aici 24/7 la ${HOST_PHONE_PRIMARY}.
-
-${SIGNATURE}
-`),
-    en: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-All settled in? 🌿
-• Hot water is supplied by dedicated boilers — please don't change the thermostat (already optimised).
-• Smart TV, private bathroom, terrace. Premium bedding and fresh towels.
-• WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-
-If you need anything, write us anytime — we're here 24/7 on ${HOST_PHONE_PRIMARY}.
-
-${SIGNATURE}
-`),
-    fr: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName} !
-
-Bien installés ? 🌿
-• L'eau chaude vient de chaudières dédiées — merci de ne pas toucher au thermostat.
-• Smart TV, salle de bain privée, terrasse. Linge premium et serviettes fraîches.
-• WiFi : ${WIFI_SSID} / ${WIFI_PASSWORD}.
-
-À tout moment au ${HOST_PHONE_PRIMARY} — nous sommes disponibles 24h/24.
-
-${SIGNATURE}
-`),
-    de: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-Gut angekommen? 🌿
-• Das Warmwasser kommt aus eigenen Boilern — bitte den Thermostat nicht verändern.
-• Smart TV, eigenes Bad, Terrasse. Premium-Bettwäsche und frische Handtücher.
-• WLAN: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-
-Bei Fragen rund um die Uhr unter ${HOST_PHONE_PRIMARY}.
-
-${SIGNATURE}
-`),
-    it: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-Tutto a posto? 🌿
-• L'acqua calda viene da boiler dedicati — non modifichi il termostato.
-• Smart TV, bagno privato, terrazza. Biancheria premium e asciugamani freschi.
-• WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-
-Siamo a disposizione 24/7 al ${HOST_PHONE_PRIMARY}.
-
-${SIGNATURE}
-`),
-    es: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}.
-
-¿Todo bien? 🌿
-• El agua caliente proviene de calderas propias — por favor, no modifique el termostato.
-• Smart TV, baño privado, terraza. Ropa de cama premium y toallas frescas.
-• WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-
-Disponibles 24/7 en ${HOST_PHONE_PRIMARY}.
-
-${SIGNATURE}
-`),
-    hu: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-Minden rendben? 🌿
-• A meleg vizet saját bojlerek adják — kérjük, ne állítsa át a termosztátot.
-• Smart TV, saját fürdőszoba, terasz. Prémium ágynemű és friss törölközők.
-• WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-
-Bármikor elérhetők vagyunk: ${HOST_PHONE_PRIMARY}.
-
-${SIGNATURE}
-`),
-  },
-
-  // =========================================================================
-  // A7 — Mid-stay
-  // =========================================================================
-  A7_mid_stay: {
+  A3_welcome_check: {
     ro: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Sperăm că vă bucurați de ședere. Câteva idei dacă vă doriți să explorați:
-• Mănăstirile Neamț, Agapia, Văratec, Sihăstria — la 20–40 minute.
-• Cetatea Neamț — punct istoric, vedere panoramică.
-• Masaj relaxant, jacuzzi sau BBQ pe terasă — putem organiza azi sau mâine.
-• Mâncare proaspătă din bucătăriile partenere — vă recomandăm cu plăcere.
+V-ați instalat bine în *${v.apartmentName}*? Aveți nevoie de ceva?
+Suntem la un mesaj distanță: ${HOST_PHONE_PRIMARY} (Anca) sau ${HOST_PHONE_SECONDARY} (Vasi).
 
-Doriți ceva? Un mesaj e suficient.
+Seară plăcută!
 
 ${SIGNATURE}
 `),
     en: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}! 🌿
 
-We hope you're enjoying your stay. A few ideas if you want to explore:
-• Neamț, Agapia, Văratec, Sihăstria monasteries — 20–40 minutes away.
-• Neamț Citadel — historic landmark with panoramic views.
-• Relaxing massage, jacuzzi or terrace BBQ — we can organise today or tomorrow.
-• Fresh meals from our partner kitchens — happy to recommend.
+Are you settled in OK at *${v.apartmentName}*? Anything you need?
+We're a message away on ${HOST_PHONE_PRIMARY} (Anca) or ${HOST_PHONE_SECONDARY} (Vasi).
 
-Want anything? Just message us.
+Have a lovely evening!
 
 ${SIGNATURE}
 `),
     fr: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName} ! 🌿
 
-Quelques idées si vous souhaitez explorer :
-• Monastères de Neamț, Agapia, Văratec, Sihăstria — 20–40 minutes.
-• Citadelle de Neamț — site historique avec vue panoramique.
-• Massage, jacuzzi ou BBQ — organisable aujourd'hui ou demain.
-• Repas frais des cuisines partenaires — sur demande.
+Vous êtes bien installés à *${v.apartmentName}* ? Besoin de quelque chose ?
+Nous sommes joignables : ${HOST_PHONE_PRIMARY} (Anca) / ${HOST_PHONE_SECONDARY} (Vasi).
 
-À votre disposition !
+Bonne soirée !
 
 ${SIGNATURE}
 `),
     de: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Ein paar Ideen für Ihren Aufenthalt:
-• Klöster Neamț, Agapia, Văratec, Sihăstria — 20–40 Minuten entfernt.
-• Festung Neamț — historisches Wahrzeichen mit Panoramablick.
-• Massage, Whirlpool oder BBQ — heute oder morgen möglich.
-• Frische Speisen aus den Partner­küchen — gerne.
+Sind Sie gut in *${v.apartmentName}* angekommen? Brauchen Sie etwas?
+Wir sind erreichbar: ${HOST_PHONE_PRIMARY} (Anca) / ${HOST_PHONE_SECONDARY} (Vasi).
 
-Sagen Sie einfach Bescheid.
+Einen schönen Abend!
 
 ${SIGNATURE}
 `),
     it: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Qualche idea per il suo soggiorno:
-• Monasteri di Neamț, Agapia, Văratec, Sihăstria — 20–40 minuti.
-• Cittadella di Neamț — sito storico con vista panoramica.
-• Massaggio, jacuzzi o BBQ — organizzabile oggi o domani.
-• Piatti freschi dalle cucine partner — su richiesta.
+Vi siete sistemati bene a *${v.apartmentName}*? Avete bisogno di qualcosa?
+Siamo a un messaggio: ${HOST_PHONE_PRIMARY} (Anca) / ${HOST_PHONE_SECONDARY} (Vasi).
 
-Ci faccia sapere!
+Buona serata!
 
 ${SIGNATURE}
 `),
     es: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}. 🌿
 
-Algunas ideas para su estancia:
-• Monasterios de Neamț, Agapia, Văratec, Sihăstria — a 20–40 minutos.
-• Ciudadela de Neamț — sitio histórico con vistas panorámicas.
-• Masaje, jacuzzi o BBQ — hoy o mañana.
-• Comidas frescas de las cocinas asociadas — bajo demanda.
+¿Se han instalado bien en *${v.apartmentName}*? ¿Necesitan algo?
+Estamos a un mensaje: ${HOST_PHONE_PRIMARY} (Anca) / ${HOST_PHONE_SECONDARY} (Vasi).
 
-¡Cuéntenos!
+¡Buena noche!
 
 ${SIGNATURE}
 `),
     hu: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Néhány ötlet a tartózkodásra:
-• Neamț, Agapia, Văratec, Sihăstria kolostorok — 20–40 perc.
-• Neamț vára — történelmi nevezetesség panoráma kilátással.
-• Masszázs, jakuzzi vagy BBQ — ma vagy holnap.
-• Friss ételek partner­konyháinkból — szívesen ajánljuk.
+Jól berendezkedtek a *${v.apartmentName}*-ban? Szükségük van valamire?
+Egy üzenetnyire vagyunk: ${HOST_PHONE_PRIMARY} (Anca) / ${HOST_PHONE_SECONDARY} (Vasi).
 
-Jelezzen, ha kér valamit!
+Kellemes estét!
 
 ${SIGNATURE}
 `),
   },
 
   // =========================================================================
-  // A8 — Check-out morning
+  // A4 — Checkout reminder (evening before checkout, 20:00)
   // =========================================================================
-  A8_checkout_morning: {
-    ro: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-Astăzi e ziua plecării — vă mulțumim că ne-ați ales. 🌿
-
-• Check-out: până la ora 11:00. Dacă aveți nevoie de câteva ore în plus, scrieți-ne.
-• ${KEY_RETURN_INSTRUCTIONS.ro}
-• Închideți ferestrele și ușa principală. Nu trebuie să spălați vase sau să faceți curățenie — echipa noastră se ocupă.
-• Drum bun! Sperăm să vă revedem curând.
-
-${SIGNATURE}
-`),
-    en: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-Today is departure day — thank you for choosing us. 🌿
-
-• Check-out: by 11:00. Need a couple of extra hours? Just ask.
-• ${KEY_RETURN_INSTRUCTIONS.en}
-• Close windows and the main door. No need to wash dishes or tidy — our team handles it.
-• Safe travels! We hope to see you again soon.
-
-${SIGNATURE}
-`),
-    fr: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName} !
-
-Aujourd'hui c'est le départ — merci pour votre confiance. 🌿
-
-• Départ : avant 11h00. Besoin de quelques heures supplémentaires ? Écrivez-nous.
-• ${KEY_RETURN_INSTRUCTIONS.fr}
-• Fermez les fenêtres et la porte. Inutile de faire le ménage — notre équipe s'en charge.
-• Bon voyage ! À très bientôt.
-
-${SIGNATURE}
-`),
-    de: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-Heute ist Abreisetag — vielen Dank, dass Sie uns gewählt haben. 🌿
-
-• Check-out: bis 11:00 Uhr. Brauchen Sie ein paar Stunden mehr? Sagen Sie Bescheid.
-• ${KEY_RETURN_INSTRUCTIONS.de}
-• Fenster und Haustür schließen. Geschirr und Reinigung übernimmt unser Team.
-• Gute Reise — auf Wiedersehen!
-
-${SIGNATURE}
-`),
-    it: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-Oggi è il giorno della partenza — grazie per averci scelto. 🌿
-
-• Check-out: entro le 11:00. Le servono un paio d'ore in più? Ce lo dica.
-• ${KEY_RETURN_INSTRUCTIONS.it}
-• Chiuda finestre e porta principale. Niente piatti o pulizie — al resto ci pensa il nostro team.
-• Buon viaggio — a presto!
-
-${SIGNATURE}
-`),
-    es: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}.
-
-Hoy es el día de salida — gracias por elegirnos. 🌿
-
-• Check-out: antes de las 11:00. ¿Necesita unas horas más? Avísenos.
-• ${KEY_RETURN_INSTRUCTIONS.es}
-• Cierre ventanas y puerta principal. No es necesario lavar platos ni limpiar — nuestro equipo se encarga.
-• ¡Buen viaje — hasta pronto!
-
-${SIGNATURE}
-`),
-    hu: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-Ma a távozás napja — köszönjük, hogy minket választott. 🌿
-
-• Távozás: 11:00-ig. Ha pár órával később indul, szóljon.
-• ${KEY_RETURN_INSTRUCTIONS.hu}
-• Csukja be az ablakokat és a bejárati ajtót. Mosogatás és takarítás nem szükséges.
-• Jó utat — viszontlátásra!
-
-${SIGNATURE}
-`),
-  },
-
-  // =========================================================================
-  // A9 — Post-stay review request
-  // =========================================================================
-  A9_post_stay_review: {
+  A4_checkout_reminder: {
     ro: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Vă mulțumim că ne-ați vizitat la Vila Vaias Aparts. Sperăm că ${v.apartmentName} a fost pe placul dumneavoastră.
+Vă reamintim cu drag: check-out mâine, *${formatGuestDate(v.checkOut, l)}*, până la ora *11:00*.
 
-O recenzie sinceră ne ajută enorm să creștem și să ajungem la și mai mulți oaspeți frumoși ca dumneavoastră:
+🔑 ${KEY_RETURN_INSTRUCTIONS.ro}
 
-${v.reviewLinksBlock ?? ""}
-
-🎁 *Tombola lunară:* dacă lăsați recenzii pe 2 sau mai multe platforme, intrați automat în extragerea pentru un sejur gratuit la noi.
+Vă mulțumim că ați ales *Vila Vaias Aparts*. Sperăm că v-a plăcut sejurul!
+Drum bun spre casă.
 
 ${SIGNATURE}
 `),
     en: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Thank you for staying with us at Vila Vaias Aparts. We hope ${v.apartmentName} felt like home.
+A friendly reminder: check-out is tomorrow, *${formatGuestDate(v.checkOut, l)}*, by *11:00*.
 
-A short, honest review helps us hugely — and helps other guests find us:
+🔑 ${KEY_RETURN_INSTRUCTIONS.en}
 
-${v.reviewLinksBlock ?? ""}
-
-🎁 *Monthly raffle:* leave reviews on 2 or more platforms and you're entered into our draw for a free stay.
+Thank you for choosing *Vila Vaias Aparts*. We hope you enjoyed your stay!
+Safe trip home.
 
 ${SIGNATURE}
 `),
     fr: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName} ! 🌿
 
-Merci pour votre séjour à la Vila Vaias Aparts. Nous espérons que ${v.apartmentName} vous a plu.
+Petit rappel : départ demain, *${formatGuestDate(v.checkOut, l)}*, avant *11h00*.
 
-Un avis sincère nous aide énormément :
+🔑 ${KEY_RETURN_INSTRUCTIONS.fr}
 
-${v.reviewLinksBlock ?? ""}
-
-🎁 *Tombola mensuelle :* laissez un avis sur 2 plateformes ou plus pour participer au tirage d'un séjour gratuit.
+Merci d'avoir choisi *Vila Vaias Aparts*. Bon retour !
 
 ${SIGNATURE}
 `),
     de: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Danke für Ihren Aufenthalt bei Vila Vaias Aparts. Wir hoffen, ${v.apartmentName} hat Ihnen gefallen.
+Kurze Erinnerung: Check-out morgen, *${formatGuestDate(v.checkOut, l)}*, bis *11:00 Uhr*.
 
-Eine ehrliche Bewertung hilft uns sehr:
+🔑 ${KEY_RETURN_INSTRUCTIONS.de}
 
-${v.reviewLinksBlock ?? ""}
-
-🎁 *Monatliche Verlosung:* Bewertungen auf 2 oder mehr Plattformen nehmen automatisch an unserer Verlosung für einen kostenlosen Aufenthalt teil.
+Vielen Dank, dass Sie sich für *Vila Vaias Aparts* entschieden haben. Gute Heimreise!
 
 ${SIGNATURE}
 `),
     it: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Grazie per il suo soggiorno a Vila Vaias Aparts. Speriamo che ${v.apartmentName} le sia piaciuto.
+Un piccolo promemoria: check-out domani, *${formatGuestDate(v.checkOut, l)}*, entro le *11:00*.
 
-Una recensione sincera ci aiuta moltissimo:
+🔑 ${KEY_RETURN_INSTRUCTIONS.it}
 
-${v.reviewLinksBlock ?? ""}
-
-🎁 *Estrazione mensile:* recensioni su 2 o più piattaforme partecipano automaticamente al sorteggio di un soggiorno gratuito.
+Grazie per aver scelto *Vila Vaias Aparts*. Buon viaggio di ritorno!
 
 ${SIGNATURE}
 `),
     es: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}. 🌿
 
-Gracias por su estancia en Vila Vaias Aparts. Esperamos que ${v.apartmentName} le haya gustado.
+Recordatorio: salida mañana, *${formatGuestDate(v.checkOut, l)}*, antes de las *11:00*.
 
-Una reseña sincera nos ayuda muchísimo:
+🔑 ${KEY_RETURN_INSTRUCTIONS.es}
 
-${v.reviewLinksBlock ?? ""}
-
-🎁 *Sorteo mensual:* las reseñas en 2 o más plataformas entran automáticamente al sorteo de una estancia gratis.
+Gracias por elegir *Vila Vaias Aparts*. ¡Buen viaje de vuelta!
 
 ${SIGNATURE}
 `),
     hu: (v, l) => r(`
 ${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Köszönjük, hogy a Vila Vaias Aparts vendége volt. Reméljük, élvezte a ${v.apartmentName} apartmant.
+Emlékeztető: kijelentkezés holnap, *${formatGuestDate(v.checkOut, l)}*, *11:00*-ig.
 
-Egy őszinte értékelés sokat segít:
+🔑 ${KEY_RETURN_INSTRUCTIONS.hu}
+
+Köszönjük, hogy a *Vila Vaias Aparts*-t választotta. Jó utat haza!
+
+${SIGNATURE}
+`),
+  },
+
+  // =========================================================================
+  // A5 — Review request (48h after checkout)
+  // =========================================================================
+  A5_review_request: {
+    ro: (v, l) => r(`
+${timeGreeting(l)}, ${v.guestName}! 🌿
+
+Vă mulțumim încă o dată că ați ales *Vila Vaias Aparts* — *${v.apartmentName}*.
+Sperăm din suflet că v-a plăcut sejurul.
+
+Dacă aveți două minute, o recenzie ne ajută enorm:
 
 ${v.reviewLinksBlock ?? ""}
 
-🎁 *Havi sorsolás:* 2 vagy több platformon hagyott értékeléssel automatikusan részt vesz egy ingyenes tartózkodás sorsolásán.
+📸 Trimiteți-ne și captură cu recenzia — toate platformele cu recenzie vă intră automat în tombola lunară pentru un sejur gratuit la Vila Vaias Aparts.
 
-${SIGNATURE}
-`),
-  },
-
-  // =========================================================================
-  // B1 — Last-minute confirmation
-  // =========================================================================
-  B1_lastminute_confirmed: {
-    ro: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! ⚡
-
-Confirmare rezervare last-minute la Vila Vaias Aparts — ${v.apartmentName}.
-
-📅 Check-in azi, după ora 14:00 · Check-out ${formatGuestDate(v.checkOut, l)} (până la 11:00).
-📍 ${ADDRESS} · Cod poartă auto: *${GATE_CODE}*
-📶 WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}
-💶 Taxă de stațiune: ${v.cityTaxTotal} lei (${CITY_TAX_PER_ADULT_PER_NIGHT} lei/adult/noapte) la sosire.
-
-Codul cutiei cu chei vi-l trimitem direct când sunteți la 30–60 minute distanță. Anunțați-ne!
+Vă așteptăm cu drag înapoi.
 
 ${SIGNATURE}
 `),
     en: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! ⚡
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Last-minute booking confirmed at Vila Vaias Aparts — ${v.apartmentName}.
+Thank you once again for choosing *Vila Vaias Aparts* — *${v.apartmentName}*.
+We hope you genuinely enjoyed your stay.
 
-📅 Check-in today from 14:00 · Check-out ${formatGuestDate(v.checkOut, l)} (by 11:00).
-📍 ${ADDRESS} · Vehicle gate code: *${GATE_CODE}*
-📶 WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}
-💶 City tax: ${v.cityTaxTotal} lei (${CITY_TAX_PER_ADULT_PER_NIGHT} lei/adult/night) on arrival.
+If you have two minutes, a review helps us enormously:
 
-We'll send the key-box code once you're 30–60 minutes away. Let us know!
+${v.reviewLinksBlock ?? ""}
+
+📸 Send us a screenshot of your reviews too — every platform you review on enters you in our monthly raffle for a free stay at Vila Vaias Aparts.
+
+We'd love to welcome you back.
 
 ${SIGNATURE}
 `),
     fr: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName} ! ⚡
+${timeGreeting(l)}, ${v.guestName} ! 🌿
 
-Réservation de dernière minute confirmée — ${v.apartmentName}.
+Merci encore d'avoir choisi *Vila Vaias Aparts* — *${v.apartmentName}*.
 
-📅 Arrivée aujourd'hui dès 14h00 · Départ ${formatGuestDate(v.checkOut, l)} (avant 11h00).
-📍 ${ADDRESS} · Code portail : *${GATE_CODE}*
-📶 WiFi : ${WIFI_SSID} / ${WIFI_PASSWORD}
-💶 Taxe de séjour : ${v.cityTaxTotal} lei à l'arrivée.
+Si vous avez deux minutes, un avis nous aide énormément :
 
-Code de la boîte à clés envoyé à 30–60 minutes de l'arrivée.
+${v.reviewLinksBlock ?? ""}
+
+📸 Envoyez-nous une capture de l'avis — chaque plateforme = participation à la tombola mensuelle (séjour offert).
+
+À très bientôt !
 
 ${SIGNATURE}
 `),
     de: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! ⚡
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Last-Minute-Buchung bestätigt — ${v.apartmentName}.
+Nochmals vielen Dank für Ihren Aufenthalt bei *Vila Vaias Aparts* — *${v.apartmentName}*.
 
-📅 Check-in heute ab 14:00 Uhr · Check-out ${formatGuestDate(v.checkOut, l)} (bis 11:00 Uhr).
-📍 ${ADDRESS} · Tor-Code: *${GATE_CODE}*
-📶 WLAN: ${WIFI_SSID} / ${WIFI_PASSWORD}
-💶 Kurtaxe: ${v.cityTaxTotal} Lei bei Ankunft.
+Wenn Sie zwei Minuten haben, hilft uns eine Bewertung sehr:
 
-Den Schlüsselkasten-Code senden wir 30–60 Minuten vor Ankunft.
+${v.reviewLinksBlock ?? ""}
+
+📸 Schicken Sie uns gern einen Screenshot — jede Plattform = Teilnahme an der monatlichen Verlosung (kostenloser Aufenthalt).
+
+Wir freuen uns auf Ihren nächsten Besuch.
 
 ${SIGNATURE}
 `),
     it: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! ⚡
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Prenotazione last-minute confermata — ${v.apartmentName}.
+Grazie ancora per aver scelto *Vila Vaias Aparts* — *${v.apartmentName}*.
 
-📅 Check-in oggi dalle 14:00 · Check-out ${formatGuestDate(v.checkOut, l)} (entro le 11:00).
-📍 ${ADDRESS} · Codice cancello: *${GATE_CODE}*
-📶 WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}
-💶 Tassa di soggiorno: ${v.cityTaxTotal} lei all'arrivo.
+Se avete due minuti, una recensione ci aiuta moltissimo:
 
-Codice cassetta chiavi inviato a 30–60 minuti dall'arrivo.
+${v.reviewLinksBlock ?? ""}
+
+📸 Inviateci uno screenshot — ogni piattaforma = partecipazione all'estrazione mensile (soggiorno gratuito).
+
+A presto!
 
 ${SIGNATURE}
 `),
     es: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}. ⚡
+${timeGreeting(l)}, ${v.guestName}. 🌿
 
-Reserva de última hora confirmada — ${v.apartmentName}.
+Gracias de nuevo por elegir *Vila Vaias Aparts* — *${v.apartmentName}*.
 
-📅 Llegada hoy desde las 14:00 · Salida ${formatGuestDate(v.checkOut, l)} (antes de las 11:00).
-📍 ${ADDRESS} · Código del portón: *${GATE_CODE}*
-📶 WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}
-💶 Tasa turística: ${v.cityTaxTotal} lei a la llegada.
+Si tiene dos minutos, una reseña nos ayuda muchísimo:
 
-Le enviaremos el código del buzón cuando esté a 30–60 minutos.
+${v.reviewLinksBlock ?? ""}
+
+📸 Envíenos una captura — cada plataforma = participación en el sorteo mensual (estancia gratis).
+
+¡Hasta pronto!
 
 ${SIGNATURE}
 `),
     hu: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! ⚡
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Last-minute foglalás megerősítve — ${v.apartmentName}.
+Köszönjük újra, hogy a *Vila Vaias Aparts*-t választotta — *${v.apartmentName}*.
 
-📅 Érkezés ma 14:00-tól · Távozás ${formatGuestDate(v.checkOut, l)} (11:00-ig).
-📍 ${ADDRESS} · Kapukód: *${GATE_CODE}*
-📶 WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}
-💶 Idegenforgalmi adó: ${v.cityTaxTotal} lej érkezéskor.
+Ha van két perce, egy értékelés sokat segít:
 
-A kulcsdoboz kódját 30–60 perccel az érkezés előtt küldjük.
+${v.reviewLinksBlock ?? ""}
+
+📸 Küldjön egy képernyőképet — minden platform = részvétel a havi sorsoláson (ingyenes tartózkodás).
+
+Várjuk vissza!
 
 ${SIGNATURE}
 `),
   },
 
   // =========================================================================
-  // B2 — Arrival imminent
+  // B1 — Same-day combined confirm + arrival (immediate, fuses A1 + A2)
   // =========================================================================
-  B2_arrival_imminent: {
+  B1_combined_confirm_arrival: {
     ro: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Suntem pregătiți pentru sosirea dumneavoastră la ${v.apartmentName}.
-• Cod poartă auto: *${GATE_CODE}*
-• Confirmați-ne acum, vă rugăm, ora estimată — vă trimitem codul cutiei cu chei.
+Confirmare rezervare *Vila Vaias Aparts* — *${v.apartmentName}*.
+• Check-in astăzi/curând (după ora 14:00)
+• Check-out: ${formatGuestDate(v.checkOut, l)} (până la 11:00)
+• ${v.nights} nopți · ${v.adults} adulți${v.children ? ` · ${v.children} copii` : ""}
+${priceLine(v, l)}
+
+${practicalInfoBlock(v, l)}
+
+Vă așteptăm cu drag!
 
 ${SIGNATURE}
 `),
     en: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-We're ready for your arrival at ${v.apartmentName}.
-• Vehicle gate code: *${GATE_CODE}*
-• Please confirm your ETA — we'll send the key-box code right after.
+Booking confirmed at *Vila Vaias Aparts* — *${v.apartmentName}*.
+• Check-in today/soon (from 14:00)
+• Check-out: ${formatGuestDate(v.checkOut, l)} (by 11:00)
+• ${v.nights} nights · ${v.adults} adults${v.children ? ` · ${v.children} children` : ""}
+${priceLine(v, l)}
+
+${practicalInfoBlock(v, l)}
+
+See you soon!
 
 ${SIGNATURE}
 `),
     fr: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName} !
+${timeGreeting(l)}, ${v.guestName} ! 🌿
 
-Tout est prêt pour votre arrivée à ${v.apartmentName}.
-• Code portail : *${GATE_CODE}*
-• Confirmez-nous votre heure d'arrivée — nous enverrons le code de la boîte à clés.
+Réservation confirmée à *Vila Vaias Aparts* — *${v.apartmentName}*.
+• Arrivée aujourd'hui (à partir de 14h00)
+• Départ : ${formatGuestDate(v.checkOut, l)} (avant 11h00)
+${priceLine(v, l)}
+
+${practicalInfoBlock(v, l)}
+
+À tout de suite !
 
 ${SIGNATURE}
 `),
     de: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Wir sind bereit für Ihre Ankunft in ${v.apartmentName}.
-• Tor-Code: *${GATE_CODE}*
-• Bitte bestätigen Sie die Ankunftszeit — danach senden wir den Schlüsselkasten-Code.
+Buchung bestätigt — *Vila Vaias Aparts* — *${v.apartmentName}*.
+• Check-in heute (ab 14:00)
+• Check-out: ${formatGuestDate(v.checkOut, l)} (bis 11:00)
+${priceLine(v, l)}
+
+${practicalInfoBlock(v, l)}
+
+Bis bald!
 
 ${SIGNATURE}
 `),
     it: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Siamo pronti ad accoglierla a ${v.apartmentName}.
-• Codice cancello: *${GATE_CODE}*
-• Confermi l'orario di arrivo — invieremo il codice della cassetta delle chiavi.
+Prenotazione confermata — *Vila Vaias Aparts* — *${v.apartmentName}*.
+• Check-in oggi (dalle 14:00)
+• Check-out: ${formatGuestDate(v.checkOut, l)} (entro le 11:00)
+${priceLine(v, l)}
+
+${practicalInfoBlock(v, l)}
+
+A presto!
 
 ${SIGNATURE}
 `),
     es: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}.
+${timeGreeting(l)}, ${v.guestName}. 🌿
 
-Listos para recibirle en ${v.apartmentName}.
-• Código del portón: *${GATE_CODE}*
-• Confirme la hora estimada y le enviaremos el código del buzón.
+Reserva confirmada — *Vila Vaias Aparts* — *${v.apartmentName}*.
+• Check-in hoy (a partir de las 14:00)
+• Check-out: ${formatGuestDate(v.checkOut, l)} (antes de las 11:00)
+${priceLine(v, l)}
+
+${practicalInfoBlock(v, l)}
+
+¡Hasta pronto!
 
 ${SIGNATURE}
 `),
     hu: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Készen állunk: ${v.apartmentName}.
-• Kapukód: *${GATE_CODE}*
-• Erősítse meg az érkezési időt — utána küldjük a kulcsdoboz kódját.
+Foglalás megerősítve — *Vila Vaias Aparts* — *${v.apartmentName}*.
+• Bejelentkezés ma (14:00 után)
+• Kijelentkezés: ${formatGuestDate(v.checkOut, l)} (11:00-ig)
+${priceLine(v, l)}
+
+${practicalInfoBlock(v, l)}
+
+Hamarosan találkozunk!
 
 ${SIGNATURE}
 `),
   },
 
   // =========================================================================
-  // B3 — Post check-in (same-day flow)
+  // C1 — One-night combined confirm + arrival (immediate, fuses A1 + A2)
   // =========================================================================
-  B3_post_checkin: {
+  C1_combined_confirm_arrival: {
     ro: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-V-ați acomodat la ${v.apartmentName}? 🌿
-WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-Boilerul are termostat reglat — vă rugăm nu îl modificați.
+Confirmare rezervare *Vila Vaias Aparts* — *${v.apartmentName}* pentru o noapte.
+• Check-in: ${formatGuestDate(v.checkIn, l)} (după ora 14:00)
+• Check-out: ${formatGuestDate(v.checkOut, l)} (până la ora 11:00)
+${priceLine(v, l)}
 
-Suntem aici 24/7 la ${HOST_PHONE_PRIMARY}.
+${practicalInfoBlock(v, l)}
+
+Sejur plăcut!
 
 ${SIGNATURE}
 `),
     en: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-All settled in at ${v.apartmentName}? 🌿
-WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-The boiler thermostat is pre-set — please don't change it.
+Booking confirmed at *Vila Vaias Aparts* — *${v.apartmentName}* for one night.
+• Check-in: ${formatGuestDate(v.checkIn, l)} (from 14:00)
+• Check-out: ${formatGuestDate(v.checkOut, l)} (until 11:00)
+${priceLine(v, l)}
 
-Here 24/7 on ${HOST_PHONE_PRIMARY}.
+${practicalInfoBlock(v, l)}
 
-${SIGNATURE}
-`),
-    fr: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName} !
-
-Bien installés à ${v.apartmentName} ? 🌿
-WiFi : ${WIFI_SSID} / ${WIFI_PASSWORD}.
-Le thermostat du chauffe-eau est préréglé — merci de ne pas y toucher.
-
-Disponibles 24h/24 au ${HOST_PHONE_PRIMARY}.
-
-${SIGNATURE}
-`),
-    de: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-Gut angekommen in ${v.apartmentName}? 🌿
-WLAN: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-Der Boiler-Thermostat ist voreingestellt — bitte nicht verändern.
-
-24/7 erreichbar unter ${HOST_PHONE_PRIMARY}.
-
-${SIGNATURE}
-`),
-    it: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-Tutto a posto a ${v.apartmentName}? 🌿
-WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-Il termostato del boiler è impostato — non lo modifichi.
-
-24/7 al ${HOST_PHONE_PRIMARY}.
-
-${SIGNATURE}
-`),
-    es: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}.
-
-¿Todo bien en ${v.apartmentName}? 🌿
-WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-El termostato del calentador está ajustado — por favor, no lo modifique.
-
-Disponibles 24/7 en ${HOST_PHONE_PRIMARY}.
-
-${SIGNATURE}
-`),
-    hu: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-Minden rendben a ${v.apartmentName} apartmanban? 🌿
-WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-A bojler termosztátja be van állítva — kérjük, ne állítsa át.
-
-24/7 elérhetők: ${HOST_PHONE_PRIMARY}.
-
-${SIGNATURE}
-`),
-  },
-
-  // =========================================================================
-  // B4 — Post-stay review (same as A9, used by B/C flows)
-  // =========================================================================
-  B4_post_stay_review: {
-    ro: (v, l) => renderers.A9_post_stay_review.ro(v, l),
-    en: (v, l) => renderers.A9_post_stay_review.en(v, l),
-    fr: (v, l) => renderers.A9_post_stay_review.fr(v, l),
-    de: (v, l) => renderers.A9_post_stay_review.de(v, l),
-    it: (v, l) => renderers.A9_post_stay_review.it(v, l),
-    es: (v, l) => renderers.A9_post_stay_review.es(v, l),
-    hu: (v, l) => renderers.A9_post_stay_review.hu(v, l),
-  },
-
-  // =========================================================================
-  // C1 — One-night confirmation
-  // =========================================================================
-  C1_booking_confirmed: {
-    ro: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🌙
-
-Confirmare pentru o noapte la Vila Vaias Aparts — ${v.apartmentName}.
-
-📅 Sosire: ${formatGuestDate(v.checkIn, l)} (după 14:00).
-📅 Plecare: ${formatGuestDate(v.checkOut, l)} (până la 11:00).
-📍 ${ADDRESS} · Cod poartă: *${GATE_CODE}*.
-
-Dimineață vă vom trimite ultimele detalii pentru un check-in cât mai liniștit.
-
-${SIGNATURE}
-`),
-    en: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🌙
-
-One-night stay confirmed at Vila Vaias Aparts — ${v.apartmentName}.
-
-📅 Arrival: ${formatGuestDate(v.checkIn, l)} (from 14:00).
-📅 Departure: ${formatGuestDate(v.checkOut, l)} (by 11:00).
-📍 ${ADDRESS} · Gate code: *${GATE_CODE}*.
-
-We'll send the final details in the morning.
+Enjoy your stay!
 
 ${SIGNATURE}
 `),
     fr: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName} ! 🌙
+${timeGreeting(l)}, ${v.guestName} ! 🌿
 
-Confirmation pour une nuit — ${v.apartmentName}.
-📅 Arrivée : ${formatGuestDate(v.checkIn, l)} · Départ : ${formatGuestDate(v.checkOut, l)}.
-📍 ${ADDRESS} · Code portail : *${GATE_CODE}*.
+Réservation confirmée à *Vila Vaias Aparts* — *${v.apartmentName}* pour une nuit.
+• Arrivée : ${formatGuestDate(v.checkIn, l)} (dès 14h00)
+• Départ : ${formatGuestDate(v.checkOut, l)} (avant 11h00)
+${priceLine(v, l)}
 
-${SIGNATURE}
-`),
-    de: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🌙
+${practicalInfoBlock(v, l)}
 
-Eine Übernachtung bestätigt — ${v.apartmentName}.
-📅 Ankunft: ${formatGuestDate(v.checkIn, l)} · Abreise: ${formatGuestDate(v.checkOut, l)}.
-📍 ${ADDRESS} · Tor-Code: *${GATE_CODE}*.
-
-${SIGNATURE}
-`),
-    it: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🌙
-
-Una notte confermata — ${v.apartmentName}.
-📅 Arrivo: ${formatGuestDate(v.checkIn, l)} · Partenza: ${formatGuestDate(v.checkOut, l)}.
-📍 ${ADDRESS} · Codice cancello: *${GATE_CODE}*.
-
-${SIGNATURE}
-`),
-    es: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}. 🌙
-
-Una noche confirmada — ${v.apartmentName}.
-📅 Llegada: ${formatGuestDate(v.checkIn, l)} · Salida: ${formatGuestDate(v.checkOut, l)}.
-📍 ${ADDRESS} · Código del portón: *${GATE_CODE}*.
-
-${SIGNATURE}
-`),
-    hu: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🌙
-
-Egy éjszaka megerősítve — ${v.apartmentName}.
-📅 Érkezés: ${formatGuestDate(v.checkIn, l)} · Távozás: ${formatGuestDate(v.checkOut, l)}.
-📍 ${ADDRESS} · Kapukód: *${GATE_CODE}*.
-
-${SIGNATURE}
-`),
-  },
-
-  // =========================================================================
-  // C2 — One-night arrival morning (same template as A5, dedicated key)
-  // =========================================================================
-  C2_arrival_morning: {
-    ro: (v, l) => renderers.A5_arrival_morning.ro(v, l),
-    en: (v, l) => renderers.A5_arrival_morning.en(v, l),
-    fr: (v, l) => renderers.A5_arrival_morning.fr(v, l),
-    de: (v, l) => renderers.A5_arrival_morning.de(v, l),
-    it: (v, l) => renderers.A5_arrival_morning.it(v, l),
-    es: (v, l) => renderers.A5_arrival_morning.es(v, l),
-    hu: (v, l) => renderers.A5_arrival_morning.hu(v, l),
-  },
-
-  // =========================================================================
-  // C3 — One-night post check-in
-  // =========================================================================
-  C3_post_checkin: {
-    ro: (v, l) => renderers.A6_post_checkin.ro(v, l),
-    en: (v, l) => renderers.A6_post_checkin.en(v, l),
-    fr: (v, l) => renderers.A6_post_checkin.fr(v, l),
-    de: (v, l) => renderers.A6_post_checkin.de(v, l),
-    it: (v, l) => renderers.A6_post_checkin.it(v, l),
-    es: (v, l) => renderers.A6_post_checkin.es(v, l),
-    hu: (v, l) => renderers.A6_post_checkin.hu(v, l),
-  },
-
-  // =========================================================================
-  // C4 — One-night review (same template as A9)
-  // =========================================================================
-  C4_post_stay_review: {
-    ro: (v, l) => renderers.A9_post_stay_review.ro(v, l),
-    en: (v, l) => renderers.A9_post_stay_review.en(v, l),
-    fr: (v, l) => renderers.A9_post_stay_review.fr(v, l),
-    de: (v, l) => renderers.A9_post_stay_review.de(v, l),
-    it: (v, l) => renderers.A9_post_stay_review.it(v, l),
-    es: (v, l) => renderers.A9_post_stay_review.es(v, l),
-    hu: (v, l) => renderers.A9_post_stay_review.hu(v, l),
-  },
-
-  // =========================================================================
-  // D1 — Returning guest
-  // =========================================================================
-  D1_returning_welcome_back: {
-    ro: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 💚
-
-Ce bucurie să vă revedem la Vila Vaias Aparts — a ${v.previousVisits ?? 2}-a ședere alături de noi.
-
-V-am rezervat ${v.apartmentName} pentru ${formatGuestDate(v.checkIn, l)} — ${formatGuestDate(v.checkOut, l)}.
-Detaliile sosirii sunt aceleași (cod poartă *${GATE_CODE}*, WiFi ${WIFI_SSID} / ${WIFI_PASSWORD}), iar pentru fidelitate vă oferim atenția obișnuită — vă vom contacta zilele acestea.
-
-${SIGNATURE}
-`),
-    en: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 💚
-
-Wonderful to have you back at Vila Vaias Aparts — your ${v.previousVisits ?? 2}${ordinalSuffix(v.previousVisits ?? 2)} stay with us.
-
-We've reserved ${v.apartmentName} for ${formatGuestDate(v.checkIn, l)} — ${formatGuestDate(v.checkOut, l)}.
-The basics are unchanged (gate *${GATE_CODE}*, WiFi ${WIFI_SSID} / ${WIFI_PASSWORD}), and we'll be in touch with a small returning-guest gesture.
-
-${SIGNATURE}
-`),
-    fr: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName} ! 💚
-
-Quel plaisir de vous revoir — votre ${v.previousVisits ?? 2}e séjour à la Vila Vaias Aparts.
-${v.apartmentName} vous attend du ${formatGuestDate(v.checkIn, l)} au ${formatGuestDate(v.checkOut, l)}.
-Code portail *${GATE_CODE}* · WiFi ${WIFI_SSID} / ${WIFI_PASSWORD}.
+Bon séjour !
 
 ${SIGNATURE}
 `),
     de: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 💚
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Schön, Sie wiederzusehen — Ihr ${v.previousVisits ?? 2}. Aufenthalt bei Vila Vaias Aparts.
-${v.apartmentName} vom ${formatGuestDate(v.checkIn, l)} bis ${formatGuestDate(v.checkOut, l)}.
-Tor-Code *${GATE_CODE}* · WLAN ${WIFI_SSID} / ${WIFI_PASSWORD}.
+Buchung bestätigt — *Vila Vaias Aparts* — *${v.apartmentName}* für eine Nacht.
+• Check-in: ${formatGuestDate(v.checkIn, l)} (ab 14:00)
+• Check-out: ${formatGuestDate(v.checkOut, l)} (bis 11:00)
+${priceLine(v, l)}
 
-${SIGNATURE}
-`),
-    it: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 💚
+${practicalInfoBlock(v, l)}
 
-Che gioia rivederla — il suo ${v.previousVisits ?? 2}° soggiorno alla Vila Vaias Aparts.
-${v.apartmentName} dal ${formatGuestDate(v.checkIn, l)} al ${formatGuestDate(v.checkOut, l)}.
-Codice cancello *${GATE_CODE}* · WiFi ${WIFI_SSID} / ${WIFI_PASSWORD}.
-
-${SIGNATURE}
-`),
-    es: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}. 💚
-
-Qué alegría volver a verle — su ${v.previousVisits ?? 2}.ª estancia en Vila Vaias Aparts.
-${v.apartmentName} del ${formatGuestDate(v.checkIn, l)} al ${formatGuestDate(v.checkOut, l)}.
-Código del portón *${GATE_CODE}* · WiFi ${WIFI_SSID} / ${WIFI_PASSWORD}.
-
-${SIGNATURE}
-`),
-    hu: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 💚
-
-De jó újra látni — ez a ${v.previousVisits ?? 2}. tartózkodása nálunk.
-${v.apartmentName}: ${formatGuestDate(v.checkIn, l)} — ${formatGuestDate(v.checkOut, l)}.
-Kapukód *${GATE_CODE}* · WiFi ${WIFI_SSID} / ${WIFI_PASSWORD}.
-
-${SIGNATURE}
-`),
-  },
-
-  // =========================================================================
-  // E1 — Group / full villa
-  // =========================================================================
-  E1_group_coordinator: {
-    ro: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🏡
-
-Vă mulțumim că ați ales Vila Vaias Aparts pentru întregul grup.
-Apartamente rezervate: ${(v.groupApartments ?? []).join(", ") || v.apartmentName}.
-
-📅 ${formatGuestDate(v.checkIn, l)} — ${formatGuestDate(v.checkOut, l)} · ${v.nights} nopți.
-📍 ${ADDRESS} · Cod poartă auto: *${GATE_CODE}*.
-📶 WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-💶 Taxă de stațiune: ${CITY_TAX_PER_ADULT_PER_NIGHT} lei / adult / noapte, total estimat ${v.cityTaxTotal} lei.
-
-Pentru grupuri putem coordona check-in scalat, mâncare proaspătă pentru toți și activități comune (BBQ, jacuzzi, vizite la mănăstiri). Confirmați-ne ora aproximativă pentru fiecare echipaj.
-
-${SIGNATURE}
-`),
-    en: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🏡
-
-Thank you for choosing Vila Vaias Aparts for the whole group.
-Reserved apartments: ${(v.groupApartments ?? []).join(", ") || v.apartmentName}.
-
-📅 ${formatGuestDate(v.checkIn, l)} — ${formatGuestDate(v.checkOut, l)} · ${v.nights} nights.
-📍 ${ADDRESS} · Vehicle gate code: *${GATE_CODE}*.
-📶 WiFi: ${WIFI_SSID} / ${WIFI_PASSWORD}.
-💶 City tax: ${CITY_TAX_PER_ADULT_PER_NIGHT} lei / adult / night, estimated total ${v.cityTaxTotal} lei.
-
-For groups we can stagger check-in, organise fresh meals for everyone and run shared activities (BBQ, jacuzzi, monastery visits). Please share approximate arrival times per car/family.
-
-${SIGNATURE}
-`),
-    fr: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName} ! 🏡
-
-Merci d'avoir choisi la Vila Vaias Aparts pour tout le groupe.
-Appartements réservés : ${(v.groupApartments ?? []).join(", ") || v.apartmentName}.
-📅 ${formatGuestDate(v.checkIn, l)} — ${formatGuestDate(v.checkOut, l)} · ${v.nights} nuits.
-📍 ${ADDRESS} · Code portail : *${GATE_CODE}*.
-
-${SIGNATURE}
-`),
-    de: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🏡
-
-Danke, dass Sie Vila Vaias Aparts für die gesamte Gruppe gewählt haben.
-Reservierte Apartments: ${(v.groupApartments ?? []).join(", ") || v.apartmentName}.
-📅 ${formatGuestDate(v.checkIn, l)} — ${formatGuestDate(v.checkOut, l)} · ${v.nights} Nächte.
-📍 ${ADDRESS} · Tor-Code: *${GATE_CODE}*.
+Angenehmen Aufenthalt!
 
 ${SIGNATURE}
 `),
     it: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🏡
+${timeGreeting(l)}, ${v.guestName}! 🌿
 
-Grazie per aver scelto Vila Vaias Aparts per tutto il gruppo.
-Appartamenti riservati: ${(v.groupApartments ?? []).join(", ") || v.apartmentName}.
-📅 ${formatGuestDate(v.checkIn, l)} — ${formatGuestDate(v.checkOut, l)} · ${v.nights} notti.
-📍 ${ADDRESS} · Codice cancello: *${GATE_CODE}*.
+Prenotazione confermata — *Vila Vaias Aparts* — *${v.apartmentName}* per una notte.
+• Check-in: ${formatGuestDate(v.checkIn, l)} (dalle 14:00)
+• Check-out: ${formatGuestDate(v.checkOut, l)} (entro le 11:00)
+${priceLine(v, l)}
 
-${SIGNATURE}
-`),
-    es: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}. 🏡
+${practicalInfoBlock(v, l)}
 
-Gracias por elegir Vila Vaias Aparts para todo el grupo.
-Apartamentos reservados: ${(v.groupApartments ?? []).join(", ") || v.apartmentName}.
-📅 ${formatGuestDate(v.checkIn, l)} — ${formatGuestDate(v.checkOut, l)} · ${v.nights} noches.
-📍 ${ADDRESS} · Código del portón: *${GATE_CODE}*.
-
-${SIGNATURE}
-`),
-    hu: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}! 🏡
-
-Köszönjük, hogy a teljes csoport számára a Vila Vaias Aparts-t választotta.
-Lefoglalt apartmanok: ${(v.groupApartments ?? []).join(", ") || v.apartmentName}.
-📅 ${formatGuestDate(v.checkIn, l)} — ${formatGuestDate(v.checkOut, l)} · ${v.nights} éjszaka.
-📍 ${ADDRESS} · Kapukód: *${GATE_CODE}*.
-
-${SIGNATURE}
-`),
-  },
-
-  // =========================================================================
-  // F1 — International multilingual pre-arrival
-  // =========================================================================
-  F1_intl_pre_arrival: {
-    ro: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-Vă întâmpinăm cu drag la Vila Vaias Aparts. Mai jos găsiți esențialele pentru sosire — în mai multe limbi.
-${KEY_RETURN_INSTRUCTIONS.ro}
-
-${SIGNATURE}
-`),
-    en: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-
-A warm welcome to Vila Vaias Aparts. Below are the essentials for arrival.
-${KEY_RETURN_INSTRUCTIONS.en}
-
-${SIGNATURE}
-`),
-    fr: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName} !
-${KEY_RETURN_INSTRUCTIONS.fr}
-
-${SIGNATURE}
-`),
-    de: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-${KEY_RETURN_INSTRUCTIONS.de}
-
-${SIGNATURE}
-`),
-    it: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-${KEY_RETURN_INSTRUCTIONS.it}
+Buon soggiorno!
 
 ${SIGNATURE}
 `),
     es: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}.
-${KEY_RETURN_INSTRUCTIONS.es}
+${timeGreeting(l)}, ${v.guestName}. 🌿
+
+Reserva confirmada — *Vila Vaias Aparts* — *${v.apartmentName}* por una noche.
+• Check-in: ${formatGuestDate(v.checkIn, l)} (a partir de las 14:00)
+• Check-out: ${formatGuestDate(v.checkOut, l)} (hasta las 11:00)
+${priceLine(v, l)}
+
+${practicalInfoBlock(v, l)}
+
+¡Disfrute de su estancia!
 
 ${SIGNATURE}
 `),
     hu: (v, l) => r(`
-${timeGreeting(l)}, ${v.guestName}!
-${KEY_RETURN_INSTRUCTIONS.hu}
+${timeGreeting(l)}, ${v.guestName}! 🌿
+
+Foglalás megerősítve — *Vila Vaias Aparts* — *${v.apartmentName}* egy éjszakára.
+• Bejelentkezés: ${formatGuestDate(v.checkIn, l)} (14:00 után)
+• Kijelentkezés: ${formatGuestDate(v.checkOut, l)} (11:00-ig)
+${priceLine(v, l)}
+
+${practicalInfoBlock(v, l)}
+
+Kellemes tartózkodást!
 
 ${SIGNATURE}
 `),
@@ -1704,7 +1016,6 @@ export function renderTemplate(
 
 /** Sanity check used by the API route — make sure the door code never leaks. */
 export function containsBannedSecrets(body: string): boolean {
-  // Examples of the (private) door-code patterns we never allow.
   const bannedPatterns = [
     /\bkeybox\s*code\b/i,
     /\bcutia?\s*cu\s*chei\s*[:=]/i,
@@ -1713,35 +1024,3 @@ export function containsBannedSecrets(body: string): boolean {
   ];
   return bannedPatterns.some((p) => p.test(body));
 }
-
-function ordinalSuffix(n: number): string {
-  const j = n % 10;
-  const k = n % 100;
-  if (j === 1 && k !== 11) return "st";
-  if (j === 2 && k !== 12) return "nd";
-  if (j === 3 && k !== 13) return "rd";
-  return "th";
-}
-
-export const TEMPLATE_KEYS: TemplateKey[] = [
-  "A1_booking_confirmed",
-  "A2_week_before",
-  "A3_three_days",
-  "A4_day_before",
-  "A5_arrival_morning",
-  "A6_post_checkin",
-  "A7_mid_stay",
-  "A8_checkout_morning",
-  "A9_post_stay_review",
-  "B1_lastminute_confirmed",
-  "B2_arrival_imminent",
-  "B3_post_checkin",
-  "B4_post_stay_review",
-  "C1_booking_confirmed",
-  "C2_arrival_morning",
-  "C3_post_checkin",
-  "C4_post_stay_review",
-  "D1_returning_welcome_back",
-  "E1_group_coordinator",
-  "F1_intl_pre_arrival",
-];

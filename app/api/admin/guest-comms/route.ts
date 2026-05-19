@@ -58,6 +58,7 @@ export async function GET(req: NextRequest) {
         bookingRef: u.bookingRef,
         templateKey: u.templateKey,
         scenario: u.scenario,
+        flags: u.flags,
         channel: u.channel,
         languages: u.languages,
         scheduledFor: u.scheduledFor.toISOString(),
