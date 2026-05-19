@@ -18,6 +18,21 @@ const nextConfig = {
         permanent: true
       },
       {
+        source: "/apartamente",
+        destination: "/apartments",
+        permanent: true
+      },
+      {
+        source: "/apartamente/:slug*",
+        destination: "/apartments/:slug*",
+        permanent: true
+      },
+      {
+        source: "/pachete",
+        destination: "/packages",
+        permanent: true
+      },
+      {
         source: "/toata-vila",
         destination: "/vila-completa",
         permanent: true
