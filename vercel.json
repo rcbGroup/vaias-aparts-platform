@@ -8,6 +8,10 @@
     {
       "path": "/api/cron/booking-agent",
       "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/cron/guest-messages",
+      "schedule": "*/15 * * * *"
     }
   ]
 }

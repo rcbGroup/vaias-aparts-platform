@@ -3,6 +3,10 @@
 // numeric ID to pick the right system prompt.
 
 import { BOOKING_AGENT_META, BookingAgent } from "./bookingAgent";
+import {
+  GUEST_COMMS_AGENT_META,
+  GuestCommunicationAgent,
+} from "./guestCommunication";
 
 export type RegisteredAgent = {
   id: string;
@@ -12,8 +16,8 @@ export type RegisteredAgent = {
   icon: string;
   color: string;
   systemPrompt: string;
-  // Optional structured API (only the Booking Agent exposes one today).
-  api?: typeof BookingAgent;
+  // Optional structured API — exposed by agents that ship a tagged API object.
+  api?: typeof BookingAgent | typeof GuestCommunicationAgent;
 };
 
 export const AGENT_REGISTRY: RegisteredAgent[] = [
@@ -103,6 +107,16 @@ export const AGENT_REGISTRY: RegisteredAgent[] = [
     color: BOOKING_AGENT_META.color,
     systemPrompt: BOOKING_AGENT_META.systemPrompt,
     api: BookingAgent,
+  },
+  {
+    id: GUEST_COMMS_AGENT_META.id,
+    numericId: GUEST_COMMS_AGENT_META.numericId,
+    name: GUEST_COMMS_AGENT_META.name,
+    description: GUEST_COMMS_AGENT_META.description,
+    icon: GUEST_COMMS_AGENT_META.icon,
+    color: GUEST_COMMS_AGENT_META.color,
+    systemPrompt: GUEST_COMMS_AGENT_META.systemPrompt,
+    api: GuestCommunicationAgent,
   },
 ];
 
