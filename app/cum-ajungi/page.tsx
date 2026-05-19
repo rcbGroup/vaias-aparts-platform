@@ -12,8 +12,7 @@ import {
 import AirportExplorer from "./AirportExplorer";
 
 const PAGE_URL = "https://www.vaiasaparts.ro/cum-ajungi";
-const HERO_IMAGE =
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Targu_Neamt%2C_foto_Curcan_Ionel_%281%29.jpg/1920px-Targu_Neamt%2C_foto_Curcan_Ionel_%281%29.jpg";
+const HERO_IMAGE = "/attractions/targu-neamt.jpg";
 
 export const metadata: Metadata = {
   title:

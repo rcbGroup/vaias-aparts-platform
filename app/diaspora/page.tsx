@@ -24,7 +24,7 @@ export default function DiasporaPage() {
       <section className="relative min-h-[70vh] flex items-center bg-forest-950 pt-32 pb-20">
         <div className="absolute inset-0">
           <Image
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cetatea_Neamtului_-_exterior.jpg/1920px-Cetatea_Neamtului_-_exterior.jpg"
+            src="/attractions/cetatea-neamt.jpg"
             alt="Cetatea Neamț — Moldova autentică, România"
             fill
             className="object-cover opacity-30"
@@ -134,10 +134,10 @@ export default function DiasporaPage() {
           </div>
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {[
-              { name: "Mănăstirea Agapia", dist: "30 min", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Manastirea_Agapia_-_panoramio.jpg/1600px-Manastirea_Agapia_-_panoramio.jpg" },
-              { name: "Cetatea Neamț", dist: "5 min", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cetatea_Neamtului_-_exterior.jpg/1600px-Cetatea_Neamtului_-_exterior.jpg" },
-              { name: "Masivul Ceahlău", dist: "55 min", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Ceahlau-mountains-romania-august-2017-0001.jpg/1600px-Ceahlau-mountains-romania-august-2017-0001.jpg" },
-              { name: "Cheile Bicazului", dist: "50 min", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Bicaz_Gorges_%2843574913021%29.jpg/1600px-Bicaz_Gorges_%2843574913021%29.jpg" }
+              { name: "Mănăstirea Agapia", dist: "30 min", img: "/attractions/manastirea-agapia.jpg" },
+              { name: "Cetatea Neamț", dist: "5 min", img: "/attractions/cetatea-neamt.jpg" },
+              { name: "Masivul Ceahlău", dist: "55 min", img: "/attractions/muntele-ceahlau.jpg" },
+              { name: "Cheile Bicazului", dist: "50 min", img: "/attractions/cheile-bicazului.jpg" }
             ].map((p) => (
               <div key={p.name} className="relative aspect-[4/5] rounded-2xl overflow-hidden group">
                 <Image src={p.img} alt={p.name} fill sizes="300px" className="object-cover transition-transform duration-700 group-hover:scale-105" />

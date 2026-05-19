@@ -21,7 +21,7 @@ export default function CrediteFotoPage() {
         eyebrow="Credite foto"
         title="Mulțumim autorilor fotografiilor"
         subtitle="Fotografiile zonelor turistice afișate pe acest site provin de pe Wikimedia Commons, sub licențe Creative Commons. Aici sunt atribuțiile complete."
-        image="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Neamt_Monastery.jpg/1920px-Neamt_Monastery.jpg"
+        image="/attractions/manastirea-neamt.jpg"
       />
 
       <section className="section bg-cream-50">

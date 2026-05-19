@@ -27,7 +27,7 @@ export default function ExperientsePage() {
       {/* ─── HERO ─────────────────────────────────────────────────────── */}
       <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-forest-950">
         <Image
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Ceahlau-mountains-romania-august-2017-0001.jpg/1920px-Ceahlau-mountains-romania-august-2017-0001.jpg"
+          src="/attractions/muntele-ceahlau.jpg"
           alt="Masivul Ceahlău — Moldova, peisaj de excepție"
           fill
           className="object-cover kenburns opacity-30"

@@ -13,7 +13,7 @@ export default function CookiesPage() {
         eyebrow="Legal"
         title="Politică Cookies"
         subtitle="Ce sunt cookies, ce folosim și cum le poți controla."
-        image="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Ceahlau-mountains-romania-august-2017-0001.jpg/1920px-Ceahlau-mountains-romania-august-2017-0001.jpg"
+        image="/attractions/muntele-ceahlau.jpg"
       />
 
       <section className="section bg-cream-50">
