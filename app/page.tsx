@@ -29,10 +29,10 @@ export default function HomePage() {
 
   const foodItems = ["1", "2", "3", "4"];
   const foodImages = [
-    "https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1565299543923-37dd37887442?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1200&q=80"
+    "/unsplash/food-pelmeni.jpg",
+    "/unsplash/food-soup.jpg",
+    "/unsplash/food-traditional.jpg",
+    "/unsplash/food-dessert.jpg"
   ];
 
   const transportItems = [
@@ -432,7 +432,7 @@ export default function HomePage() {
                 desc: "Un lac privat în sat Nemțișor, la 10 minute. Pescuit, grătar, natură în liniște deplină. Exclusiv pentru oaspeții noștri — la cerere.",
                 cta: "Descoperă lacul",
                 href: "/experiente",
-                photo: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?auto=format&fit=crop&w=1600&q=80"
+                photo: "/unsplash/experience-lake.jpg"
               },
               {
                 num: "03",
@@ -441,7 +441,7 @@ export default function HomePage() {
                 desc: "Sarmale, mămăligă, tocăniță, plăcintă poale-n brâu, vin local. O experiență culinară care definește Moldova. În curând.",
                 cta: "Află mai mult",
                 href: "/han-rustic",
-                photo: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=80"
+                photo: "/unsplash/experience-hanrustic.jpg"
               }
             ].map((p, i) => (
               <ScrollFade key={p.num} delay={i * 120}>

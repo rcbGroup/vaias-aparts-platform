@@ -12,7 +12,7 @@ export const metadata: Metadata = {
       "Vila boutique, lac privat de pescuit și restaurant tradițional moldovenesc — toate în zona Târgu Neamț, România.",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?auto=format&fit=crop&w=1200&q=80",
+        url: "/unsplash/experience-lake.jpg",
         width: 1200,
         height: 630,
         alt: "Lacul privat Nemțișor — Vaias Aparts",
@@ -240,7 +240,7 @@ export default function ExperientsePage() {
             <div className="order-1 lg:order-2 relative">
               <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-card">
                 <Image
-                  src="https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?auto=format&fit=crop&w=1600&q=80"
+                  src="/unsplash/experience-lake.jpg"
                   alt="Lacul privat Nemțișor — liniște și natură"
                   fill
                   className="object-cover"
@@ -275,7 +275,7 @@ export default function ExperientsePage() {
             <div className="relative">
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-card">
                 <Image
-                  src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85"
+                  src="/unsplash/experience-hanrustic.jpg"
                   alt="Han Rustic — gastronomie moldovenească"
                   fill
                   className="object-cover card-lift"

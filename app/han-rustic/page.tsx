@@ -13,7 +13,7 @@ export const metadata: Metadata = {
       "Restaurant tradițional moldovenesc în Sat Braniște, Vânători-Neamț. Sarmale, mămăligă, ciorbe, plăcinte și vinuri locale. Relansat în curând.",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85",
+        url: "/unsplash/experience-hanrustic.jpg",
         width: 1200,
         height: 630,
         alt: "Han Rustic — gastronomie moldovenească",
@@ -72,7 +72,7 @@ export default function HanRusticPage() {
       <section className="relative min-h-[92vh] flex items-end overflow-hidden">
         {/* Background image */}
         <Image
-          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2400&q=85"
+          src="/unsplash/experience-hanrustic.jpg"
           alt="Han Rustic — gastronomie moldovenească"
           fill
           className="object-cover object-center kenburns"
@@ -186,7 +186,7 @@ export default function HanRusticPage() {
             <div className="relative">
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85"
+                  src="/unsplash/experience-hanrustic.jpg"
                   alt="Bucătărie tradițională moldovenească"
                   fill
                   className="object-cover"

@@ -52,7 +52,7 @@ export default function RefugiulVaiasPage() {
       <section className="relative bg-forest-950 pt-32 pb-20 text-cream-50">
         <div className="absolute inset-0 opacity-30">
           <Image
-            src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2400&q=85"
+            src="/unsplash/experience-lake.jpg"
             alt="Lac în pădure"
             fill
             className="object-cover"
@@ -95,7 +95,7 @@ export default function RefugiulVaiasPage() {
             </div>
             <div className="rounded-2xl overflow-hidden shadow-2xl">
               <Image
-                src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=85"
+                src="/unsplash/experience-mountain-cabin.jpg"
                 alt="Pădure cu lac"
                 width={800}
                 height={600}
