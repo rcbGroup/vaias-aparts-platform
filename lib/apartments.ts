@@ -34,6 +34,7 @@ export type Apartment = {
   heroImage: string;
   gallery: string[];
   youtubeId?: string;
+  /** Optional 3D virtual tour — surfaced in WhatsApp check-in messages when set. */
   matterportId?: string;
 };
 
@@ -147,6 +148,7 @@ export const apartments: Apartment[] = [
     rules: defaultRules,
     heroImage: APT1_PHOTOS[0],
     gallery: APT1_PHOTOS,
+    youtubeId: "21BhJhk6jPE",
   },
   {
     slug: "apartament-2",
@@ -207,6 +209,7 @@ export const apartments: Apartment[] = [
     rules: defaultRules,
     heroImage: APT2_PHOTOS[0],
     gallery: APT2_PHOTOS,
+    youtubeId: "nGQpA50hlNY",
   },
   {
     slug: "apartament-3",
@@ -271,6 +274,7 @@ export const apartments: Apartment[] = [
     rules: defaultRules,
     heroImage: APT3_PHOTOS[0],
     gallery: APT3_PHOTOS,
+    youtubeId: "UjtKgNfktr0",
   },
   {
     slug: "apartament-4",
@@ -332,6 +336,7 @@ export const apartments: Apartment[] = [
     rules: defaultRules,
     heroImage: APT4_PHOTOS[0],
     gallery: APT4_PHOTOS,
+    youtubeId: "QsAMMzvvRG8",
   },
   {
     slug: "apartament-5",
@@ -390,7 +395,7 @@ export const apartments: Apartment[] = [
     rules: defaultRules,
     heroImage: APT5_PHOTOS[0],
     gallery: APT5_PHOTOS,
-    matterportId: "6xEQUdBSM9w"
+    youtubeId: "CB2qN7b3hk8",
   },
   {
     slug: "apartament-6",
@@ -449,6 +454,7 @@ export const apartments: Apartment[] = [
     rules: defaultRules,
     heroImage: APT6_PHOTOS[0],
     gallery: APT6_PHOTOS,
+    youtubeId: "9hxuujvLB8Y",
   },
   {
     slug: "apartament-7",
@@ -520,6 +526,7 @@ export const apartments: Apartment[] = [
     ],
     heroImage: APT7_PHOTOS[0],
     gallery: APT7_PHOTOS,
+    youtubeId: "VrQ_jbreueU",
   }
 ];
 

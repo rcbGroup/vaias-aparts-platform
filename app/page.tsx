@@ -289,6 +289,43 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* VIDEO TOUR */}
+      <section className="section bg-cream-50">
+        <div className="container-x">
+          <ScrollFade>
+            <SectionHeader
+              eyebrow="Tur video"
+              title="Vila Vaias Aparts în mișcare"
+              subtitle="Confort de hotel, libertatea de acasă, liniște și priveliști ca în Elveția — vezi vila și împrejurimile."
+            />
+          </ScrollFade>
+          <ScrollFade delay={100}>
+            <div className="mt-12 mx-auto max-w-4xl">
+              <div className="relative aspect-video overflow-hidden rounded-2xl shadow-card bg-forest-950">
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/KnEAUHQFEvY?rel=0"
+                  title="Vila Vaias Aparts — tur video"
+                  className="absolute inset-0 h-full w-full border-0"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <div className="mt-5 text-center">
+                <a
+                  href="https://www.youtube.com/@VaiasAparts/videos"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary text-sm"
+                >
+                  ▶️ Vezi toate filmările pe YouTube
+                </a>
+              </div>
+            </div>
+          </ScrollFade>
+        </div>
+      </section>
+
       {/* GUEST HIGHLIGHTS */}
       <section className="section bg-stone-50">
         <div className="container-x">

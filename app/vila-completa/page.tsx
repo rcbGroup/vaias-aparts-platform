@@ -213,6 +213,60 @@ export default function VillaCompletaPage() {
         </div>
       </section>
 
+      {/* VIDEO TOUR */}
+      <section className="section bg-cream-50">
+        <div className="container-x">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <div className="eyebrow mb-3">Tur video</div>
+            <h2 className="font-display text-3xl md:text-5xl text-forest-900 mb-4 text-balance">
+              Vila Vaias Aparts în mișcare
+            </h2>
+            <p className="font-serif text-lg text-forest-800/85">
+              Confort de hotel, libertatea de acasă, liniște și priveliști ca în Elveția —
+              vezi întreaga vilă și bucătăria comună complet utilată.
+            </p>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-5">
+            <div className="lg:col-span-3">
+              <div className="relative aspect-video overflow-hidden rounded-2xl shadow-card bg-forest-950">
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/KnEAUHQFEvY?rel=0"
+                  title="Vila Vaias Aparts — tur video întreaga vilă"
+                  className="absolute inset-0 h-full w-full border-0"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <p className="mt-3 text-sm text-stone-500 text-center">Tur complet al vilei</p>
+            </div>
+            <div className="lg:col-span-2">
+              <div className="relative aspect-video overflow-hidden rounded-2xl shadow-card bg-forest-950">
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/xnxi4jQYKaU?rel=0"
+                  title="Bucătăria comună modernă — Vila Vaias Aparts"
+                  className="absolute inset-0 h-full w-full border-0"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <p className="mt-3 text-sm text-stone-500 text-center">Bucătăria comună complet utilată</p>
+            </div>
+          </div>
+          <div className="mt-6 text-center">
+            <a
+              href="https://www.youtube.com/@VaiasAparts/videos"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-walnut-600 hover:text-walnut-700"
+            >
+              ▶️ Vezi toate filmările pe canalul YouTube Vaias Aparts
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* PRICING CARD */}
       <section id="tarife" className="section bg-stone-50 relative overflow-hidden">
         <div className="absolute inset-0 pattern-moldavian opacity-40 pointer-events-none" />
