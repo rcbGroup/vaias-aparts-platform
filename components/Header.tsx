@@ -23,6 +23,7 @@ export default function Header() {
     { href: "/vila-completa", label: "Toată Vila" },
     { href: "/packages", label: "Pachete" },
     { href: "/wellness", label: "Wellness" },
+    { href: "/ce-poti-face", label: "Ce poți face" },
     { href: "/zone-turistice", label: t("nav.attractions") },
     { href: "/cum-ajungi", label: "Cum ajungi" },
     { href: "/galerie", label: t("nav.gallery") },

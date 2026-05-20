@@ -72,7 +72,9 @@ export default function Footer() {
               <li><Link href="/" className="text-cream-100/80 hover:text-cream-50 transition">{t("common.home")}</Link></li>
               <li><Link href="/apartments" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.apartments")}</Link></li>
               <li><Link href="/vila-completa" className="text-cream-100/80 hover:text-cream-50 transition">Toată Vila — 18–28 persoane</Link></li>
+              <li><Link href="/ce-poti-face" className="text-cream-100/80 hover:text-cream-50 transition">Ce poți face</Link></li>
               <li><Link href="/zone-turistice" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.attractions")}</Link></li>
+              <li><Link href="/istoria-orasului" className="text-cream-100/80 hover:text-cream-50 transition">Istoria orașului</Link></li>
               <li><Link href="/cum-ajungi" className="text-cream-100/80 hover:text-cream-50 transition">Cum ajungi · Aeroporturi</Link></li>
               <li><Link href="/galerie" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.gallery")}</Link></li>
               <li><Link href="/videouri" className="text-cream-100/80 hover:text-cream-50 transition">Videouri</Link></li>

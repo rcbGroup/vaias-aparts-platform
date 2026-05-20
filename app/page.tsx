@@ -459,6 +459,43 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* STEPS AWAY — everything you need within walking distance */}
+      <section className="section bg-cream-50">
+        <div className="container-x">
+          <ScrollFade>
+            <SectionHeader
+              eyebrow="Ultracentral · Târgu Neamț"
+              title="Tot ce ai nevoie — la câțiva pași"
+              subtitle="Piață, magazine, restaurante, muzee, centrul vechi și parcul — aproape totul e la o plimbare scurtă de poarta noastră."
+            />
+          </ScrollFade>
+          <div className="mt-14 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-4">
+            {[
+              { icon: "🧺", label: "Piața agroalimentară", time: "6 min pe jos" },
+              { icon: "🛒", label: "Magazine (Lidl, Profi)", time: "5 min pe jos" },
+              { icon: "🍽️", label: "Restaurante & cafenele", time: "4 min pe jos" },
+              { icon: "🏛️", label: "Muzeul de istorie", time: "7 min pe jos" },
+              { icon: "🏰", label: "Cetatea Neamț", time: "10 min cu mașina" },
+              { icon: "🏘️", label: "Centrul vechi", time: "5 min pe jos" },
+              { icon: "🌳", label: "Parcul central", time: "9 min pe jos" }
+            ].map((it, i) => (
+              <ScrollFade key={it.label} delay={i * 60}>
+                <div className="card-lift h-full rounded-2xl bg-stone-50 border border-stone-100 p-5 text-center flex flex-col items-center">
+                  <div className="text-3xl mb-3" aria-hidden>{it.icon}</div>
+                  <div className="font-display text-base text-forest-900 leading-tight mb-2">{it.label}</div>
+                  <div className="mt-auto text-[11px] uppercase tracking-[0.18em] text-walnut-600 font-semibold">{it.time}</div>
+                </div>
+              </ScrollFade>
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <Link href="/ce-poti-face" className="btn-secondary">
+              Vezi tot ce poți face →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* THREE PILLARS ECOSYSTEM */}
       <section className="section bg-forest-950 text-cream-50 relative overflow-hidden">
         <div className="absolute inset-0 pattern-moldavian-dark opacity-30 pointer-events-none" />
