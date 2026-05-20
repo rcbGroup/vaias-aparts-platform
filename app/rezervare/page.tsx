@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import BookingForm from "@/components/BookingForm";
+import { BOOKING_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Rezervare | Vila Vaias Aparts Târgu Neamț — Prețuri și Disponibilitate",
@@ -76,6 +77,30 @@ export default function ReservationPage() {
       <section className="section bg-cream-50">
         <div className="container-x grid gap-14 lg:grid-cols-12">
           <div className="lg:col-span-8">
+            {/* Primary: 5StarDesk direct-booking engine (real-time availability) */}
+            <div className="rounded-2xl border-2 border-walnut-400 bg-walnut-50 p-7 mb-8 text-center">
+              <div className="eyebrow mb-2">Rezervare instant · Cel mai mic preț</div>
+              <h2 className="font-display text-2xl md:text-3xl text-forest-900 mb-2">
+                Verifică disponibilitatea și rezervă direct
+              </h2>
+              <p className="text-sm text-forest-800/85 max-w-xl mx-auto mb-5">
+                Sistemul nostru de rezervări (5StarDesk) îți arată disponibilitatea în timp real și
+                cel mai bun preț, fără comision OTA — rezervare confirmată pe loc.
+              </p>
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary inline-block"
+              >
+                📅 Verifică disponibilitate & rezervă
+              </a>
+            </div>
+
+            <div className="text-center text-sm text-stone-500 mb-6">
+              sau trimite-ne o cerere și revenim cu confirmarea
+            </div>
+
             <BookingForm />
 
             <p className="text-xs text-stone-500 mt-3">

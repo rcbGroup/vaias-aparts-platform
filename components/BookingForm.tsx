@@ -62,6 +62,21 @@ export default function BookingForm() {
         })
       });
     } catch {}
+    // Log the enquiry so nothing is lost (CRM import later).
+    try {
+      await fetch("/api/enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: fd.get("name"),
+          email: fd.get("email"),
+          phone: fd.get("phone"),
+          apartment: apartment.name,
+          source: "booking-form",
+          message: `Check-in ${checkin || "?"} → check-out ${checkout || "?"}, ${guests} oaspeți${nights ? `, ${nights} nopți (~${totalRON} RON)` : ""}. ${fd.get("requests") || ""}`.trim()
+        })
+      });
+    } catch {}
     setSubmitted(true);
     setSubmitting(false);
   }

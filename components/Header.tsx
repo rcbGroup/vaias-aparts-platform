@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useLang } from "./LanguageProvider";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { BOOKING_URL } from "@/lib/site";
 
 export default function Header() {
   const { t } = useLang();
@@ -142,12 +143,14 @@ export default function Header() {
           <div className="hidden xl:flex items-center gap-2 2xl:gap-3 shrink-0">
             <LanguageSwitcher tone={dark ? "dark" : "light"} />
             <div className="relative">
-              <Link
-                href="/rezervare"
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`${dark ? "btn-primary" : "btn-outline-light"} !px-4 2xl:!px-7 !py-2.5 2xl:!py-3.5 !text-xs 2xl:!text-sm`}
               >
                 {t("nav.bookNow")}
-              </Link>
+              </a>
               {/* Badge hidden at xl, shown at 2xl */}
               <span className="hidden 2xl:inline-block absolute -top-2 -right-2 rounded-full bg-walnut-500 px-1.5 py-0.5 text-[9px] uppercase tracking-wide text-cream-50 font-medium whitespace-nowrap">
                 Cel mai mic preț
@@ -188,15 +191,14 @@ export default function Header() {
         {open && (
           <div className="xl:hidden border-t border-walnut-200/40 bg-cream-50/95 backdrop-blur-md">
             <div className="container-x py-4 flex flex-col gap-1">
-              {/* FIX 5: 752 first, then 738, both with WhatsApp links */}
-              {/* Primary: +40 752 388 388 (Anca) */}
+              {/* Primary: +40 752 388 388 (Vasi) */}
               <a href="tel:+40752388388" className="flex items-center gap-2 py-2 px-2 text-sm text-forest-700 font-medium">
                 <PhoneIcon /> +40 752 388 388
               </a>
               <a href="https://wa.me/40752388388" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 py-2 px-2 text-sm text-green-700 font-medium">
                 <WhatsAppIcon /> WhatsApp (+40 752 388 388)
               </a>
-              {/* Secondary: +40 738 345 330 (Vasi) */}
+              {/* Secondary: +40 738 345 330 (Anca) */}
               <a href="tel:+40738345330" className="flex items-center gap-2 py-2 px-2 text-sm text-forest-700 font-medium">
                 <PhoneIcon /> +40 738 345 330
               </a>
@@ -214,13 +216,15 @@ export default function Header() {
                   {item.label}
                 </Link>
               ))}
-              <Link
-                href="/rezervare"
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
-                className="btn-primary mt-3 w-full"
+                className="btn-primary mt-3 w-full text-center"
               >
                 {t("nav.bookNow")}
-              </Link>
+              </a>
             </div>
           </div>
         )}

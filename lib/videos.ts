@@ -56,7 +56,7 @@ export const siteVideos: SiteVideo[] = [
     youtubeId: "UjtKgNfktr0",
     title: "Apartament 3",
     description:
-      "Cel mai încăpător — 2 dormitoare XXL și terasă, 66,6 mp doar pentru tine.",
+      "Cel mai încăpător — 2 dormitoare XXL și terasă, 67 mp doar pentru tine.",
     category: "apartament",
     aptSlug: "apartament-3",
     uploadDate: "2025-08-21T13:31:36-07:00",

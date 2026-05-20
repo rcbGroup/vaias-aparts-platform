@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useLang } from "./LanguageProvider";
+import { BOOKING_URL } from "@/lib/site";
 
 export default function MobileBookFab() {
   const { t } = useLang();
@@ -16,8 +16,10 @@ export default function MobileBookFab() {
   }, []);
 
   return (
-    <Link
-      href="/rezervare"
+    <a
+      href={BOOKING_URL}
+      target="_blank"
+      rel="noopener noreferrer"
       aria-label={t("nav.bookNow")}
       className={`lg:hidden fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 rounded-full bg-walnut-500 px-5 py-3.5 text-sm font-medium uppercase tracking-[0.18em] text-cream-50 shadow-card transition-all duration-300 ${
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none"
@@ -28,6 +30,6 @@ export default function MobileBookFab() {
         <path d="M16 3v4M8 3v4M3 11h18" />
       </svg>
       {t("fab.book")}
-    </Link>
+    </a>
   );
 }
