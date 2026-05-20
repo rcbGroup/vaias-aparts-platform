@@ -568,7 +568,7 @@ export const landingPages: LandingPage[] = [
         a: "Bineînțeles. Avem paturi extensibile pentru copii, iar animalele de companie sunt bine venite, fără cost suplimentar. Vă rugăm să ne spuneți la rezervare."
       }
     ],
-    nearby: ["Centrul Târgu Neamț (1 km)", "Cetatea Neamțului (5 km)", "Mănăstirile Neamțului", "Aeroport Iași (90 km, 1.5 h)"],
+    nearby: ["Centrul Târgu Neamț (1 km)", "Cetatea Neamțului (5 km)", "Mănăstirile Neamțului", "Aeroport Suceava (60 km, 1h 10min)"],
     bookingPitch:
       "Pentru sejururi lungi (10+ zile), apartamentele cu 2 dormitoare oferă confortul unei case proprii. Reducere 25% automată pentru 7+ nopți.",
     primaryCTA: "Rezervă pentru vacanța acasă",

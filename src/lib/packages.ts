@@ -69,7 +69,7 @@ export const CURATED_PACKAGES: CuratedPackage[] = [
       "Construit pentru românii din Italia, Spania, Marea Britanie, Germania, Irlanda. Comunicare bilingvă, asistență transfer aeroport, sfat pentru recăpătare contact cu familia și mănăstirile.",
     inclusions: [
       "Cazare 5+ nopți cu reducere diaspora 10%",
-      "Transfer aeroport Iași / Suceava / Bacău (la cost)",
+      "Transfer aeroport Suceava / Bacău / Iași (la cost)",
       "Concierge multilingv (RO/EN/IT/FR)",
       "Sfat pentru rezervări mănăstiri, restaurante, evenimente locale",
       "Coș de bun venit cu produse moldovenești",

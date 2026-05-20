@@ -95,7 +95,7 @@ export const airports: Airport[] = [
       }
     ],
     summary:
-      "Cel mai apropiat aeroport de Vila Vaias — doar 75 km. Hub principal Wizz Air și Ryanair pentru Moldova: zboruri directe din Londra, Dublin, Roma, Milano, Madrid, Bruxelles, Köln și Tel Aviv."
+      "Al doilea aeroport ca apropiere — 75 km. Hub principal Wizz Air și Ryanair pentru Moldova: zboruri directe din Londra, Dublin, Roma, Milano, Madrid, Bruxelles, Köln și Tel Aviv."
   },
   {
     slug: "suceava-scv",
@@ -107,8 +107,8 @@ export const airports: Airport[] = [
     region: "Bucovina",
     lat: 47.6875,
     lng: 26.354,
-    distanceKm: 120,
-    driveTime: "2h 0min",
+    distanceKm: 60,
+    driveTime: "1h 10min",
     closest: true,
     carriers: ["Wizz Air", "TAROM", "HiSky"],
     routes: [
@@ -130,7 +130,7 @@ export const airports: Airport[] = [
       {
         label: "Mașină / rent-a-car",
         description:
-          "E85 + DN2 spre Târgu Neamț, ~2h. Rent-a-car: Autonom, Avis, Klass Wagen — birouri în terminal."
+          "E85 + DN2 spre Târgu Neamț, ~1h 10min. Rent-a-car: Autonom, Avis, Klass Wagen — birouri în terminal."
       },
       {
         label: "Transfer privat Vaias",
@@ -140,11 +140,11 @@ export const airports: Airport[] = [
       {
         label: "Tren / autobuz",
         description:
-          "De la Suceava există microbuze regulate spre Târgu Neamț (~2h 30min) cu schimbare la Fălticeni sau Pașcani."
+          "De la Suceava există microbuze regulate spre Târgu Neamț (~1h 45min) cu schimbare la Fălticeni sau Pașcani."
       }
     ],
     summary:
-      "Aeroportul Bucovinei — al doilea ca apropiere. 120 km de Vaias, perfect pentru combinarea cu mănăstirile pictate (Voroneț, Sucevița, Moldovița) într-un singur city break."
+      "Aeroportul Bucovinei — cel mai apropiat de Vaias, doar 60 km. Hub Wizz Air și poarta spre mănăstirile pictate (Voroneț, Sucevița, Moldovița) — toate într-un singur city break."
   },
   {
     slug: "iasi-ias",
@@ -872,7 +872,9 @@ export const airports: Airport[] = [
   }
 ];
 
-export const closestAirports = airports.filter((a) => a.closest);
+export const closestAirports = airports
+  .filter((a) => a.closest)
+  .sort((a, b) => a.distanceKm - b.distanceKm);
 export const romanianAirports = airports.filter((a) => a.country === "Romania");
 export const internationalAirports = airports.filter(
   (a) => a.country !== "Romania"

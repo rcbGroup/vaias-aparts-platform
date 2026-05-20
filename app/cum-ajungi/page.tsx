@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   title:
     "Cum ajungi la Târgu Neamț — toate aeroporturile din România | Vaias Aparts",
   description:
-    "Ghid complet 2026: cele 15 aeroporturi din România + 7 aeroporturi din țările vecine, distanțe față de Târgu Neamț, companii aeriene Wizz / Ryanair / TAROM, transport spre Vila Vaias Aparts. Cel mai apropiat: Bacău (BCM), doar 75 km.",
+    "Ghid complet 2026: cele 15 aeroporturi din România + 7 aeroporturi din țările vecine, distanțe față de Târgu Neamț, companii aeriene Wizz / Ryanair / TAROM, transport spre Vila Vaias Aparts. Cel mai apropiat: Suceava (SCV), doar 60 km.",
   keywords: [
     "cum ajung la Târgu Neamț",
     "aeroport Târgu Neamț",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     title:
       "Cum ajungi la Târgu Neamț — toate aeroporturile din România și țările vecine",
     description:
-      "Ghid complet: 22 de aeroporturi, distanțe, companii aeriene, rute Wizz/Ryanair/TAROM și transport spre Vila Vaias Aparts. Cel mai apropiat: Bacău, 75 km.",
+      "Ghid complet: 22 de aeroporturi, distanțe, companii aeriene, rute Wizz/Ryanair/TAROM și transport spre Vila Vaias Aparts. Cel mai apropiat: Suceava, 60 km.",
     images: [{ url: HERO_IMAGE, width: 1200, height: 630, alt: "Cum ajungi la Târgu Neamț" }]
   },
   twitter: {
@@ -61,11 +61,11 @@ export const metadata: Metadata = {
 const FAQS: { q: string; a: string }[] = [
   {
     q: "Care este cel mai apropiat aeroport de Târgu Neamț?",
-    a: "Cel mai apropiat aeroport de Vila Vaias Aparts din Târgu Neamț este Aeroportul Internațional „George Enescu” Bacău (BCM) — la doar 75 km, aproximativ 1h 15min cu mașina pe DN15D. Bacău este hub Wizz Air și Ryanair, cu zboruri directe din Londra, Dublin, Roma, Milano, Madrid, Bruxelles, Köln și Tel Aviv (sezonier)."
+    a: "Cel mai apropiat aeroport de Vila Vaias Aparts din Târgu Neamț este Aeroportul Internațional „Ștefan cel Mare” Suceava (SCV) — la doar 60 km, aproximativ 1h 10min cu mașina. Urmează Bacău (BCM) la 75 km și Iași (IAS) la 130 km. Suceava este hub Wizz Air, cu zboruri directe din Londra, Roma, Milano, Madrid, Paris, München și Tel Aviv."
   },
   {
     q: "Câte aeroporturi sunt în județul Neamț?",
-    a: "În județul Neamț nu există aeroport propriu cu trafic comercial. Cele mai apropiate aeroporturi pentru zboruri internaționale sunt Bacău (BCM) la 75 km, Iași (IAS) la 130 km și Suceava — Ștefan cel Mare (SCV) la 120 km."
+    a: "În județul Neamț nu există aeroport propriu cu trafic comercial. Cele mai apropiate aeroporturi pentru zboruri internaționale sunt Suceava — Ștefan cel Mare (SCV) la 60 km, Bacău (BCM) la 75 km și Iași (IAS) la 130 km."
   },
   {
     q: "Există zboruri directe din Londra spre Bacău?",
@@ -93,11 +93,11 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "Care sunt distanțele față de Vila Vaias Aparts pentru fiecare aeroport principal?",
-    a: "Bacău (BCM) 75 km · Suceava (SCV) 120 km · Iași (IAS) 130 km · Târgu Mureș (TGM) 260 km · Cluj-Napoca (CLJ) 305 km · Sibiu (SBZ) 330 km · București Otopeni (OTP) 370 km · Tulcea (TCE) 390 km · Baia Mare (BAY) 440 km · Constanța (CND) 480 km · Craiova (CRA) 510 km · Satu Mare (SUJ) 520 km · Oradea (OMR) 590 km · Arad (ARW) 610 km · Timișoara (TSR) 620 km."
+    a: "Suceava (SCV) 60 km · Bacău (BCM) 75 km · Iași (IAS) 130 km · Târgu Mureș (TGM) 260 km · Cluj-Napoca (CLJ) 305 km · Sibiu (SBZ) 330 km · București Otopeni (OTP) 370 km · Tulcea (TCE) 390 km · Baia Mare (BAY) 440 km · Constanța (CND) 480 km · Craiova (CRA) 510 km · Satu Mare (SUJ) 520 km · Oradea (OMR) 590 km · Arad (ARW) 610 km · Timișoara (TSR) 620 km."
   },
   {
     q: "Pot zbura direct la Vila Vaias dintr-un alt oraș european?",
-    a: "Vila Vaias Aparts nu are aeroport propriu. Cel mai aproape de noi se zboară prin Bacău (BCM), Iași (IAS) sau Suceava (SCV) — toate la 1–2h 15min cu mașina. Avem și un partener care vă poate trimite la aeroport sau prelua de la sosire — întrebați pe WhatsApp."
+    a: "Vila Vaias Aparts nu are aeroport propriu. Cel mai aproape de noi se zboară prin Suceava (SCV), Bacău (BCM) sau Iași (IAS) — toate la 1–2h 15min cu mașina. Avem și un partener care vă poate trimite la aeroport sau prelua de la sosire — întrebați pe WhatsApp."
   }
 ];
 
@@ -200,7 +200,7 @@ export default function CumAjungiPage() {
             <span className="inline-flex items-center gap-1 rounded-full bg-cream-50/10 border border-cream-50/20 px-3 py-1.5">⭐ Booking.com 9.4</span>
             <span className="inline-flex items-center gap-1 rounded-full bg-cream-50/10 border border-cream-50/20 px-3 py-1.5">⭐ 5.0 · 99 Google</span>
             <span className="inline-flex items-center gap-1 rounded-full bg-cream-50/10 border border-cream-50/20 px-3 py-1.5">🏛 4 stele · Cert. 35332</span>
-            <span className="inline-flex items-center gap-1 rounded-full bg-walnut-500/90 border border-walnut-500 text-cream-50 px-3 py-1.5 font-semibold">✈ Cel mai apropiat: Bacău 75 km</span>
+            <span className="inline-flex items-center gap-1 rounded-full bg-walnut-500/90 border border-walnut-500 text-cream-50 px-3 py-1.5 font-semibold">✈ Cel mai apropiat aeroport: Suceava 60 km</span>
           </div>
           <div className="mt-10 flex flex-wrap gap-3">
             <Link href="#aeroporturi" className="btn-primary text-base">
@@ -221,7 +221,7 @@ export default function CumAjungiPage() {
             <div className="text-xs uppercase tracking-[0.28em] text-stone-500 mt-1">aeroporturi</div>
           </div>
           <div>
-            <div className="font-display text-4xl text-walnut-500">75 km</div>
+            <div className="font-display text-4xl text-walnut-500">60 km</div>
             <div className="text-xs uppercase tracking-[0.28em] text-stone-500 mt-1">cel mai apropiat</div>
           </div>
           <div>
@@ -245,7 +245,7 @@ export default function CumAjungiPage() {
             </h2>
             <div className="divider-gold my-7" />
             <p className="font-serif text-lg md:text-xl text-stone-500 leading-relaxed">
-              Vila Vaias Aparts e poziționată strategic în mijlocul triunghiului Bacău — Suceava — Iași.
+              Vila Vaias Aparts e poziționată strategic în mijlocul triunghiului Suceava — Bacău — Iași.
               Indiferent unde aterizezi, ești la noi într-o singură călătorie.
             </p>
           </div>

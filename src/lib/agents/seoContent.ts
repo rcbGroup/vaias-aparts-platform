@@ -170,7 +170,7 @@ const SECTION_TEMPLATES_RO: Record<string, string> = {
   monasteries:
     "Mulți români din diaspora vin la mănăstirile Neamț pentru aprindere de lumânare la mormântul Părintelui Cleopa. Sau pentru o Sfântă Liturghie care să le amintească de copilărie. Suntem aici să te însoțim.",
   family_logistics:
-    "Te ajutăm cu transferul de la aeroport (Iași 200 km, Bacău 90 km, Suceava 110 km, Cluj 350 km), cu organizarea unei petreceri de familie, cu rezervarea pentru o nuntă sau o pomenire.",
+    "Te ajutăm cu transferul de la aeroport (Suceava 60 km, Bacău 75 km, Iași 130 km, Cluj 305 km), cu organizarea unei petreceri de familie, cu rezervarea pentru o nuntă sau o pomenire.",
   intro_wellness:
     "Stațiunile balneare Oglinzi (15 km) și Bălțătești (10 km) sunt destinații cunoscute pentru tratament reumatologic, dermatologic și ginecologic. Vila Vaias Aparts este baza ideală — mai aproape decât Slănic Moldova, mai liniștit decât Vatra Dornei.",
   oglinzi_about:

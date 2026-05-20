@@ -89,7 +89,7 @@ Vă scrie Vasile Jiboc, fiu al pământului nemțean. Avem o vilă boutique chia
 Pentru enoriașii dvs. — fie din ${parish.city}, fie de oriunde din diaspora — ar fi o bucurie să le putem oferi un sejur ca acasă atunci când vin la închinare. Cu părintescul dvs. binecuvântare, am putea organiza:
 
   • Tarife preferențiale pentru grupuri de pelerini (10% reducere)
-  • Asistență la sosirea pe aeroportul Iași (200 km) sau Bacău (90 km)
+  • Asistență la sosirea pe aeroportul Suceava (60 km), Bacău (75 km) sau Iași (130 km)
   • Cazare cu comuniune cu Sfinții Părinți din mănăstirile dimprejur
   • Ghid de pelerinaj (4 ore, ortodox, român)
   • Mâncare tradițională cu binecuvântare — Han Rustic, recomandare directă
