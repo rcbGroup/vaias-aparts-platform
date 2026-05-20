@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import PageHero from "@/components/PageHero";
 import ScrollFade from "@/components/ScrollFade";
+import VideoThumbnail from "@/components/VideoThumbnail";
+import MediaActions from "@/components/MediaActions";
 import {
   APT1_PHOTOS,
   APT2_PHOTOS,
@@ -17,8 +19,32 @@ import {
   DRONE_NIGHT_PHOTOS,
   HERO_EXTERIOR_PRIMARY,
 } from "@/lib/photos";
+import {
+  SITE_URL,
+  VILLA_VIDEO_ID,
+  KITCHEN_VIDEO_ID,
+  getVideoByApartment,
+} from "@/lib/videos";
 
-type GalleryImage = { src: string; alt: string; label: string; tags: string[] };
+type Item =
+  | {
+      kind: "photo";
+      src: string;
+      alt: string;
+      label: string;
+      tags: string[];
+      shareUrl: string;
+      enquiry: string;
+    }
+  | {
+      kind: "video";
+      youtubeId: string;
+      title: string;
+      label: string;
+      tags: string[];
+      shareUrl: string;
+      enquiry: string;
+    };
 
 const galleryCategories = [
   { id: "all", label: "Toate fotografiile" },
@@ -33,75 +59,123 @@ const galleryCategories = [
   { id: "exterior", label: "Exterior și curte" },
   { id: "drone", label: "Vedere aeriană (dronă)" },
   { id: "baie", label: "Băi" },
+  { id: "video", label: "Videouri" },
 ];
 
-// Build interior photos for one apartment. Bathrooms (filenames containing
-// "-baie") are also tagged "baie" so they surface under the Băi filter.
-function aptImages(
-  photos: string[],
-  aptId: string,
-  aptLabel: string
-): GalleryImage[] {
-  return photos.map((src, i) => {
-    const isBath = /-baie/.test(src);
-    const tags = [aptId, "interior"];
-    if (isBath) tags.push("baie");
-    return {
-      src,
-      alt: `${aptLabel} Vila Vaias Aparts Târgu Neamț — ${
-        isBath ? "baie renovată" : "interior"
-      } ${i + 1}`,
-      label: aptLabel,
-      tags,
-    };
+const APTS = [
+  { id: "apt1", slug: "apartament-1", label: "Apartament 1", photos: APT1_PHOTOS },
+  { id: "apt2", slug: "apartament-2", label: "Apartament 2", photos: APT2_PHOTOS },
+  { id: "apt3", slug: "apartament-3", label: "Apartament 3", photos: APT3_PHOTOS },
+  { id: "apt4", slug: "apartament-4", label: "Apartament 4", photos: APT4_PHOTOS },
+  { id: "apt5", slug: "apartament-5", label: "Apartament 5", photos: APT5_PHOTOS },
+  { id: "apt6", slug: "apartament-6", label: "Apartament 6", photos: APT6_PHOTOS },
+  { id: "apt7", slug: "apartament-7", label: "Apartament 7", photos: APT7_PHOTOS },
+];
+
+const genericEnquiry = "Bună ziua! Sunt interesat(ă) de Vila Vaias Aparts! 🏡";
+
+function buildItems(): Item[] {
+  const items: Item[] = [];
+
+  // Whole-villa video leads the gallery.
+  items.push({
+    kind: "video",
+    youtubeId: VILLA_VIDEO_ID,
+    title: "Vila Vaias Aparts — tur complet",
+    label: "Vila — tur video",
+    tags: ["video"],
+    shareUrl: `${SITE_URL}/vila-completa`,
+    enquiry: genericEnquiry,
   });
+
+  for (const apt of APTS) {
+    const shareUrl = `${SITE_URL}/apartments/${apt.slug}`;
+    const enquiry = `Bună ziua! Sunt interesat(ă) de ${apt.label} la Vila Vaias Aparts! 🏡`;
+    const video = getVideoByApartment(apt.slug);
+    apt.photos.forEach((src, i) => {
+      const isBath = /-baie/.test(src);
+      const tags = [apt.id, "interior"];
+      if (isBath) tags.push("baie");
+      items.push({
+        kind: "photo",
+        src,
+        alt: `${apt.label} Vila Vaias Aparts Târgu Neamț — ${isBath ? "baie renovată" : "interior"} ${i + 1}`,
+        label: apt.label,
+        tags,
+        shareUrl,
+        enquiry,
+      });
+      // Video card second — right after the first (hero) photo.
+      if (i === 0 && video) {
+        items.push({
+          kind: "video",
+          youtubeId: video.youtubeId,
+          title: `${apt.label} — tur video`,
+          label: apt.label,
+          tags: [apt.id, "video"],
+          shareUrl,
+          enquiry,
+        });
+      }
+    });
+  }
+
+  EXTERIOR_PHOTOS.forEach((src, i) => {
+    items.push({
+      kind: "photo",
+      src,
+      alt: `Vila Vaias Aparts — fațadă boutique, Str. Sfântul Lazăr nr. 1, Târgu Neamț — fotografie ${i + 1}`,
+      label: "Exterior și curte",
+      tags: ["exterior"],
+      shareUrl: `${SITE_URL}/galerie`,
+      enquiry: genericEnquiry,
+    });
+  });
+
+  [...DRONE_DAY_PHOTOS, ...DRONE_NIGHT_PHOTOS].forEach((src, i) => {
+    items.push({
+      kind: "photo",
+      src,
+      alt: `Vila Vaias Aparts — vedere aeriană dronă în Târgu Neamț, la poalele Cetății Neamțului — fotografie ${i + 1}`,
+      label: "Vedere aeriană (dronă)",
+      tags: ["drone"],
+      shareUrl: `${SITE_URL}/galerie`,
+      enquiry: genericEnquiry,
+    });
+  });
+
+  // Shared-kitchen video closes the set.
+  items.push({
+    kind: "video",
+    youtubeId: KITCHEN_VIDEO_ID,
+    title: "Bucătăria pentru Toți",
+    label: "Bucătărie — video",
+    tags: ["video"],
+    shareUrl: `${SITE_URL}/vila-completa`,
+    enquiry: genericEnquiry,
+  });
+
+  return items;
 }
 
-const galleryImages: GalleryImage[] = [
-  ...aptImages(APT1_PHOTOS, "apt1", "Apartament 1"),
-  ...aptImages(APT2_PHOTOS, "apt2", "Apartament 2"),
-  ...aptImages(APT3_PHOTOS, "apt3", "Apartament 3"),
-  ...aptImages(APT4_PHOTOS, "apt4", "Apartament 4"),
-  ...aptImages(APT5_PHOTOS, "apt5", "Apartament 5"),
-  ...aptImages(APT6_PHOTOS, "apt6", "Apartament 6"),
-  ...aptImages(APT7_PHOTOS, "apt7", "Apartament 7"),
-  ...EXTERIOR_PHOTOS.map((src, i) => ({
-    src,
-    alt: `Vila Vaias Aparts — fațadă boutique, Str. Sfântul Lazăr nr. 1, Târgu Neamț — fotografie ${i + 1}`,
-    label: "Exterior și curte",
-    tags: ["exterior"],
-  })),
-  ...DRONE_DAY_PHOTOS.map((src, i) => ({
-    src,
-    alt: `Vila Vaias Aparts — vedere aeriană dronă în Târgu Neamț, la poalele Cetății Neamțului — fotografie ${i + 1}`,
-    label: "Vedere aeriană (dronă)",
-    tags: ["drone"],
-  })),
-  ...DRONE_NIGHT_PHOTOS.map((src, i) => ({
-    src,
-    alt: `Vila Vaias Aparts — vedere aeriană pe timp de noapte, Târgu Neamț — fotografie ${i + 1}`,
-    label: "Vedere aeriană (dronă)",
-    tags: ["drone"],
-  })),
-];
+const allItems = buildItems();
 
 export default function GalleryClient() {
   const [active, setActive] = useState("all");
   const [lightbox, setLightbox] = useState<number | null>(null);
 
-  const images =
-    active === "all"
-      ? galleryImages
-      : galleryImages.filter((img) => img.tags.includes(active));
+  const items = useMemo(
+    () => (active === "all" ? allItems : allItems.filter((it) => it.tags.includes(active))),
+    [active]
+  );
+  const photos = useMemo(() => items.filter((i) => i.kind === "photo") as Extract<Item, { kind: "photo" }>[], [items]);
 
   useEffect(() => {
     if (lightbox === null) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setLightbox(null);
-      if (e.key === "ArrowLeft")
-        setLightbox((i) => (i! - 1 + images.length) % images.length);
-      if (e.key === "ArrowRight")
-        setLightbox((i) => (i! + 1) % images.length);
+      if (e.key === "ArrowLeft") setLightbox((i) => (i! - 1 + photos.length) % photos.length);
+      if (e.key === "ArrowRight") setLightbox((i) => (i! + 1) % photos.length);
     };
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
@@ -109,14 +183,14 @@ export default function GalleryClient() {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
-  }, [lightbox, images.length]);
+  }, [lightbox, photos.length]);
 
   return (
     <>
       <PageHero
-        eyebrow="Galerie foto"
+        eyebrow="Galerie foto & video"
         title="O privire peste casele noastre."
-        subtitle="Apartamente, exterior, curte și împrejurimi — Vila Vaias Aparts în imagini."
+        subtitle="Apartamente, exterior, curte, împrejurimi — și tururi video — Vila Vaias Aparts în imagini."
         image={HERO_EXTERIOR_PRIMARY}
       />
 
@@ -142,35 +216,56 @@ export default function GalleryClient() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-            {images.map((img, i) => (
-              <ScrollFade key={img.src + i} delay={Math.min(i * 30, 400)}>
-                <button
-                  onClick={() => setLightbox(i)}
-                  className="relative aspect-square overflow-hidden rounded-lg bg-stone-100 group block w-full"
-                  aria-label={img.alt}
-                >
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    fill
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-forest-950/0 group-hover:bg-forest-950/15 transition-colors duration-500" />
-                  <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-forest-950/85 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                    <span className="text-xs uppercase tracking-wider text-cream-50">
-                      {img.label}
-                    </span>
+            {items.map((item, i) => {
+              if (item.kind === "video") {
+                return (
+                  <ScrollFade key={`v-${item.youtubeId}-${i}`} delay={Math.min(i * 30, 400)}>
+                    <div className="group relative aspect-square overflow-hidden rounded-lg bg-forest-950">
+                      <VideoThumbnail youtubeId={item.youtubeId} title={item.title} label="Video" />
+                      <MediaActions
+                        mediaKey={`video:${item.youtubeId}`}
+                        shareUrl={item.shareUrl}
+                        title={`${item.title} — Vila Vaias Aparts`}
+                        enquiryText={item.enquiry}
+                      />
+                    </div>
+                  </ScrollFade>
+                );
+              }
+              const photoIndex = photos.indexOf(item);
+              return (
+                <ScrollFade key={item.src + i} delay={Math.min(i * 30, 400)}>
+                  <div className="group relative aspect-square overflow-hidden rounded-lg bg-stone-100">
+                    <button
+                      onClick={() => setLightbox(photoIndex)}
+                      className="absolute inset-0 h-full w-full"
+                      aria-label={item.alt}
+                    >
+                      <Image
+                        src={item.src}
+                        alt={item.alt}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-forest-950/0 group-hover:bg-forest-950/15 transition-colors duration-500" />
+                    </button>
+                    <MediaActions
+                      mediaKey={item.src}
+                      shareUrl={item.shareUrl}
+                      title={`${item.label} — Vila Vaias Aparts`}
+                      enquiryText={item.enquiry}
+                    />
                   </div>
-                </button>
-              </ScrollFade>
-            ))}
+                </ScrollFade>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {lightbox !== null && (
+      {lightbox !== null && photos[lightbox] && (
         <div
           className="fixed inset-0 z-[100] bg-forest-950/97 flex items-center justify-center p-4 backdrop-blur-sm"
           onClick={() => setLightbox(null)}
@@ -190,7 +285,7 @@ export default function GalleryClient() {
             className="absolute left-4 md:left-8 text-cream-50 text-4xl px-4 py-2 rounded-full hover:bg-cream-50/10 transition"
             onClick={(e) => {
               e.stopPropagation();
-              setLightbox((i) => (i! - 1 + images.length) % images.length);
+              setLightbox((i) => (i! - 1 + photos.length) % photos.length);
             }}
           >
             ‹
@@ -200,7 +295,7 @@ export default function GalleryClient() {
             className="absolute right-4 md:right-8 text-cream-50 text-4xl px-4 py-2 rounded-full hover:bg-cream-50/10 transition"
             onClick={(e) => {
               e.stopPropagation();
-              setLightbox((i) => (i! + 1) % images.length);
+              setLightbox((i) => (i! + 1) % photos.length);
             }}
           >
             ›
@@ -211,8 +306,8 @@ export default function GalleryClient() {
             onClick={(e) => e.stopPropagation()}
           >
             <Image
-              src={images[lightbox].src}
-              alt={images[lightbox].alt}
+              src={photos[lightbox].src}
+              alt={photos[lightbox].alt}
               fill
               sizes="100vw"
               className="object-contain"
@@ -220,7 +315,7 @@ export default function GalleryClient() {
             />
           </div>
           <div className="absolute bottom-6 left-0 right-0 text-center text-cream-100/80 text-sm">
-            {lightbox + 1} / {images.length} &middot; {images[lightbox].label}
+            {lightbox + 1} / {photos.length} &middot; {photos[lightbox].label}
           </div>
         </div>
       )}

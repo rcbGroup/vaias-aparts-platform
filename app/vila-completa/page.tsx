@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { apartments } from "@/lib/apartments";
+import { siteVideos, videoObjectLd, VILLA_VIDEO_ID, KITCHEN_VIDEO_ID } from "@/lib/videos";
 
 // Whole-villa pricing — flat weekday/weekend rates
 const PRICE_WEEKDAY = 2065;
@@ -641,6 +642,16 @@ export default function VillaCompletaPage() {
           </p>
         </div>
       </section>
+
+      {siteVideos
+        .filter((v) => v.youtubeId === VILLA_VIDEO_ID || v.youtubeId === KITCHEN_VIDEO_ID)
+        .map((v) => (
+          <script
+            key={v.youtubeId}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(videoObjectLd(v)) }}
+          />
+        ))}
     </>
   );
 }

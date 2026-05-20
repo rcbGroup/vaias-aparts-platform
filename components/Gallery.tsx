@@ -2,8 +2,27 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { SITE_URL } from "@/lib/videos";
+import VideoThumbnail from "./VideoThumbnail";
+import MediaActions from "./MediaActions";
 
-export default function Gallery({ images, alt }: { images: string[]; alt: string }) {
+type Cell =
+  | { type: "photo"; src: string; idx: number }
+  | { type: "video" };
+
+export default function Gallery({
+  images,
+  alt,
+  video,
+  apartmentName,
+  apartmentSlug,
+}: {
+  images: string[];
+  alt: string;
+  video?: { youtubeId: string; title: string };
+  apartmentName?: string;
+  apartmentSlug?: string;
+}) {
   const [active, setActive] = useState<number | null>(null);
 
   useEffect(() => {
@@ -21,27 +40,69 @@ export default function Gallery({ images, alt }: { images: string[]; alt: string
     };
   }, [active, images.length]);
 
+  const pageUrl = apartmentSlug ? `${SITE_URL}/apartments/${apartmentSlug}` : SITE_URL;
+  const subject = apartmentName ?? alt;
+  const enquiry = `Bună ziua! Sunt interesat(ă) de ${subject} la Vila Vaias Aparts! 🏡`;
+
+  // Video card sits as the SECOND tile — right after the hero photo.
+  const cells: Cell[] = [];
+  images.forEach((src, idx) => {
+    cells.push({ type: "photo", src, idx });
+    if (idx === 0 && video) cells.push({ type: "video" });
+  });
+
   return (
     <>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-        {images.map((src, i) => (
-          <button
-            key={src + i}
-            onClick={() => setActive(i)}
-            className={`relative overflow-hidden rounded-lg group ${
-              i === 0 ? "col-span-2 row-span-2 aspect-square md:aspect-[4/3]" : "aspect-square"
-            }`}
-          >
-            <Image
-              src={src}
-              alt={`${alt} — fotografie ${i + 1}`}
-              fill
-              sizes={i === 0 ? "(max-width: 768px) 100vw, 66vw" : "(max-width: 768px) 50vw, 33vw"}
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-forest-950/0 group-hover:bg-forest-950/15 transition" />
-          </button>
-        ))}
+        {cells.map((cell, i) => {
+          if (cell.type === "video" && video) {
+            return (
+              <div
+                key={`video-${video.youtubeId}`}
+                className="group relative aspect-square overflow-hidden rounded-lg bg-forest-950"
+              >
+                <VideoThumbnail youtubeId={video.youtubeId} title={video.title} label="Tur video" />
+                <MediaActions
+                  mediaKey={`video:${video.youtubeId}`}
+                  shareUrl={pageUrl}
+                  title={`${video.title} — Vila Vaias Aparts`}
+                  enquiryText={enquiry}
+                />
+              </div>
+            );
+          }
+          if (cell.type !== "photo") return null;
+          const isHero = cell.idx === 0;
+          return (
+            <div
+              key={cell.src + i}
+              className={`group relative overflow-hidden rounded-lg ${
+                isHero ? "col-span-2 row-span-2 aspect-square md:aspect-[4/3]" : "aspect-square"
+              }`}
+            >
+              <button
+                onClick={() => setActive(cell.idx)}
+                aria-label={`${alt} — fotografie ${cell.idx + 1}`}
+                className="absolute inset-0 h-full w-full"
+              >
+                <Image
+                  src={cell.src}
+                  alt={`${alt} — fotografie ${cell.idx + 1}`}
+                  fill
+                  sizes={isHero ? "(max-width: 768px) 100vw, 66vw" : "(max-width: 768px) 50vw, 33vw"}
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-forest-950/0 group-hover:bg-forest-950/15 transition" />
+              </button>
+              <MediaActions
+                mediaKey={cell.src}
+                shareUrl={pageUrl}
+                title={`${subject} — Vila Vaias Aparts`}
+                enquiryText={enquiry}
+              />
+            </div>
+          );
+        })}
       </div>
 
       {active !== null && (

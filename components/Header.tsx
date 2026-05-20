@@ -25,6 +25,7 @@ export default function Header() {
     { href: "/zone-turistice", label: t("nav.attractions") },
     { href: "/cum-ajungi", label: "Cum ajungi" },
     { href: "/galerie", label: t("nav.gallery") },
+    { href: "/videouri", label: "Videouri" },
     { href: "/recenzii", label: t("nav.reviews") },
     { href: "/blog", label: t("nav.blog") },
     { href: "/contact", label: t("nav.contact") }

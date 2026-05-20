@@ -7,6 +7,7 @@ import { attractions } from "@/lib/attractions";
 import { platformBadges, guestHighlights } from "@/lib/reviews";
 import { guestAvatars } from "@/lib/guest-avatars";
 import { getActiveOffers } from "@/lib/seasonal-offers";
+import { siteVideos, videoObjectLd, VILLA_VIDEO_ID } from "@/lib/videos";
 import ApartmentCard from "@/components/ApartmentCard";
 import SectionHeader from "@/components/SectionHeader";
 import ScrollFade from "@/components/ScrollFade";
@@ -801,6 +802,16 @@ export default function HomePage() {
           </ScrollFade>
         </div>
       </section>
+
+      {siteVideos
+        .filter((v) => v.youtubeId === VILLA_VIDEO_ID)
+        .map((v) => (
+          <script
+            key={v.youtubeId}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(videoObjectLd(v)) }}
+          />
+        ))}
     </>
   );
 }
