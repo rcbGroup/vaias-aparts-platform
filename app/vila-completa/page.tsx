@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { apartments } from "@/lib/apartments";
 import { siteVideos, videoObjectLd, VILLA_VIDEO_ID, KITCHEN_VIDEO_ID } from "@/lib/videos";
+import UspBanner from "@/components/UspBanner";
 
 // Whole-villa pricing — flat weekday/weekend rates
 const PRICE_WEEKDAY = 2065;
@@ -213,6 +214,9 @@ export default function VillaCompletaPage() {
           ))}
         </div>
       </section>
+
+      {/* USP — entire apartment at room price */}
+      <UspBanner />
 
       {/* VIDEO TOUR */}
       <section className="section bg-cream-50">

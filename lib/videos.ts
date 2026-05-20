@@ -38,7 +38,7 @@ export const siteVideos: SiteVideo[] = [
     youtubeId: "21BhJhk6jPE",
     title: "Apartament 1",
     description:
-      "Confort, relaxare și acces central în Târgu Neamț — apartament complet privat de 46,4 mp.",
+      "Confort, relaxare și acces central în Târgu Neamț — apartament complet privat de 46 mp.",
     category: "apartament",
     aptSlug: "apartament-1",
     uploadDate: "2025-08-21T10:34:33-07:00",
@@ -47,7 +47,7 @@ export const siteVideos: SiteVideo[] = [
     youtubeId: "nGQpA50hlNY",
     title: "Apartament 2",
     description:
-      "City-break ideal sau sejur prelungit — modern și central, apartament întreg de 46,1 mp.",
+      "City-break ideal sau sejur prelungit — modern și central, apartament întreg de 46 mp.",
     category: "apartament",
     aptSlug: "apartament-2",
     uploadDate: "2025-08-21T11:31:28-07:00",
@@ -56,7 +56,7 @@ export const siteVideos: SiteVideo[] = [
     youtubeId: "UjtKgNfktr0",
     title: "Apartament 3",
     description:
-      "Cel mai încăpător — 2 dormitoare XXL și terasă, 66,6 mp doar pentru tine.",
+      "Cel mai încăpător — 2 dormitoare XXL și terasă, 67 mp doar pentru tine.",
     category: "apartament",
     aptSlug: "apartament-3",
     uploadDate: "2025-08-21T13:31:36-07:00",

@@ -10,6 +10,7 @@ import { getActiveOffers } from "@/lib/seasonal-offers";
 import { siteVideos, videoObjectLd, VILLA_VIDEO_ID } from "@/lib/videos";
 import ApartmentCard from "@/components/ApartmentCard";
 import SectionHeader from "@/components/SectionHeader";
+import UspBanner from "@/components/UspBanner";
 import ScrollFade from "@/components/ScrollFade";
 import HeroSlideshow from "@/components/HeroSlideshow";
 import { useLang } from "@/components/LanguageProvider";
@@ -64,6 +65,9 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* USP — entire apartment at room price */}
+      <UspBanner />
 
       {/* FEATURED APARTMENTS */}
       <section id="apartamente" className="section bg-stone-50 relative">

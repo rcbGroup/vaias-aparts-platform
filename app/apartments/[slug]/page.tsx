@@ -14,9 +14,22 @@ import StarRating from "@/components/StarRating";
 import ApartmentCard from "@/components/ApartmentCard";
 import { AmenityIcon } from "@/components/AmenityIcon";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import UspBanner from "@/components/UspBanner";
 
 export async function generateStaticParams() {
   return apartments.map((a) => ({ slug: a.slug }));
+}
+
+function roomIcon(name: string): string {
+  const n = name.toLowerCase();
+  if (n.includes("dormitor")) return "🛏️";
+  if (n.includes("living")) return "🛋️";
+  if (n.includes("bucăt") || n.includes("bucat")) return "🍳";
+  if (n.includes("baie")) return "🚿";
+  if (n.includes("teras") || n.includes("patio")) return "🌿";
+  if (n.includes("coridor") || n.includes("hol") || n.includes("cameră") || n.includes("camera"))
+    return "🚪";
+  return "🏠";
 }
 
 export async function generateMetadata({
@@ -234,6 +247,9 @@ export default async function ApartmentPage({
         </div>
       </section>
 
+      {/* USP — entire apartment at room price */}
+      <UspBanner className="mb-12" />
+
       {/* GALLERY */}
       <section className="container-x mb-8">
         <Gallery
@@ -332,6 +348,50 @@ export default async function ApartmentPage({
               </p>
             </div>
           )}
+
+          {/* FLOOR PLAN — apartament complet */}
+          <div>
+            <div className="eyebrow mb-3">Planul apartamentului</div>
+            <h2 className="font-display text-3xl md:text-4xl text-forest-900 mb-3">
+              Plan 3D — Apartament complet
+            </h2>
+            <p className="font-serif text-lg text-forest-800/90 leading-relaxed mb-7 max-w-2xl">
+              Apartament complet — nu doar o cameră. Living, dormitor, bucătărie și baie — totul
+              doar pentru tine.
+            </p>
+
+            {apartment.floorPlanImage ? (
+              <div className="relative w-full overflow-hidden rounded-2xl border border-stone-200 bg-cream-50 shadow-soft">
+                <Image
+                  src={apartment.floorPlanImage}
+                  alt={`Plan 3D ${apartment.name} — Vila Vaias Aparts`}
+                  width={1600}
+                  height={1000}
+                  sizes="(max-width: 1024px) 100vw, 66vw"
+                  className="w-full h-auto object-contain"
+                />
+              </div>
+            ) : (
+              <div className="rounded-2xl border-2 border-dashed border-walnut-300 bg-cream-50 p-6 md:p-8">
+                <div className="flex flex-wrap gap-3 justify-center">
+                  {apartment.rooms.map((r) => (
+                    <span
+                      key={r.name}
+                      className="inline-flex items-center gap-2 rounded-xl border border-walnut-200 bg-walnut-50 px-4 py-3 text-forest-900"
+                    >
+                      <span className="text-xl" aria-hidden>
+                        {roomIcon(r.name)}
+                      </span>
+                      <span className="text-sm font-medium">{r.name}</span>
+                    </span>
+                  ))}
+                </div>
+                <p className="mt-6 text-center text-xs uppercase tracking-[0.28em] text-stone-500">
+                  Toate camerele — sub o singură ușă, doar pentru tine
+                </p>
+              </div>
+            )}
+          </div>
 
           {/* ROOMS */}
           <div>

@@ -26,7 +26,7 @@ const SVG_H = 700;
 function projectToSvg(lat: number, lng: number) {
   const x = ((lng - MAP_BBOX.west) / (MAP_BBOX.east - MAP_BBOX.west)) * SVG_W;
   const y = ((MAP_BBOX.north - lat) / (MAP_BBOX.north - MAP_BBOX.south)) * SVG_H;
-  return { x, y };
+  return { x: Math.round(x), y: Math.round(y) };
 }
 
 type FilterCountry = "all" | Country;
