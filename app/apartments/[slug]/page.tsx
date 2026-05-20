@@ -8,6 +8,7 @@ import {
   getRelatedApartments
 } from "@/lib/apartments";
 import { reviews } from "@/lib/reviews";
+import { getVideoByApartment, videoObjectLd } from "@/lib/videos";
 import Gallery from "@/components/Gallery";
 import StarRating from "@/components/StarRating";
 import ApartmentCard from "@/components/ApartmentCard";
@@ -72,6 +73,7 @@ export default async function ApartmentPage({
 
   const related = getRelatedApartments(apartment.slug, 3);
   const apartmentReviews = reviews.filter((r) => r.apartment === apartment.name).slice(0, 3);
+  const aptVideo = getVideoByApartment(apartment.slug);
 
   const whatsappMsg = encodeURIComponent(
     `Bună ziua! Doresc să rezerv ${apartment.name} la Vila Vaias Aparts. Datele mele: Check-in: [DATA], Check-out: [DATA], [NR] adulți, [NR] copii. Vă rog să confirmați disponibilitatea și prețul.`
@@ -234,7 +236,13 @@ export default async function ApartmentPage({
 
       {/* GALLERY */}
       <section className="container-x mb-8">
-        <Gallery images={apartment.gallery} alt={apartment.name} />
+        <Gallery
+          images={apartment.gallery}
+          alt={apartment.name}
+          video={aptVideo ? { youtubeId: aptVideo.youtubeId, title: aptVideo.title } : undefined}
+          apartmentName={apartment.name}
+          apartmentSlug={apartment.slug}
+        />
       </section>
 
       {/* VIDEO TOUR — embedded apartment presentation */}
@@ -583,6 +591,12 @@ export default async function ApartmentPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
+      {aptVideo && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoObjectLd(aptVideo)) }}
+        />
+      )}
     </>
   );
 }

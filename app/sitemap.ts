@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { p: "/diaspora", priority: 0.85 },
     { p: "/pelerini", priority: 0.85 },
     { p: "/galerie", priority: 0.8 },
+    { p: "/videouri", priority: 0.8 },
     { p: "/recenzii", priority: 0.8 },
     { p: "/despre-noi", priority: 0.7 },
     { p: "/contact", priority: 0.7 },
