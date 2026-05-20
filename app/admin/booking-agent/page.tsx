@@ -342,7 +342,7 @@ export default function BookingAgentDashboard() {
               <li>• 5% taxă locală/adult/noapte la cotații.</li>
               <li>• Avans 30% rezervări directe.</li>
               <li>• Check-in 14:00 · check-out 11:00.</li>
-              <li>• Contact: Vasi +40 738 345 330 · Anca +40 752 388 388.</li>
+              <li>• Contact: Vasi +40 752 388 388 · Anca +40 738 345 330.</li>
             </ul>
           </div>
         </section>

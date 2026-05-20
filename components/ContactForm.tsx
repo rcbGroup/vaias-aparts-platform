@@ -7,13 +7,38 @@ export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitting(true);
-    setTimeout(() => {
-      setSubmitted(true);
-      setSubmitting(false);
-    }, 700);
+    const fd = new FormData(e.currentTarget);
+    const slug = (fd.get("apartament") || "").toString();
+    const aptName = apartments.find((a) => a.slug === slug)?.name || "";
+    const checkin = (fd.get("checkin") || "").toString();
+    const checkout = (fd.get("checkout") || "").toString();
+    const guests = (fd.get("oaspeti") || "").toString();
+    const parts = [
+      (fd.get("mesaj") || "").toString().trim(),
+      checkin || checkout ? `Perioadă: ${checkin || "?"} → ${checkout || "?"}` : "",
+      guests ? `Oaspeți: ${guests}` : "",
+    ].filter(Boolean);
+    try {
+      await fetch("/api/enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: fd.get("nume"),
+          email: fd.get("email"),
+          phone: fd.get("telefon"),
+          apartment: aptName,
+          source: "contact-form",
+          message: parts.join(" · "),
+        }),
+      });
+    } catch {
+      /* swallow — UI still confirms; email/DB best-effort */
+    }
+    setSubmitted(true);
+    setSubmitting(false);
   }
 
   if (submitted) {

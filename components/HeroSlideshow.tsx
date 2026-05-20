@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useLang } from "./LanguageProvider";
+import { BOOKING_URL } from "@/lib/site";
 
 type Slide = {
   src: string;
@@ -181,9 +182,9 @@ export default function HeroSlideshow() {
               <Link href="/apartments" className="btn-primary">
                 {t("hero.cta1")}
               </Link>
-              <Link href="/rezervare" className="btn-outline-light">
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-outline-light">
                 {t("hero.cta2")}
-              </Link>
+              </a>
               <Link
                 href="/vila-completa"
                 className="btn-outline-light border-walnut-300/80 text-walnut-100 hover:bg-walnut-500 hover:border-walnut-500 hover:text-cream-50"

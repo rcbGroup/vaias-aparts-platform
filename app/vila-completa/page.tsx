@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { apartments } from "@/lib/apartments";
 import { siteVideos, videoObjectLd, VILLA_VIDEO_ID, KITCHEN_VIDEO_ID } from "@/lib/videos";
+import { BOOKING_URL } from "@/lib/site";
 
 // Whole-villa pricing — flat weekday/weekend rates
 const PRICE_WEEKDAY = 2065;
@@ -623,10 +624,18 @@ export default function VillaCompletaPage() {
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <a
-              href={`https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`}
+              href={BOOKING_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary bg-cream-50 text-forest-900 hover:bg-cream-100 hover:text-forest-900"
+            >
+              📅 Verifică disponibilitate & rezervă
+            </a>
+            <a
+              href={`https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline-light"
             >
               💬 WhatsApp {WA_NUMBER_DISPLAY}
             </a>
