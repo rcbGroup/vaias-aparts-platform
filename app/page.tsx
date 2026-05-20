@@ -2,21 +2,40 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { apartments } from "@/lib/apartments";
 import { attractions } from "@/lib/attractions";
+import { airports, closestAirports } from "@/lib/airports";
 import { platformBadges, guestHighlights } from "@/lib/reviews";
 import { guestAvatars } from "@/lib/guest-avatars";
 import { getActiveOffers } from "@/lib/seasonal-offers";
 import { siteVideos, videoObjectLd, VILLA_VIDEO_ID } from "@/lib/videos";
 import ApartmentCard from "@/components/ApartmentCard";
+import AirportMap from "@/components/AirportMap";
 import SectionHeader from "@/components/SectionHeader";
 import UspBanner from "@/components/UspBanner";
 import ScrollFade from "@/components/ScrollFade";
 import HeroSlideshow from "@/components/HeroSlideshow";
 import { useLang } from "@/components/LanguageProvider";
 
+// One representative airport per distance band for the homepage preview.
+const PREVIEW_AIRPORT_SLUGS = [
+  "suceava-scv",
+  "bacau-bcm",
+  "iasi-ias",
+  "targu-mures-tgm",
+  "cluj-napoca-clj",
+  "chisinau-kiv",
+  "bucuresti-otopeni-otp"
+];
+const previewAirports = airports
+  .filter((a) => PREVIEW_AIRPORT_SLUGS.includes(a.slug))
+  .sort((a, b) => a.distanceKm - b.distanceKm);
+const CLOSEST_SLUG = closestAirports[0]?.slug;
+
 export default function HomePage() {
   const { t } = useLang();
+  const router = useRouter();
   const featured = apartments;
   const featuredAttractions = attractions.slice(0, 6);
   const highlights = guestHighlights.slice(0, 6);
@@ -578,6 +597,42 @@ export default function HomePage() {
               </ScrollFade>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* AIRPORTS MAP PREVIEW */}
+      <section className="section bg-forest-950 text-cream-50 relative overflow-hidden">
+        <div className="absolute inset-0 pattern-moldavian-dark opacity-30 pointer-events-none" />
+        <div className="container-x relative">
+          <ScrollFade>
+            <div className="max-w-3xl mx-auto text-center mb-12">
+              <div className="eyebrow-light mb-4">Cum ajungi · aeroporturi</div>
+              <h2 className="font-display text-4xl md:text-5xl text-cream-50 text-balance">
+                La doar 60 km de cel mai apropiat aeroport.
+              </h2>
+              <div className="divider-gold my-7" />
+              <p className="font-serif text-lg md:text-xl text-cream-100/85 leading-relaxed">
+                Suceava, Bacău și Iași — trei aeroporturi internaționale la mai puțin de 2 ore.
+                Vezi distanțele față de Vila Vaias Aparts și autostrada A7 pe hartă.
+              </p>
+            </div>
+          </ScrollFade>
+          <ScrollFade delay={100}>
+            <AirportMap
+              airports={previewAirports}
+              closestSlug={CLOSEST_SLUG}
+              compact
+              onSelect={(slug) => router.push(`/cum-ajungi#airport-${slug}`)}
+            />
+            <div className="mt-8 text-center">
+              <Link
+                href="/cum-ajungi"
+                className="btn-primary bg-cream-50 text-forest-900 hover:bg-cream-100 hover:text-forest-900"
+              >
+                Vezi toate aeroporturile →
+              </Link>
+            </div>
+          </ScrollFade>
         </div>
       </section>
 

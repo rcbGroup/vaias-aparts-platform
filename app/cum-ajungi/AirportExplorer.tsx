@@ -4,39 +4,19 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import {
   airports,
-  internationalAirports,
-  romanianAirports,
-  VILA_VAIAS_COORDS,
+  closestAirports,
   type Airport,
-  type Country,
-  type Region
+  type Country
 } from "@/lib/airports";
-
-// SVG viewport — centered on Romania with extra margin so neighboring
-// airports (Budapesta, Chișinău, Sofia…) still land inside the frame.
-const MAP_BBOX = {
-  west: 18.5,
-  east: 30.5,
-  north: 50.0,
-  south: 42.0
-};
-const SVG_W = 1000;
-const SVG_H = 700;
-
-function projectToSvg(lat: number, lng: number) {
-  const x = ((lng - MAP_BBOX.west) / (MAP_BBOX.east - MAP_BBOX.west)) * SVG_W;
-  const y = ((MAP_BBOX.north - lat) / (MAP_BBOX.north - MAP_BBOX.south)) * SVG_H;
-  return { x: Math.round(x), y: Math.round(y) };
-}
+import AirportMap from "@/components/AirportMap";
 
 type FilterCountry = "all" | Country;
+
+const CLOSEST_SLUG = closestAirports[0]?.slug;
 
 export default function AirportExplorer() {
   const [search, setSearch] = useState("");
   const [country, setCountry] = useState<FilterCountry>("all");
-  const [active, setActive] = useState<string | null>(null);
-
-  const vila = projectToSvg(VILA_VAIAS_COORDS.lat, VILA_VAIAS_COORDS.lng);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -66,222 +46,15 @@ export default function AirportExplorer() {
   return (
     <div>
       {/* ─── MAP ─── */}
-      <div className="rounded-3xl bg-forest-950 overflow-hidden border border-forest-900 shadow-card relative">
-        <div className="absolute top-5 left-5 z-10 rounded-full bg-cream-50/95 backdrop-blur px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-forest-900">
-          Vaias Aparts · Târgu Neamț
-        </div>
-        <div className="absolute top-5 right-5 z-10 rounded-full bg-walnut-500/95 backdrop-blur px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cream-50">
-          {filtered.length} aeroporturi
-        </div>
-
-        <svg
-          viewBox={`0 0 ${SVG_W} ${SVG_H}`}
-          className="w-full h-auto block"
-          role="img"
-          aria-label="Hartă cu aeroporturile din România și țările vecine, marcate față de Vila Vaias Aparts din Târgu Neamț"
-        >
-          {/* Background gradient */}
-          <defs>
-            <radialGradient id="bg" cx="50%" cy="50%" r="60%">
-              <stop offset="0%" stopColor="#1f2e23" />
-              <stop offset="100%" stopColor="#0f1a13" />
-            </radialGradient>
-            <pattern
-              id="grid"
-              width="30"
-              height="30"
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M 30 0 L 0 0 0 30"
-                fill="none"
-                stroke="rgba(234,217,168,0.04)"
-                strokeWidth="0.5"
-              />
-            </pattern>
-          </defs>
-          <rect width={SVG_W} height={SVG_H} fill="url(#bg)" />
-          <rect width={SVG_W} height={SVG_H} fill="url(#grid)" />
-
-          {/* Romania-ish silhouette (very loose convex hull, decorative) */}
-          <path
-            d="
-              M 220 250
-              Q 260 160, 360 150
-              Q 470 130, 580 180
-              Q 700 200, 780 240
-              Q 820 290, 800 350
-              Q 790 420, 740 470
-              Q 660 520, 560 510
-              Q 440 530, 360 500
-              Q 280 470, 240 410
-              Q 200 340, 220 250 Z
-            "
-            fill="rgba(155,183,153,0.07)"
-            stroke="rgba(155,183,153,0.30)"
-            strokeWidth="1.5"
-          />
-
-          {/* Distance lines from Vila to each airport */}
-          {filtered.map((a) => {
-            const p = projectToSvg(a.lat, a.lng);
-            const isActive = active === a.slug;
-            return (
-              <line
-                key={`line-${a.slug}`}
-                x1={vila.x}
-                y1={vila.y}
-                x2={p.x}
-                y2={p.y}
-                stroke={
-                  isActive
-                    ? "rgba(211,170,84,0.95)"
-                    : a.closest
-                      ? "rgba(211,170,84,0.55)"
-                      : "rgba(234,217,168,0.18)"
-                }
-                strokeWidth={isActive ? 2.5 : a.closest ? 1.3 : 0.6}
-                strokeDasharray={isActive ? "0" : "4 4"}
-              />
-            );
-          })}
-
-          {/* Airport pins */}
-          {filtered.map((a) => {
-            const p = projectToSvg(a.lat, a.lng);
-            const isActive = active === a.slug;
-            return (
-              <g
-                key={`pin-${a.slug}`}
-                onMouseEnter={() => setActive(a.slug)}
-                onMouseLeave={() => setActive((s) => (s === a.slug ? null : s))}
-                onClick={() => {
-                  document
-                    .getElementById(`airport-${a.slug}`)
-                    ?.scrollIntoView({ behavior: "smooth", block: "start" });
-                }}
-                className="cursor-pointer"
-              >
-                <circle
-                  cx={p.x}
-                  cy={p.y}
-                  r={isActive ? 14 : a.closest ? 11 : 7}
-                  fill={
-                    a.closest
-                      ? "rgba(211,170,84,0.95)"
-                      : a.country === "Romania"
-                        ? "rgba(155,183,153,0.85)"
-                        : "rgba(234,217,168,0.6)"
-                  }
-                  stroke="#0f1a13"
-                  strokeWidth="2"
-                />
-                <text
-                  x={p.x}
-                  y={p.y + 4}
-                  fontSize="10"
-                  fontWeight="700"
-                  textAnchor="middle"
-                  fill="#0f1a13"
-                >
-                  {a.iata}
-                </text>
-                <text
-                  x={p.x}
-                  y={p.y + (a.closest ? 26 : 22)}
-                  fontSize={isActive ? 14 : 11}
-                  fontWeight={isActive ? 700 : 500}
-                  textAnchor="middle"
-                  fill={isActive ? "#faf6e9" : "rgba(250,246,233,0.75)"}
-                  style={{ pointerEvents: "none" }}
-                >
-                  {a.shortName}
-                </text>
-                {(a.closest || isActive) && (
-                  <text
-                    x={p.x}
-                    y={p.y + (a.closest ? 40 : 36)}
-                    fontSize="10"
-                    textAnchor="middle"
-                    fill="rgba(211,170,84,0.95)"
-                    style={{ pointerEvents: "none" }}
-                  >
-                    {a.distanceKm} km · {a.driveTime}
-                  </text>
-                )}
-              </g>
-            );
-          })}
-
-          {/* Vila Vaias star marker */}
-          <g>
-            <circle
-              cx={vila.x}
-              cy={vila.y}
-              r="22"
-              fill="rgba(140,88,50,0.20)"
-              stroke="rgba(211,170,84,0.6)"
-              strokeWidth="1"
-            />
-            <circle
-              cx={vila.x}
-              cy={vila.y}
-              r="14"
-              fill="#a96f3e"
-              stroke="#faf6e9"
-              strokeWidth="2.5"
-            />
-            <text
-              x={vila.x}
-              y={vila.y + 4}
-              fontSize="14"
-              fontWeight="900"
-              textAnchor="middle"
-              fill="#faf6e9"
-            >
-              ★
-            </text>
-            <text
-              x={vila.x}
-              y={vila.y - 28}
-              fontSize="14"
-              fontWeight="700"
-              textAnchor="middle"
-              fill="#faf6e9"
-            >
-              Vila Vaias Aparts
-            </text>
-            <text
-              x={vila.x}
-              y={vila.y - 14}
-              fontSize="10"
-              textAnchor="middle"
-              fill="rgba(211,170,84,0.95)"
-            >
-              Târgu Neamț
-            </text>
-          </g>
-        </svg>
-        <div className="px-6 py-4 bg-forest-900/80 border-t border-forest-800 flex flex-wrap items-center justify-between gap-3 text-xs text-cream-100/70">
-          <div className="flex items-center gap-4">
-            <span className="inline-flex items-center gap-2">
-              <span className="h-3 w-3 rounded-full bg-walnut-500" />
-              Cele 3 aeroporturi închise
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <span className="h-3 w-3 rounded-full bg-forest-300" />
-              România
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <span className="h-3 w-3 rounded-full bg-cream-300/70" />
-              Internațional
-            </span>
-          </div>
-          <div className="text-cream-200/60">
-            Click pe pin pentru detalii. Hover pentru distanță.
-          </div>
-        </div>
-      </div>
+      <AirportMap
+        airports={filtered}
+        closestSlug={CLOSEST_SLUG}
+        onSelect={(slug) => {
+          document
+            .getElementById(`airport-${slug}`)
+            ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }}
+      />
 
       {/* ─── FILTERS ─── */}
       <div className="mt-10 rounded-2xl bg-cream-50 border border-stone-200 p-5 md:p-6 flex flex-col md:flex-row md:items-center gap-4">
@@ -454,5 +227,3 @@ function AirportCard({ a }: { a: Airport }) {
     </article>
   );
 }
-
-export { romanianAirports, internationalAirports };
