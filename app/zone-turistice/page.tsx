@@ -8,10 +8,25 @@ import { attractions } from "@/lib/attractions";
 export const metadata: Metadata = {
   title: "Zone turistice — atracții la o oră de Vaias Aparts",
   description:
-    "Cetatea Neamț, mănăstirile Agapia și Văratec, Masivul Ceahlău, Cheile Bicazului, casa lui Creangă — toate la mai puțin de o oră de noi."
+    "Cetatea Neamț, mănăstirile Neamț, Agapia, Văratec, Secu, Sihăstria și Bistrița, Masivul Ceahlău, Durău, Cheile Bicazului și Lacul Roșu, rezervația de zimbri Vânători-Neamț, Piatra Neamț și casa lui Creangă — toate la o oră de noi."
 };
 
+const categoryLabels: { key: string; label: string }[] = [
+  { key: "Mănăstire", label: "Mănăstiri" },
+  { key: "Cetate", label: "Cetăți" },
+  { key: "Munte", label: "Munți" },
+  { key: "Natură", label: "Natură" },
+  { key: "Oraș", label: "Oraș" },
+];
+
 export default function AttractionsPage() {
+  const categoryStrip = categoryLabels
+    .map((c) => ({
+      l: c.label,
+      n: String(attractions.filter((a) => a.category === c.key).length),
+    }))
+    .filter((c) => c.n !== "0");
+
   return (
     <>
       <PageHero
@@ -24,13 +39,7 @@ export default function AttractionsPage() {
       {/* CATEGORY STRIP */}
       <section className="bg-stone-50 border-b border-stone-100 py-10">
         <div className="container-x grid grid-cols-3 md:grid-cols-5 gap-3 text-center">
-          {[
-            { l: "Mănăstiri", n: "3" },
-            { l: "Cetăți", n: "2" },
-            { l: "Munți", n: "1" },
-            { l: "Natură", n: "1" },
-            { l: "Oraș", n: "2" }
-          ].map((c) => (
+          {categoryStrip.map((c) => (
             <div key={c.l} className="px-3">
               <div className="font-display text-3xl text-walnut-500">{c.n}</div>
               <div className="text-xs uppercase tracking-[0.28em] text-stone-500 mt-1">{c.l}</div>
@@ -44,8 +53,8 @@ export default function AttractionsPage() {
         <div className="container-x">
           <SectionHeader
             eyebrow="Ce să vizitezi"
-            title="Opt locuri care merită ocolite cu drumul."
-            subtitle="Recomandările noastre — testate, povestite, predate ca pe niște obiecte de familie."
+            title={`${attractions.length} locuri care merită ocolite cu drumul.`}
+            subtitle="Recomandările noastre — mănăstiri, cetăți, munți și ape, toate la o oră de poarta noastră."
           />
 
           <div className="mt-16 space-y-8">

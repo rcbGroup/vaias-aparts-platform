@@ -105,6 +105,90 @@ export const attractions: Attraction[] = [
     drivingTime: "18 min",
     category: "Mănăstire",
     image: "/attractions/manastirea-neamt.jpg"
+  },
+  {
+    slug: "manastirea-secu",
+    name: "Mănăstirea Secu",
+    shortDescription:
+      "Mănăstire de călugări ascunsă în codrii Vânătorilor, cu ziduri de cetate și o liniște adâncă.",
+    longDescription:
+      "Ridicată în 1602 de vornicul Nestor Ureche, tatăl cronicarului Grigore Ureche, Mănăstirea Secu se ascunde într-o poiană înconjurată de pădure, pe valea pârâului Secu. Zidurile groase și turnurile de apărare amintesc de vremurile tulburi, dar înăuntru domnește pacea. Este una dintre cele mai importante vetre monahale din Moldova, legată de marii duhovnici ai secolului XX.",
+    distance: "20 km",
+    drivingTime: "30 min",
+    category: "Mănăstire",
+    image: "/attractions/manastirea-secu.jpg"
+  },
+  {
+    slug: "manastirea-sihastria",
+    name: "Mănăstirea Sihăstria",
+    shortDescription:
+      "Vatra părintelui Cleopa și a marilor duhovnici — un loc de pelerinaj viu al ortodoxiei românești.",
+    longDescription:
+      "Mănăstirea Sihăstria, la câțiva kilometri de Secu, este locul unde au trăit și au fost îngropați marii duhovnici Cleopa Ilie și Paisie Olaru. Pentru mii de pelerini, este una dintre cele mai căutate destinații spirituale din țară. Atmosfera de rugăciune, izvorul tămăduitor și drumul prin pădure spre Schitul Sihla fac din vizită o experiență adâncă.",
+    distance: "22 km",
+    drivingTime: "35 min",
+    category: "Mănăstire",
+    image: "/attractions/manastirea-sihastria.jpg"
+  },
+  {
+    slug: "manastirea-bistrita",
+    name: "Mănăstirea Bistrița",
+    shortDescription:
+      "Necropolă domnească a lui Alexandru cel Bun, cu turn-clopotniță și o istorie de șase secole.",
+    longDescription:
+      "Ctitorită la 1402 de Alexandru cel Bun, Mănăstirea Bistrița adăpostește mormântul marelui domnitor și o parte din tezaurul medieval al Moldovei. Turnul-clopotniță, paraclisul lui Ștefan cel Mare și clopotul Buga, dăruit de Alexandru cel Bun, sunt mărturii ale măreției de odinioară. Se află aproape de Piatra Neamț, pe drumul spre munte.",
+    distance: "40 km",
+    drivingTime: "50 min",
+    category: "Mănăstire",
+    image: "/attractions/manastirea-bistrita.jpg"
+  },
+  {
+    slug: "statiunea-durau",
+    name: "Stațiunea Durău",
+    shortDescription:
+      "Stațiune montană la poalele Ceahlăului — aer tare, pârtie de schi și poarta spre trasee.",
+    longDescription:
+      "Durău este stațiunea de la poalele Ceahlăului, la peste 750 m altitudine, cunoscută pentru aerul curat, mănăstirea pictată de Nicolae Tonitza și pârtia de schi pentru iarnă. Vara, de aici pleacă cele mai frumoase trasee spre Cabana Dochia și Toaca. Este locul perfect pentru o zi de munte — drumeție, telescaun și priveliști spre masivul legendar.",
+    distance: "65 km",
+    drivingTime: "1 h 10 min",
+    category: "Munte",
+    image: "/attractions/statiunea-durau.jpg"
+  },
+  {
+    slug: "lacul-rosu",
+    name: "Lacul Roșu",
+    shortDescription:
+      "Lacul de baraj natural cu trunchiuri de brad ieșite din apă — o priveliște unică în Carpați.",
+    longDescription:
+      "Format în 1837 după o uriașă alunecare de teren care a barat pârâul Bicaz, Lacul Roșu este cel mai mare lac natural de baraj din România. Trunchiurile de brad care ies din apă îi dau un aer ireal, iar culoarea roșiatică vine din aluviunile bogate în fier. Se află chiar la capătul Cheilor Bicazului — o excursie de o zi care merită fiecare kilometru.",
+    distance: "80 km",
+    drivingTime: "1 h 20 min",
+    category: "Natură",
+    image: "/attractions/lacul-rosu.jpg"
+  },
+  {
+    slug: "vanatori-neamt",
+    name: "Parcul Natural Vânători-Neamț",
+    shortDescription:
+      "Rezervația de zimbri Dragoș Vodă — singura turmă de zimbri în libertate semi-naturală din zonă.",
+    longDescription:
+      "La doar câțiva kilometri de noi, Parcul Natural Vânători-Neamț găzduiește Rezervația de Zimbri „Dragoș Vodă”, unde puteți vedea de aproape zimbrul european — simbolul Moldovei medievale, readus aici după ce dispăruse în sălbăticie. Traseul prin pădure, observatoarele și aerul curat fac din vizită o experiență minunată pentru familii și copii.",
+    distance: "10 km",
+    drivingTime: "15 min",
+    category: "Natură",
+    image: "/attractions/vanatori-neamt.jpg"
+  },
+  {
+    slug: "piatra-neamt",
+    name: "Piatra Neamț",
+    shortDescription:
+      "„Perla Moldovei” — oraș montan cu telegondolă, ansamblul lui Ștefan cel Mare și priveliști de pe Cozla.",
+    longDescription:
+      "Piatra Neamț, reședința județului, este un oraș cochet așezat între dealuri împădurite. Urcați cu telegondola pe Muntele Cozla pentru o panoramă superbă, vizitați Curtea Domnească și Turnul lui Ștefan cel Mare, apoi plimbați-vă pe faleza Bistriței. Are muzee, restaurante bune și o atmosferă relaxată — o destinație de o zi excelentă din Târgu Neamț.",
+    distance: "46 km",
+    drivingTime: "50 min",
+    category: "Oraș",
+    image: "/attractions/piatra-neamt.jpg"
   }
 ];
 
@@ -161,5 +245,47 @@ export const attractionImageCredits = [
     author: "Acristianas (modified by Ghirlandajo)",
     license: "CC-BY-SA-4.0",
     source: "https://commons.wikimedia.org/wiki/File:Neamt_Monastery.jpg"
+  },
+  {
+    slug: "manastirea-secu",
+    author: "Cezar Suceveanu (uploader Cezarika1, ro.wikipedia)",
+    license: "CC-BY-2.5",
+    source: "https://commons.wikimedia.org/wiki/File:M%C4%83n%C4%83stirea_Secu.jpg"
+  },
+  {
+    slug: "manastirea-sihastria",
+    author: "mihai moise",
+    license: "CC-BY-3.0",
+    source: "https://commons.wikimedia.org/wiki/File:Manastirea_Sihastria_-_panoramio.jpg"
+  },
+  {
+    slug: "manastirea-bistrita",
+    author: "Losy (Romanian Wikipedia)",
+    license: "CC-BY-2.5",
+    source: "https://commons.wikimedia.org/wiki/File:Manastirea_Bistrita_0023.JPG"
+  },
+  {
+    slug: "statiunea-durau",
+    author: "Vianora Pescaru",
+    license: "CC-BY-SA-3.0-RO",
+    source: "https://commons.wikimedia.org/wiki/File:M%C4%83n%C4%83stirea_Dur%C4%83u.jpg"
+  },
+  {
+    slug: "lacul-rosu",
+    author: "Emilpop",
+    license: "CC-BY-SA-3.0",
+    source: "https://commons.wikimedia.org/wiki/File:Lacul;_Rosu,_Romania.JPG"
+  },
+  {
+    slug: "vanatori-neamt",
+    author: "Cristian Borteș (bortescristian), Cluj-Napoca",
+    license: "CC-BY-2.0",
+    source: "https://commons.wikimedia.org/wiki/File:Rezervatia_de_zimbrii_Dragos_Voda_(2725611733).jpg"
+  },
+  {
+    slug: "piatra-neamt",
+    author: "zaFleur",
+    license: "CC-BY-SA-3.0",
+    source: "https://commons.wikimedia.org/wiki/File:Piatra-Neam%C8%9B_din_Cozla_-_panoramio.jpg"
   }
 ];

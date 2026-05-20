@@ -237,30 +237,34 @@ export default async function ApartmentPage({
         <Gallery images={apartment.gallery} alt={apartment.name} />
       </section>
 
-      {/* VIDEO / VIRTUAL TOUR — shown only when an apartment has a youtubeId or matterportId */}
-      {(apartment.youtubeId || apartment.matterportId) && (
+      {/* VIDEO TOUR — embedded apartment presentation */}
+      {apartment.youtubeId && (
         <section className="container-x mb-16">
-          <div className="flex flex-wrap gap-3 justify-center">
-            {apartment.matterportId && (
-              <a
-                href={`https://my.matterport.com/show/?m=${apartment.matterportId}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-secondary"
-              >
-                🎥 Tur virtual 3D
-              </a>
-            )}
-            {apartment.youtubeId && (
-              <a
-                href={`https://www.youtube.com/watch?v=${apartment.youtubeId}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-secondary"
-              >
-                ▶️ Vezi pe YouTube
-              </a>
-            )}
+          <div className="text-center mb-6">
+            <div className="eyebrow mb-2">Tur video</div>
+            <h2 className="font-display text-3xl md:text-4xl text-forest-900">
+              Vezi {apartment.name} în mișcare
+            </h2>
+          </div>
+          <div className="relative mx-auto max-w-4xl aspect-video overflow-hidden rounded-2xl shadow-card bg-forest-950">
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${apartment.youtubeId}?rel=0`}
+              title={`Tur video ${apartment.name} — Vila Vaias Aparts`}
+              className="absolute inset-0 h-full w-full border-0"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+          <div className="mt-4 text-center">
+            <a
+              href={`https://www.youtube.com/watch?v=${apartment.youtubeId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-walnut-600 hover:text-walnut-700"
+            >
+              ▶️ Vezi pe YouTube · canalul Vaias Aparts
+            </a>
           </div>
         </section>
       )}

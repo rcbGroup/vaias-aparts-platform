@@ -18,7 +18,7 @@ import {
   HERO_EXTERIOR_PRIMARY,
 } from "@/lib/photos";
 
-type GalleryImage = { src: string; alt: string; category: string };
+type GalleryImage = { src: string; alt: string; label: string; tags: string[] };
 
 const galleryCategories = [
   { id: "all", label: "Toate fotografiile" },
@@ -29,60 +29,59 @@ const galleryCategories = [
   { id: "apt5", label: "Apartament 5" },
   { id: "apt6", label: "Apartament 6" },
   { id: "apt7", label: "Apartament 7 — parter, fără trepte" },
+  { id: "interior", label: "Interior" },
   { id: "exterior", label: "Exterior și curte" },
   { id: "drone", label: "Vedere aeriană (dronă)" },
+  { id: "baie", label: "Băi" },
 ];
 
+// Build interior photos for one apartment. Bathrooms (filenames containing
+// "-baie") are also tagged "baie" so they surface under the Băi filter.
+function aptImages(
+  photos: string[],
+  aptId: string,
+  aptLabel: string
+): GalleryImage[] {
+  return photos.map((src, i) => {
+    const isBath = /-baie/.test(src);
+    const tags = [aptId, "interior"];
+    if (isBath) tags.push("baie");
+    return {
+      src,
+      alt: `${aptLabel} Vila Vaias Aparts Târgu Neamț — ${
+        isBath ? "baie renovată" : "interior"
+      } ${i + 1}`,
+      label: aptLabel,
+      tags,
+    };
+  });
+}
+
 const galleryImages: GalleryImage[] = [
-  ...APT1_PHOTOS.map((src, i) => ({
-    src,
-    alt: `Apartament 1 Vila Vaias Aparts Târgu Neamț — fotografie ${i + 1}`,
-    category: "apt1",
-  })),
-  ...APT2_PHOTOS.map((src, i) => ({
-    src,
-    alt: `Apartament 2 Vila Vaias Aparts Târgu Neamț — fotografie ${i + 1}`,
-    category: "apt2",
-  })),
-  ...APT3_PHOTOS.map((src, i) => ({
-    src,
-    alt: `Apartament 3 Vila Vaias Aparts Târgu Neamț — cel mai mare apartament — fotografie ${i + 1}`,
-    category: "apt3",
-  })),
-  ...APT4_PHOTOS.map((src, i) => ({
-    src,
-    alt: `Apartament 4 Vila Vaias Aparts Târgu Neamț — 2 dormitoare cu patio — fotografie ${i + 1}`,
-    category: "apt4",
-  })),
-  ...APT5_PHOTOS.map((src, i) => ({
-    src,
-    alt: `Apartament 5 Vila Vaias Aparts Târgu Neamț — aer condiționat, etaj 2 — exterior ${i + 1}`,
-    category: "apt5",
-  })),
-  ...APT6_PHOTOS.map((src, i) => ({
-    src,
-    alt: `Apartament 6 Vila Vaias Aparts Târgu Neamț — aer condiționat, etaj 2 — exterior ${i + 1}`,
-    category: "apt6",
-  })),
-  ...APT7_PHOTOS.map((src, i) => ({
-    src,
-    alt: `Apartament 7 Vila Vaias Aparts — parter fără trepte — exterior ${i + 1}`,
-    category: "apt7",
-  })),
+  ...aptImages(APT1_PHOTOS, "apt1", "Apartament 1"),
+  ...aptImages(APT2_PHOTOS, "apt2", "Apartament 2"),
+  ...aptImages(APT3_PHOTOS, "apt3", "Apartament 3"),
+  ...aptImages(APT4_PHOTOS, "apt4", "Apartament 4"),
+  ...aptImages(APT5_PHOTOS, "apt5", "Apartament 5"),
+  ...aptImages(APT6_PHOTOS, "apt6", "Apartament 6"),
+  ...aptImages(APT7_PHOTOS, "apt7", "Apartament 7"),
   ...EXTERIOR_PHOTOS.map((src, i) => ({
     src,
     alt: `Vila Vaias Aparts — fațadă boutique, Str. Sfântul Lazăr nr. 1, Târgu Neamț — fotografie ${i + 1}`,
-    category: "exterior",
+    label: "Exterior și curte",
+    tags: ["exterior"],
   })),
   ...DRONE_DAY_PHOTOS.map((src, i) => ({
     src,
     alt: `Vila Vaias Aparts — vedere aeriană dronă în Târgu Neamț, la poalele Cetății Neamțului — fotografie ${i + 1}`,
-    category: "drone",
+    label: "Vedere aeriană (dronă)",
+    tags: ["drone"],
   })),
   ...DRONE_NIGHT_PHOTOS.map((src, i) => ({
     src,
     alt: `Vila Vaias Aparts — vedere aeriană pe timp de noapte, Târgu Neamț — fotografie ${i + 1}`,
-    category: "drone",
+    label: "Vedere aeriană (dronă)",
+    tags: ["drone"],
   })),
 ];
 
@@ -93,7 +92,7 @@ export default function GalleryClient() {
   const images =
     active === "all"
       ? galleryImages
-      : galleryImages.filter((img) => img.category === active);
+      : galleryImages.filter((img) => img.tags.includes(active));
 
   useEffect(() => {
     if (lightbox === null) return;
@@ -111,8 +110,6 @@ export default function GalleryClient() {
       window.removeEventListener("keydown", onKey);
     };
   }, [lightbox, images.length]);
-
-  const apt567Active = active === "apt5" || active === "apt6" || active === "apt7";
 
   return (
     <>
@@ -144,19 +141,6 @@ export default function GalleryClient() {
             ))}
           </div>
 
-          {apt567Active && (
-            <div className="mb-8 rounded-2xl border border-walnut-200 bg-walnut-50 p-5 max-w-3xl mx-auto text-center">
-              <div className="font-display text-lg text-walnut-700 mb-1">
-                📸 Fotografii interior noi în curând
-              </div>
-              <p className="text-sm text-forest-800/85">
-                Apartamentele 5, 6 și 7 sunt în programul nostru de fotografie profesională.
-                Până atunci, vedeți aici exteriorul și amplasarea pe vilă.{" "}
-                {active === "apt5" && "Pentru Apartament 5 aveți disponibil un tur virtual 3D pe pagina dedicată."}
-              </p>
-            </div>
-          )}
-
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {images.map((img, i) => (
               <ScrollFade key={img.src + i} delay={Math.min(i * 30, 400)}>
@@ -176,7 +160,7 @@ export default function GalleryClient() {
                   <div className="absolute inset-0 bg-forest-950/0 group-hover:bg-forest-950/15 transition-colors duration-500" />
                   <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-forest-950/85 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500">
                     <span className="text-xs uppercase tracking-wider text-cream-50">
-                      {galleryCategories.find((c) => c.id === img.category)?.label}
+                      {img.label}
                     </span>
                   </div>
                 </button>
@@ -236,8 +220,7 @@ export default function GalleryClient() {
             />
           </div>
           <div className="absolute bottom-6 left-0 right-0 text-center text-cream-100/80 text-sm">
-            {lightbox + 1} / {images.length} &middot;{" "}
-            {galleryCategories.find((c) => c.id === images[lightbox].category)?.label}
+            {lightbox + 1} / {images.length} &middot; {images[lightbox].label}
           </div>
         </div>
       )}

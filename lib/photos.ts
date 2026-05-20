@@ -2,8 +2,8 @@
  * Centralized photo manifest. All paths are local (served from /public).
  *
  * Source: Geani Pralea professional shoot (Mar 2026) for Apt 1-4, exterior facade,
- * drone day, drone night. Apt 5-7 still pending a dedicated shoot — see PHOTO GAP
- * note below for how those are handled until new photos arrive.
+ * drone day, drone night. Apt 5-7 use the original-site interior photos
+ * (restored from vaiasaparts.ro) until a dedicated shoot covers them.
  */
 
 const G = "/gallery";
@@ -35,7 +35,7 @@ export const APT1_PHOTOS = [
   `${G}/vila-vaias-aparts-targu-neamt-apartament-1-hol-3.jpg`,
 ];
 
-/* ---------------- Apartment 2 — 16 photos ---------------- */
+/* ---------------- Apartment 2 — 14 photos ---------------- */
 export const APT2_PHOTOS = [
   `${G}/vila-vaias-aparts-targu-neamt-apartament-2-living-1.jpg`,
   `${G}/vila-vaias-aparts-targu-neamt-apartament-2-living-2.jpg`,
@@ -51,8 +51,6 @@ export const APT2_PHOTOS = [
   `${G}/vila-vaias-aparts-targu-neamt-apartament-2-baie-5.jpg`,
   `${G}/vila-vaias-aparts-targu-neamt-apartament-2-hol-1.jpg`,
   `${G}/vila-vaias-aparts-targu-neamt-apartament-2-hol-2.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-apartament-2-baie-veche-1.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-apartament-2-baie-veche-2.jpg`,
 ];
 
 /* ---------------- Apartment 3 — 25 photos (largest) ---------------- */
@@ -84,7 +82,7 @@ export const APT3_PHOTOS = [
   `${G}/vila-vaias-aparts-targu-neamt-apartament-3-hol-intrare-1.jpg`,
 ];
 
-/* ---------------- Apartment 4 — 25 photos (2 bedroom + patio) ---------------- */
+/* ---------------- Apartment 4 — 22 photos (2 bedroom + patio) ---------------- */
 export const APT4_PHOTOS = [
   `${G}/vila-vaias-aparts-targu-neamt-apartament-4-living-1.jpg`,
   `${G}/vila-vaias-aparts-targu-neamt-apartament-4-living-canapea-1.jpg`,
@@ -108,9 +106,6 @@ export const APT4_PHOTOS = [
   `${G}/vila-vaias-aparts-targu-neamt-apartament-4-baie-dus-1.jpg`,
   `${G}/vila-vaias-aparts-targu-neamt-apartament-4-baie-dus-2.jpg`,
   `${G}/vila-vaias-aparts-targu-neamt-apartament-4-baie-dus-3.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-apartament-4-baie-veche-1.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-apartament-4-baie-veche-2.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-apartament-4-baie-veche-3.jpg`,
 ];
 
 /* ---------------- Exterior facade — 6 photos ---------------- */
@@ -134,37 +129,20 @@ export const DRONE_NIGHT_PHOTOS = [
   `${G}/vila-vaias-aparts-targu-neamt-vedere-aeriana-noapte-2.jpg`,
 ];
 
-/* ---------------- Apartment 5/6/7 PHOTO GAP ----------------
- * Geani Pralea shoot covered Apt 1-4 only. Until new photos arrive,
- * the gallery for these apartments mixes drone exteriors (showing where
- * the apartment sits) with representative interior shots — we make this
- * explicit in alt text and on the apartment page so guests aren't misled.
- *
- * Apt 5 has a Matterport 3D walkthrough (id 6xEQUdBSM9w) on its page.
- */
-export const APT5_PHOTOS = [
-  `${G}/vila-vaias-aparts-targu-neamt-vedere-aeriana-noapte-1.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-vedere-aeriana-drona-3.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-vedere-aeriana-drona-7.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-exterior-fatada-2.jpg`,
-];
+/* ---------------- Apartment 5 — 17 interior photos (restored from original site) ---------------- */
+export const APT5_PHOTOS = Array.from({ length: 17 }, (_, i) =>
+  `${G}/vila-vaias-aparts-targu-neamt-apartament-5-${i + 1}.webp`
+);
 
-export const APT6_PHOTOS = [
-  `${G}/vila-vaias-aparts-targu-neamt-vedere-aeriana-noapte-2.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-vedere-aeriana-drona-5.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-vedere-aeriana-drona-9.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-exterior-fatada-3.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-exterior-fatada-4.jpg`,
-];
+/* ---------------- Apartment 6 — 11 interior photos (restored from original site) ---------------- */
+export const APT6_PHOTOS = Array.from({ length: 11 }, (_, i) =>
+  `${G}/vila-vaias-aparts-targu-neamt-apartament-6-${i + 1}.webp`
+);
 
-export const APT7_PHOTOS = [
-  `${G}/vila-vaias-aparts-targu-neamt-exterior-fatada-5.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-exterior-fatada-6.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-vedere-aeriana-drona-1.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-vedere-aeriana-drona-12.jpg`,
-  `${G}/vila-vaias-aparts-targu-neamt-vedere-aeriana-drona-15.jpg`,
-];
+/* ---------------- Apartment 7 — 7 interior photos (restored from original site) ---------------- */
+export const APT7_PHOTOS = Array.from({ length: 7 }, (_, i) =>
+  `${G}/vila-vaias-aparts-targu-neamt-apartament-7-${i + 1}.webp`
+);
 
 /* ---------------- Hero shots used across the site ---------------- */
 export const HERO_EXTERIOR_PRIMARY = `${G}/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg`;
