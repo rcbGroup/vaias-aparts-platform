@@ -6,12 +6,16 @@
   "regions": ["fra1"],
   "crons": [
     {
-      "path": "/api/cron/booking-agent",
-      "schedule": "0 * * * *"
-    },
-    {
       "path": "/api/cron/guest-messages",
       "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/cron/booking-agent",
+      "schedule": "*/30 * * * *"
+    },
+    {
+      "path": "/api/cron/review-requests",
+      "schedule": "0 * * * *"
     }
   ]
 }

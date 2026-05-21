@@ -7,6 +7,10 @@ import {
   GUEST_COMMS_AGENT_META,
   GuestCommunicationAgent,
 } from "./guestCommunication";
+import {
+  REVIEW_REQUEST_AGENT_META,
+  ReviewRequestAgent,
+} from "@/lib/guest-journey/reviewRequestAgent";
 
 export type RegisteredAgent = {
   id: string;
@@ -17,7 +21,10 @@ export type RegisteredAgent = {
   color: string;
   systemPrompt: string;
   // Optional structured API — exposed by agents that ship a tagged API object.
-  api?: typeof BookingAgent | typeof GuestCommunicationAgent;
+  api?:
+    | typeof BookingAgent
+    | typeof GuestCommunicationAgent
+    | typeof ReviewRequestAgent;
 };
 
 export const AGENT_REGISTRY: RegisteredAgent[] = [
@@ -117,6 +124,16 @@ export const AGENT_REGISTRY: RegisteredAgent[] = [
     color: GUEST_COMMS_AGENT_META.color,
     systemPrompt: GUEST_COMMS_AGENT_META.systemPrompt,
     api: GuestCommunicationAgent,
+  },
+  {
+    id: REVIEW_REQUEST_AGENT_META.id,
+    numericId: REVIEW_REQUEST_AGENT_META.numericId,
+    name: REVIEW_REQUEST_AGENT_META.name,
+    description: REVIEW_REQUEST_AGENT_META.description,
+    icon: REVIEW_REQUEST_AGENT_META.icon,
+    color: REVIEW_REQUEST_AGENT_META.color,
+    systemPrompt: REVIEW_REQUEST_AGENT_META.systemPrompt,
+    api: ReviewRequestAgent,
   },
 ];
 
