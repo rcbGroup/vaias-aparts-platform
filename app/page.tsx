@@ -16,7 +16,7 @@ import SectionHeader from "@/components/SectionHeader";
 import UspBanner from "@/components/UspBanner";
 import ScrollFade from "@/components/ScrollFade";
 import HeroSlideshow from "@/components/HeroSlideshow";
-import { useLang } from "@/components/LanguageProvider";
+import { useLang, useLanguage } from "@/components/LanguageProvider";
 
 // One representative airport per distance band for the homepage preview.
 const PREVIEW_AIRPORT_SLUGS = [
@@ -35,6 +35,7 @@ const CLOSEST_SLUG = closestAirports[0]?.slug;
 
 export default function HomePage() {
   const { t } = useLang();
+  const { lang } = useLanguage();
   const router = useRouter();
   const featured = apartments;
   const featuredAttractions = attractions.slice(0, 6);
@@ -386,6 +387,57 @@ export default function HomePage() {
                   <div className="text-xs text-stone-600">{b.label}</div>
                 </div>
               </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* REVIEW QUOTES STRIP */}
+      <section className="py-16 bg-white border-t border-b border-stone-100">
+        <div className="container-x">
+          <ScrollFade>
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
+              <div>
+                <div className="flex items-center gap-2 mb-2 flex-wrap">
+                  <span className="text-amber-400">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                  <span className="font-bold text-stone-900">5.0</span>
+                  <span className="text-stone-400 text-sm">&middot;</span>
+                  <span className="text-stone-500 text-sm">{lang !== "en" ? "99 recenzii Google" : "99 Google reviews"}</span>
+                  <span className="text-stone-400 text-sm">&middot;</span>
+                  <span className="font-semibold text-sky-700 text-sm">9.4 Booking.com</span>
+                </div>
+                <h2 className="font-display text-2xl sm:text-3xl text-stone-900">
+                  {lang !== "en" ? "Ce spun oaspeţii noştri." : "What our guests say."}
+                </h2>
+              </div>
+              <Link href="/recenzii" className="text-walnut-600 text-sm font-medium hover:text-walnut-800 transition-colors whitespace-nowrap">
+                {lang !== "en" ? "Toate recenziile" : "All reviews"} →
+              </Link>
+            </div>
+          </ScrollFade>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { name: "Andrei & Raluca", loc: "Bucureşti", platform: "Booking", qRo: "Preţul direct a fost cu 20% mai mic faţă de Booking. Apartament privat, pat Emperor de 2m×2m, şi Anca ne-a recomandat restaurante pe care nu le-am fi găsit singuri.", qEn: "The direct price was 20% cheaper than Booking. Private apartment, 2m×2m Emperor bed, and Anca recommended restaurants we’d never have found alone." },
+              { name: "Daniela M.", loc: "Iaşi", platform: "Google", qRo: "Gazde minunate, comunicare rapidă pe WhatsApp, totul perfect pregătit. Apartamentul arată exact ca în poze, poate chiar mai frumos.", qEn: "Wonderful hosts, quick WhatsApp responses, everything perfectly prepared. The apartment looks exactly like the photos, maybe even more beautiful." },
+              { name: "Alexandru V.", loc: "Suceava", platform: "Google", qRo: "Am venit cu câinele (animale acceptate, fără taxă suplimentară!) şi am avut o experienţă perfectă. Vasi a dat sfaturi excelente pentru trasee.", qEn: "Came with my dog (pets accepted, no extra charge!) and had a perfect experience. Vasi gave excellent tips for local trails." },
+              { name: "Familia Rusu", loc: "Bacău", platform: "Google", qRo: "Locul perfect pentru o vacanţă de familie. 2 dormitoare, 67mp — tot al tău. Fără recepţie, fără alţi turişti pe hol. Copiii au adorat.", qEn: "Perfect for a family holiday. 2 bedrooms, 67sqm — all yours. No reception, no other tourists in the hallway. The kids loved it." },
+            ].map((q) => (
+              <ScrollFade key={q.name}>
+                <div className="bg-stone-50 border border-stone-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-amber-400 text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                    <span className="text-xs text-stone-400 bg-white px-1.5 py-0.5 rounded-full border border-stone-100">{q.platform}</span>
+                  </div>
+                  <blockquote className="text-stone-600 text-sm leading-relaxed flex-1 mb-4">&ldquo;{lang !== "en" ? q.qRo : q.qEn}&rdquo;</blockquote>
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-full bg-walnut-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">{q.name[0]}</div>
+                    <div>
+                      <div className="text-xs font-semibold text-stone-800">{q.name}</div>
+                      <div className="text-xs text-stone-400">{q.loc}</div>
+                    </div>
+                  </div>
+                </div>
+              </ScrollFade>
             ))}
           </div>
         </div>
