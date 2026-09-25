@@ -20,14 +20,14 @@ export default function Header() {
 
   const nav = [
     { href: "/apartments", label: t("nav.apartments") },
-    { href: "/vila-completa", label: "Toată Vila" },
-    { href: "/packages", label: "Pachete" },
-    { href: "/wellness", label: "Wellness" },
-    { href: "/ce-poti-face", label: "Ce poți face" },
+    { href: "/vila-completa", label: t("nav.allVilla") },
+    { href: "/packages", label: t("nav.packages") },
+    { href: "/wellness", label: t("nav.wellness") },
+    { href: "/ce-poti-face", label: t("nav.thingsToDo") },
     { href: "/zone-turistice", label: t("nav.attractions") },
-    { href: "/cum-ajungi", label: "Cum ajungi" },
+    { href: "/cum-ajungi", label: t("nav.directions") },
     { href: "/galerie", label: t("nav.gallery") },
-    { href: "/videouri", label: "Videouri" },
+    { href: "/videouri", label: t("nav.videos") },
     { href: "/recenzii", label: t("nav.reviews") },
     { href: "/blog", label: t("nav.blog") },
     { href: "/contact", label: t("nav.contact") }
@@ -37,13 +37,12 @@ export default function Header() {
 
   return (
     <>
-      {/* Contact bar — semi-transparent at top so the hero shows through, opaque on scroll */}
+      {/* Contact bar */}
       <div
         className={`fixed inset-x-0 top-0 z-[60] flex items-center justify-center xl:justify-end gap-3 xl:gap-6 backdrop-blur px-4 xl:px-8 py-1.5 text-xs text-cream-100/80 transition-colors duration-500 ${
           dark ? "bg-forest-900/95" : "bg-forest-900/30"
         }`}
       >
-        {/* Primary always visible */}
         <a
           href="tel:+40752388388"
           className="flex items-center gap-1.5 hover:text-cream-50 transition"
@@ -61,7 +60,6 @@ export default function Header() {
           WhatsApp
         </a>
 
-        {/* Secondary + email — desktop only */}
         <span className="hidden xl:block text-cream-100/40">|</span>
         <a
           href="tel:+40738345330"
@@ -87,7 +85,6 @@ export default function Header() {
         </a>
       </div>
 
-      {/* FIX 4: top-[28px] on mobile (contact bar height), lg:top-[30px] on desktop */}
       <header
         className={`fixed inset-x-0 z-50 transition-all duration-500 ${
           dark
@@ -114,7 +111,6 @@ export default function Header() {
               >
                 Vaias Aparts
               </span>
-              {/* Tagline hidden at xl (1280-1535px) so nav fits, shown again at 2xl */}
               <span
                 className={`hidden 2xl:block text-[10px] uppercase tracking-[0.32em] transition-colors ${
                   dark ? "text-walnut-500" : "text-cream-100/80"
@@ -152,7 +148,6 @@ export default function Header() {
               >
                 {t("nav.bookNow")}
               </a>
-              {/* Badge hidden at xl, shown at 2xl */}
               <span className="hidden 2xl:inline-block absolute -top-2 -right-2 rounded-full bg-walnut-500 px-1.5 py-0.5 text-[9px] uppercase tracking-wide text-cream-50 font-medium whitespace-nowrap">
                 Cel mai mic preț
               </span>
@@ -192,14 +187,12 @@ export default function Header() {
         {open && (
           <div className="xl:hidden border-t border-walnut-200/40 bg-cream-50/95 backdrop-blur-md">
             <div className="container-x py-4 flex flex-col gap-1">
-              {/* Primary: +40 752 388 388 (Vasi) */}
               <a href="tel:+40752388388" className="flex items-center gap-2 py-2 px-2 text-sm text-forest-700 font-medium">
                 <PhoneIcon /> +40 752 388 388
               </a>
               <a href="https://wa.me/40752388388" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 py-2 px-2 text-sm text-green-700 font-medium">
                 <WhatsAppIcon /> WhatsApp (+40 752 388 388)
               </a>
-              {/* Secondary: +40 738 345 330 (Anca) */}
               <a href="tel:+40738345330" className="flex items-center gap-2 py-2 px-2 text-sm text-forest-700 font-medium">
                 <PhoneIcon /> +40 738 345 330
               </a>
