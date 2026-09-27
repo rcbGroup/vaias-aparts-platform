@@ -38,7 +38,7 @@ export async function GET(_req: NextRequest, { params }: { params: { slug: strin
     lines.push(`DTSTAMP:${formatICalDate(now)}`);
     lines.push(`DTSTART;VALUE=DATE:${booking.checkIn.toISOString().split("T")[0].replace(/-/g, "")}`);
     lines.push(`DTEND;VALUE=DATE:${booking.checkOut.toISOString().split("T")[0].replace(/-/g, "")}`);
-    lines.push(`SUMMARY:Rezervat — ${booking.guestName}`);
+    lines.push(`SUMMARY:Rezervat`);
     lines.push("STATUS:CONFIRMED");
     lines.push("END:VEVENT");
   }

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+const esc = (v: unknown): string => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string));
+
 /**
  * Central enquiry logger. Captures every enquiry (form, gallery, whatsapp click
  * context) so nothing is lost before the CRM is wired up. Persists a Lead row,
@@ -50,12 +52,12 @@ export async function POST(req: NextRequest) {
     if (apiKey) {
       const html = `
         <h2>Cerere nouă — Vaias Aparts</h2>
-        <p><strong>Sursă:</strong> ${source}</p>
-        ${apartment ? `<p><strong>Apartament:</strong> ${apartment}</p>` : ""}
-        <p><strong>Nume:</strong> ${name || "—"}</p>
-        ${phone ? `<p><strong>Telefon:</strong> <a href="tel:${phone}">${phone}</a></p>` : ""}
-        ${email ? `<p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>` : ""}
-        ${message ? `<p><strong>Mesaj:</strong><br>${message.replace(/\n/g, "<br>")}</p>` : ""}
+        <p><strong>Sursă:</strong> ${esc(source)}</p>
+        ${apartment ? `<p><strong>Apartament:</strong> ${esc(apartment)}</p>` : ""}
+        <p><strong>Nume:</strong> ${esc(name || "—")}</p>
+        ${phone ? `<p><strong>Telefon:</strong> <a href="tel:${esc(phone)}">${esc(phone)}</a></p>` : ""}
+        ${email ? `<p><strong>Email:</strong> <a href="mailto:${esc(email)}">${esc(email)}</a></p>` : ""}
+        ${message ? `<p><strong>Mesaj:</strong><br>${esc(message).replace(/\n/g, "<br>")}</p>` : ""}
         <p style="color:#888;font-size:12px">${createdAt}</p>
       `;
       await fetch("https://api.resend.com/emails", {

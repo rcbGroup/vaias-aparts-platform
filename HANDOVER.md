@@ -21,7 +21,7 @@
 | Field | Value |
 |-------|-------|
 | Email | vaiasaparts@gmail.com |
-| Password | VaiasAdmin2026! |
+| Password | CHANGE_ME_STRONG_PASSWORD |
 | Admin URL | /admin |
 
 ---
@@ -151,7 +151,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_live_..."
 
 # Admin
 ADMIN_EMAIL="vaiasaparts@gmail.com"
-ADMIN_PASSWORD="VaiasAdmin2026!"
+ADMIN_PASSWORD="CHANGE_ME_STRONG_PASSWORD"
 ADMIN_SESSION_SECRET="[generate: openssl rand -base64 32]"
 
 # Property constants

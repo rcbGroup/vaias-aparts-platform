@@ -86,7 +86,7 @@ ${APARTMENT_DETAILS}
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const messages: Message[] = body.messages ?? [];
+    const messages: Message[] = (Array.isArray(body.messages) ? body.messages : []).slice(-20);
     const language: string = body.language ?? "ro";
 
     if (!Array.isArray(messages) || messages.length === 0) {
@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
 
     // Validate each message shape
     for (const m of messages) {
-      if (!m.role || !m.content || typeof m.content !== "string") {
+      if (!m.role || !m.content || typeof m.content !== "string" || m.content.length > 2000 || !["user", "assistant"].includes(m.role)) {
         return NextResponse.json({ error: "Invalid message shape" }, { status: 400 });
       }
       if (m.role !== "user" && m.role !== "assistant") {

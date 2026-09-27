@@ -1,3 +1,5 @@
+
+const esc = (v: unknown): string => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string));
 const OWNER_WHATSAPP = process.env.OWNER_WHATSAPP || "+40738345330";
 const OWNER_EMAIL = process.env.OWNER_EMAIL || "contact@VaiasAparts.ro";
 
@@ -69,16 +71,16 @@ export async function sendOwnerEmail(data: BookingNotification): Promise<boolean
     <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
       <h2 style="color:#1a2820">🏨 Cerere rezervare nouă — Vaias Aparts</h2>
       <table style="width:100%;border-collapse:collapse">
-        <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Oaspete</td><td style="padding:8px;border-bottom:1px solid #eee">${data.guestName}</td></tr>
-        <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Telefon</td><td style="padding:8px;border-bottom:1px solid #eee"><a href="tel:${data.guestPhone}">${data.guestPhone}</a></td></tr>
-        ${data.guestEmail ? `<tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Email</td><td style="padding:8px;border-bottom:1px solid #eee"><a href="mailto:${data.guestEmail}">${data.guestEmail}</a></td></tr>` : ""}
-        <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Apartament</td><td style="padding:8px;border-bottom:1px solid #eee">${data.apartment}</td></tr>
-        <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Check-in</td><td style="padding:8px;border-bottom:1px solid #eee">${data.checkIn}</td></tr>
-        <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Check-out</td><td style="padding:8px;border-bottom:1px solid #eee">${data.checkOut}</td></tr>
-        <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Nopți</td><td style="padding:8px;border-bottom:1px solid #eee">${data.nights}</td></tr>
-        <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Oaspeți</td><td style="padding:8px;border-bottom:1px solid #eee">${data.guests}</td></tr>
-        <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Total estimativ</td><td style="padding:8px;border-bottom:1px solid #eee;font-size:1.2em;color:#8c5832">€${data.totalEUR}</td></tr>
-        ${data.specialRequests ? `<tr><td style="padding:8px;font-weight:bold">Cerințe speciale</td><td style="padding:8px">${data.specialRequests}</td></tr>` : ""}
+        <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Oaspete</td><td style="padding:8px;border-bottom:1px solid #eee">${esc(data.guestName)}</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Telefon</td><td style="padding:8px;border-bottom:1px solid #eee"><a href="tel:${esc(data.guestPhone)}">${esc(data.guestPhone)}</a></td></tr>
+        ${data.guestEmail ? `<tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Email</td><td style="padding:8px;border-bottom:1px solid #eee"><a href="mailto:${esc(data.guestEmail)}">${esc(data.guestEmail)}</a></td></tr>` : ""}
+        <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Apartament</td><td style="padding:8px;border-bottom:1px solid #eee">${esc(data.apartment)}</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Check-in</td><td style="padding:8px;border-bottom:1px solid #eee">${esc(data.checkIn)}</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Check-out</td><td style="padding:8px;border-bottom:1px solid #eee">${esc(data.checkOut)}</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Nopți</td><td style="padding:8px;border-bottom:1px solid #eee">${esc(data.nights)}</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Oaspeți</td><td style="padding:8px;border-bottom:1px solid #eee">${esc(data.guests)}</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">Total estimativ</td><td style="padding:8px;border-bottom:1px solid #eee;font-size:1.2em;color:#8c5832">€${esc(data.totalEUR)}</td></tr>
+        ${data.specialRequests ? `<tr><td style="padding:8px;font-weight:bold">Cerințe speciale</td><td style="padding:8px">${esc(data.specialRequests)}</td></tr>` : ""}
       </table>
       <div style="margin-top:24px;padding:16px;background:#f5f3ee;border-radius:8px">
         <a href="https://wa.me/${data.guestPhone?.replace(/[^0-9]/g, "")}" style="background:#25D366;color:white;padding:10px 20px;border-radius:20px;text-decoration:none;font-weight:bold">
@@ -99,7 +101,7 @@ export async function sendOwnerEmail(data: BookingNotification): Promise<boolean
       body: JSON.stringify({
         from: "Vaias Aparts <noreply@vaiasaparts.ro>",
         to: [OWNER_EMAIL],
-        subject: `🏨 Rezervare nouă: ${data.guestName} — ${data.apartment} (${data.checkIn})`,
+        subject: `🏨 Rezervare nouă: ${esc(data.guestName)} — ${esc(data.apartment)} (${esc(data.checkIn)})`,
         html
       })
     });
@@ -124,17 +126,17 @@ export async function sendGuestConfirmationEmail(
       </div>
       <div style="background:#fdfcf7;padding:32px;border:1px solid #e8e3d8;border-top:0;border-radius:0 0 12px 12px">
         <h2 style="color:#1a2820">Cererea dvs. a fost primită!</h2>
-        <p style="color:#555">Dragă ${data.guestName},</p>
+        <p style="color:#555">Dragă ${esc(data.guestName)},</p>
         <p style="color:#555">Vă mulțumim pentru cererea de rezervare. O vom verifica și vă vom contacta în maxim 4 ore pentru confirmare.</p>
 
         <div style="background:#f5f3ee;padding:20px;border-radius:8px;margin:20px 0">
           <h3 style="margin:0 0 12px;color:#1a2820">Detalii rezervare</h3>
-          <p style="margin:4px 0"><strong>Apartament:</strong> ${data.apartment}</p>
-          <p style="margin:4px 0"><strong>Check-in:</strong> ${data.checkIn} (după ora 14:00)</p>
-          <p style="margin:4px 0"><strong>Check-out:</strong> ${data.checkOut} (până la ora 11:00)</p>
-          <p style="margin:4px 0"><strong>Nopți:</strong> ${data.nights}</p>
-          <p style="margin:4px 0"><strong>Oaspeți:</strong> ${data.guests}</p>
-          <p style="margin:8px 0 0;font-size:1.1em"><strong>Total estimativ: €${data.totalEUR}</strong></p>
+          <p style="margin:4px 0"><strong>Apartament:</strong> ${esc(data.apartment)}</p>
+          <p style="margin:4px 0"><strong>Check-in:</strong> ${esc(data.checkIn)} (după ora 14:00)</p>
+          <p style="margin:4px 0"><strong>Check-out:</strong> ${esc(data.checkOut)} (până la ora 11:00)</p>
+          <p style="margin:4px 0"><strong>Nopți:</strong> ${esc(data.nights)}</p>
+          <p style="margin:4px 0"><strong>Oaspeți:</strong> ${esc(data.guests)}</p>
+          <p style="margin:8px 0 0;font-size:1.1em"><strong>Total estimativ: €${esc(data.totalEUR)}</strong></p>
         </div>
 
         <p style="color:#555">Dacă aveți întrebări, ne puteți contacta oricând:</p>
@@ -156,7 +158,7 @@ export async function sendGuestConfirmationEmail(
       body: JSON.stringify({
         from: "Vaias Aparts <contact@vaiasaparts.ro>",
         to: [guestEmail],
-        subject: `Cerere de rezervare primită — ${data.apartment}`,
+        subject: `Cerere de rezervare primită — ${esc(data.apartment)}`,
         html
       })
     });

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+const esc = (v: unknown): string => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string));
+
 export async function POST(req: NextRequest) {
   try {
     const { name, email, phone, subject, message } = await req.json();
@@ -21,12 +23,12 @@ export async function POST(req: NextRequest) {
     if (apiKey) {
       const html = `
         <h2>Mesaj nou de contact — Vaias Aparts</h2>
-        <p><strong>Nume:</strong> ${name}</p>
-        ${email ? `<p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>` : ""}
-        ${phone ? `<p><strong>Telefon:</strong> <a href="tel:${phone}">${phone}</a></p>` : ""}
-        ${subject ? `<p><strong>Subiect:</strong> ${subject}</p>` : ""}
+        <p><strong>Nume:</strong> ${esc(name)}</p>
+        ${email ? `<p><strong>Email:</strong> <a href="mailto:${esc(email)}">${esc(email)}</a></p>` : ""}
+        ${phone ? `<p><strong>Telefon:</strong> <a href="tel:${esc(phone)}">${esc(phone)}</a></p>` : ""}
+        ${subject ? `<p><strong>Subiect:</strong> ${esc(subject)}</p>` : ""}
         <p><strong>Mesaj:</strong></p>
-        <p>${message.replace(/\n/g, "<br>")}</p>
+        <p>${esc(message).replace(/\n/g, "<br>")}</p>
       `;
 
       await fetch("https://api.resend.com/emails", {

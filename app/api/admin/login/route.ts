@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyAdminCredentials } from "@/lib/auth";
+import { verifyAdminCredentials, loginBlocked, recordLoginFail } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
-  const { email, password } = await req.json();
+  const ip = (req.headers.get("x-forwarded-for") || "").split(",")[0].trim() || "unknown";
+  if (loginBlocked(ip)) {
+    return NextResponse.json({ error: "Prea multe încercări. Încercați din nou peste 15 minute." }, { status: 429 });
+  }
+  const { email, password } = await req.json().catch(() => ({ email: "", password: "" }));
 
   if (!verifyAdminCredentials(email, password)) {
+    recordLoginFail(ip);
     return NextResponse.json({ error: "Credențiale incorecte" }, { status: 401 });
   }
 

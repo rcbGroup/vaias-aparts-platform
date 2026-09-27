@@ -51,7 +51,8 @@ async function main() {
 
   // Seed admin user
   const adminEmail = process.env.ADMIN_EMAIL || "contact@vaiasaparts.ro";
-  const adminPassword = process.env.ADMIN_PASSWORD || "VaiasAdmin2026!";
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  if (!adminPassword) throw new Error("Set ADMIN_PASSWORD in the environment before seeding");
   const hashed = await bcrypt.hash(adminPassword, 12);
 
   await prisma.adminUser.upsert({

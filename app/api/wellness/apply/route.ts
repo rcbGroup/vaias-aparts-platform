@@ -61,7 +61,8 @@ export async function POST(req: NextRequest) {
       program: { slug: program.slug, nameRO: program.nameRO, priceRON: program.priceRON },
     });
   } catch (err: any) {
-    return NextResponse.json({ ok: false, error: err.message }, { status: 500 });
+    console.error("wellness/apply", err);
+    return NextResponse.json({ ok: false, error: "Server error" }, { status: 500 });
   }
 }
 

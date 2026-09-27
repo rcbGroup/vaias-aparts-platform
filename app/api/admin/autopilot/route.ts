@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { AGENT_REGISTRY, getAgentByNumericId } from "@/lib/agents/registry";
+import { getAdminSession } from "@/lib/auth";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -19,6 +20,7 @@ function isValidAgentId(id: unknown): id is number {
 // POST handler
 // ---------------------------------------------------------------------------
 export async function POST(req: NextRequest) {
+  if (!getAdminSession(req)) return NextResponse.json({ error: "Neautorizat" }, { status: 401 });
   try {
     const body = (await req.json()) as Partial<AutopilotRequest>;
 
