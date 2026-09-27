@@ -68,3 +68,6 @@ export function useLang(): Ctx {
   }
   return c;
 }
+
+// Alias used by app/page.tsx and app/recenzii/page.tsx (build fix 27-09-2026)
+export const useLanguage = useLang;
