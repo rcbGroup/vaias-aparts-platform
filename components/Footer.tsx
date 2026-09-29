@@ -19,7 +19,7 @@ export default function Footer() {
               <div>
                 <div className="font-display text-2xl text-cream-50">Vila Vaias Aparts</div>
                 <div className="text-[10px] uppercase tracking-[0.32em] text-cream-200/70">
-                  Boutique Â· TÃ¢rgu NeamÈ
+                  Boutique · Târgu Neamț
                 </div>
               </div>
             </div>
@@ -96,20 +96,20 @@ export default function Footer() {
             <ul className="space-y-3 text-cream-100/80">
               <li>
                 <span className="block text-cream-200/60 text-xs uppercase tracking-wider">Vila Vaias Aparts</span>
-                Str. SfÃ¢ntul LazÄr nr. 1<br />
-                TÃ¢rgu NeamÈ, jud. NeamÈ<br />
-                RomÃ¢nia, 615200
+                Str. Sfântul Lazăr nr. 1<br />
+                Târgu Neamț, jud. Neamț<br />
+                România, 615200
               </li>
               <li>
                 <span className="block text-cream-200/60 text-xs uppercase tracking-wider mt-2">{t("footer.phone")}</span>
                 <div className="flex items-center gap-2">
                   <span>+40 752 388 388</span>
-                  <a href="tel:+40752388388" aria-label="SunÄ +40 752 388 388" className="hover:text-cream-50 transition" title="SunÄ">ð</a>
+                  <a href="tel:+40752388388" aria-label="Sună +40 752 388 388" className="hover:text-cream-50 transition" title="Sună">ð</a>
                   <a href="https://wa.me/40752388388" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp +40 752 388 388" className="hover:text-green-400 transition" title="WhatsApp">ð¬</a>
                 </div>
                 <div className="flex items-center gap-2 mt-1">
                   <span>+40 738 345 330</span>
-                  <a href="tel:+40738345330" aria-label="SunÄ +40 738 345 330" className="hover:text-cream-50 transition" title="SunÄ">ð</a>
+                  <a href="tel:+40738345330" aria-label="Sună +40 738 345 330" className="hover:text-cream-50 transition" title="Sună">ð</a>
                   <a href="https://wa.me/40738345330" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp +40 738 345 330" className="hover:text-green-400 transition" title="WhatsApp">ð¬</a>
                 </div>
               </li>
@@ -124,7 +124,7 @@ export default function Footer() {
           <div className="lg:col-span-3">
             <div className="text-xs uppercase tracking-[0.32em] text-walnut-300 mb-4">{t("footer.bookDirect")}</div>
             <p className="text-cream-100/70 text-sm leading-relaxed mb-4">
-              RezervÃ¢nd direct, beneficiezi de cel mai bun preÈ disponibil â fÄrÄ comisionul platformelor OTA.
+              Rezervând direct, beneficiezi de cel mai bun preț disponibil â fără comisionul platformelor OTA.
             </p>
             <a
               href="https://www.5stardesk.net/b/vaias-aparts"
@@ -135,7 +135,7 @@ export default function Footer() {
               {t("footer.checkAvail")}
             </a>
             <div className="mt-6 pt-6 border-t border-forest-900/60">
-              <div className="text-xs uppercase tracking-[0.28em] text-walnut-300 mb-3">GÄseÈte-ne online</div>
+              <div className="text-xs uppercase tracking-[0.28em] text-walnut-300 mb-3">Găsește-ne online</div>
               <div className="flex flex-wrap gap-2">
                 <a href="https://www.booking.com/hotel/ro/vaias-aparts-targu-neamt.html" target="_blank" rel="noopener noreferrer" className="text-xs text-cream-100/60 hover:text-cream-50 border border-forest-800 rounded px-2 py-1 transition">Booking.com</a>
                 <a href="http://www.airbnb.com/p/vaiasaparts" target="_blank" rel="noopener noreferrer" className="text-xs text-cream-100/60 hover:text-cream-50 border border-forest-800 rounded px-2 py-1 transition">Airbnb</a>
@@ -151,7 +151,7 @@ export default function Footer() {
 
         <div className="mt-16 pt-8 border-t border-forest-900 flex flex-col gap-4 md:flex-row md:items-center md:justify-between text-xs text-cream-100/60">
           <div>
-            Â© {new Date().getFullYear()} Vila Vaias Aparts Â· Vaia Rustic SRL Â· CUI 36258605 Â· J27/603/2016 Â· Clasificare: 4 stele Â· Certificat nr. 35332/20.07.2023 Â· {t("footer.rights")}
+            © {new Date().getFullYear()} Vila Vaias Aparts · Vaia Rustic SRL · CUI 36258605 · J27/603/2016 · Clasificare: 4 stele · Certificat nr. 35332/20.07.2023 · {t("footer.rights")}
           </div>
           <div className="flex gap-6">
             <Link href="/politica-confidentialitate" className="hover:text-cream-50">{t("footer.privacy")}</Link>
