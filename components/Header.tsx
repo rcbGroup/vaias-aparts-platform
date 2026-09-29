@@ -116,7 +116,7 @@ export default function Header() {
                   dark ? "text-walnut-500" : "text-cream-100/80"
                 }`}
               >
-                Boutique Â· TÃ¢rgu NeamÈ
+                Boutique · Târgu Neamț
               </span>
             </div>
           </Link>
