@@ -33,7 +33,6 @@ export default function LanguageSwitcher({ tone = "dark" }: { tone?: "dark" | "l
         aria-expanded={open}
         className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-medium uppercase tracking-[0.18em] transition ${triggerCls}`}
       >
-        <span aria-hidden className="text-base leading-none">{current.flag}</span>
         <span>{current.label}</span>
         <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6">
           <path d="M3 4.5l3 3 3-3" strokeLinecap="round" strokeLinejoin="round" />
@@ -60,7 +59,6 @@ export default function LanguageSwitcher({ tone = "dark" }: { tone?: "dark" | "l
                     : "text-forest-800 hover:bg-stone-100"
                 }`}
               >
-                <span aria-hidden className="text-base">{l.flag}</span>
                 <span className="font-medium">{l.label}</span>
               </button>
             </li>
