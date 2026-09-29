@@ -168,7 +168,7 @@ export default function HeroSlideshow() {
         <div className="container-x">
           <div className="max-w-3xl text-cream-50 animate-slide-up pointer-events-auto">
             <div className="eyebrow-light mb-6">{t("hero.eyebrow")}</div>
-            <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[88px] leading-[0.98] tracking-tight text-cream-50 text-balance">
+            <h1 className="font-display text-3xl sm:text-4xl md:text-[48px] lg:text-[56px] leading-[1.08] tracking-tight text-cream-50 text-balance">
               {t("hero.title1")}
               <br className="hidden md:block" /> {t("hero.title2")}
             </h1>
