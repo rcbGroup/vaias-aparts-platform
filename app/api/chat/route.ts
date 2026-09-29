@@ -117,44 +117,44 @@ function ruleBasedResponse(messages: Message[], language: string): Response {
   const bookingKw = ["rezerv", "booking", "book", "reserv", "réserv", "buchung", "prenotaz", "disponibil", "available", "liber", "free", "price", "preț", "cost", "tarif", "pret"];
   if (bookingKw.some((k) => text.includes(k))) {
     const reply = isRo
-      ? "Pentru rezervări și prețuri actuale vă rugăm să ne contactați direct:
+      ? `Pentru rezervări și prețuri actuale vă rugăm să ne contactați direct:
 
 📞 +40 752 388 388 sau +40 738 345 330
 💬 WhatsApp: https://wa.me/40752388388
 🌐 Rezervare online: https://vaiasaparts.ro/rezervare
 
-Răspundem rapid și vă oferim cel mai mic preț garantat! 🏡"
+Răspundem rapid și vă oferim cel mai mic preț garantat! 🏡`
       : isFr
-      ? "Pour les réservations et les tarifs actuels, veuillez nous contacter directement:
+      ? `Pour les réservations et les tarifs actuels, veuillez nous contacter directement:
 
 📞 +40 752 388 388 ou +40 738 345 330
 💬 WhatsApp: https://wa.me/40752388388
-🌐 Réservation en ligne: https://vaiasaparts.ro/rezervare"
+🌐 Réservation en ligne: https://vaiasaparts.ro/rezervare`
       : isDe
-      ? "Für Buchungen und aktuelle Preise kontaktieren Sie uns bitte direkt:
+      ? `Für Buchungen und aktuelle Preise kontaktieren Sie uns bitte direkt:
 
 📞 +40 752 388 388 oder +40 738 345 330
 💬 WhatsApp: https://wa.me/40752388388
-🌐 Online-Buchung: https://vaiasaparts.ro/rezervare"
+🌐 Online-Buchung: https://vaiasaparts.ro/rezervare`
       : isIt
-      ? "Per prenotazioni e prezzi attuali, contattateci direttamente:
+      ? `Per prenotazioni e prezzi attuali, contattateci direttamente:
 
 📞 +40 752 388 388 o +40 738 345 330
 💬 WhatsApp: https://wa.me/40752388388
-🌐 Prenotazione online: https://vaiasaparts.ro/rezervare"
+🌐 Prenotazione online: https://vaiasaparts.ro/rezervare`
       : isEs
-      ? "Para reservas y precios actuales, contáctenos directamente:
+      ? `Para reservas y precios actuales, contáctenos directamente:
 
 📞 +40 752 388 388 o +40 738 345 330
 💬 WhatsApp: https://wa.me/40752388388
-🌐 Reserva online: https://vaiasaparts.ro/rezervare"
-      : "For bookings and current prices, please contact us directly:
+🌐 Reserva online: https://vaiasaparts.ro/rezervare`
+      : `For bookings and current prices, please contact us directly:
 
 📞 +40 752 388 388 or +40 738 345 330
 💬 WhatsApp: https://wa.me/40752388388
 🌐 Book online: https://vaiasaparts.ro/rezervare
 
-We reply fast and guarantee the lowest price! 🏡";
+We reply fast and guarantee the lowest price! 🏡`;
     return buildSSEResponse(reply);
   }
 
@@ -162,22 +162,22 @@ We reply fast and guarantee the lowest price! 🏡";
   const aptKw = ["apartament", "apartment", "cameră", "camera", "room", "chambre", "zimmer", "stanza", "habitacion", "dormitor", "bedroom", "pat", "bed", "persoane", "guests", "capacitate", "capacity"];
   if (aptKw.some((k) => text.includes(k))) {
     const reply = isRo
-      ? "Vila Vaias Aparts are 7 apartamente boutique (nu există apartament 8) în Târgu Neamț:
+      ? `Vila Vaias Aparts are 7 apartamente boutique (nu există apartament 8) în Târgu Neamț:
 
 • Apartamentele 1–6: bucătărie privată, terasă, pat Emperor 2m×2m
 • Apartament 7: frigider propriu, Bucătăria pentru Toți la parter
 • Capacitate: 22 persoane standard, până la 28 maxim
 • Aer condiționat: DOAR în Apt. 5 și 6
 
-Pentru detalii sau rezervare: +40 752 388 388 📞"
-      : "Vaias Aparts has 7 boutique apartments (there is NO apartment 8) in Târgu Neamț:
+Pentru detalii sau rezervare: +40 752 388 388 📞`
+      : `Vaias Aparts has 7 boutique apartments (there is NO apartment 8) in Târgu Neamț:
 
 • Apartments 1–6: private kitchen, terrace, Emperor bed 2m×2m
 • Apartment 7: own fridge, shared Kitchen for All on ground floor
 • Capacity: 22 guests standard, up to 28 maximum
 • Air conditioning: ONLY in Apt. 5 and 6
 
-For details or booking: +40 752 388 388 📞";
+For details or booking: +40 752 388 388 📞`;
     return buildSSEResponse(reply);
   }
 
@@ -185,55 +185,55 @@ For details or booking: +40 752 388 388 📞";
   const locKw = ["adresă", "adresa", "address", "location", "unde", "where", "cum ajung", "how to get", "directions", "harta", "map", "targu", "târgu", "neamț", "bacau", "iași"];
   if (locKw.some((k) => text.includes(k))) {
     const reply = isRo
-      ? "Ne găsiți la:
+      ? `Ne găsiți la:
 📍 Strada Sfântul Lazăr Nr. 1, Târgu Neamț, jud. Neamț, România, 615200
 
 Suntem ultracentral, la câteva minute de Cetatea Neamțului și mănăstirile Agapia și Văratec.
 
-Pentru indicații exacte: https://vaiasaparts.ro/cum-ajungi"
-      : "You can find us at:
+Pentru indicații exacte: https://vaiasaparts.ro/cum-ajungi`
+      : `You can find us at:
 📍 Strada Sfântul Lazăr Nr. 1, Târgu Neamț, Neamț County, Romania, 615200
 
 Centrally located, minutes from Neamț Fortress and Agapia & Văratec monasteries.
 
-For directions: https://vaiasaparts.ro/cum-ajungi";
+For directions: https://vaiasaparts.ro/cum-ajungi`;
     return buildSSEResponse(reply);
   }
 
   // Default fallback
   const reply = isRo
-    ? "Mulțumim pentru mesaj! 😊 Echipa Vaias Aparts vă stă la dispoziție:
+    ? `Mulțumim pentru mesaj! 😊 Echipa Vaias Aparts vă stă la dispoziție:
 
 📞 +40 752 388 388 (disponibil și pe WhatsApp)
 📧 contact@VaiasAparts.ro
 🌐 https://vaiasaparts.ro
 
-Vă răspundem în cel mai scurt timp!"
+Vă răspundem în cel mai scurt timp!`
     : isFr
-    ? "Merci pour votre message! 😊 L'équipe Vaias Aparts est à votre disposition:
+    ? `Merci pour votre message! 😊 L'équipe Vaias Aparts est à votre disposition:
 
 📞 +40 752 388 388 (aussi sur WhatsApp)
-📧 contact@VaiasAparts.ro"
+📧 contact@VaiasAparts.ro`
     : isDe
-    ? "Danke für Ihre Nachricht! 😊 Das Team von Vaias Aparts steht Ihnen zur Verfügung:
+    ? `Danke für Ihre Nachricht! 😊 Das Team von Vaias Aparts steht Ihnen zur Verfügung:
 
 📞 +40 752 388 388 (auch auf WhatsApp)
-📧 contact@VaiasAparts.ro"
+📧 contact@VaiasAparts.ro`
     : isIt
-    ? "Grazie per il vostro messaggio! 😊 Il team di Vaias Aparts è a vostra disposizione:
+    ? `Grazie per il vostro messaggio! 😊 Il team di Vaias Aparts è a vostra disposizione:
 
 📞 +40 752 388 388 (anche su WhatsApp)
-📧 contact@VaiasAparts.ro"
+📧 contact@VaiasAparts.ro`
     : isEs
-    ? "¡Gracias por su mensaje! 😊 El equipo de Vaias Aparts está a su disposición:
+    ? `¡Gracias por su mensaje! 😊 El equipo de Vaias Aparts está a su disposición:
 
 📞 +40 752 388 388 (también en WhatsApp)
-📧 contact@VaiasAparts.ro"
-    : "Thank you for your message! 😊 The Vaias Aparts team is here for you:
+📧 contact@VaiasAparts.ro`
+    : `Thank you for your message! 😊 The Vaias Aparts team is here for you:
 
 📞 +40 752 388 388 (also on WhatsApp)
 📧 contact@VaiasAparts.ro
-🌐 https://vaiasaparts.ro";
+🌐 https://vaiasaparts.ro`;
   return buildSSEResponse(reply);
 }
 
