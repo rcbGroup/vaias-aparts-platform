@@ -121,7 +121,7 @@ export default function Header() {
             </div>
           </Link>
 
-          <nav className="hidden xl:flex items-center gap-2 2xl:gap-5 flex-1 justify-center min-w-0">
+          <nav className="hidden lg:flex items-center gap-2 2xl:gap-5 flex-1 justify-center min-w-0">
             {nav.map((item) => (
               <Link
                 key={item.href}
@@ -137,7 +137,7 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="hidden xl:flex items-center gap-2 2xl:gap-3 shrink-0">
+          <div className="hidden lg:flex items-center gap-2 2xl:gap-3 shrink-0">
             <LanguageSwitcher tone={dark ? "dark" : "light"} />
             <div className="relative">
               <a
@@ -154,7 +154,7 @@ export default function Header() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 xl:hidden">
+          <div className="flex items-center gap-2 lg:hidden">
             <LanguageSwitcher tone={dark ? "dark" : "light"} />
             <button
               aria-label={t("nav.menu")}
@@ -185,7 +185,7 @@ export default function Header() {
         </div>
 
         {open && (
-          <div className="xl:hidden border-t border-walnut-200/40 bg-cream-50/95 backdrop-blur-md">
+          <div className="lg:hidden border-t border-walnut-200/40 bg-cream-50/95 backdrop-blur-md">
             <div className="container-x py-4 flex flex-col gap-1">
               <a href="tel:+40752388388" className="flex items-center gap-2 py-2 px-2 text-sm text-forest-700 font-medium">
                 <PhoneIcon /> +40 752 388 388
