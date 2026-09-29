@@ -87,7 +87,7 @@ export default function HomePage() {
       </section>
 
       {/* USP â entire apartment at room price */}
-      <UspBanner />
+      <UspBanner lang={lang} />
 
       {/* FEATURED APARTMENTS */}
       <section id="apartamente" className="section bg-stone-50 relative">
