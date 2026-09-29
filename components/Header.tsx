@@ -116,7 +116,7 @@ export default function Header() {
                   dark ? "text-walnut-500" : "text-cream-100/80"
                 }`}
               >
-                Boutique · Târgu Neamț
+                Boutique Â· TÃ¢rgu NeamÈ
               </span>
             </div>
           </Link>
@@ -149,7 +149,7 @@ export default function Header() {
                 {t("nav.bookNow")}
               </a>
               <span className="hidden 2xl:inline-block absolute -top-2 -right-2 rounded-full bg-walnut-500 px-1.5 py-0.5 text-[9px] uppercase tracking-wide text-cream-50 font-medium whitespace-nowrap">
-                Cel mai mic preț
+                {t("nav.lowestPrice")}
               </span>
             </div>
           </div>
