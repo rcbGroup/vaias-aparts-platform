@@ -12,7 +12,7 @@ export default function PageHero({
   image: string;
 }) {
   return (
-    <section className="relative h-[64vh] min-h-[520px] w-full overflow-hidden bg-forest-950">
+    <section className="relative h-[72vh] min-h-[660px] w-full overflow-hidden bg-forest-950 scroll-margin-top-[90px]">
       <Image
         src={image}
         alt=""
@@ -21,7 +21,7 @@ export default function PageHero({
         sizes="100vw"
         className="object-cover kenburns"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-forest-950/30 via-forest-950/40 to-forest-950/85" />
+      <div className="absolute inset-0 bg-gradient-to-b from-forest-950/50 via-forest-950/40 to-forest-950/85" />
       <div className="absolute inset-0 pattern-moldavian-dark opacity-30 mix-blend-overlay" />
       <div className="absolute inset-0 flex items-end pb-20">
         <div className="container-x text-cream-50 animate-slide-up">
