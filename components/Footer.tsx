@@ -19,7 +19,7 @@ export default function Footer() {
               <div>
                 <div className="font-display text-2xl text-cream-50">Vila Vaias Aparts</div>
                 <div className="text-[10px] uppercase tracking-[0.32em] text-cream-200/70">
-                  Boutique · Târgu Neamț
+                  Boutique Â· TÃ¢rgu NeamÈ
                 </div>
               </div>
             </div>
@@ -39,7 +39,7 @@ export default function Footer() {
                   <path d="M9 8h-3v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.378 14.192 5 15.115 5H18V0h-3.808C10.596 0 9 1.583 9 4.615V8z" />
                 </svg>
               </a>
-              {/* WhatsApp — primary number */}
+              {/* WhatsApp â primary number */}
               <a
                 href="https://wa.me/40752388388"
                 target="_blank"
@@ -71,22 +71,22 @@ export default function Footer() {
             <ul className="space-y-3">
               <li><Link href="/" className="text-cream-100/80 hover:text-cream-50 transition">{t("common.home")}</Link></li>
               <li><Link href="/apartments" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.apartments")}</Link></li>
-              <li><Link href="/vila-completa" className="text-cream-100/80 hover:text-cream-50 transition">Toată Vila — 18–28 persoane</Link></li>
-              <li><Link href="/ce-poti-face" className="text-cream-100/80 hover:text-cream-50 transition">Ce poți face</Link></li>
+              <li><Link href="/vila-completa" className="text-cream-100/80 hover:text-cream-50 transition">{t("footer.villaFull")}</Link></li>
+              <li><Link href="/ce-poti-face" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.thingsToDo")}</Link></li>
               <li><Link href="/zone-turistice" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.attractions")}</Link></li>
-              <li><Link href="/istoria-orasului" className="text-cream-100/80 hover:text-cream-50 transition">Istoria orașului</Link></li>
-              <li><Link href="/cum-ajungi" className="text-cream-100/80 hover:text-cream-50 transition">Cum ajungi · Aeroporturi</Link></li>
+              <li><Link href="/istoria-orasului" className="text-cream-100/80 hover:text-cream-50 transition">{t("footer.cityHistory")}</Link></li>
+              <li><Link href="/cum-ajungi" className="text-cream-100/80 hover:text-cream-50 transition">{t("footer.directionsAirports")}</Link></li>
               <li><Link href="/galerie" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.gallery")}</Link></li>
-              <li><Link href="/videouri" className="text-cream-100/80 hover:text-cream-50 transition">Videouri</Link></li>
+              <li><Link href="/videouri" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.videos")}</Link></li>
               <li><Link href="/recenzii" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.reviews")}</Link></li>
               <li><Link href="/despre-noi" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.about")}</Link></li>
               <li><Link href="/blog" className="text-cream-100/80 hover:text-cream-50 transition">Blog</Link></li>
-              <li><Link href="/experiente" className="text-cream-100/80 hover:text-cream-50 transition">Experiențe</Link></li>
-              <li><Link href="/packages" className="text-cream-100/80 hover:text-cream-50 transition">Pachete</Link></li>
-              <li><Link href="/wellness" className="text-cream-100/80 hover:text-cream-50 transition">Wellness</Link></li>
+              <li><Link href="/experiente" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.experiences")}</Link></li>
+              <li><Link href="/packages" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.packages")}</Link></li>
+              <li><Link href="/wellness" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.wellness")}</Link></li>
               <li><Link href="/refugiul-vaias" className="text-cream-100/80 hover:text-cream-50 transition">Refugiul Vaias</Link></li>
-              <li><Link href="/vouchere-vacanta" className="text-cream-100/80 hover:text-cream-50 transition">Vouchere vacanță</Link></li>
-              <li><Link href="/afiliati" className="text-cream-100/80 hover:text-cream-50 transition">Afiliere</Link></li>
+              <li><Link href="/vouchere-vacanta" className="text-cream-100/80 hover:text-cream-50 transition">{t("footer.vouchers")}</Link></li>
+              <li><Link href="/afiliati" className="text-cream-100/80 hover:text-cream-50 transition">{t("footer.affiliates")}</Link></li>
               <li><Link href="/rezervare" className="text-cream-100/80 hover:text-cream-50 transition">{t("nav.bookNow")}</Link></li>
             </ul>
           </div>
@@ -96,21 +96,21 @@ export default function Footer() {
             <ul className="space-y-3 text-cream-100/80">
               <li>
                 <span className="block text-cream-200/60 text-xs uppercase tracking-wider">Vila Vaias Aparts</span>
-                Str. Sfântul Lazăr nr. 1<br />
-                Târgu Neamț, jud. Neamț<br />
-                România, 615200
+                Str. SfÃ¢ntul LazÄr nr. 1<br />
+                TÃ¢rgu NeamÈ, jud. NeamÈ<br />
+                RomÃ¢nia, 615200
               </li>
               <li>
                 <span className="block text-cream-200/60 text-xs uppercase tracking-wider mt-2">{t("footer.phone")}</span>
                 <div className="flex items-center gap-2">
                   <span>+40 752 388 388</span>
-                  <a href="tel:+40752388388" aria-label="Sună +40 752 388 388" className="hover:text-cream-50 transition" title="Sună">📞</a>
-                  <a href="https://wa.me/40752388388" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp +40 752 388 388" className="hover:text-green-400 transition" title="WhatsApp">💬</a>
+                  <a href="tel:+40752388388" aria-label="SunÄ +40 752 388 388" className="hover:text-cream-50 transition" title="SunÄ">ð</a>
+                  <a href="https://wa.me/40752388388" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp +40 752 388 388" className="hover:text-green-400 transition" title="WhatsApp">ð¬</a>
                 </div>
                 <div className="flex items-center gap-2 mt-1">
                   <span>+40 738 345 330</span>
-                  <a href="tel:+40738345330" aria-label="Sună +40 738 345 330" className="hover:text-cream-50 transition" title="Sună">📞</a>
-                  <a href="https://wa.me/40738345330" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp +40 738 345 330" className="hover:text-green-400 transition" title="WhatsApp">💬</a>
+                  <a href="tel:+40738345330" aria-label="SunÄ +40 738 345 330" className="hover:text-cream-50 transition" title="SunÄ">ð</a>
+                  <a href="https://wa.me/40738345330" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp +40 738 345 330" className="hover:text-green-400 transition" title="WhatsApp">ð¬</a>
                 </div>
               </li>
               <li>
@@ -122,9 +122,9 @@ export default function Footer() {
           </div>
 
           <div className="lg:col-span-3">
-            <div className="text-xs uppercase tracking-[0.32em] text-walnut-300 mb-4">Rezervă direct</div>
+            <div className="text-xs uppercase tracking-[0.32em] text-walnut-300 mb-4">{t("footer.bookDirect")}</div>
             <p className="text-cream-100/70 text-sm leading-relaxed mb-4">
-              Rezervând direct, beneficiezi de cel mai bun preț disponibil — fără comisionul platformelor OTA.
+              RezervÃ¢nd direct, beneficiezi de cel mai bun preÈ disponibil â fÄrÄ comisionul platformelor OTA.
             </p>
             <a
               href="https://www.5stardesk.net/b/vaias-aparts"
@@ -132,10 +132,10 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-walnut-500 px-5 py-2.5 text-sm uppercase tracking-wider text-cream-50 hover:bg-walnut-600 transition w-fit"
             >
-              Verifică disponibilitate
+              {t("footer.checkAvail")}
             </a>
             <div className="mt-6 pt-6 border-t border-forest-900/60">
-              <div className="text-xs uppercase tracking-[0.28em] text-walnut-300 mb-3">Găsește-ne online</div>
+              <div className="text-xs uppercase tracking-[0.28em] text-walnut-300 mb-3">GÄseÈte-ne online</div>
               <div className="flex flex-wrap gap-2">
                 <a href="https://www.booking.com/hotel/ro/vaias-aparts-targu-neamt.html" target="_blank" rel="noopener noreferrer" className="text-xs text-cream-100/60 hover:text-cream-50 border border-forest-800 rounded px-2 py-1 transition">Booking.com</a>
                 <a href="http://www.airbnb.com/p/vaiasaparts" target="_blank" rel="noopener noreferrer" className="text-xs text-cream-100/60 hover:text-cream-50 border border-forest-800 rounded px-2 py-1 transition">Airbnb</a>
@@ -151,13 +151,13 @@ export default function Footer() {
 
         <div className="mt-16 pt-8 border-t border-forest-900 flex flex-col gap-4 md:flex-row md:items-center md:justify-between text-xs text-cream-100/60">
           <div>
-            © {new Date().getFullYear()} Vila Vaias Aparts · Vaia Rustic SRL · CUI 36258605 · J27/603/2016 · Clasificare: 4 stele · Certificat nr. 35332/20.07.2023 · {t("footer.rights")}
+            Â© {new Date().getFullYear()} Vila Vaias Aparts Â· Vaia Rustic SRL Â· CUI 36258605 Â· J27/603/2016 Â· Clasificare: 4 stele Â· Certificat nr. 35332/20.07.2023 Â· {t("footer.rights")}
           </div>
           <div className="flex gap-6">
             <Link href="/politica-confidentialitate" className="hover:text-cream-50">{t("footer.privacy")}</Link>
             <Link href="/termeni-conditii" className="hover:text-cream-50">{t("footer.terms")}</Link>
-            <Link href="/politica-cookies" className="hover:text-cream-50">Politică Cookies</Link>
-            <Link href="/credite-foto" className="hover:text-cream-50">Credite foto</Link>
+            <Link href="/politica-cookies" className="hover:text-cream-50">{t("footer.cookies")}</Link>
+            <Link href="/credite-foto" className="hover:text-cream-50">{t("footer.photoCredits")}</Link>
           </div>
         </div>
       </div>
