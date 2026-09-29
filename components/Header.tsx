@@ -37,51 +37,47 @@ export default function Header() {
 
   return (
     <>
-      {/* Contact bar */}
+      {/* Contact bar — symmetric pill buttons, both numbers always visible */}
       <div
-        className={`fixed inset-x-0 top-0 z-[60] flex items-center justify-center xl:justify-end gap-3 xl:gap-6 backdrop-blur px-4 xl:px-8 py-1.5 text-xs text-cream-100/80 transition-colors duration-500 ${
-          dark ? "bg-forest-900/95" : "bg-forest-900/30"
+        className={`fixed inset-x-0 top-0 z-[60] flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-1 backdrop-blur text-xs transition-colors duration-500 ${
+          dark ? "bg-forest-900/95" : "bg-forest-900/35"
         }`}
       >
+        {/* Primary — Vasi */}
         <a
           href="tel:+40752388388"
-          className="flex items-center gap-1.5 hover:text-cream-50 transition"
+          className="flex items-center gap-1 rounded-full border border-cream-100/25 px-2.5 py-0.5 text-cream-100/80 hover:text-cream-50 hover:border-cream-100/50 transition whitespace-nowrap"
         >
           <PhoneIcon />
-          +40 752 388 388
+          <span>+40 752 388 388</span>
         </a>
         <a
           href="https://wa.me/40752388388"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 hover:text-green-300 transition"
+          className="flex items-center gap-1 rounded-full border border-green-500/30 bg-green-950/20 px-2.5 py-0.5 text-green-400/80 hover:text-green-300 hover:bg-green-950/40 transition whitespace-nowrap"
         >
           <WhatsAppIcon />
-          WhatsApp
+          <span>WhatsApp</span>
         </a>
 
-        <span className="hidden xl:block text-cream-100/40">|</span>
+        {/* Secondary — Anca (hidden on very small screens) */}
+        <span className="hidden sm:block text-cream-100/25 text-[10px] mx-0.5">·</span>
         <a
           href="tel:+40738345330"
-          className="hidden xl:flex items-center gap-1.5 hover:text-cream-50 transition"
+          className="hidden sm:flex items-center gap-1 rounded-full border border-cream-100/25 px-2.5 py-0.5 text-cream-100/80 hover:text-cream-50 hover:border-cream-100/50 transition whitespace-nowrap"
         >
           <PhoneIcon />
-          +40 738 345 330
+          <span>+40 738 345 330</span>
         </a>
         <a
           href="https://wa.me/40738345330"
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden xl:flex items-center gap-1.5 hover:text-green-300 transition"
+          className="hidden sm:flex items-center gap-1 rounded-full border border-green-500/30 bg-green-950/20 px-2.5 py-0.5 text-green-400/80 hover:text-green-300 hover:bg-green-950/40 transition whitespace-nowrap"
         >
           <WhatsAppIcon />
-          WhatsApp
-        </a>
-        <a
-          href="mailto:contact@vaiasaparts.ro"
-          className="hidden xl:flex items-center gap-1.5 hover:text-cream-50 transition"
-        >
-          contact@vaiasaparts.ro
+          <span>WhatsApp</span>
         </a>
       </div>
 
