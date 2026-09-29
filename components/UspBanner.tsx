@@ -1,3 +1,4 @@
+// build-trigger: 2026-09-29T16:57:19Z
 type LangContent = {
   eyebrow: string;
   title: string;
