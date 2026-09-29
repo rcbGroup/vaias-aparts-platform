@@ -43,10 +43,10 @@ export default function HomePage() {
   const activeOffers = getActiveOffers().slice(0, 6);
 
   const whyItems = [
-    { icon: "ð", k: "1" },
-    { icon: "ð", k: "2" },
-    { icon: "â¨", k: "3" },
-    { icon: "ð¶", k: "4" }
+    { icon: "📍", k: "1" },
+    { icon: "🔑", k: "2" },
+    { icon: "✨", k: "3" },
+    { icon: "💶", k: "4" }
   ];
 
   const foodItems = ["1", "2", "3", "4"];
@@ -58,15 +58,15 @@ export default function HomePage() {
   ];
 
   const transportItems = [
-    { icon: "ð", k: "1" },
-    { icon: "ð", k: "2" },
-    { icon: "âï¸", k: "3" },
-    { icon: "ð", k: "4" }
+    { icon: "🚗", k: "1" },
+    { icon: "🚆", k: "2" },
+    { icon: "✈️", k: "3" },
+    { icon: "🚌", k: "4" }
   ];
 
   return (
     <>
-      {/* HERO â full viewport sliding photo gallery */}
+      {/* HERO — full viewport sliding photo gallery */}
       <HeroSlideshow />
 
       {/* INTRO STRIP */}
@@ -86,7 +86,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* USP â entire apartment at room price */}
+      {/* USP — entire apartment at room price */}
       <UspBanner lang={lang} />
 
       {/* FEATURED APARTMENTS */}
@@ -144,7 +144,7 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     className="btn-secondary text-sm text-center"
                   >
-                    ð¬ {offer.ctaTextRO}
+                    💬 {offer.ctaTextRO}
                   </a>
                 </div>
               </ScrollFade>
@@ -188,7 +188,7 @@ export default function HomePage() {
             <SectionHeader
               eyebrow="Vila Vaias Aparts este perfectă pentru"
               title="Cine sunt oaspeții noștri"
-              subtitle="Familii, cupluri, pelerini, diaspora, grupuri și călători de afaceri â fiecare găsește la noi confortul potrivit."
+              subtitle="Familii, cupluri, pelerini, diaspora, grupuri și călători de afaceri — fiecare găsește la noi confortul potrivit."
             />
           </ScrollFade>
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -204,7 +204,7 @@ export default function HomePage() {
                   <h3 className="font-display text-xl text-forest-900 mb-2 group-hover:text-walnut-700 transition">{avatar.titleRO}</h3>
                   <p className="text-sm text-stone-600 leading-relaxed mb-4">{avatar.descriptionRO}</p>
                   <span className="text-xs font-medium text-walnut-600 uppercase tracking-wider">
-                    {avatar.ctaTextRO} â
+                    {avatar.ctaTextRO} →
                   </span>
                 </a>
               </ScrollFade>
@@ -221,18 +221,18 @@ export default function HomePage() {
             <ScrollFade>
               <div className="eyebrow-light mb-6">Rezervare directă</div>
               <h2 className="font-display text-4xl md:text-5xl text-cream-50 mb-6">
-                Cel mai bun preț â direct la noi.
+                Cel mai bun preț — direct la noi.
               </h2>
               <p className="font-serif text-xl text-cream-100/80 leading-relaxed mb-8">
-                Rezervând direct pe WhatsApp sau telefon, eviți comisionul platformelor de rezervare (15â25%).
+                Rezervând direct pe WhatsApp sau telefon, eviți comisionul platformelor de rezervare (15–25%).
                 Comunicare directă cu familia care gestionează Vila Vaias Aparts, flexibilitate pentru cereri speciale
                 și confirmare rapidă.
               </p>
               <div className="grid sm:grid-cols-3 gap-6 mb-10 text-left">
                 {[
-                  { icon: "ð", title: "Cel mai bun preț direct", desc: "Fără comision OTA de 15â25%. Prețul pe care îl plătești vine în întregime la noi." },
-                  { icon: "â¡", title: "Confirmare rapidă", desc: "Răspundem în WhatsApp de regulă în câteva ore, între 08:00 și 22:00." },
-                  { icon: "ð¤", title: "Comunicare directă", desc: "Vorbești direct cu familia care gestionează vila â nu cu un call center." }
+                  { icon: "💚", title: "Cel mai bun preț direct", desc: "Fără comision OTA de 15–25%. Prețul pe care îl plătești vine în întregime la noi." },
+                  { icon: "⚡", title: "Confirmare rapidă", desc: "Răspundem în WhatsApp de regulă în câteva ore, între 08:00 și 22:00." },
+                  { icon: "🤝", title: "Comunicare directă", desc: "Vorbești direct cu familia care gestionează vila — nu cu un call center." }
                 ].map(item => (
                   <div key={item.title} className="rounded-xl border border-cream-50/10 bg-cream-50/5 p-5">
                     <div className="text-2xl mb-3" aria-hidden>{item.icon}</div>
@@ -248,10 +248,10 @@ export default function HomePage() {
                   rel="noopener noreferrer"
                   className="btn-primary"
                 >
-                  ð¬ Rezervă pe WhatsApp
+                  💬 Rezervă pe WhatsApp
                 </a>
                 <a href="tel:+40752388388" className="btn-outline-light">
-                  ð +40 752 388 388
+                  📞 +40 752 388 388
                 </a>
                 <a
                   href="https://www.5stardesk.net/b/vaias-aparts"
@@ -275,7 +275,7 @@ export default function HomePage() {
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-card">
               <Image
                 src="/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-2.jpg"
-                alt="Vila Vaias Aparts â curte și exterior"
+                alt="Vila Vaias Aparts — curte și exterior"
                 fill
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 className="object-cover"
@@ -321,7 +321,7 @@ export default function HomePage() {
             <SectionHeader
               eyebrow="Tur video"
               title="Vila Vaias Aparts în mișcare"
-              subtitle="Confort de hotel, libertatea de acasă, liniște și priveliști ca în Elveția â vezi vila și împrejurimile."
+              subtitle="Confort de hotel, libertatea de acasă, liniște și priveliști ca în Elveția — vezi vila și împrejurimile."
             />
           </ScrollFade>
           <ScrollFade delay={100}>
@@ -329,7 +329,7 @@ export default function HomePage() {
               <div className="relative aspect-video overflow-hidden rounded-2xl shadow-card bg-forest-950">
                 <iframe
                   src="https://www.youtube-nocookie.com/embed/KnEAUHQFEvY?rel=0"
-                  title="Vila Vaias Aparts â tur video"
+                  title="Vila Vaias Aparts — tur video"
                   className="absolute inset-0 h-full w-full border-0"
                   loading="lazy"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -343,7 +343,7 @@ export default function HomePage() {
                   rel="noopener noreferrer"
                   className="btn-secondary text-sm"
                 >
-                  â¶ï¸ Vezi toate filmările pe YouTube
+                  ▶️ Vezi toate filmările pe YouTube
                 </a>
               </div>
             </div>
@@ -411,16 +411,16 @@ export default function HomePage() {
                 </h2>
               </div>
               <Link href="/recenzii" className="text-walnut-600 text-sm font-medium hover:text-walnut-800 transition-colors whitespace-nowrap">
-                {lang !== "en" ? "Toate recenziile" : "All reviews"} â
+                {lang !== "en" ? "Toate recenziile" : "All reviews"} →
               </Link>
             </div>
           </ScrollFade>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { name: "Andrei & Raluca", loc: "Bucureşti", platform: "Booking", qRo: "Preţul direct a fost cu 20% mai mic faţă de Booking. Apartament privat, pat Emperor de 2m×2m, şi Anca ne-a recomandat restaurante pe care nu le-am fi găsit singuri.", qEn: "The direct price was 20% cheaper than Booking. Private apartment, 2m×2m Emperor bed, and Anca recommended restaurants weâd never have found alone." },
+              { name: "Andrei & Raluca", loc: "Bucureşti", platform: "Booking", qRo: "Preţul direct a fost cu 20% mai mic faţă de Booking. Apartament privat, pat Emperor de 2m×2m, şi Anca ne-a recomandat restaurante pe care nu le-am fi găsit singuri.", qEn: "The direct price was 20% cheaper than Booking. Private apartment, 2m×2m Emperor bed, and Anca recommended restaurants we’d never have found alone." },
               { name: "Daniela M.", loc: "Iaşi", platform: "Google", qRo: "Gazde minunate, comunicare rapidă pe WhatsApp, totul perfect pregătit. Apartamentul arată exact ca în poze, poate chiar mai frumos.", qEn: "Wonderful hosts, quick WhatsApp responses, everything perfectly prepared. The apartment looks exactly like the photos, maybe even more beautiful." },
               { name: "Alexandru V.", loc: "Suceava", platform: "Google", qRo: "Am venit cu câinele (animale acceptate, fără taxă suplimentară!) şi am avut o experienţă perfectă. Vasi a dat sfaturi excelente pentru trasee.", qEn: "Came with my dog (pets accepted, no extra charge!) and had a perfect experience. Vasi gave excellent tips for local trails." },
-              { name: "Familia Rusu", loc: "Bacău", platform: "Google", qRo: "Locul perfect pentru o vacanţă de familie. 2 dormitoare, 67mp â tot al tău. Fără recepţie, fără alţi turişti pe hol. Copiii au adorat.", qEn: "Perfect for a family holiday. 2 bedrooms, 67sqm â all yours. No reception, no other tourists in the hallway. The kids loved it." },
+              { name: "Familia Rusu", loc: "Bacău", platform: "Google", qRo: "Locul perfect pentru o vacanţă de familie. 2 dormitoare, 67mp — tot al tău. Fără recepţie, fără alţi turişti pe hol. Copiii au adorat.", qEn: "Perfect for a family holiday. 2 bedrooms, 67sqm — all yours. No reception, no other tourists in the hallway. The kids loved it." },
             ].map((q) => (
               <ScrollFade key={q.name}>
                 <div className="bg-stone-50 border border-stone-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
@@ -511,25 +511,25 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* STEPS AWAY â everything you need within walking distance */}
+      {/* STEPS AWAY — everything you need within walking distance */}
       <section className="section bg-cream-50">
         <div className="container-x">
           <ScrollFade>
             <SectionHeader
               eyebrow="Ultracentral · Târgu Neamț"
-              title="Tot ce ai nevoie â la câțiva pași"
-              subtitle="Piață, magazine, restaurante, muzee, centrul vechi și parcul â aproape totul e la o plimbare scurtă de poarta noastră."
+              title="Tot ce ai nevoie — la câțiva pași"
+              subtitle="Piață, magazine, restaurante, muzee, centrul vechi și parcul — aproape totul e la o plimbare scurtă de poarta noastră."
             />
           </ScrollFade>
           <div className="mt-14 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-4">
             {[
-              { icon: "ð§º", label: "Piața agroalimentară", time: "6 min pe jos" },
-              { icon: "ð", label: "Magazine (Lidl, Profi)", time: "5 min pe jos" },
-              { icon: "ð½ï¸", label: "Restaurante & cafenele", time: "4 min pe jos" },
-              { icon: "ðï¸", label: "Muzeul de istorie", time: "7 min pe jos" },
-              { icon: "ð°", label: "Cetatea Neamț", time: "10 min cu mașina" },
-              { icon: "ðï¸", label: "Centrul vechi", time: "5 min pe jos" },
-              { icon: "ð³", label: "Parcul central", time: "9 min pe jos" }
+              { icon: "🧺", label: "Piața agroalimentară", time: "6 min pe jos" },
+              { icon: "🛒", label: "Magazine (Lidl, Profi)", time: "5 min pe jos" },
+              { icon: "🍽️", label: "Restaurante & cafenele", time: "4 min pe jos" },
+              { icon: "🏛️", label: "Muzeul de istorie", time: "7 min pe jos" },
+              { icon: "🏰", label: "Cetatea Neamț", time: "10 min cu mașina" },
+              { icon: "🏘️", label: "Centrul vechi", time: "5 min pe jos" },
+              { icon: "🌳", label: "Parcul central", time: "9 min pe jos" }
             ].map((it, i) => (
               <ScrollFade key={it.label} delay={i * 60}>
                 <div className="card-lift h-full rounded-2xl bg-stone-50 border border-stone-100 p-5 text-center flex flex-col items-center">
@@ -542,7 +542,7 @@ export default function HomePage() {
           </div>
           <div className="mt-10 text-center">
             <Link href="/ce-poti-face" className="btn-secondary">
-              Vezi tot ce poți face â
+              Vezi tot ce poți face →
             </Link>
           </div>
         </div>
@@ -560,7 +560,7 @@ export default function HomePage() {
               </h2>
               <div className="divider-gold my-7" />
               <p className="font-serif text-lg text-cream-100/80 max-w-2xl mx-auto">
-                Vila, lacul secret și restaurantul â trei lumi care se completează perfect pentru un sejur cu suflet în Moldova.
+                Vila, lacul secret și restaurantul — trei lumi care se completează perfect pentru un sejur cu suflet în Moldova.
               </p>
             </div>
           </ScrollFade>
@@ -570,7 +570,7 @@ export default function HomePage() {
                 num: "01",
                 title: "Vila Vaias Aparts",
                 subtitle: "7 apartamente boutique",
-                desc: "Cea mai bine notată cazare din Târgu Neamț. 99 de recenzii Google la 5.0 stele. Booking.com 9.4. Fiecare apartament â un spațiu al tău.",
+                desc: "Cea mai bine notată cazare din Târgu Neamț. 99 de recenzii Google la 5.0 stele. Booking.com 9.4. Fiecare apartament — un spațiu al tău.",
                 cta: "Alege apartamentul",
                 href: "/apartments",
                 photo: "/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg"
@@ -579,7 +579,7 @@ export default function HomePage() {
                 num: "02",
                 title: "Lacul Privat Nemțișor",
                 subtitle: "Refugiul Secret al Oaspeților Vaias",
-                desc: "Un lac privat în sat Nemțișor, la 10 minute. Pescuit, grătar, natură în liniște deplină. Exclusiv pentru oaspeții noștri â la cerere.",
+                desc: "Un lac privat în sat Nemțișor, la 10 minute. Pescuit, grătar, natură în liniște deplină. Exclusiv pentru oaspeții noștri — la cerere.",
                 cta: "Descoperă lacul",
                 href: "/experiente",
                 photo: "/unsplash/experience-lake.jpg"
@@ -611,7 +611,7 @@ export default function HomePage() {
                     <h3 className="font-display text-2xl text-cream-50 mb-3">{p.title}</h3>
                     <p className="text-cream-100/75 text-sm leading-relaxed mb-6">{p.desc}</p>
                     <Link href={p.href} className="btn-outline-light text-sm py-2 px-5">
-                      {p.cta} â
+                      {p.cta} →
                     </Link>
                   </div>
                 </article>
@@ -701,7 +701,7 @@ export default function HomePage() {
               </h2>
               <div className="divider-gold my-7" />
               <p className="font-serif text-lg md:text-xl text-cream-100/85 leading-relaxed">
-                Suceava, Bacău și Iași â trei aeroporturi internaționale la mai puțin de 2 ore.
+                Suceava, Bacău și Iași — trei aeroporturi internaționale la mai puțin de 2 ore.
                 Vezi distanțele față de Vila Vaias Aparts și autostrada A7 pe hartă.
               </p>
             </div>
@@ -718,7 +718,7 @@ export default function HomePage() {
                 href="/cum-ajungi"
                 className="btn-primary bg-cream-50 text-forest-900 hover:bg-cream-100 hover:text-forest-900"
               >
-                Vezi toate aeroporturile â
+                Vezi toate aeroporturile →
               </Link>
             </div>
           </ScrollFade>
@@ -739,24 +739,24 @@ export default function HomePage() {
                   </span>
                 </div>
                 <h2 className="font-display text-4xl md:text-5xl text-cream-50 mb-5">
-                  Rezervă toată Vila Vaias â pentru 22 până la 28 de persoane.
+                  Rezervă toată Vila Vaias — pentru 22 până la 28 de persoane.
                 </h2>
                 <p className="font-serif text-lg text-cream-100/80 leading-relaxed mb-6">
                   Toate cele 7 apartamente, o singură rezervare. De la{" "}
-                  <strong className="text-cream-50">2.065 RON/noapte</strong> (luniâjoi) ·{" "}
+                  <strong className="text-cream-50">2.065 RON/noapte</strong> (luni–joi) ·{" "}
                   <strong className="text-cream-50">2.450 RON/noapte</strong> (weekend).
                   Perfect pentru nunți, petreceri, team building și reuniuni de familie.
                 </p>
                 <ul className="space-y-2 mb-8 text-sm text-cream-100/80">
-                  <li>â 7 apartamente independente · 22â28 persoane</li>
-                  <li>â Reducere progresivă: 5% la 2 nopți â 17.5% la 7+ nopți</li>
-                  <li>â Calculator preț pe site â vezi tariful tău imediat</li>
-                  <li>â Cel mai bun preț â direct la noi, fără markup OTA</li>
-                  <li>â Bucătăria pentru Toți + parcare gratuită CCTV 24/7</li>
+                  <li>✓ 7 apartamente independente · 22–28 persoane</li>
+                  <li>✓ Reducere progresivă: 5% la 2 nopți → 17.5% la 7+ nopți</li>
+                  <li>✓ Calculator preț pe site — vezi tariful tău imediat</li>
+                  <li>✓ Cel mai bun preț — direct la noi, fără markup OTA</li>
+                  <li>✓ Bucătăria pentru Toți + parcare gratuită CCTV 24/7</li>
                 </ul>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link href="/vila-completa" className="btn-primary">
-                    ð¡ Vezi pagina Vila Completă
+                    🏡 Vezi pagina Vila Completă
                   </Link>
                   <a
                     href="https://wa.me/40752388388?text=Bun%C4%83%20ziua!%20Suntem%20interesa%C8%9Bi%20s%C4%83%20rezerv%C4%83m%20%C3%AEntreaga%20vil%C4%83%20Vaias%20Aparts.%20Datele%3A%20%5BDATA%20CHECK-IN%5D%20%E2%80%93%20%5BDATA%20CHECK-OUT%5D.%20Total%20adul%C8%9Bi%3A%20%5BNR%5D.%20Total%20copii%3A%20%5BNR%5D.%20V%C4%83%20rog%20s%C4%83%20ne%20comunica%C8%9Bi%20disponibilitatea%20%C8%99i%20pre%C8%9Bul%20total."
@@ -764,7 +764,7 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     className="btn-outline-light"
                   >
-                    ð¬ WhatsApp
+                    💬 WhatsApp
                   </a>
                 </div>
               </ScrollFade>
@@ -773,26 +773,26 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CAZARE DESTINATIONS â internal linking for SEO */}
+      {/* CAZARE DESTINATIONS — internal linking for SEO */}
       <section className="section bg-stone-50">
         <div className="container-x">
           <ScrollFade>
             <SectionHeader
               eyebrow="Cazare în zona Neamț"
               title="Pentru ce ești la noi?"
-              subtitle="Alege motivul vizitei tale â îți pregătim o experiență potrivită."
+              subtitle="Alege motivul vizitei tale — îți pregătim o experiență potrivită."
             />
           </ScrollFade>
           <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {[
-              { href: "/cazare/cazare-cetatea-neamtului", title: "Cetatea Neamțului", text: "5 km · Cetatea lui Ștefan cel Mare", icon: "ð°" },
-              { href: "/cazare/cazare-manastirea-agapia", title: "Mănăstirea Agapia", text: "30 min · Picturile lui Grigorescu", icon: "âª" },
-              { href: "/cazare/cazare-manastirea-varatec", title: "Mănăstirea Văratec", text: "35 min · Cea mai mare mănăstire de maici", icon: "ðï¸" },
-              { href: "/cazare/cazare-manastirea-neamt", title: "Mănăstirea Neamț", text: "15 min · Ierusalimul ortodoxiei", icon: "ð" },
-              { href: "/cazare/cazare-ceahlau", title: "Masivul Ceahlău", text: "45 min · Muntele dacilor", icon: "â°ï¸" },
-              { href: "/cazare/cazare-grup-targu-neamt", title: "Grupuri · Vila întreagă", text: "22-28 persoane · Familie, parohie, corporate", icon: "ð¨âð©âð§âð¦" },
-              { href: "/cazare/cazare-diaspora-targu-neamt", title: "Diaspora", text: "Acasă în Moldova · Multilingv", icon: "ð" },
-              { href: "/cazare/cazare-targu-neamt", title: "Ghidul complet", text: "Toate motivele · Toate detaliile", icon: "ð" }
+              { href: "/cazare/cazare-cetatea-neamtului", title: "Cetatea Neamțului", text: "5 km · Cetatea lui Ștefan cel Mare", icon: "🏰" },
+              { href: "/cazare/cazare-manastirea-agapia", title: "Mănăstirea Agapia", text: "30 min · Picturile lui Grigorescu", icon: "⛪" },
+              { href: "/cazare/cazare-manastirea-varatec", title: "Mănăstirea Văratec", text: "35 min · Cea mai mare mănăstire de maici", icon: "🕊️" },
+              { href: "/cazare/cazare-manastirea-neamt", title: "Mănăstirea Neamț", text: "15 min · Ierusalimul ortodoxiei", icon: "📜" },
+              { href: "/cazare/cazare-ceahlau", title: "Masivul Ceahlău", text: "45 min · Muntele dacilor", icon: "⛰️" },
+              { href: "/cazare/cazare-grup-targu-neamt", title: "Grupuri · Vila întreagă", text: "22-28 persoane · Familie, parohie, corporate", icon: "👨‍👩‍👧‍👦" },
+              { href: "/cazare/cazare-diaspora-targu-neamt", title: "Diaspora", text: "Acasă în Moldova · Multilingv", icon: "🌍" },
+              { href: "/cazare/cazare-targu-neamt", title: "Ghidul complet", text: "Toate motivele · Toate detaliile", icon: "📖" }
             ].map((d, i) => (
               <ScrollFade key={d.href} delay={i * 60}>
                 <Link
@@ -802,7 +802,7 @@ export default function HomePage() {
                   <div className="text-3xl mb-3" aria-hidden>{d.icon}</div>
                   <h3 className="font-display text-lg text-forest-900 mb-1">{d.title}</h3>
                   <p className="text-xs text-stone-600 leading-relaxed">{d.text}</p>
-                  <span className="mt-3 inline-block text-xs uppercase tracking-wider text-walnut-600">Vezi cazare â</span>
+                  <span className="mt-3 inline-block text-xs uppercase tracking-wider text-walnut-600">Vezi cazare →</span>
                 </Link>
               </ScrollFade>
             ))}
@@ -821,11 +821,11 @@ export default function HomePage() {
             {[
               {
                 q: "Care este cea mai bună cazare din Târgu Neamț?",
-                a: "Vila Vaias Aparts este cea mai bine notată cazare din Târgu Neamț â Booking.com 9.4 și 99 de recenzii Google la 5.0 stele. 7 apartamente boutique independente, fiecare cu baie privată și (cu o singură excepție) bucătărie proprie. Clasificare 4 stele, certificat 35332."
+                a: "Vila Vaias Aparts este cea mai bine notată cazare din Târgu Neamț — Booking.com 9.4 și 99 de recenzii Google la 5.0 stele. 7 apartamente boutique independente, fiecare cu baie privată și (cu o singură excepție) bucătărie proprie. Clasificare 4 stele, certificat 35332."
               },
               {
                 q: "Cât costă o noapte la Vila Vaias Aparts?",
-                a: "Apartamentele single (1 dormitor) pornesc de la 295 RON/noapte, cele cu 2 dormitoare de la 595 RON. Aplicăm 10% reducere pentru 2-3 nopți, 15% pentru 4-6 nopți, 25% pentru 7+ nopți. Toată vila â de la 2.065 RON/noapte (luniâjoi), 2.450 RON/noapte (weekend). Cel mai bun preț â direct pe WhatsApp."
+                a: "Apartamentele single (1 dormitor) pornesc de la 295 RON/noapte, cele cu 2 dormitoare de la 595 RON. Aplicăm 10% reducere pentru 2-3 nopți, 15% pentru 4-6 nopți, 25% pentru 7+ nopți. Toată vila — de la 2.065 RON/noapte (luni–joi), 2.450 RON/noapte (weekend). Cel mai bun preț — direct pe WhatsApp."
               },
               {
                 q: "La ce distanță sunteți de Cetatea Neamțului?",
@@ -841,11 +841,11 @@ export default function HomePage() {
               },
               {
                 q: "Putem rezerva întreaga vilă pentru un eveniment?",
-                a: "Da, vila întreagă (toate cele 7 apartamente) poate fi rezervată pentru grupuri de 22 până la 28 de persoane â reuniuni de familie, nunți, retrageri parohiale, team-building corporate. Tariful este personalizat â contactați-ne pe WhatsApp."
+                a: "Da, vila întreagă (toate cele 7 apartamente) poate fi rezervată pentru grupuri de 22 până la 28 de persoane — reuniuni de familie, nunți, retrageri parohiale, team-building corporate. Tariful este personalizat — contactați-ne pe WhatsApp."
               },
               {
                 q: "Cum funcționează check-in-ul?",
-                a: "Check-in este după ora 14:00, check-out până la 11:00. Self check-in cu ghidaj â vă întâmpinăm sau vă transmitem instrucțiunile, cum vă este mai comod. Pentru zboruri târzii sau cazuri speciale, suntem flexibili."
+                a: "Check-in este după ora 14:00, check-out până la 11:00. Self check-in cu ghidaj — vă întâmpinăm sau vă transmitem instrucțiunile, cum vă este mai comod. Pentru zboruri târzii sau cazuri speciale, suntem flexibili."
               },
               {
                 q: "Care este avansul la rezervare?",
@@ -875,12 +875,12 @@ export default function HomePage() {
                 {
                   "@type": "Question",
                   name: "Care este cea mai bună cazare din Târgu Neamț?",
-                  acceptedAnswer: { "@type": "Answer", text: "Vila Vaias Aparts este cea mai bine notată cazare din Târgu Neamț â Booking.com 9.4 și 99 de recenzii Google la 5.0 stele. 7 apartamente boutique independente, clasificare 4 stele, certificat 35332." }
+                  acceptedAnswer: { "@type": "Answer", text: "Vila Vaias Aparts este cea mai bine notată cazare din Târgu Neamț — Booking.com 9.4 și 99 de recenzii Google la 5.0 stele. 7 apartamente boutique independente, clasificare 4 stele, certificat 35332." }
                 },
                 {
                   "@type": "Question",
                   name: "Cât costă o noapte la Vila Vaias Aparts?",
-                  acceptedAnswer: { "@type": "Answer", text: "Apartamentele single pornesc de la 295 RON/noapte, cele cu 2 dormitoare de la 595 RON. Toată vila â de la 2.065 RON/noapte (luniâjoi), 2.450 RON/noapte (weekend). Reduceri: 10% pentru 2-3 nopți, 15% pentru 4-6 nopți, 25% pentru 7+ nopți. Cel mai bun preț direct pe WhatsApp." }
+                  acceptedAnswer: { "@type": "Answer", text: "Apartamentele single pornesc de la 295 RON/noapte, cele cu 2 dormitoare de la 595 RON. Toată vila — de la 2.065 RON/noapte (luni–joi), 2.450 RON/noapte (weekend). Reduceri: 10% pentru 2-3 nopți, 15% pentru 4-6 nopți, 25% pentru 7+ nopți. Cel mai bun preț direct pe WhatsApp." }
                 },
                 {
                   "@type": "Question",
@@ -905,7 +905,7 @@ export default function HomePage() {
                 {
                   "@type": "Question",
                   name: "Cum funcționează check-in-ul?",
-                  acceptedAnswer: { "@type": "Answer", text: "Check-in după 14:00, check-out până la 11:00. Self check-in cu ghidaj â vă întâmpinăm sau vă transmitem instrucțiunile." }
+                  acceptedAnswer: { "@type": "Answer", text: "Check-in după 14:00, check-out până la 11:00. Self check-in cu ghidaj — vă întâmpinăm sau vă transmitem instrucțiunile." }
                 },
                 {
                   "@type": "Question",
