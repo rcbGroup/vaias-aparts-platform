@@ -1,8 +1,18 @@
-"use client";
-import { useLang } from "@/components/LanguageProvider";
+import { getDict, DEFAULT_LANG, Lang } from "@/lib/i18n";
 
-export default function UspBanner({ className = "" }: { className?: string }) {
-  const { t } = useLang();
+/**
+ * USP highlight band – server-safe, works in both server and client pages.
+ * Receives `lang` from the parent so it never depends on React context.
+ */
+export default function UspBanner({
+  className = "",
+  lang = DEFAULT_LANG,
+}: {
+  className?: string;
+  lang?: Lang;
+}) {
+  const dict = getDict(lang);
+  const t = (key: string) => dict[key] ?? getDict(DEFAULT_LANG)[key] ?? key;
 
   const POINTS = [
     {
@@ -25,8 +35,8 @@ export default function UspBanner({ className = "" }: { className?: string }) {
   return (
     <section className={`bg-forest-950 text-cream-50 relative overflow-hidden ${className}`}>
       <div className="absolute inset-0 pattern-moldavian-dark opacity-30 pointer-events-none" />
-      <div className="container-x-relative py-14 md:py-20">
-        <div className="max-w-3Xl mx-auto text-center mb-12">
+      <div className="container-x relative py-14 md:py-20">
+        <div className="max-w-3xl mx-auto text-center mb-12">
           <div className="eyebrow-light mb-4">{t("usp.eyebrow")}</div>
           <h2 className="font-display text-3xl md:text-5xl text-cream-50 text-balance">
             {t("usp.title")}
