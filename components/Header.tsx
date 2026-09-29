@@ -89,7 +89,7 @@ export default function Header() {
         className={`fixed inset-x-0 z-50 transition-all duration-500 ${
           dark
             ? "glass border-b border-walnut-200/40 py-3 top-[28px] lg:top-[30px]"
-            : "bg-transparent py-5 top-[28px] lg:top-[30px]"
+            : "bg-gradient-to-b from-forest-950/70 to-transparent py-5 top-[28px] lg:top-[30px]"
         }`}
       >
         <div className="container-x flex items-center justify-between gap-3 2xl:gap-6">
