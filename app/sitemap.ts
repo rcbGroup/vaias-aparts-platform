@@ -3,10 +3,24 @@ import { apartments } from "@/lib/apartments";
 import { blogPosts } from "@/lib/blog";
 import { landingPages } from "@/lib/landing-pages";
 
+const BASE = "https://www.vaiasaparts.ro";
+const LOCALES = ["en", "fr", "de", "it", "es"];
+
+function buildAlternates(path: string): Record<string, string> {
+  const cleanPath = path === "" ? "" : path;
+  const result: Record<string, string> = {
+    ro: `${BASE}${cleanPath}`
+  };
+  for (const loc of LOCALES) {
+    result[loc] = `${BASE}/${loc}${cleanPath}`;
+  }
+  return result;
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://www.vaiasaparts.ro";
   const now = new Date();
-  const staticUrls = [
+
+  const staticPages = [
     { p: "", priority: 1.0 },
     { p: "/apartments", priority: 0.95 },
     { p: "/vila-completa", priority: 0.95 },
@@ -35,32 +49,38 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { p: "/parteneri-restaurante", priority: 0.5 },
     { p: "/politica-confidentialitate", priority: 0.3 },
     { p: "/termeni-conditii", priority: 0.3 }
-  ].map(({ p, priority }) => ({
-    url: `${base}${p}`,
+  ];
+
+  const staticUrls = staticPages.map(({ p, priority }) => ({
+    url: `${BASE}${p}`,
     lastModified: now,
     changeFrequency: "weekly" as const,
-    priority
+    priority,
+    alternates: { languages: buildAlternates(p) }
   }));
 
   const apartmentUrls = apartments.map((a) => ({
-    url: `${base}/apartments/${a.slug}`,
+    url: `${BASE}/apartments/${a.slug}`,
     lastModified: now,
     changeFrequency: "weekly" as const,
-    priority: 0.9
+    priority: 0.9,
+    alternates: { languages: buildAlternates(`/apartments/${a.slug}`) }
   }));
 
   const landingUrls = landingPages.map((p) => ({
-    url: `${base}/cazare/${p.slug}`,
+    url: `${BASE}/cazare/${p.slug}`,
     lastModified: now,
     changeFrequency: "weekly" as const,
-    priority: 0.85
+    priority: 0.85,
+    alternates: { languages: buildAlternates(`/cazare/${p.slug}`) }
   }));
 
   const blogUrls = blogPosts.map((p) => ({
-    url: `${base}/blog/${p.slug}`,
+    url: `${BASE}/blog/${p.slug}`,
     lastModified: new Date(p.publishedAt),
     changeFrequency: "monthly" as const,
-    priority: 0.6
+    priority: 0.6,
+    alternates: { languages: buildAlternates(`/blog/${p.slug}`) }
   }));
 
   return [...staticUrls, ...apartmentUrls, ...landingUrls, ...blogUrls];
