@@ -1,12 +1,12 @@
 export type Lang = "ro" | "en" | "fr" | "de" | "it" | "es";
 
 export const LANGS: { code: Lang; label: string; flag: string }[] = [
-  { code: "ro", label: "RO", flag: "ð·ð´" },
-  { code: "en", label: "EN", flag: "ð¬ð§" },
-  { code: "fr", label: "FR", flag: "ð«ð·" },
-  { code: "de", label: "DE", flag: "ð©ðª" },
-  { code: "it", label: "IT", flag: "ð®ð¹" },
-  { code: "es", label: "ES", flag: "ðªð¸" }
+  { code: "ro", label: "RO", flag: "🇷🇴" },
+  { code: "en", label: "EN", flag: "🇬🇧" },
+  { code: "fr", label: "FR", flag: "🇫🇷" },
+  { code: "de", label: "DE", flag: "🇩🇪" },
+  { code: "it", label: "IT", flag: "🇮🇹" },
+  { code: "es", label: "ES", flag: "🇪🇸" }
 ];
 
 export const DEFAULT_LANG: Lang = "ro";
