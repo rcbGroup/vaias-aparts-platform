@@ -6,17 +6,17 @@ export default function UspBanner({ className = "" }: { className?: string }) {
 
   const POINTS = [
     {
-      icon: "🏀",
+      icon: "🎯",
       titleKey: "usp.1.title",
       textKey: "usp.1.text",
     },
     {
-      icon: "♪\u0008",
+      icon: "⭐",
       titleKey: "usp.2.title",
       textKey: "usp.2.text",
     },
     {
-      icon: "💑",
+      icon: "📍",
       titleKey: "usp.3.title",
       textKey: "usp.3.text",
     },
