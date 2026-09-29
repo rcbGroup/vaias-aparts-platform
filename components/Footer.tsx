@@ -39,7 +39,7 @@ export default function Footer() {
                   <path d="M9 8h-3v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.378 14.192 5 15.115 5H18V0h-3.808C10.596 0 9 1.583 9 4.615V8z" />
                 </svg>
               </a>
-              {/* WhatsApp â primary number */}
+              {/* WhatsApp — primary number */}
               <a
                 href="https://wa.me/40752388388"
                 target="_blank"
@@ -104,13 +104,13 @@ export default function Footer() {
                 <span className="block text-cream-200/60 text-xs uppercase tracking-wider mt-2">{t("footer.phone")}</span>
                 <div className="flex items-center gap-2">
                   <span>+40 752 388 388</span>
-                  <a href="tel:+40752388388" aria-label="Sună +40 752 388 388" className="hover:text-cream-50 transition" title="Sună">ð</a>
-                  <a href="https://wa.me/40752388388" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp +40 752 388 388" className="hover:text-green-400 transition" title="WhatsApp">ð¬</a>
+                  <a href="tel:+40752388388" aria-label="Sună +40 752 388 388" className="hover:text-cream-50 transition" title="Sună">📞</a>
+                  <a href="https://wa.me/40752388388" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp +40 752 388 388" className="hover:text-green-400 transition" title="WhatsApp">💬</a>
                 </div>
                 <div className="flex items-center gap-2 mt-1">
                   <span>+40 738 345 330</span>
-                  <a href="tel:+40738345330" aria-label="Sună +40 738 345 330" className="hover:text-cream-50 transition" title="Sună">ð</a>
-                  <a href="https://wa.me/40738345330" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp +40 738 345 330" className="hover:text-green-400 transition" title="WhatsApp">ð¬</a>
+                  <a href="tel:+40738345330" aria-label="Sună +40 738 345 330" className="hover:text-cream-50 transition" title="Sună">📞</a>
+                  <a href="https://wa.me/40738345330" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp +40 738 345 330" className="hover:text-green-400 transition" title="WhatsApp">💬</a>
                 </div>
               </li>
               <li>
@@ -124,7 +124,7 @@ export default function Footer() {
           <div className="lg:col-span-3">
             <div className="text-xs uppercase tracking-[0.32em] text-walnut-300 mb-4">{t("footer.bookDirect")}</div>
             <p className="text-cream-100/70 text-sm leading-relaxed mb-4">
-              Rezervând direct, beneficiezi de cel mai bun preț disponibil â fără comisionul platformelor OTA.
+              Rezervând direct, beneficiezi de cel mai bun preț disponibil — fără comisionul platformelor OTA.
             </p>
             <a
               href="https://www.5stardesk.net/b/vaias-aparts"
