@@ -18,13 +18,15 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const nav = [
+  const nav: { href: string; label: string; mobileOnly?: boolean }[] = [
     { href: "/apartments", label: t("nav.apartments") },
     { href: "/vila-completa", label: t("nav.allVilla") },
     { href: "/packages", label: t("nav.packages") },
     { href: "/wellness", label: t("nav.wellness") },
     { href: "/ce-poti-face", label: t("nav.thingsToDo") },
     { href: "/zone-turistice", label: t("nav.attractions") },
+    // Desktop nav is already at its width limit — this one lives in the mobile menu + footer only.
+    { href: "/exploreaza-zona", label: t("nav.exploreArea"), mobileOnly: true },
     { href: "/cum-ajungi", label: t("nav.directions") },
     { href: "/galerie", label: t("nav.gallery") },
     { href: "/videouri", label: t("nav.videos") },
@@ -118,7 +120,7 @@ export default function Header() {
           </Link>
 
           <nav className="hidden lg:flex items-center gap-2 2xl:gap-5 flex-1 justify-center min-w-0">
-            {nav.map((item) => (
+            {nav.filter((item) => !item.mobileOnly).map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

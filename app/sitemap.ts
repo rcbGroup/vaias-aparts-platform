@@ -28,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { p: "/cazare", priority: 0.9 },
     { p: "/ce-poti-face", priority: 0.85 },
     { p: "/zone-turistice", priority: 0.85 },
+    { p: "/exploreaza-zona", priority: 0.85 },
     { p: "/istoria-orasului", priority: 0.7 },
     { p: "/cum-ajungi", priority: 0.9 },
     { p: "/diaspora", priority: 0.85 },

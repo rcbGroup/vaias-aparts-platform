@@ -385,6 +385,61 @@ Warmly,
 Echipa Vaias Aparts`;
 }
 
+/* ====================== STANDALONE: EXPLORE THE AREA ====================== */
+/**
+ * "Descoperă zona / Explore the area" — on-demand WhatsApp message pointing
+ * guests to the local guide page (/exploreaza-zona). Not part of the automated
+ * 7-stage journey (deliberately NOT in ALL_STAGES): send it manually from the
+ * admin, or attach it to a stage once the team approves the cadence.
+ * Plain text, WhatsApp-safe, no prices (prices live on the site).
+ */
+
+export const EXPLORE_AREA_URL = "https://www.vaiasaparts.ro/exploreaza-zona";
+
+function exploreArea_RO(ctx: JourneyContext): string {
+  return `Bună, ${ctx.guestName}! 👋
+
+Ca să vă bucurați din plin de zilele petrecute la noi, v-am pregătit un ghid local al zonei Vânători-Neamț — Ținutul Zimbrului, chiar lângă vilă:
+${EXPLORE_AREA_URL}
+
+Pe scurt, la câteva minute cu mașina:
+🦬 Rezervația de Zimbri „Dragoș Vodă” și Parcul Natural — mergeți dimineața, când zimbrii sunt la hrănitori
+⛪ Mănăstirea Neamț, Secu, Sihăstria, Agapia și Văratec — plus schiturile din pădure
+🏰 Cetatea Neamț și Casa lui Ion Creangă din Humulești
+🍽 Han Rustic — restaurantul nostru din Vânători-Neamț, pe DN15B; vă rezervăm noi masa
+
+În ghid găsiți și trei planuri de jumătate de zi, drumurile, farmacia, cabinetul medical și numerele utile (urgențe 112).
+
+Spuneți-ne ce vă atrage — vă facem un plan pe zile sau vă aranjăm un ghid pentru mănăstiri. Răspundeți direct la acest mesaj.
+
+Cu drag,
+Echipa Vaias Aparts`;
+}
+
+function exploreArea_EN(ctx: JourneyContext): string {
+  return `Hi ${ctx.guestName}! 👋
+
+To make the most of your days with us, we've put together a local guide to the Vânători-Neamț area — Bison Land, right next to the villa:
+${EXPLORE_AREA_URL}
+
+In short, a few minutes' drive away:
+🦬 The "Dragoș Vodă" Bison Reserve and the Natural Park — go in the morning, when the bison are at the feeders
+⛪ Neamț, Secu, Sihăstria, Agapia and Văratec monasteries — plus the forest hermitages
+🏰 Neamț Citadel and Ion Creangă's childhood home in Humulești
+🍽 Han Rustic — our restaurant in Vânători-Neamț, on the DN15B road; we'll book your table
+
+The guide also has three half-day plans, the roads, the pharmacy, the medical clinic and the useful numbers (emergencies 112).
+
+Tell us what draws you — we'll plan your days or arrange a monastery guide. Just reply to this message.
+
+Warmly,
+Echipa Vaias Aparts`;
+}
+
+export function renderExploreAreaMessage(ctx: JourneyContext): string {
+  return (ctx.language ?? "ro") === "en" ? exploreArea_EN(ctx) : exploreArea_RO(ctx);
+}
+
 /* ============================ DISPATCH ============================ */
 
 export function renderJourneyMessage(stage: JourneyStage, ctx: JourneyContext): string {

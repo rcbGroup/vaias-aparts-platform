@@ -161,6 +161,9 @@ export default function AttractionsPage() {
             <Link href="/contact" className="btn-primary bg-cream-50 text-forest-900 hover:bg-cream-100 hover:text-forest-900">
               Cere recomandări
             </Link>
+            <Link href="/exploreaza-zona" className="btn-outline-light">
+              Descoperă zona
+            </Link>
             <Link href="/apartments" className="btn-outline-light">
               Apartamente
             </Link>
