@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useLang } from "./LanguageProvider";
 import { BOOKING_URL } from "@/lib/site";
+import { ShimmerButton } from "@/components/magicui/ShimmerButton";
 
 type Slide = {
   src: string;
@@ -141,7 +142,9 @@ export default function HeroSlideshow() {
       aria-roledescription="carousel"
       aria-label="Vila Vaias Aparts — galerie"
     >
-      {SLIDES.map((slide, i) => (
+      {/* Only the current and the next slide are mounted: with all 12 in the viewport, `loading="lazy"`
+          never applied and the first paint fetched ~1 MB of hero images. Ken Burns runs on the active slide only. */}
+      {SLIDES.map((slide, i) => (i === index || i === (index + 1) % SLIDES.length) && (
         <div
           key={slide.src}
           className={`absolute inset-0 transition-opacity duration-[1400ms] ease-in-out ${
@@ -154,9 +157,9 @@ export default function HeroSlideshow() {
             alt={slide.alt}
             fill
             priority={i === 0}
-            loading={i === 0 ? "eager" : "lazy"}
+            fetchPriority={i === 0 ? "high" : "auto"}
             sizes="100vw"
-            className="object-cover kenburns"
+            className={`object-cover ${i === index ? "kenburns" : ""}`}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-forest-950/30 via-forest-950/40 to-forest-950/85" />
           <div className="absolute inset-0 pattern-moldavian-dark opacity-30 mix-blend-overlay" />
@@ -172,29 +175,34 @@ export default function HeroSlideshow() {
               {t("hero.title1")}
               <br className="hidden md:block" /> {t("hero.title2")}
             </h1>
-            <p className="mt-7 font-serif text-xl md:text-2xl text-cream-100/95 max-w-2xl leading-relaxed">
+            <p className="mt-6 max-w-xl text-base md:text-lg text-cream-100/90 leading-relaxed">
               {t("hero.subtitle")}
             </p>
-            <p className="mt-3 italic font-serif text-lg text-cream-100/70">
-              {t("hero.subtitleEn")}
-            </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link href="/apartments" className="btn-primary">
+            {/* One primary action (direct booking) and one secondary (browse). BRAND.md §7/§8. */}
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-flex">
+                <ShimmerButton
+                  type="button"
+                  tabIndex={-1}
+                  background="#324C37"
+                  shimmerColor="#FAF6E9"
+                  shimmerDuration="4s"
+                  className="px-7 py-3.5 text-sm font-medium uppercase tracking-[0.18em] text-cream-50"
+                >
+                  {t("hero.cta2")}
+                </ShimmerButton>
+              </a>
+              <Link href="/apartments" className="btn-outline-light">
                 {t("hero.cta1")}
               </Link>
-              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-outline-light">
-                {t("hero.cta2")}
-              </a>
-              <Link
-                href="/vila-completa"
-                className="btn-outline-light border-walnut-300/80 text-walnut-100 hover:bg-walnut-500 hover:border-walnut-500 hover:text-cream-50"
-              >
-                🏡 Rezervă toată vila
-              </Link>
             </div>
-            <p className="mt-4 text-sm text-cream-100/80">
-              Prețuri de la <strong className="text-cream-50">295 RON/noapte</strong> · Toată vila — de la{" "}
-              <strong className="text-cream-50">2.065 RON/noapte</strong>
+            {/* Prices: source lib/apartments.ts (min pricePerNightRON) and lib/villa-pricing.ts */}
+            <p className="mt-5 text-sm text-cream-100/85">
+              {t("common.from")} <strong className="text-cream-50 tabular-nums">295 RON</strong>{t("common.perNight")}
+              <span className="mx-2 text-cream-100/40">·</span>
+              <Link href="/vila-completa" className="underline decoration-cream-100/40 underline-offset-4 hover:decoration-cream-50">
+                {t("nav.allVilla")}: {t("common.from")} <strong className="text-cream-50 tabular-nums">2.065 RON</strong>{t("common.perNight")}
+              </Link>
             </p>
           </div>
         </div>
@@ -214,7 +222,7 @@ export default function HeroSlideshow() {
         type="button"
         aria-label="Slide anterior"
         onClick={() => go(index - 1)}
-        className="group absolute left-2 md:left-6 top-1/2 -translate-y-1/2 grid h-12 w-12 place-items-center rounded-full bg-cream-50/10 hover:bg-cream-50/20 backdrop-blur text-cream-50 border border-cream-50/20 transition"
+        className="group absolute hidden md:grid left-2 md:left-6 top-1/2 -translate-y-1/2 h-12 w-12 place-items-center rounded-full bg-cream-50/10 hover:bg-cream-50/20 backdrop-blur text-cream-50 border border-cream-50/20 transition"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="15 18 9 12 15 6" />
@@ -224,7 +232,7 @@ export default function HeroSlideshow() {
         type="button"
         aria-label="Slide următor"
         onClick={() => go(index + 1)}
-        className="group absolute right-2 md:right-6 top-1/2 -translate-y-1/2 grid h-12 w-12 place-items-center rounded-full bg-cream-50/10 hover:bg-cream-50/20 backdrop-blur text-cream-50 border border-cream-50/20 transition"
+        className="group absolute hidden md:grid right-2 md:right-6 top-1/2 -translate-y-1/2 h-12 w-12 place-items-center rounded-full bg-cream-50/10 hover:bg-cream-50/20 backdrop-blur text-cream-50 border border-cream-50/20 transition"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="9 18 15 12 9 6" />

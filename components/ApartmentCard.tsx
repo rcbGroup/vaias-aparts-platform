@@ -34,8 +34,8 @@ export default function ApartmentCard({
           {apartment.view}
         </div>
         {apartment.hasAC && (
-          <div className="absolute top-4 right-4 rounded-full bg-blue-500/90 backdrop-blur px-3 py-1 text-xs font-medium text-white uppercase tracking-wider">
-            AC ❄️
+          <div className="absolute top-4 right-4 flex items-center gap-1 rounded-full bg-cream-50/95 backdrop-blur px-3 py-1 text-[11px] font-medium text-forest-800 uppercase tracking-wider">
+            <SnowIcon /> AC
           </div>
         )}
         {!apartment.hasPrivateKitchen && (
@@ -75,13 +75,20 @@ export default function ApartmentCard({
           <span className="flex items-center gap-1.5">
             <GuestsIcon /> {apartment.guests}–{apartment.guestsMax} {t("common.guests")}
           </span>
-          <span className="flex items-center gap-1.5 ml-auto">{apartment.sizeSqm} m²</span>
+          <span className="flex items-center gap-1.5 ml-auto whitespace-nowrap">{apartment.sizeSqm} m² · {apartment.floor}</span>
         </div>
       </div>
     </Link>
   );
 }
 
+function SnowIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+      <path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19" />
+    </svg>
+  );
+}
 function BedIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">

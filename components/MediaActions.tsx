@@ -18,15 +18,10 @@ function hashString(s: string): number {
   return Math.abs(h);
 }
 
-// Deterministic, organic-looking base counts so the gallery feels lively.
-// User reactions (localStorage) are layered on top — no backend required.
-function seedCounts(mediaKey: string): Counts {
-  const h = hashString(mediaKey);
-  return {
-    heart: 7 + (h % 38),
-    love: 2 + ((h >> 3) % 17),
-    smile: 1 + ((h >> 6) % 11),
-  };
+// Counts start at zero. Earlier versions seeded "organic-looking" numbers from a hash of the media key,
+// which presented invented reactions as social proof (removed 10 Oct 2026, BRAND.md §10: verified figures only).
+function seedCounts(_mediaKey: string): Counts {
+  return { heart: 0, love: 0, smile: 0 };
 }
 
 export default function MediaActions({
@@ -164,7 +159,7 @@ export default function MediaActions({
               }`}
             >
               <span className="text-[13px]">{r.char}</span>
-              <span className="font-medium tabular-nums">{n}</span>
+              {n > 0 && <span className="font-medium tabular-nums">{n}</span>}
             </button>
           );
         })}

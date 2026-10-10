@@ -19,20 +19,20 @@ export default function Header() {
   }, []);
 
   const nav: { href: string; label: string; mobileOnly?: boolean }[] = [
+    // Desktop shows 7 items (BRAND.md §7). Everything else lives in the mobile menu and the footer.
     { href: "/apartments", label: t("nav.apartments") },
     { href: "/vila-completa", label: t("nav.allVilla") },
     { href: "/packages", label: t("nav.packages") },
-    { href: "/wellness", label: t("nav.wellness") },
     { href: "/ce-poti-face", label: t("nav.thingsToDo") },
-    { href: "/zone-turistice", label: t("nav.attractions") },
-    // Desktop nav is already at its width limit — this one lives in the mobile menu + footer only.
-    { href: "/exploreaza-zona", label: t("nav.exploreArea"), mobileOnly: true },
-    { href: "/cum-ajungi", label: t("nav.directions") },
     { href: "/galerie", label: t("nav.gallery") },
-    { href: "/videouri", label: t("nav.videos") },
     { href: "/recenzii", label: t("nav.reviews") },
-    { href: "/blog", label: t("nav.blog") },
-    { href: "/contact", label: t("nav.contact") }
+    { href: "/contact", label: t("nav.contact") },
+    { href: "/wellness", label: t("nav.wellness"), mobileOnly: true },
+    { href: "/zone-turistice", label: t("nav.attractions"), mobileOnly: true },
+    { href: "/exploreaza-zona", label: t("nav.exploreArea"), mobileOnly: true },
+    { href: "/cum-ajungi", label: t("nav.directions"), mobileOnly: true },
+    { href: "/videouri", label: t("nav.videos"), mobileOnly: true },
+    { href: "/blog", label: t("nav.blog"), mobileOnly: true }
   ];
 
   const dark = scrolled || open;
@@ -119,12 +119,12 @@ export default function Header() {
             </div>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-2 2xl:gap-5 flex-1 justify-center min-w-0">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-6 flex-1 justify-center min-w-0">
             {nav.filter((item) => !item.mobileOnly).map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-[12px] 2xl:text-sm font-medium whitespace-nowrap transition-colors ${
+                className={`text-[13px] xl:text-sm font-medium whitespace-nowrap transition-colors ${
                   dark
                     ? "text-forest-800 hover:text-walnut-600"
                     : "text-cream-50 hover:text-cream-200"
