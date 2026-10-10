@@ -1,3 +1,4 @@
+import { PHONE_PRIMARY_DISPLAY, WHATSAPP_PRIMARY } from "@/lib/site";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -160,7 +161,7 @@ export default function VouchereVacantaPage() {
                 </div>
                 <p className="text-sm text-stone-600">{pk.note}</p>
                 <Link
-                  href="https://wa.me/40743456789"
+                  href={`https://wa.me/${WHATSAPP_PRIMARY}`}
                   className="btn-primary mt-4 inline-block"
                 >
                   Solicită ofertă WhatsApp
@@ -199,8 +200,8 @@ export default function VouchereVacantaPage() {
             conformă cu cerințele departamentului de resurse umane.
           </p>
           <div className="mt-8 flex flex-wrap gap-4 justify-center">
-            <a href="https://wa.me/40743456789" className="btn-primary">
-              WhatsApp 0743 456 789
+            <a href={`https://wa.me/${WHATSAPP_PRIMARY}`} className="btn-primary">
+              WhatsApp {PHONE_PRIMARY_DISPLAY}
             </a>
             <Link href="/contact" className="btn-outline-light">
               Contact

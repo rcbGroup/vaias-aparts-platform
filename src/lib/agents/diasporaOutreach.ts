@@ -6,6 +6,8 @@
  * and English/Romanian templates for diaspora transport partners.
  */
 
+import { PHONE_PRIMARY_DISPLAY } from "../../../lib/site";
+
 export type DiasporaParish = {
   country: string;
   city: string;
@@ -100,7 +102,7 @@ Domnul să vă binecuvânteze slujirea în ${parish.parishName} din ${parish.cit
 
 Cu plecăciune și fiu evlavios,
 Vasile Jiboc — Vila Vaias Aparts
-www.vaiasaparts.ro · WhatsApp: +40 743 456 789
+www.vaiasaparts.ro · WhatsApp: ${PHONE_PRIMARY_DISPLAY}
 Echipa Vaias Aparts`,
   };
 }
@@ -127,7 +129,7 @@ Puteți să-mi spuneți cine se ocupă de parteneriatele B2B la voi? Sau, dacă 
 Cu drag,
 Vasile Jiboc
 Vila Vaias Aparts · www.vaiasaparts.ro
-WhatsApp: +40 743 456 789
+WhatsApp: ${PHONE_PRIMARY_DISPLAY}
 Echipa Vaias Aparts`,
   };
 }
