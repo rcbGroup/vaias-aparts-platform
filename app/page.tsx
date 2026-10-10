@@ -16,6 +16,7 @@ import SectionHeader from "@/components/SectionHeader";
 import UspBanner from "@/components/UspBanner";
 import ScrollFade from "@/components/ScrollFade";
 import HeroSlideshow from "@/components/HeroSlideshow";
+import { NumberTicker } from "@/components/magicui/NumberTicker";
 import { useLang, useLanguage } from "@/components/LanguageProvider";
 
 // One representative airport per distance band for the homepage preview.
@@ -72,14 +73,17 @@ export default function HomePage() {
       {/* INTRO STRIP */}
       <section className="bg-cream-50 py-14 border-b border-stone-100 relative">
         <div className="container-x grid gap-8 md:grid-cols-4 text-center">
+          {/* Figures are verified in lib/reviews.ts (Google 99 reviews / 5.0; Booking.com 9.4). Keep them in sync. */}
           {[
-            { v: "7", l: t("stats.apartments") },
-            { v: "9.4", l: "Booking.com" },
-            { v: "99", l: t("stats.reviews") },
-            { v: "5.0", l: t("stats.rating") }
+            { v: 7, d: 0, l: t("stats.apartments") },
+            { v: 9.4, d: 1, l: "Booking.com" },
+            { v: 99, d: 0, l: t("stats.reviews") },
+            { v: 5.0, d: 1, l: t("stats.rating") }
           ].map((s, i) => (
             <ScrollFade key={s.l} delay={i * 80}>
-              <div className="font-display text-4xl text-walnut-500 mb-1">{s.v}</div>
+              <div className="font-display text-4xl text-walnut-500 mb-1">
+                <NumberTicker value={s.v} decimalPlaces={s.d} delay={i * 0.1} locale="ro-RO" />
+              </div>
               <div className="text-xs uppercase tracking-[0.28em] text-stone-500">{s.l}</div>
             </ScrollFade>
           ))}
@@ -230,12 +234,12 @@ export default function HomePage() {
               </p>
               <div className="grid sm:grid-cols-3 gap-6 mb-10 text-left">
                 {[
-                  { icon: "💚", title: "Cel mai bun preț direct", desc: "Fără comision OTA de 15–25%. Prețul pe care îl plătești vine în întregime la noi." },
-                  { icon: "⚡", title: "Confirmare rapidă", desc: "Răspundem în WhatsApp de regulă în câteva ore, între 08:00 și 22:00." },
-                  { icon: "🤝", title: "Comunicare directă", desc: "Vorbești direct cu familia care gestionează vila — nu cu un call center." }
+                  { icon: "1", title: "Fără comision de platformă", desc: "Booking și Airbnb rețin 15–25%. La rezervarea directă, prețul plătit rămâne integral la vilă." },
+                  { icon: "2", title: "Răspuns pe WhatsApp în aceeași zi", desc: "Între 08:00 și 22:00. Confirmarea vine cu numele, datele și prețul final scrise." },
+                  { icon: "3", title: "Vorbești cu gazdele", desc: "Vasi sau Anca îți răspund direct. Fără call center, fără intermediari." }
                 ].map(item => (
                   <div key={item.title} className="rounded-xl border border-cream-50/10 bg-cream-50/5 p-5">
-                    <div className="text-2xl mb-3" aria-hidden>{item.icon}</div>
+                    <div className="mb-3 grid h-8 w-8 place-items-center rounded-full border border-walnut-300/60 text-walnut-300 font-display text-sm" aria-hidden>{item.icon}</div>
                     <h3 className="font-display text-lg text-cream-50 mb-2">{item.title}</h3>
                     <p className="text-sm text-cream-100/70 leading-relaxed">{item.desc}</p>
                   </div>
@@ -248,10 +252,10 @@ export default function HomePage() {
                   rel="noopener noreferrer"
                   className="btn-primary"
                 >
-                  💬 Rezervă pe WhatsApp
+                  Rezervă pe WhatsApp
                 </a>
                 <a href="tel:+40752388388" className="btn-outline-light">
-                  📞 +40 752 388 388
+                  Sună: +40 752 388 388
                 </a>
                 <a
                   href="https://www.5stardesk.net/b/vaias-aparts"
@@ -365,49 +369,26 @@ export default function HomePage() {
             {highlights.map((h, i) => (
               <ScrollFade key={h.theme} delay={i * 80}>
                 <div className="card-lift rounded-2xl bg-cream-50 border border-stone-100 p-7 h-full">
-                  <div className="text-3xl mb-4" aria-hidden>{h.icon}</div>
+                  <div className="mb-4 grid h-9 w-9 place-items-center rounded-full bg-walnut-500/15 font-display text-sm text-walnut-700" aria-hidden>{i + 1}</div>
                   <h3 className="font-display text-xl text-forest-900 mb-2">{h.titleRO}</h3>
                   <p className="text-stone-600 text-sm leading-relaxed">{h.descriptionRO}</p>
                 </div>
               </ScrollFade>
             ))}
           </div>
-          <div className="mt-10 flex justify-center gap-6 flex-wrap">
-            {platformBadges.map(b => (
-              <a
-                key={b.platform}
-                href={b.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 rounded-xl border border-stone-200 bg-cream-50 px-5 py-3 shadow-soft hover:shadow-md transition"
-              >
-                <span className="font-display text-2xl text-walnut-500">{b.score}</span>
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-stone-500">{b.platform}</div>
-                  <div className="text-xs text-stone-600">{b.label}</div>
-                </div>
-              </a>
-            ))}
-          </div>
         </div>
       </section>
 
-      {/* REVIEW QUOTES STRIP */}
-      <section className="py-16 bg-white border-t border-b border-stone-100">
+      {/* REVIEWS — verified figures only (lib/reviews.ts). Named quotes were removed on 10 Oct 2026:
+          the data file forbids unverified testimonials. Re-add real ones with platform + date when available. */}
+      <section className="py-16 bg-white border-t border-b border-stone-100 overflow-hidden">
         <div className="container-x">
           <ScrollFade>
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
               <div>
-                <div className="flex items-center gap-2 mb-2 flex-wrap">
-                  <span className="text-amber-400">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-                  <span className="font-bold text-stone-900">5.0</span>
-                  <span className="text-stone-400 text-sm">&middot;</span>
-                  <span className="text-stone-500 text-sm">{lang !== "en" ? "99 recenzii Google" : "99 Google reviews"}</span>
-                  <span className="text-stone-400 text-sm">&middot;</span>
-                  <span className="font-semibold text-sky-700 text-sm">9.4 Booking.com</span>
-                </div>
+                <div className="eyebrow mb-3">{lang !== "en" ? "Recenzii verificate" : "Verified reviews"}</div>
                 <h2 className="font-display text-2xl sm:text-3xl text-stone-900">
-                  {lang !== "en" ? "Ce spun oaspeţii noştri." : "What our guests say."}
+                  {lang !== "en" ? "Ce spun oaspeții noștri." : "What our guests say."}
                 </h2>
               </div>
               <Link href="/recenzii" className="text-walnut-600 text-sm font-medium hover:text-walnut-800 transition-colors whitespace-nowrap">
@@ -415,29 +396,27 @@ export default function HomePage() {
               </Link>
             </div>
           </ScrollFade>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              { name: "Andrei & Raluca", loc: "Bucureşti", platform: "Booking", qRo: "Preţul direct a fost cu 20% mai mic faţă de Booking. Apartament privat, pat Emperor de 2m×2m, şi Anca ne-a recomandat restaurante pe care nu le-am fi găsit singuri.", qEn: "The direct price was 20% cheaper than Booking. Private apartment, 2m×2m Emperor bed, and Anca recommended restaurants we’d never have found alone." },
-              { name: "Daniela M.", loc: "Iaşi", platform: "Google", qRo: "Gazde minunate, comunicare rapidă pe WhatsApp, totul perfect pregătit. Apartamentul arată exact ca în poze, poate chiar mai frumos.", qEn: "Wonderful hosts, quick WhatsApp responses, everything perfectly prepared. The apartment looks exactly like the photos, maybe even more beautiful." },
-              { name: "Alexandru V.", loc: "Suceava", platform: "Google", qRo: "Am venit cu câinele (animale acceptate, fără taxă suplimentară!) şi am avut o experienţă perfectă. Vasi a dat sfaturi excelente pentru trasee.", qEn: "Came with my dog (pets accepted, no extra charge!) and had a perfect experience. Vasi gave excellent tips for local trails." },
-              { name: "Familia Rusu", loc: "Bacău", platform: "Google", qRo: "Locul perfect pentru o vacanţă de familie. 2 dormitoare, 67mp — tot al tău. Fără recepţie, fără alţi turişti pe hol. Copiii au adorat.", qEn: "Perfect for a family holiday. 2 bedrooms, 67sqm — all yours. No reception, no other tourists in the hallway. The kids loved it." },
-            ].map((q) => (
-              <ScrollFade key={q.name}>
-                <div className="bg-stone-50 border border-stone-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-amber-400 text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-                    <span className="text-xs text-stone-400 bg-white px-1.5 py-0.5 rounded-full border border-stone-100">{q.platform}</span>
-                  </div>
-                  <blockquote className="text-stone-600 text-sm leading-relaxed flex-1 mb-4">&ldquo;{lang !== "en" ? q.qRo : q.qEn}&rdquo;</blockquote>
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-walnut-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">{q.name[0]}</div>
-                    <div>
-                      <div className="text-xs font-semibold text-stone-800">{q.name}</div>
-                      <div className="text-xs text-stone-400">{q.loc}</div>
-                    </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {platformBadges.map((b) => (
+              <a
+                key={b.platform}
+                href={b.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="card-lift flex items-center justify-between gap-4 rounded-2xl border border-stone-200 bg-cream-50 px-6 py-5"
+              >
+                <div>
+                  <div className="text-xs uppercase tracking-[0.28em] text-stone-500">{b.platform}</div>
+                  <div className="font-display text-3xl text-forest-900 tabular-nums mt-1">
+                    {b.score.toFixed(1)}
+                    <span className="text-base text-stone-500"> / {b.maxScore}</span>
                   </div>
                 </div>
-              </ScrollFade>
+                <div className="text-sm text-stone-600 text-right">
+                  {b.reviewCount ? `${b.reviewCount} ${lang !== "en" ? "recenzii" : "reviews"}` : b.label}
+                  <div className="text-walnut-600 text-xs mt-1">{lang !== "en" ? "Vezi pe" : "View on"} {b.platform} →</div>
+                </div>
+              </a>
             ))}
           </div>
         </div>
