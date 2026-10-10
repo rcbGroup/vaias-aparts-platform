@@ -15,6 +15,7 @@
  */
 
 import { type Apartment } from "../../../lib/apartments";
+import { PHONE_PRIMARY_DISPLAY } from "../../../lib/site";
 
 export type JourneyStage =
   | "pre_arrival_7d"
@@ -60,7 +61,7 @@ De la ora 14:00. Vă vom trimite codul de poartă (0623#) și instrucțiunile de
 • Tur ghidat mănăstiri (Agapia, Văratec, Neamț)
 • Transfer aeroport Iași
 
-Aveți întrebări? Răspundeți direct la acest mesaj sau pe WhatsApp 0743 456 789.
+Aveți întrebări? Răspundeți direct la acest mesaj sau pe WhatsApp ${PHONE_PRIMARY_DISPLAY}.
 
 Cu drag,
 Echipa Vaias Aparts`;
@@ -85,7 +86,7 @@ From 14:00. We'll send the gate code (0623#) and self check-in instructions 48 h
 • Guided monastery tour (Agapia, Văratec, Neamț)
 • Iași airport transfer
 
-Questions? Reply to this message or WhatsApp +40 743 456 789.
+Questions? Reply to this message or WhatsApp ${PHONE_PRIMARY_DISPLAY}.
 
 Warmly,
 Echipa Vaias Aparts`;
@@ -104,7 +105,7 @@ Pin GPS: https://maps.app.goo.gl/vaiasaparts
 🛏 *Apartamentul dvs.*: ${ctx.apartmentName ?? "(confirmare separată)"}
 
 📲 *La sosire*:
-1. Apelați-ne pe WhatsApp (0743 456 789) cu 30 min înainte de sosire
+1. Apelați-ne pe WhatsApp (${PHONE_PRIMARY_DISPLAY}) cu 30 min înainte de sosire
 2. Folosiți codul 0623# pentru poarta curții
 3. Vă întâmpinăm la apartament — vă oferim cheia direct
 4. Plata taxei de oraș (3 lei / adult / noapte) — cash sau card la check-in
@@ -130,7 +131,7 @@ GPS pin: https://maps.app.goo.gl/vaiasaparts
 🛏 *Your apartment*: ${ctx.apartmentName ?? "(separate confirmation)"}
 
 📲 *On arrival*:
-1. WhatsApp us (+40 743 456 789) 30 minutes before arrival
+1. WhatsApp us (${PHONE_PRIMARY_DISPLAY}) 30 minutes before arrival
 2. Use code 0623# for the courtyard gate
 3. We'll meet you at the apartment — we give you the key in person
 4. City tax (3 RON / adult / night) paid at check-in — cash or card
@@ -152,7 +153,7 @@ Astăzi e ziua! Vă așteptăm cu drag la Vaias Aparts.
 🔑 Cod poartă: 0623#
 🕐 Check-in: după ora 14:00
 
-📲 Apelați-ne pe WhatsApp 0743 456 789 cu 30 min înainte de sosire — venim la apartament să vă dăm cheia și să vă arătăm tot.
+📲 Apelați-ne pe WhatsApp ${PHONE_PRIMARY_DISPLAY} cu 30 min înainte de sosire — venim la apartament să vă dăm cheia și să vă arătăm tot.
 
 Drum bun și ne vedem curând!
 
@@ -169,7 +170,7 @@ Today's the day! We're looking forward to welcoming you at Vaias Aparts.
 🔑 Gate code: 0623#
 🕐 Check-in: after 14:00
 
-📲 WhatsApp us (+40 743 456 789) 30 minutes before arrival — we'll meet you at the apartment with the key and a quick walkthrough.
+📲 WhatsApp us (${PHONE_PRIMARY_DISPLAY}) 30 minutes before arrival — we'll meet you at the apartment with the key and a quick walkthrough.
 
 Safe travels — see you soon!
 
