@@ -142,7 +142,9 @@ export default function HeroSlideshow() {
       aria-roledescription="carousel"
       aria-label="Vila Vaias Aparts — galerie"
     >
-      {SLIDES.map((slide, i) => (
+      {/* Only the current and the next slide are mounted: with all 12 in the viewport, `loading="lazy"`
+          never applied and the first paint fetched ~1 MB of hero images. Ken Burns runs on the active slide only. */}
+      {SLIDES.map((slide, i) => (i === index || i === (index + 1) % SLIDES.length) && (
         <div
           key={slide.src}
           className={`absolute inset-0 transition-opacity duration-[1400ms] ease-in-out ${
@@ -155,9 +157,9 @@ export default function HeroSlideshow() {
             alt={slide.alt}
             fill
             priority={i === 0}
-            loading={i === 0 ? "eager" : "lazy"}
+            fetchPriority={i === 0 ? "high" : "auto"}
             sizes="100vw"
-            className="object-cover kenburns"
+            className={`object-cover ${i === index ? "kenburns" : ""}`}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-forest-950/30 via-forest-950/40 to-forest-950/85" />
           <div className="absolute inset-0 pattern-moldavian-dark opacity-30 mix-blend-overlay" />
