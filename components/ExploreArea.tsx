@@ -4,6 +4,8 @@ import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import SectionHeader from "@/components/SectionHeader";
 import ScrollFade from "@/components/ScrollFade";
+import VideoThumbnail from "@/components/VideoThumbnail";
+import { videoWatchUrl } from "@/lib/videos";
 import { useLang } from "@/components/LanguageProvider";
 import { whatsappLink } from "@/lib/site";
 import {
@@ -16,6 +18,7 @@ import {
   exploreSections,
   exploreSource,
   exploreUi,
+  exploreVideo,
   type ExploreLang,
   type L
 } from "@/lib/explore-area";
@@ -69,6 +72,39 @@ export default function ExploreArea() {
                 </div>
               </a>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* VIDEO */}
+      <section className="section bg-forest-900 text-cream-50 !py-16 md:!py-24">
+        <div className="container-x">
+          <div className="max-w-3xl mx-auto text-center mb-10">
+            <div className="eyebrow-light mb-4">{tx(exploreVideo.eyebrow)}</div>
+            <h2 className="font-display text-4xl md:text-5xl text-cream-50 text-balance">
+              {tx(exploreVideo.title)}
+            </h2>
+            <div className="divider-gold my-7" />
+            <p className="font-serif text-lg text-cream-100/80">{tx(exploreVideo.caption)}</p>
+          </div>
+          <div className="mx-auto max-w-4xl">
+            <div className="group relative aspect-video overflow-hidden rounded-2xl shadow-card bg-forest-950">
+              <VideoThumbnail
+                youtubeId={exploreVideo.youtubeId}
+                title={tx(exploreVideo.title)}
+                label={tx(exploreVideo.eyebrow)}
+              />
+            </div>
+            <div className="mt-4 text-center">
+              <a
+                href={videoWatchUrl(exploreVideo.youtubeId)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs uppercase tracking-[0.2em] text-cream-100/70 hover:text-cream-50 transition"
+              >
+                {tx(exploreVideo.watch)} →
+              </a>
+            </div>
           </div>
         </div>
       </section>

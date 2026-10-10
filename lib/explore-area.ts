@@ -52,6 +52,22 @@ export const exploreHero = {
   image: "/attractions/vanatori-neamt.jpg"
 };
 
+/**
+ * Video section — YouTube clip chosen by Vasi (10 Oct 2026) for the area page.
+ * Click-to-play via components/VideoThumbnail (privacy-enhanced embed).
+ * Captions are deliberately neutral: the player shows the clip's own title.
+ */
+export const exploreVideo = {
+  youtubeId: "IYNAyRkUsjI",
+  eyebrow: { ro: "Video", en: "Video" } as L,
+  title: { ro: "Zona, în mișcare.", en: "The area, in motion." } as L,
+  caption: {
+    ro: "Un clip despre Vânători-Neamț și împrejurimi, ales de noi pentru tine. Apasă pentru redare.",
+    en: "A short film about Vânători-Neamț and its surroundings, picked by us for you. Click to play."
+  } as L,
+  watch: { ro: "Vezi pe YouTube", en: "Watch on YouTube" } as L
+};
+
 export const exploreIntro: { eyebrow: L; title: L; body: L[] } = {
   eyebrow: { ro: "Unde suntem", en: "Where we are" },
   title: {
