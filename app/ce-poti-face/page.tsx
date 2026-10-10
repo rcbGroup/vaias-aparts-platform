@@ -165,7 +165,7 @@ export default function CePotiFacePage() {
 
       {/* CROSS LINKS */}
       <section className="section bg-forest-900 text-cream-50">
-        <div className="container-x grid gap-6 md:grid-cols-2">
+        <div className="container-x grid gap-6 md:grid-cols-3">
           <Link
             href="/zone-turistice"
             className="group rounded-3xl bg-forest-800/40 border border-cream-200/15 p-8 hover:border-cream-200/40 transition"
@@ -194,6 +194,21 @@ export default function CePotiFacePage() {
             </p>
             <span className="mt-5 inline-block text-walnut-300 group-hover:text-walnut-200 transition">
               Citește istoria →
+            </span>
+          </Link>
+          <Link
+            href="/exploreaza-zona"
+            className="group rounded-3xl bg-forest-800/40 border border-cream-200/15 p-8 hover:border-cream-200/40 transition"
+          >
+            <div className="eyebrow-light mb-3">Ghid local · RO/EN</div>
+            <h3 className="font-display text-2xl md:text-3xl text-cream-50 mb-3">
+              Descoperă zona — Vânători-Neamț
+            </h3>
+            <p className="text-cream-100/80 leading-relaxed">
+              Zimbrii, schiturile din pădure, muzeele satelor, Han Rustic și informații practice — după harta turistică oficială a comunei.
+            </p>
+            <span className="mt-5 inline-block text-walnut-300 group-hover:text-walnut-200 transition">
+              Descoperă zona →
             </span>
           </Link>
         </div>
