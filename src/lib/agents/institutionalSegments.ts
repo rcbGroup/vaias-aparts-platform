@@ -8,6 +8,8 @@
  *   • Corporate (teambuilding, board meetings, executive retreats)
  */
 
+import { PHONE_PRIMARY_DISPLAY } from "../../../lib/site";
+
 export type InstitutionalSegment = "SCHOOL" | "POLICE_MILITARY" | "MEDICAL" | "CORPORATE";
 
 export type SegmentPackage = {
@@ -117,7 +119,7 @@ Aș fi bucuros să stabilim o întâlnire scurtă online sau să vă vizitez la 
 
 Cu deosebită considerație,
 Vasile Jiboc — Vila Vaias Aparts
-www.vaiasaparts.ro · 0743 456 789
+www.vaiasaparts.ro · ${PHONE_PRIMARY_DISPLAY}
 Echipa Vaias Aparts`,
   };
 }
@@ -140,7 +142,7 @@ Putem începe colaborarea cu un grup pilot — 4-8 persoane. Verificați program
 
 Cu respect,
 Vasile Jiboc — Vila Vaias Aparts
-www.vaiasaparts.ro · 0743 456 789
+www.vaiasaparts.ro · ${PHONE_PRIMARY_DISPLAY}
 Echipa Vaias Aparts`,
   };
 }
@@ -169,7 +171,7 @@ Aș fi bucuros să vă trimit fișa tehnică completă și dispunerea spațiilor
 Cu drag,
 Vasile Jiboc
 Vila Vaias Aparts · www.vaiasaparts.ro
-WhatsApp: 0743 456 789
+WhatsApp: ${PHONE_PRIMARY_DISPLAY}
 Echipa Vaias Aparts`,
   };
 }
@@ -191,7 +193,7 @@ ${pkg.inclusions.map(i => `      - ${i}`).join("\n")}
 
 Avantajul vilă întreagă: 22-28 persoane, intimitate completă, nimeni străin în jurul echipei dvs.
 
-Trimit cu plăcere o ofertă detaliată cu calendar disponibil. Răspundeți la mail sau pe WhatsApp 0743 456 789 — răspund în maxim 4 ore lucrătoare.
+Trimit cu plăcere o ofertă detaliată cu calendar disponibil. Răspundeți la mail sau pe WhatsApp ${PHONE_PRIMARY_DISPLAY} — răspund în maxim 4 ore lucrătoare.
 
 Cu drag,
 Vasile Jiboc — Vila Vaias Aparts

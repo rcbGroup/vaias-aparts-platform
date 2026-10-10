@@ -1,3 +1,4 @@
+import { PHONE_PRIMARY_DISPLAY, WHATSAPP_PRIMARY, whatsappLink } from "@/lib/site";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CURATED_PACKAGES } from "@/src/lib/packages";
@@ -77,9 +78,9 @@ export default function PackagesPage() {
                 </details>
                 <div className="flex gap-2 mt-auto">
                   <Link
-                    href={`https://wa.me/40743456789?text=${encodeURIComponent(
+                    href={whatsappLink(
                       `Bună ziua! Sunt interesat de pachetul "${pk.nameRO}". Pot primi mai multe detalii?`
-                    )}`}
+                    )}
                     className="btn-primary flex-1 text-center text-sm"
                   >
                     WhatsApp
@@ -104,8 +105,8 @@ export default function PackagesPage() {
             Dacă vii cu un grup, ai o ocazie aniversară, vrei o combinație neobișnuită — scrie-ne pe WhatsApp și
             facem pachetul împreună.
           </p>
-          <Link href="https://wa.me/40743456789" className="btn-primary">
-            WhatsApp 0743 456 789
+          <Link href={`https://wa.me/${WHATSAPP_PRIMARY}`} className="btn-primary">
+            WhatsApp {PHONE_PRIMARY_DISPLAY}
           </Link>
         </div>
       </section>

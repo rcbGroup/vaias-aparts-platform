@@ -4,6 +4,7 @@
  * Generates platform-aware social posts (Instagram, Facebook, TikTok caption,
  * LinkedIn for B2B) from structured inputs — apartment data, reviews, events.
  */
+import { PHONE_PRIMARY_DISPLAY } from "../../../lib/site";
 import { apartments, getApartmentBySlug } from "../../../lib/apartments";
 
 export type SocialPlatform = "instagram" | "facebook" | "tiktok" | "linkedin";
@@ -89,7 +90,7 @@ function apartmentShowcaseCaption(input: SocialPostInputs): string {
   if (input.language === "en") {
     return `${apt.name} — ${apt.tagline}.\n\n${apt.descriptionEN.slice(0, 300)}...\n\nDirect booking at vaiasaparts.ro — best price guaranteed.`;
   }
-  return `${apt.name} — ${apt.tagline}.\n\n${apt.shortDescription}\n\nDirect bookings la vaiasaparts.ro — cel mai bun preț garantat. 📲 WhatsApp 0743 456 789.`;
+  return `${apt.name} — ${apt.tagline}.\n\n${apt.shortDescription}\n\nDirect bookings la vaiasaparts.ro — cel mai bun preț garantat. 📲 WhatsApp ${PHONE_PRIMARY_DISPLAY}.`;
 }
 
 function reviewRepostCaption(input: SocialPostInputs): string {
@@ -107,7 +108,7 @@ function eventCaption(input: SocialPostInputs): string {
   if (input.language === "en") {
     return `${subj}\n\nJoin us at Vaias Aparts — 7 boutique apartments in Târgu Neamț, 15 min from Agapia, Văratec, and Neamț monasteries.\n\nBook direct: vaiasaparts.ro`;
   }
-  return `${subj}\n\nVă invităm la Vaias Aparts — 7 apartamente boutique în Târgu Neamț, la 15 minute de Agapia, Văratec și Mănăstirea Neamț.\n\nRezervare: vaiasaparts.ro / 0743 456 789`;
+  return `${subj}\n\nVă invităm la Vaias Aparts — 7 apartamente boutique în Târgu Neamț, la 15 minute de Agapia, Văratec și Mănăstirea Neamț.\n\nRezervare: vaiasaparts.ro / ${PHONE_PRIMARY_DISPLAY}`;
 }
 
 function tipCaption(input: SocialPostInputs): string {
@@ -164,7 +165,7 @@ const CAPTION_FNS: Record<SocialPostCategory, (i: SocialPostInputs) => string> =
 
 const CTA_BY_PLATFORM: Record<SocialPlatform, string> = {
   instagram: "Rezervă pe vaiasaparts.ro — link în bio",
-  facebook: "Rezervă direct la vaiasaparts.ro — 0743 456 789",
+  facebook: `Rezervă direct la vaiasaparts.ro — ${PHONE_PRIMARY_DISPLAY}`,
   tiktok: "Link in bio — vaiasaparts.ro",
   linkedin: "B2B partnerships: contact@vaiasaparts.ro",
 };

@@ -8,6 +8,7 @@
  * The generator is template-driven (not LLM-driven) so output is predictable,
  * cacheable, and free to run at scale. Real long-form rewriting can layer on top.
  */
+import { WHATSAPP_PRIMARY } from "../../../lib/site";
 import { apartments } from "../../../lib/apartments";
 
 export type SEOTopic =
@@ -258,7 +259,7 @@ export function generateBlogPost(req: SEOBlogRequest): SEOBlogResult {
       ? {
           "@type": "LodgingBusiness",
           name: apartment.name,
-          telephone: "+40743456789",
+          telephone: `+${WHATSAPP_PRIMARY}`,
           address: {
             "@type": "PostalAddress",
             streetAddress: "Strada Sfântul Lazăr nr. 1",

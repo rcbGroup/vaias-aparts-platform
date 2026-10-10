@@ -1,3 +1,4 @@
+import { PHONE_PRIMARY_DISPLAY, WHATSAPP_PRIMARY } from "@/lib/site";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -155,8 +156,8 @@ export default function RefugiulVaiasPage() {
             organizăm ziua perfectă pentru voi.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <a href="https://wa.me/40743456789" className="btn-primary">
-              WhatsApp 0743 456 789
+            <a href={`https://wa.me/${WHATSAPP_PRIMARY}`} className="btn-primary">
+              WhatsApp {PHONE_PRIMARY_DISPLAY}
             </a>
             <Link href="/packages" className="btn-outline-light">
               Vezi pachetul „Pescuit și Natură"

@@ -6,6 +6,8 @@
  * unique tracking code per partner that survives URL clicks and booking attribution.
  */
 
+import { PHONE_PRIMARY_DISPLAY } from "../../../lib/site";
+
 export type B2BCategory =
   | "TRAVEL_AGENCY"
   | "TOUR_OPERATOR"
@@ -112,7 +114,7 @@ Aș fi bucuros să stabilim un call de 15 minute săptămâna viitoare. Sau, dac
 Cu drag,
 Vasile Jiboc
 Vila Vaias Aparts — www.vaiasaparts.ro
-WhatsApp: 0743 456 789
+WhatsApp: ${PHONE_PRIMARY_DISPLAY}
 Echipa Vaias Aparts`,
     tracking,
   };
@@ -147,7 +149,7 @@ Could we schedule a 15-minute call next week? I'd be glad to send our partner pa
 Warmly,
 Vasile Jiboc
 Vila Vaias Aparts — www.vaiasaparts.ro
-WhatsApp: +40 743 456 789
+WhatsApp: ${PHONE_PRIMARY_DISPLAY}
 Echipa Vaias Aparts`,
     tracking,
   };
@@ -186,7 +188,7 @@ Pot trimite oferta completă (fact sheet, foto, tarife B2B) la confirmarea inter
 Cu deosebită considerație,
 Vasile Jiboc
 Vila Vaias Aparts
-www.vaiasaparts.ro · 0743 456 789
+www.vaiasaparts.ro · ${PHONE_PRIMARY_DISPLAY}
 Echipa Vaias Aparts`,
     tracking,
   };

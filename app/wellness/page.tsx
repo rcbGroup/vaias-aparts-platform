@@ -1,3 +1,4 @@
+import { PHONE_PRIMARY_DISPLAY, WHATSAPP_PRIMARY } from "@/lib/site";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { WELLNESS_PROGRAMS, getUpcomingSessions } from "@/src/lib/agents/wellnessRetreat";
@@ -37,8 +38,8 @@ export default function WellnessPage() {
             <Link href="#programe" className="btn-primary">
               Vezi programele
             </Link>
-            <a href="https://wa.me/40743456789" className="btn-outline-light">
-              WhatsApp 0743 456 789
+            <a href={`https://wa.me/${WHATSAPP_PRIMARY}`} className="btn-outline-light">
+              WhatsApp {PHONE_PRIMARY_DISPLAY}
             </a>
           </div>
         </div>
