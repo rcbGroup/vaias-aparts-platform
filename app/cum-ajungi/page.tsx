@@ -402,7 +402,7 @@ export default function CumAjungiPage() {
 
           <div className="mt-14 text-center">
             <Link href="/rezervare" className="btn-primary bg-cream-50 text-forest-900 hover:bg-cream-100 hover:text-forest-900 text-base px-8 py-4">
-              Rezervă acum — cel mai mic preț garantat
+              Rezervă acum — rezervare directă
             </Link>
           </div>
         </div>
