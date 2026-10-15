@@ -16,7 +16,7 @@ const values = [
   },
   {
     title: "Detalii care contează",
-    text: "Pat Emperor 2m×2m cu lenjerie moale, Smart TV, WiFi rapid, prosoave curate, CCTV 24/7 — fiecare detaliu gândit pentru confortul și liniștea dvs."
+    text: "Pat Emperor 2m×2m (Apts 1–6) sau dublu standard (Apt 7), lenjerie moale, Smart TV, WiFi rapid, prosoave curate — fiecare detaliu gândit pentru confortul și liniștea dvs."
   },
   {
     title: "Locație rară în Târgu Neamț",
@@ -56,7 +56,7 @@ export default function AboutPage() {
             </p>
             <p>
               Vila noastră cuprinde 7 apartamente boutique independente, amenajate cu atenție pentru
-              confort, liniște și ospitalitate autentică. Fiecare apartament are pat Emperor de
+              confort, liniște și ospitalitate autentică. Șase din șapte apartamente au pat Emperor de
               2m×2m, Smart TV, WiFi gratuit de mare viteză, baie privată, lenjerie și prosoave de
               calitate și terasă privată. Toate apartamentele sunt dotate cu bucătărie proprie
               complet utilată — cu excepția Apartamentului 7, care beneficiază de acces direct la

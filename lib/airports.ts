@@ -988,7 +988,7 @@ export const cityBreakOrigins: CityBreakOrigin[] = [
     flag: "🇩🇪",
     airport: { iata: "IAS", slug: "iasi-ias", name: "Iași" },
     pitch:
-      "Lufthansa Frankfurt → Iași zilnic. Confort business class, pat Emperor 2×2m la Vaias.",
+      "Lufthansa Frankfurt → Iași zilnic. Confort business class. Cazare boutique la Vaias Aparts.",
     nights: "3–5 nopți",
     fromPriceEUR: 70,
     whatsappMessage:

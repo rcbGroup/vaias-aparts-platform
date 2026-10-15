@@ -202,7 +202,7 @@ export const landingPages: LandingPage[] = [
       heading: "Mănăstirea Agapia la 30 de minute — refugiul ideal pentru pelerini",
       body: [
         "Mănăstirea Agapia este una dintre comorile spirituale ale Moldovei — peste 300 de monahii trăiesc aici, în case albe risipite pe dealuri. Pictura interioară a fost realizată în 1858 de Nicolae Grigorescu, atunci tânăr de 20 de ani. La doar 30 de minute cu mașina, Vila Vaias Aparts este punctul ideal de pornire.",
-        "Spre deosebire de chiliile mănăstirești, la noi aveți un apartament propriu — pat Emperor moale, baie privată, bucătărie. Vă întoarceți din slujbă, vă faceți un ceai, vă liniștiți. A doua zi sunteți gata pentru un nou drum prin mănăstiri.",
+        "Spre deosebire de chiliile mănăstirești, la noi aveți un apartament propriu — pat confortabil, baie privată, bucătărie. Vă întoarceți din slujbă, vă faceți un ceai, vă liniștiți. A doua zi sunteți gata pentru un nou drum prin mănăstiri.",
         "Itinerarul recomandat pelerinilor: Agapia (30 min), Văratec (35 min), Sihăstria (45 min, mormântul Părintelui Cleopa), Mănăstirea Neamț (15 min). Vă putem da o foaie de drum în prima zi."
       ]
     },

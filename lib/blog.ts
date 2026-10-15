@@ -243,7 +243,7 @@ Traseu mai puțin circulat, cu peisaje salbatice și formațiuni stâncoase impr
     publishedAt: "2026-02-10",
     readTime: 8,
     seoTitle: "Cazare boutique Târgu Neamț — Vaias Aparts, 7 apartamente cu suflet",
-    seoDesc: "Vaias Aparts: 7 apartamente boutique în Târgu Neamț. Paturi Emperor 2m×2m, bucătărie proprie, parcare gratuită. Rezervare directă = cel mai bun preț.",
+    seoDesc: "Vaias Aparts: 7 apartamente boutique în Târgu Neamț. Bucătărie proprie, parcare gratuită. Rezervare directă = cele mai bune condiții.",
     body: `
 ## Apartamentele boutique — o altă filosofie de cazare
 
@@ -266,7 +266,7 @@ Oferim 7 apartamente diferite, fiecare cu personalitatea lui:
 - **Apartamentele 5 & 6** (etaj 2) — cu aer condiționat, vederi mai generoase
 - **Apartamentul 7** (parter) — accesibil, cu acces la Kitchen for All
 
-**Toate paturile** sunt Emperor size — 2m×2m. Nu facem compromisuri la calitatea somnului.
+**6 din 7 paturi** sunt Emperor size — 2m×2m. Apartamentul 7 are pat dublu standard. Nu facem compromisuri la calitatea somnului.
 
 ## Bucătăria proprie — libertatea de a mânca cum vrei
 

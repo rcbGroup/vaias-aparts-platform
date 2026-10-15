@@ -199,7 +199,7 @@ function AirportCard({ a }: { a: Airport }) {
             De la 297 lei / noapte
           </div>
           <p className="text-sm text-stone-600 leading-relaxed mb-4">
-            7 apartamente boutique cu pat Emperor 2×2m, ultracentral în Târgu
+            7 apartamente boutique, ultracentral în Târgu
             Neamț. Reduceri: 10% la 2–3 nopți · 15% la 4–6 · 25% la 7+.
           </p>
           <Link

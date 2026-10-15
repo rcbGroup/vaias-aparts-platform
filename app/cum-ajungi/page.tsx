@@ -297,7 +297,7 @@ export default function CumAjungiPage() {
                 Vila Vaias Aparts — de la 297 lei / noapte
               </div>
               <div className="text-sm text-stone-600 mt-1">
-                7 apartamente boutique, pat Emperor 2×2m, parcare gratuită, ultracentral. Reducere 25% la 7+ nopți.
+                7 apartamente boutique, parcare gratuită, ultracentral. Condiții speciale la sejururi de 7+ nopți.
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-2">
@@ -510,7 +510,7 @@ export default function CumAjungiPage() {
             Rezervă acum — și ne vedem la aeroport.
           </h2>
           <p className="mt-5 font-serif text-xl text-cream-100/90 max-w-2xl mx-auto">
-            7 apartamente boutique. Pat Emperor 2×2m. Ultracentral în Târgu Neamț, la poalele Cetății Neamțului.
+            7 apartamente boutique. Ultracentral în Târgu Neamț, la poalele Cetății Neamțului.
             Reduceri până la 25% — rezervând direct economisești și cele 5% comision OTA.
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">

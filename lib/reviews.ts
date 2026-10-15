@@ -69,7 +69,7 @@ export const guestHighlights: GuestHighlight[] = [
     theme: "pat",
     icon: "🛏️",
     titleRO: "Pat Emperor 2m×2m",
-    descriptionRO: "Fiecare apartament are pat Emperor de 2m×2m — cel mai mare pat standard, pentru un somn perfect."
+    descriptionRO: "Șase din șapte apartamente au pat Emperor de 2m×2m — cel mai mare pat standard, pentru un somn perfect. Apt 7 are pat dublu standard."
   },
   {
     theme: "animale",
