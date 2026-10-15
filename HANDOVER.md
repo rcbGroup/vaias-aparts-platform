@@ -21,7 +21,7 @@
 | Field | Value |
 |-------|-------|
 | Email | vaiasaparts@gmail.com |
-| Password | CHANGE_ME_STRONG_PASSWORD |
+| Password | [Set ADMIN_PASSWORD in Vercel env vars — see §8 #18] |
 | Admin URL | /admin |
 
 ---
@@ -31,7 +31,7 @@
 ### Module 1 — Public Website
 - Homepage with real villa hero image (from vaiasaparts.ro), 7-apartment grid, ecosystem pillars, trust bar (97 Google reviews, 9.4 Booking.com)
 - 7 apartment pages with **real property photos** from vaiasaparts.ro (96 photos total)
-- Correct apartment data: AC only in Apt 5 & 6, Apt 7 uses Kitchen for All (not private kitchen), all Emperor beds 2m×2m, correct floor assignments
+- Correct apartment data: AC only in Apt 5 & 6, Apt 7 uses Kitchen for All (not private kitchen), Apts 1–6 have Emperor 2m×2m beds; Apt 7 has a standard double bed — correct floor assignments
 - Han Rustic page (/han-rustic) — cinematic coming-soon with reservation form
 - Experiente page (/experiente) — three ecosystem pillars (Vila, Lake, Restaurant)
 - Blog with 10 published articles, Zone turistice, Galerie, Recenzii, Despre noi, Contact pages
@@ -50,7 +50,7 @@
 - **Files:** `app/rezervare/page.tsx` + `app/api/booking/route.ts`
 - Discount tiers: 1 night standard, 2-3 nights 10%, 4-6 nights 15%, 7+ nights 25%
 - iCal sync configuration via FIVESTARDESK_ICAL_APT1-7 env vars
-- **Requires:** Netopia or Stripe credentials (see env vars below)
+- **Status:** Payment provider integration not currently in codebase (WO4 WP8.5 finding)
 
 ### Module 4 — VAIA Distribution Autopilot
 - **Admin path:** `/admin/autopilot`
@@ -172,11 +172,11 @@ CRON_SECRET="[generate: openssl rand -base64 32]"
 2. Go to Settings → Calendar Sync → iCal Export
 3. Find the iCal URL for each of the 7 apartments
 4. Copy each URL into the corresponding Vercel environment variable (FIVESTARDESK_ICAL_APT1 through 7)
-5. Sync runs automatically on the `/api/cron/ical-sync` endpoint
+5. Sync runs automatically via the iCal endpoints [Note: /api/cron/ical-sync does not exist in current codebase — WO4 WP8.5]
 
 ---
 
-## Netopia Payments Integration
+## Payment Integration [Status: Not implemented — WO4 WP8.5]
 
 1. Create merchant account at https://netopia-payments.com
 2. Go to Account Settings → API Credentials

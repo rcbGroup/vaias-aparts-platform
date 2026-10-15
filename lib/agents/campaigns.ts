@@ -199,10 +199,10 @@ export function diasporaCampaign(originAirport: string, gap?: OccupancyGap): Cam
       `Hi! Romanian abroad in ${city}? Come home to Vaias Aparts. ` +
       `25% off for 7+ night stays, ${dateEN}. We speak ${langTag.toUpperCase()}.`,
     whatsappMessageRO:
-      `Bună ziua! Mă numesc Anca, de la Vaias Aparts (Târgu Neamț). ` +
+      `Bună ziua! Vă scriem din partea Echipei Vaias Aparts (Târgu Neamț). ` +
       `Pentru ${angle}, păstrăm un apartament cu reducere pentru sejururi lungi. ${WA_FOOTER_RO}`,
     whatsappMessageEN:
-      `Hello! I'm Anca from Vaias Aparts (Târgu Neamț, Romania). ` +
+      `Hello! We are the team at Vaias Aparts (Târgu Neamț, Romania). ` +
       `For ${angle}, we hold an apartment with a long-stay discount. ${WA_FOOTER_EN}`,
     rationale: `Diaspora targeting (${city}) — long-stay incentive.`,
     estimatedReach: 120,

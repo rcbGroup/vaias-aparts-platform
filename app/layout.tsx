@@ -249,20 +249,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               email: "contact@vaiasaparts.ro",
               priceRange: "€€",
               currenciesAccepted: "RON, EUR",
-              paymentAccepted: "Cash, Credit Card, Bank Transfer",
+              paymentAccepted: "Cash, Bank Transfer", // WO4 WP3: Credit Card removed — unconfirmed (§8 #20)
               numberOfRooms: 7,
               checkinTime: "14:00",
               checkoutTime: "11:00",
-              petsAllowed: true,
+              petsAllowed: false, // WO4 WP3: pets policy unconfirmed (§8 #20) — removed until confirmed
               smokingAllowed: false,
               starRating: { "@type": "Rating", ratingValue: "4", bestRating: "5" },
-              aggregateRating: {
-                "@type": "AggregateRating",
-                ratingValue: "5.0",
-                reviewCount: "99",
-                bestRating: "5",
-                worstRating: "1"
-              },
+              // WO4 WP3.2: aggregateRating removed — self-published ratings earn no stars and may breach OUG 18/2026
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "Strada Sfântul Lazăr Nr. 1",
@@ -293,10 +287,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 { "@type": "LocationFeatureSpecification", name: "Air conditioning (Apartments 5 & 6)", value: true },
                 { "@type": "LocationFeatureSpecification", name: "Kitchen", value: true },
                 { "@type": "LocationFeatureSpecification", name: "Communal kitchen (Bucătăria pentru Toți)", value: true },
-                { "@type": "LocationFeatureSpecification", name: "CCTV 24/7", value: true },
+                // WO4 WP3: CCTV removed — unconfirmed (§8 #20)
                 { "@type": "LocationFeatureSpecification", name: "Pet-friendly", value: true },
                 { "@type": "LocationFeatureSpecification", name: "Family rooms", value: true },
-                { "@type": "LocationFeatureSpecification", name: "Wheelchair accessible (Apartment 7)", value: true },
+                // WO4 WP3: Wheelchair Apt 7 removed — unconfirmed (§8 #20)
                 { "@type": "LocationFeatureSpecification", name: "Smart TV in every apartment", value: true },
                 { "@type": "LocationFeatureSpecification", name: "Private bathroom in every apartment", value: true },
                 { "@type": "LocationFeatureSpecification", name: "Private terrace", value: true },

@@ -154,13 +154,7 @@ export default async function ApartmentPage({
     petsAllowed: true,
     smokingAllowed: false,
     starRating: { "@type": "Rating", ratingValue: "4", bestRating: "5" },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: apartment.rating.toFixed(1),
-      reviewCount: apartment.reviewsCount,
-      bestRating: "5",
-      worstRating: "1"
-    },
+    // WO4 WP3.2: aggregateRating removed — self-published ratings earn no stars
     address: {
       "@type": "PostalAddress",
       streetAddress: "Strada Sfântul Lazăr Nr. 1",
@@ -181,11 +175,7 @@ export default async function ApartmentPage({
     image: apartment.gallery.slice(0, 6),
     brand: { "@type": "Brand", name: "Vila Vaias Aparts" },
     sku: apartment.slug,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: apartment.rating.toFixed(1),
-      reviewCount: apartment.reviewsCount
-    },
+    // WO4 WP3.2: aggregateRating removed
     offers: {
       "@type": "Offer",
       url: `https://www.vaiasaparts.ro/apartments/${apartment.slug}`,
