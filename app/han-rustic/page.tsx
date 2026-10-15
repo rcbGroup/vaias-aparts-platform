@@ -20,6 +20,7 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: { canonical: "https://www.vaiasaparts.ro/han-rustic" },
 };
 
 const menuItems = [

@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Vacanță acasă în România | Cazare Târgu Neamț | Vaias Aparts",
   description: "Ești în diaspora și vrei să te întorci acasă cu stil? Vaias Aparts — apartamente boutique în Moldova, la mănăstiri și munte. Rezervă direct și economisești 5%.",
   keywords: ["cazare România diaspora", "vacanță Moldova", "Târgu Neamț", "mănăstiri Moldova", "apartamente boutique România"]
+  alternates: { canonical: "https://www.vaiasaparts.ro/diaspora" },
 };
 
 const countries = [
@@ -88,8 +89,8 @@ export default function DiasporaPage() {
               },
               {
                 icon: "🛏",
-                title: "Pat Emperor 2×2m",
-                text: "Toate paturile sunt Emperor size. Nu twin-urile strâmte din hoteluri — ci spațiu real, lenjerie de bumbac fin, somn adevărat."
+                title: "Pat Emperor 2×2m (Apts 1–6)",
+                text: "Paturi Emperor 2m×2m în 6 din 7 apartamente — cel mai mare pat standard. Lenjerie de bumbac fin, spațiu real, somn adevărat."
               },
               {
                 icon: "🍳",
@@ -254,7 +255,7 @@ export default function DiasporaPage() {
             Moldova te așteaptă.
           </h2>
           <p className="mt-5 font-serif text-xl text-cream-100/90">
-            7 apartamente boutique, Emperor size, la 2 minute de Cetatea Neamț. Rezervând direct economisești 5%.
+            7 apartamente boutique, la 2 minute de Cetatea Neamț. Pat Emperor 2m×2m în Apts 1–6; Apt 7 cu pat dublu standard. Rezervând direct beneficiezi de cele mai bune condiții.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link href="/rezervare" className="btn-primary bg-cream-50 text-forest-900 hover:bg-cream-100 hover:text-forest-900 text-lg px-8 py-4">

@@ -52,10 +52,8 @@ export const REVIEW_LINKS: Record<ReviewPlatform, PlatformLink> = {
     platform: "google",
     label: "Google Business",
     // Stable Google review URL — host may replace with a deeper share link.
-    url: env(
-      "REVIEW_URL_GOOGLE",
-      "https://search.google.com/local/writereview?placeid=ChIJVilaVaiasAparts",
-    ),
+    // WO4 WP3: ChIJVilaVaiasAparts is a fabricated Place ID — set REVIEW_URL_GOOGLE in Vercel to the real GBP short link (from §8 #24)
+    url: env("REVIEW_URL_GOOGLE", "https://www.google.com/maps/search/?api=1&query=Vila+Vaias+Aparts+Targu+Neamt"),
   },
   facebook: {
     platform: "facebook",

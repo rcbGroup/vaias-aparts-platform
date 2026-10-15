@@ -41,7 +41,7 @@ export async function generateMetadata({
   const a = getApartmentBySlug(slug);
   if (!a) return {};
   const title = `${a.name} Târgu Neamț — ${a.guests} oaspeți, ${a.bedrooms || 0} dormitor${(a.bedrooms || 0) === 1 ? "" : "e"} | Vila Vaias Aparts`;
-  const description = `${a.shortDescription} De la ${a.pricePerNightRON} RON/noapte. Booking 9.4, 99 recenzii Google 5.0. Rezervare directă WhatsApp +40 752 388 388.`;
+  const description = `${a.shortDescription} De la ${a.pricePerNightRON} RON/noapte. 4 stele (certificat nr. 35332). Rezervare directă WhatsApp +40 752 388 388.`;
   return {
     title,
     description,
@@ -151,16 +151,10 @@ export default async function ApartmentPage({
       name: a,
       value: true
     })),
-    petsAllowed: true,
+    // WO4 WP3: petsAllowed removed from JSON-LD — unconfirmed per §8 #20; policy stated in FAQ text
     smokingAllowed: false,
     starRating: { "@type": "Rating", ratingValue: "4", bestRating: "5" },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: apartment.rating.toFixed(1),
-      reviewCount: apartment.reviewsCount,
-      bestRating: "5",
-      worstRating: "1"
-    },
+    // WO4 WP3.2: aggregateRating removed — self-published ratings earn no stars
     address: {
       "@type": "PostalAddress",
       streetAddress: "Strada Sfântul Lazăr Nr. 1",
@@ -181,11 +175,7 @@ export default async function ApartmentPage({
     image: apartment.gallery.slice(0, 6),
     brand: { "@type": "Brand", name: "Vila Vaias Aparts" },
     sku: apartment.slug,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: apartment.rating.toFixed(1),
-      reviewCount: apartment.reviewsCount
-    },
+    // WO4 WP3.2: aggregateRating removed
     offers: {
       "@type": "Offer",
       url: `https://www.vaiasaparts.ro/apartments/${apartment.slug}`,
@@ -553,7 +543,7 @@ export default async function ApartmentPage({
             </div>
 
             {/* Trust note */}
-            <p className="text-xs text-stone-500 mt-2">🔒 CCTV 24/7 în zonele comune · Parcare gratuită · Animale acceptate la cerere</p>
+            <p className="text-xs text-stone-500 mt-2">🅿️ Parcare gratuită · 🐾 Animale acceptate la cerere</p>
 
             {/* Direct booking proposition */}
             <div className="rounded-xl bg-forest-50 border border-forest-200 p-4 mt-4">

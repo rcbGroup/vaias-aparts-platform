@@ -9,6 +9,7 @@ import { LanguageProvider } from "@/components/LanguageProvider";
 import MobileBookFab from "@/components/MobileBookFab";
 
 const ChatWidget = dynamic(() => import("@/components/ChatWidget"), { ssr: false });
+const CookieConsent = dynamic(() => import("@/components/CookieConsent").then(m => ({ default: m.CookieConsent })), { ssr: false });
 
 type Lang = "ro" | "en" | "fr" | "de" | "it" | "es";
 
@@ -136,8 +137,10 @@ export async function generateMetadata(): Promise<Metadata> {
       title: meta.ogTitle,
       description: meta.ogDesc
     },
+    // WO4 WP6: canonical removed from root layout — it was incorrectly setting all pages' canonical
+    // to the homepage URL. Each page must now define its own alternates.canonical.
+    // hreflang languages kept for site-wide signal (belt-and-suspenders alongside per-page hreflang).
     alternates: {
-      canonical: LANG_URLS[lang],
       languages: {
         ro: "https://www.vaiasaparts.ro",
         en: "https://www.vaiasaparts.ro/en",
@@ -170,6 +173,39 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="alternate" hrefLang="it" href="https://www.vaiasaparts.ro/it" />
         <link rel="alternate" hrefLang="es" href="https://www.vaiasaparts.ro/es" />
         <link rel="alternate" hrefLang="x-default" href="https://www.vaiasaparts.ro" />
+
+        {/* WO4 WP4: Google Consent Mode v2 — default denied until user accepts */}
+        <Script
+          id="consent-mode-defaults"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('consent', 'default', {
+                analytics_storage: 'denied',
+                ad_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied',
+                wait_for_update: 500,
+              });
+              // Restore consent if user previously accepted
+              if (typeof window !== 'undefined') {
+                try {
+                  var c = localStorage.getItem('vaias_cookie_consent');
+                  if (c === 'accepted') {
+                    gtag('consent', 'update', {
+                      analytics_storage: 'granted',
+                      ad_storage: 'granted',
+                      ad_user_data: 'granted',
+                      ad_personalization: 'granted',
+                    });
+                  }
+                } catch(e) {}
+              }
+            `,
+          }}
+        />
 
         {/* Google Analytics 4 */}
         {GA_MEASUREMENT_ID && (
@@ -224,6 +260,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Footer />
           <MobileBookFab />
           <ChatWidget />
+          <CookieConsent />
         </LanguageProvider>
         <script
           type="application/ld+json"
@@ -249,20 +286,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               email: "contact@vaiasaparts.ro",
               priceRange: "€€",
               currenciesAccepted: "RON, EUR",
-              paymentAccepted: "Cash, Credit Card, Bank Transfer",
+              paymentAccepted: "Cash, Bank Transfer", // WO4 WP3: Credit Card removed — unconfirmed (§8 #20)
               numberOfRooms: 7,
               checkinTime: "14:00",
               checkoutTime: "11:00",
-              petsAllowed: true,
+              petsAllowed: false, // WO4 WP3: pets policy unconfirmed (§8 #20) — removed until confirmed
               smokingAllowed: false,
               starRating: { "@type": "Rating", ratingValue: "4", bestRating: "5" },
-              aggregateRating: {
-                "@type": "AggregateRating",
-                ratingValue: "5.0",
-                reviewCount: "99",
-                bestRating: "5",
-                worstRating: "1"
-              },
+              // WO4 WP3.2: aggregateRating removed — self-published ratings earn no stars and may breach OUG 18/2026
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "Strada Sfântul Lazăr Nr. 1",
@@ -293,10 +324,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 { "@type": "LocationFeatureSpecification", name: "Air conditioning (Apartments 5 & 6)", value: true },
                 { "@type": "LocationFeatureSpecification", name: "Kitchen", value: true },
                 { "@type": "LocationFeatureSpecification", name: "Communal kitchen (Bucătăria pentru Toți)", value: true },
-                { "@type": "LocationFeatureSpecification", name: "CCTV 24/7", value: true },
+                // WO4 WP3: CCTV removed — unconfirmed (§8 #20)
                 { "@type": "LocationFeatureSpecification", name: "Pet-friendly", value: true },
                 { "@type": "LocationFeatureSpecification", name: "Family rooms", value: true },
-                { "@type": "LocationFeatureSpecification", name: "Wheelchair accessible (Apartment 7)", value: true },
+                // WO4 WP3: Wheelchair Apt 7 removed — unconfirmed (§8 #20)
                 { "@type": "LocationFeatureSpecification", name: "Smart TV in every apartment", value: true },
                 { "@type": "LocationFeatureSpecification", name: "Private bathroom in every apartment", value: true },
                 { "@type": "LocationFeatureSpecification", name: "Private terrace", value: true },

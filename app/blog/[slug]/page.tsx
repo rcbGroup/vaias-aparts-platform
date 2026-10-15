@@ -197,7 +197,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 Planifică-ți vacanța la Vaias Aparts.
               </h3>
               <p className="mt-4 font-serif text-lg text-cream-100/85">
-                7 apartamente cu paturi Emperor 2m×2m, bucătărie proprie și parcare gratuită. Rezervare directă = cel mai bun preț.
+                7 apartamente boutique, bucătărie proprie și parcare gratuită. Rezervare directă = cele mai bune condiții.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link href="/rezervare" className="btn-primary bg-cream-50 text-forest-900 hover:bg-cream-100 hover:text-forest-900">

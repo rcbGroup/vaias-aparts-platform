@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     "teambuilding Moldova",
     "digital nomad România",
   ],
+  alternates: { canonical: "https://www.vaiasaparts.ro/packages" },
 };
 
 const FILTER_TABS = [

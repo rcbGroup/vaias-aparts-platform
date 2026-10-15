@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     "tichete vacanță Moldova",
     "cazare cu vouchere mănăstiri",
   ],
+  alternates: { canonical: "https://www.vaiasaparts.ro/vouchere-vacanta" },
 };
 
 const providers = [

@@ -1,5 +1,11 @@
 "use client";
 
+import type { Metadata } from "next";
+export const metadata: Metadata = {
+  alternates: { canonical: "https://www.vaiasaparts.ro/apartamente" },
+};
+
+
 import { apartments } from "@/lib/apartments";
 import ApartmentCard from "@/components/ApartmentCard";
 import PageHero from "@/components/PageHero";

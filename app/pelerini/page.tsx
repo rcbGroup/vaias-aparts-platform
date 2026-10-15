@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Cazare pelerini mănăstiri Moldova | Vaias Aparts Târgu Neamț",
   description: "Cazare boutique pentru pelerinii care vizitează mănăstirile Moldovei — Agapia, Văratec, Neamț, Secu, Sihăstria. La 30 de minute de mănăstirile din Neamț.",
   keywords: ["cazare pelerini Moldova", "mănăstiri Neamț cazare", "Agapia Văratec cazare", "pelerinaj Moldova", "retragere spirituală Neamț"]
+  alternates: { canonical: "https://www.vaiasaparts.ro/pelerini" },
 };
 
 const monasteries = [
@@ -93,7 +94,7 @@ export default function PeleriniPage() {
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {[
               { icon: "🌿", title: "Liniște și pace", text: "Fără petreceri, fără zgomot. Apartamente independente cu atmosphere de retragere." },
-              { icon: "🛏", title: "Odihnă reală", text: "Pat Emperor 2×2m, lenjerie de bumbac, somn adânc după o zi de pelerinaj." },
+              { icon: "🛏", title: "Odihnă reală", text: "Pat Emperor 2×2m în Apts 1–6, lenjerie de bumbac, somn adânc după o zi de pelerinaj." },
               { icon: "🍳", title: "Bucătărie echipată", text: "Kitchen for All — gătiți ce doriți: post, mâncare de casă sau micul dejun devreme." },
               { icon: "⏰", title: "Check-in flexibil", text: "Ajungeți după slujba de seară? Ne sunați și intrarea se face autonom, oricând." },
               { icon: "🚗", title: "Parcare sigură", text: "Parcare privată în curte, gratuită. Porniți la mănăstiri oricând." },

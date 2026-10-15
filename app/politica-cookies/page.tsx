@@ -4,6 +4,7 @@ import PageHero from "@/components/PageHero";
 export const metadata: Metadata = {
   title: "Politică Cookies | Vila Vaias Aparts",
   description: "Politica privind cookies pe site-ul Vila Vaias Aparts. Operator: VAIA RUSTIC SRL, CUI 36258605."
+  alternates: { canonical: "https://www.vaiasaparts.ro/politica-cookies" },
 };
 
 export default function CookiesPage() {

@@ -4,6 +4,7 @@ import PageHero from "@/components/PageHero";
 export const metadata: Metadata = {
   title: "Termeni și Condiții | Vila Vaias Aparts",
   description: "Termeni și condiții de rezervare și cazare la Vila Vaias Aparts Târgu Neamț. VAIA RUSTIC SRL, CUI 36258605."
+  alternates: { canonical: "https://www.vaiasaparts.ro/termeni-conditii" },
 };
 
 export default function TermsPage() {
@@ -46,16 +47,21 @@ export default function TermsPage() {
                 <li>Plata se efectuează în lei (RON). Factura fiscală se emite în RON.</li>
                 <li>Acceptăm card (Visa, Mastercard), transfer bancar, numerar și tichete de vacanță (Pluxee, Up Romania, Edenred).</li>
                 <li>Factura fiscală se emite la check-out, la cerere.</li>
+                <li><strong>Taxă de stațiune:</strong> conform HCL Târgu Neamț — se achită la check-in, per oaspete adult per noapte. Valoarea taxei se comunică la rezervare.</li>
               </ul>
             </Section>
 
             <Section title="4. Anulare și modificare">
               <ul className="list-disc pl-6 space-y-1.5">
-                <li>Anulare gratuită cu min. 7 zile înainte de check-in — acont integral rambursat.</li>
-                <li>Anulare cu 3-7 zile înainte — acont reținut.</li>
-                <li>Anulare cu mai puțin de 3 zile sau no-show — se plătește integral prima noapte.</li>
-                <li>Modificările datelor sunt gratuite cu min. 7 zile înainte, sub rezerva disponibilității.</li>
+                <li>Anulare gratuită cu <strong>mai mult de 7 zile</strong> înainte de check-in — acontul se rambursează integral.</li>
+                <li>Anulare cu <strong>3–6 zile</strong> înainte de check-in — acontul se reține.</li>
+                <li>Anulare cu <strong>mai puțin de 3 zile</strong> sau neprezentare (no-show) — se facturează integral prima noapte de cazare.</li>
+                <li>Modificările datelor (decalare, scurtare) sunt gratuite cu min. 7 zile înainte, sub rezerva disponibilității.</li>
               </ul>
+              <p className="text-sm text-stone-500 mt-2">
+                {/* OUG 34/2014 art. 16 lit. l */}
+                Serviciile de cazare pentru o perioadă determinată nu beneficiază de dreptul de retragere de 14 zile prevăzut de OUG 34/2014. Prezentele condiții de anulare se aplică integral.
+              </p>
             </Section>
 
             <Section title="5. Check-in și check-out">
@@ -102,10 +108,23 @@ export default function TermsPage() {
               </p>
             </Section>
 
-            <Section title="10. Reclamații">
+            <Section title="10. Reclamații și soluționarea alternativă a litigiilor">
               <p>
                 Orice reclamație se poate face în timpul sejurului către gazdă sau, ulterior,
-                la <strong>contact@vaiasaparts.ro</strong>. Răspundem în maxim 14 zile. ANPC: anpc.ro.
+                la <strong>contact@vaiasaparts.ro</strong>. Răspundem în maxim 14 zile lucrătoare.
+              </p>
+              <p className="mt-2">
+                Dacă reclamația nu se soluționează pe cale amiabilă, aveți dreptul de a vă adresa{" "}
+                <strong>Autorității Naționale pentru Protecția Consumatorilor (ANPC)</strong> la{" "}
+                <a href="https://anpc.ro" className="underline">anpc.ro</a>{" "}
+                sau platformei de soluționare alternativă a litigiilor (SAL) la{" "}
+                <a href="https://reclamatiisal.anpc.ro" className="underline">reclamatiisal.anpc.ro</a>.
+              </p>
+              <p className="mt-2">
+                Platforma europeană de soluționare online a litigiilor (ODR) este disponibilă la{" "}
+                <a href="https://ec.europa.eu/consumers/odr" className="underline" target="_blank" rel="noopener noreferrer">
+                  ec.europa.eu/consumers/odr
+                </a>.
               </p>
             </Section>
 

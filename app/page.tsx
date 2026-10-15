@@ -74,10 +74,10 @@ export default function HomePage() {
         <div className="container-x grid gap-8 md:grid-cols-4 text-center">
           {[
             { v: "7", l: t("stats.apartments") },
-            { v: "9.4", l: "Booking.com" },
-            { v: "99", l: t("stats.reviews") },
-            { v: "5.0", l: t("stats.rating") }
-          ].map((s, i) => (
+            // WO4 WP3.1: Removed unverified "9.4 Booking.com", "99 reviews", "5.0 rating"
+            // from stats strip. These scores must be fetched and stored in property-facts.ts
+            // with source URL and date before being re-added.
+          ].filter(Boolean).map((s, i) => (
             <ScrollFade key={s.l} delay={i * 80}>
               <div className="font-display text-4xl text-walnut-500 mb-1">{s.v}</div>
               <div className="text-xs uppercase tracking-[0.28em] text-stone-500">{s.l}</div>
@@ -358,7 +358,7 @@ export default function HomePage() {
             <SectionHeader
               eyebrow="De ce ne aleg oaspeții"
               title="Experiența Vila Vaias Aparts"
-              subtitle="99 recenzii Google cu 5.0 stele. Iată ce apreciază cel mai mult oaspeții noștri."
+              subtitle="Iată ce apreciază cel mai mult oaspeții care au ales Vila Vaias Aparts."
             />
           </ScrollFade>
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -401,13 +401,10 @@ export default function HomePage() {
                 <div className="flex items-center gap-2 mb-2 flex-wrap">
                   <span className="text-amber-400">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
                   <span className="font-bold text-stone-900">5.0</span>
-                  <span className="text-stone-400 text-sm">&middot;</span>
-                  <span className="text-stone-500 text-sm">{lang !== "en" ? "99 recenzii Google" : "99 Google reviews"}</span>
-                  <span className="text-stone-400 text-sm">&middot;</span>
-                  <span className="font-semibold text-sky-700 text-sm">9.4 Booking.com</span>
+                  {/* WO4 WP3.1: unverified "99 recenzii / 9.4" removed — will be re-added from property-facts.ts with date */
                 </div>
                 <h2 className="font-display text-2xl sm:text-3xl text-stone-900">
-                  {lang !== "en" ? "Ce spun oaspeţii noştri." : "What our guests say."}
+                  {lang !== "en" ? "Ce spun oaspeții noștri." : "What our guests say."}
                 </h2>
               </div>
               <Link href="/recenzii" className="text-walnut-600 text-sm font-medium hover:text-walnut-800 transition-colors whitespace-nowrap">
@@ -415,30 +412,24 @@ export default function HomePage() {
               </Link>
             </div>
           </ScrollFade>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              { name: "Andrei & Raluca", loc: "Bucureşti", platform: "Booking", qRo: "Preţul direct a fost cu 20% mai mic faţă de Booking. Apartament privat, pat Emperor de 2m×2m, şi Anca ne-a recomandat restaurante pe care nu le-am fi găsit singuri.", qEn: "The direct price was 20% cheaper than Booking. Private apartment, 2m×2m Emperor bed, and Anca recommended restaurants we’d never have found alone." },
-              { name: "Daniela M.", loc: "Iaşi", platform: "Google", qRo: "Gazde minunate, comunicare rapidă pe WhatsApp, totul perfect pregătit. Apartamentul arată exact ca în poze, poate chiar mai frumos.", qEn: "Wonderful hosts, quick WhatsApp responses, everything perfectly prepared. The apartment looks exactly like the photos, maybe even more beautiful." },
-              { name: "Alexandru V.", loc: "Suceava", platform: "Google", qRo: "Am venit cu câinele (animale acceptate, fără taxă suplimentară!) şi am avut o experienţă perfectă. Vasi a dat sfaturi excelente pentru trasee.", qEn: "Came with my dog (pets accepted, no extra charge!) and had a perfect experience. Vasi gave excellent tips for local trails." },
-              { name: "Familia Rusu", loc: "Bacău", platform: "Google", qRo: "Locul perfect pentru o vacanţă de familie. 2 dormitoare, 67mp — tot al tău. Fără recepţie, fără alţi turişti pe hol. Copiii au adorat.", qEn: "Perfect for a family holiday. 2 bedrooms, 67sqm — all yours. No reception, no other tourists in the hallway. The kids loved it." },
-            ].map((q) => (
-              <ScrollFade key={q.name}>
-                <div className="bg-stone-50 border border-stone-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-amber-400 text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-                    <span className="text-xs text-stone-400 bg-white px-1.5 py-0.5 rounded-full border border-stone-100">{q.platform}</span>
-                  </div>
-                  <blockquote className="text-stone-600 text-sm leading-relaxed flex-1 mb-4">&ldquo;{lang !== "en" ? q.qRo : q.qEn}&rdquo;</blockquote>
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-walnut-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">{q.name[0]}</div>
-                    <div>
-                      <div className="text-xs font-semibold text-stone-800">{q.name}</div>
-                      <div className="text-xs text-stone-400">{q.loc}</div>
-                    </div>
-                  </div>
-                </div>
-              </ScrollFade>
-            ))}
+          {/* WO4 WP3.1: Composite review cards removed (authored to represent real reviews, not verbatim quotes).
+              Verbatim quotes added only when Vasi supplies them with platform source links (§8 #9). */}
+          <div className="text-center py-8">
+            <p className="text-stone-500 text-sm">
+              {lang !== "en"
+                ? "Afișăm recenzii direct de pe platforme. Citiți recenziile noastre pe Google și Booking.com."
+                : "We display reviews directly from platforms. Read our reviews on Google and Booking.com."}
+            </p>
+            <div className="flex flex-wrap justify-center gap-3 mt-4">
+              <a href="https://share.google/iFsW4iUjwIDgkgwZm" target="_blank" rel="noopener noreferrer"
+                className="text-sm text-walnut-600 hover:text-walnut-800 underline">
+                {lang !== "en" ? "Recenzii Google →" : "Google Reviews →"}
+              </a>
+              <a href="https://www.booking.com/hotel/ro/vaias-aparts-targu-neamt.html" target="_blank" rel="noopener noreferrer"
+                className="text-sm text-sky-600 hover:text-sky-800 underline">
+                Booking.com →
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -570,7 +561,7 @@ export default function HomePage() {
                 num: "01",
                 title: "Vila Vaias Aparts",
                 subtitle: "7 apartamente boutique",
-                desc: "Cea mai bine notată cazare din Târgu Neamț. 99 de recenzii Google la 5.0 stele. Booking.com 9.4. Fiecare apartament — un spațiu al tău.",
+                desc: "Vila Vaias Aparts — 7 apartamente boutique în Târgu Neamț, clasificare 4 stele. Rezervare directă disponibilă.",
                 cta: "Alege apartamentul",
                 href: "/apartments",
                 photo: "/gallery/vila-vaias-aparts-targu-neamt-exterior-fatada-1.jpg"
@@ -821,7 +812,7 @@ export default function HomePage() {
             {[
               {
                 q: "Care este cea mai bună cazare din Târgu Neamț?",
-                a: "Vila Vaias Aparts este cea mai bine notată cazare din Târgu Neamț — Booking.com 9.4 și 99 de recenzii Google la 5.0 stele. 7 apartamente boutique independente, fiecare cu baie privată și (cu o singură excepție) bucătărie proprie. Clasificare 4 stele, certificat 35332."
+                a: "Vila Vaias Aparts are 7 apartamente boutique independente în Târgu Neamț, fiecare cu baie privată și (cu o singură excepție) bucătărie proprie. Clasificare 4 stele, certificat 35332."
               },
               {
                 q: "Cât costă o noapte la Vila Vaias Aparts?",
@@ -875,7 +866,7 @@ export default function HomePage() {
                 {
                   "@type": "Question",
                   name: "Care este cea mai bună cazare din Târgu Neamț?",
-                  acceptedAnswer: { "@type": "Answer", text: "Vila Vaias Aparts este cea mai bine notată cazare din Târgu Neamț — Booking.com 9.4 și 99 de recenzii Google la 5.0 stele. 7 apartamente boutique independente, clasificare 4 stele, certificat 35332." }
+                  acceptedAnswer: { "@type": "Answer", text: "Vila Vaias Aparts are 7 apartamente boutique independente în Târgu Neamț. Clasificare 4 stele, certificat 35332." }
                 },
                 {
                   "@type": "Question",

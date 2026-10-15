@@ -197,8 +197,7 @@ export default function CumAjungiPage() {
             Indiferent unde ești în Europa — la noi e mai aproape decât crezi.
           </p>
           <div className="mt-8 flex flex-wrap gap-3 items-center text-sm text-cream-100/85">
-            <span className="inline-flex items-center gap-1 rounded-full bg-cream-50/10 border border-cream-50/20 px-3 py-1.5">⭐ Booking.com 9.4</span>
-            <span className="inline-flex items-center gap-1 rounded-full bg-cream-50/10 border border-cream-50/20 px-3 py-1.5">⭐ 5.0 · 99 Google</span>
+            {/* WO4 WP3: score badges removed — unverified */}
             <span className="inline-flex items-center gap-1 rounded-full bg-cream-50/10 border border-cream-50/20 px-3 py-1.5">🏛 4 stele · Cert. 35332</span>
             <span className="inline-flex items-center gap-1 rounded-full bg-walnut-500/90 border border-walnut-500 text-cream-50 px-3 py-1.5 font-semibold">✈ Cel mai apropiat aeroport: Suceava 60 km</span>
           </div>
@@ -297,7 +296,7 @@ export default function CumAjungiPage() {
                 Vila Vaias Aparts — de la 297 lei / noapte
               </div>
               <div className="text-sm text-stone-600 mt-1">
-                7 apartamente boutique, pat Emperor 2×2m, parcare gratuită, ultracentral. Reducere 25% la 7+ nopți.
+                7 apartamente boutique, parcare gratuită, ultracentral. Condiții speciale la sejururi de 7+ nopți.
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-2">
@@ -402,7 +401,7 @@ export default function CumAjungiPage() {
 
           <div className="mt-14 text-center">
             <Link href="/rezervare" className="btn-primary bg-cream-50 text-forest-900 hover:bg-cream-100 hover:text-forest-900 text-base px-8 py-4">
-              Rezervă acum — cel mai mic preț garantat
+              Rezervă acum — rezervare directă
             </Link>
           </div>
         </div>
@@ -510,7 +509,7 @@ export default function CumAjungiPage() {
             Rezervă acum — și ne vedem la aeroport.
           </h2>
           <p className="mt-5 font-serif text-xl text-cream-100/90 max-w-2xl mx-auto">
-            7 apartamente boutique. Pat Emperor 2×2m. Ultracentral în Târgu Neamț, la poalele Cetății Neamțului.
+            7 apartamente boutique. Ultracentral în Târgu Neamț, la poalele Cetății Neamțului.
             Reduceri până la 25% — rezervând direct economisești și cele 5% comision OTA.
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">

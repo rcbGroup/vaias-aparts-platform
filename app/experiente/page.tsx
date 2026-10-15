@@ -19,6 +19,7 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: { canonical: "https://www.vaiasaparts.ro/experiente" },
 };
 
 export default function ExperientsePage() {

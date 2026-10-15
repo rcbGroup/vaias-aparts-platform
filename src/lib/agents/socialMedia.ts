@@ -88,9 +88,9 @@ function apartmentShowcaseCaption(input: SocialPostInputs): string {
   const apt = input.apartmentSlug ? getApartmentBySlug(input.apartmentSlug) : apartments[0];
   if (!apt) return "Vila Vaias Aparts — apartamente boutique în Târgu Neamț.";
   if (input.language === "en") {
-    return `${apt.name} — ${apt.tagline}.\n\n${apt.descriptionEN.slice(0, 300)}...\n\nDirect booking at vaiasaparts.ro — best price guaranteed.`;
+    return `${apt.name} — ${apt.tagline}.\n\n${apt.descriptionEN.slice(0, 300)}...\n\nDirect booking at vaiasaparts.ro — best conditions for direct bookings.`;
   }
-  return `${apt.name} — ${apt.tagline}.\n\n${apt.shortDescription}\n\nDirect bookings la vaiasaparts.ro — cel mai bun preț garantat. 📲 WhatsApp ${PHONE_PRIMARY_DISPLAY}.`;
+  return `${apt.name} — ${apt.tagline}.\n\n${apt.shortDescription}\n\nRezervare directă la vaiasaparts.ro — cele mai bune condiții. 📲 WhatsApp ${PHONE_PRIMARY_DISPLAY}.`;
 }
 
 function reviewRepostCaption(input: SocialPostInputs): string {

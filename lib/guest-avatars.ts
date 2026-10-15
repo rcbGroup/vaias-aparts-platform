@@ -12,7 +12,7 @@ export const guestAvatars: GuestAvatar[] = [
     id: "families",
     icon: "👨‍👩‍👧‍👦",
     titleRO: "Familii cu copii",
-    descriptionRO: "Apartamente spațioase cu pat Emperor, bucătărie proprie și parcare gratuită în curte. Aer curat, spațiu de joacă și liniște — vacanță adevărată pentru toată familia.",
+    descriptionRO: "Apartamente spațioase (pat Emperor în 6 din 7), bucătărie proprie și parcare gratuită în curte. Aer curat, spațiu de joacă și liniște — vacanță adevărată pentru toată familia.",
     ctaTextRO: "Rezervă pentru familie",
     whatsappMessageRO: "Bună ziua! Suntem o familie cu copii și dorim să rezervăm un apartament la Vila Vaias Aparts. Datele: [DATA CHECK-IN] – [DATA CHECK-OUT], [NR] adulți, [NR] copii (vârste: [VÂRSTE]). Vă rog să ne comunicați disponibilitatea."
   },

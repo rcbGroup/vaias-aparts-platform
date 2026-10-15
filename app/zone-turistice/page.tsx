@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Zone turistice — atracții la o oră de Vaias Aparts",
   description:
     "Cetatea Neamț, mănăstirile Neamț, Agapia, Văratec, Secu, Sihăstria și Bistrița, Masivul Ceahlău, Durău, Cheile Bicazului și Lacul Roșu, rezervația de zimbri Vânători-Neamț, Piatra Neamț și casa lui Creangă — toate la o oră de noi."
+  alternates: { canonical: "https://www.vaiasaparts.ro/zone-turistice" },
 };
 
 const categoryLabels: { key: string; label: string }[] = [

@@ -37,15 +37,15 @@ export const landingPages: LandingPage[] = [
     slug: "cazare-targu-neamt",
     hero: {
       eyebrow: "Cazare în Târgu Neamț",
-      title: "Cea mai bine notată cazare din Târgu Neamț — 7 apartamente boutique.",
+      title: "7 apartamente boutique 4 stele în centrul Târgu Neamțului.",
       subtitle:
-        "Booking.com 9.4 · 99 recenzii Google 5.0 · Ultracentral, lângă Cetatea Neamțului. Rezervare directă — fără comision OTA.",
+        "Ultracentral, lângă Cetatea Neamțului. Rezervare directă — fără comision OTA.",
       image: VILLA_PHOTO_2
     },
     meta: {
-      title: "Cazare Târgu Neamț — Vila Vaias Aparts | 7 apartamente boutique, 9.4 Booking",
+      title: "Cazare Târgu Neamț — Vila Vaias Aparts | 7 apartamente boutique 4 stele",
       description:
-        "Cazare în Târgu Neamț la Vila Vaias Aparts — 7 apartamente boutique ultracentral, Booking.com 9.4, 99 recenzii Google 5.0. Parcare gratuită, WiFi rapid, animale acceptate. Rezervare directă — cel mai bun preț.",
+        "Cazare în Târgu Neamț la Vila Vaias Aparts — 7 apartamente boutique 4 stele, ultracentral. Parcare gratuită, WiFi rapid, animale acceptate. Rezervare directă.",
       keywords: [
         "cazare Targu Neamt",
         "cazare Târgu Neamț",
@@ -58,9 +58,9 @@ export const landingPages: LandingPage[] = [
       ]
     },
     intro: {
-      heading: "De ce Vila Vaias Aparts este alegerea numărul 1 pentru cazare în Târgu Neamț",
+      heading: "De ce să alegeți Vila Vaias Aparts pentru cazare în Târgu Neamț",
       body: [
-        "Vila Vaias Aparts oferă 7 apartamente boutique independente, în centrul orașului Târgu Neamț, la doar 5 minute cu mașina de Cetatea Neamțului și la 30 de minute de mănăstirile Agapia și Văratec. Suntem clasificați 4 stele (certificat 35332/2023) și recunoscuți drept cea mai bine notată cazare din zonă: 9.4 pe Booking.com și 99 de recenzii Google la 5.0 stele.",
+        "Vila Vaias Aparts oferă 7 apartamente boutique independente, în centrul orașului Târgu Neamț, la doar 5 minute cu mașina de Cetatea Neamțului și la 30 de minute de mănăstirile Agapia și Văratec. Suntem clasificați 4 stele (certificat nr. 35332/2023).",
         "Spre deosebire de o pensiune obișnuită, fiecare apartament are propria intrare, baie privată, bucătărie complet utilată (sau acces la Bucătăria pentru Toți la Apartament 7) și terasă. Aveți intimitatea unui apartament închiriat și grija unei familii care gestionează personal vila. Parcarea în curte este gratuită, WiFi-ul de mare viteză este inclus, iar animalele de companie sunt bine venite, fără cost suplimentar.",
         "Rezervând direct pe WhatsApp sau telefon, evitați comisionul de 15–25% al platformelor de rezervare. Cel mai bun preț — direct la noi. Confirmare în câteva ore între 08:00 și 22:00."
       ]
@@ -79,12 +79,12 @@ export const landingPages: LandingPage[] = [
       { title: "Cel mai bun preț — direct la noi", text: "Rezervând prin WhatsApp sau telefon, evitați comisionul OTA de 15–25%. Prețul rămâne între noi." },
       { title: "Confirmare în câteva ore", text: "Răspundem pe WhatsApp de regulă în câteva ore, între 08:00 și 22:00. Fără robot — direct cu familia care gestionează vila." },
       { title: "Self check-in cu ghidaj", text: "Veniți la orice oră după 14:00 — vă întâmpinăm sau vă transmitem instrucțiunile, cum vă este mai comod." },
-      { title: "Flexibilitate pentru cereri speciale", text: "Pat suplimentar pentru copil, transfer de la gara Paşcani, sfaturi despre mănăstiri — întrebați liber." }
+      { title: "Flexibilitate pentru cereri speciale", text: "Pat suplimentar pentru copil, transfer de la gara Pașcani, sfaturi despre mănăstiri — întrebați liber." }
     ],
     faqs: [
       {
         q: "Care este cea mai bună cazare din Târgu Neamț?",
-        a: "Vila Vaias Aparts este cea mai bine notată cazare din Târgu Neamț, cu scor 9.4 pe Booking.com și 99 de recenzii Google la 5.0 stele. Oferă 7 apartamente boutique independente, clasificate 4 stele (certificat nr. 35332)."
+        a: "Vila Vaias Aparts oferă 7 apartamente boutique independente în centrul Târgu Neamțului, clasificate 4 stele (certificat nr. 35332). Parcarea este gratuită, WiFi-ul rapid este inclus, iar animalele de companie sunt acceptate la cerere."
       },
       {
         q: "Cât costă cazarea la Vila Vaias Aparts în Târgu Neamț?",
@@ -96,7 +96,7 @@ export const landingPages: LandingPage[] = [
       },
       {
         q: "Are Vila Vaias Aparts parcare?",
-        a: "Da, parcarea este gratuită în curtea vilei pentru toți oaspeții, în limita locurilor disponibile (primul venit, primul servit). Curtea este monitorizată CCTV 24/7."
+        a: "Da, parcarea este gratuită în curtea vilei pentru toți oaspeții, în limita locurilor disponibile (primul venit, primul servit)."
       },
       {
         q: "Acceptați animale de companie?",
@@ -120,13 +120,13 @@ export const landingPages: LandingPage[] = [
       eyebrow: "Cazare lângă Cetatea Neamțului",
       title: "La 5 minute de Cetatea lui Ștefan cel Mare.",
       subtitle:
-        "Vila Vaias Aparts — 7 apartamente boutique ultracentrale, doar 5 km de Cetatea Neamțului. Booking 9.4 · 99 recenzii Google 5.0.",
+        "Vila Vaias Aparts — 7 apartamente boutique 4 stele, ultracentrale, doar 5 km de Cetatea Neamțului.",
       image: VILLA_PHOTO_4
     },
     meta: {
       title: "Cazare lângă Cetatea Neamțului — Vila Vaias Aparts | 5 km, ultracentral",
       description:
-        "Cazare la 5 km de Cetatea Neamțului, cetatea medievală a lui Ștefan cel Mare. Vila Vaias Aparts — 7 apartamente boutique, parcare gratuită, animale acceptate. Booking 9.4.",
+        "Cazare la 5 km de Cetatea Neamțului, cetatea medievală a lui Ștefan cel Mare. Vila Vaias Aparts — 7 apartamente boutique 4 stele, parcare gratuită, animale acceptate.",
       keywords: [
         "cazare Cetatea Neamtului",
         "cazare langa Cetatea Neamtului",
@@ -189,7 +189,7 @@ export const landingPages: LandingPage[] = [
     meta: {
       title: "Cazare Mănăstirea Agapia — Vila Vaias Aparts | 30 min, boutique 4★",
       description:
-        "Cazare la 30 min de Mănăstirea Agapia, cu picturile lui Nicolae Grigorescu. Vila Vaias Aparts — apartamente boutique 4 stele în Târgu Neamț. 99 recenzii Google 5.0.",
+        "Cazare la 30 min de Mănăstirea Agapia, cu picturile lui Nicolae Grigorescu. Vila Vaias Aparts — apartamente boutique 4 stele în Târgu Neamț.",
       keywords: [
         "cazare Manastirea Agapia",
         "cazare langa Agapia",
@@ -202,7 +202,7 @@ export const landingPages: LandingPage[] = [
       heading: "Mănăstirea Agapia la 30 de minute — refugiul ideal pentru pelerini",
       body: [
         "Mănăstirea Agapia este una dintre comorile spirituale ale Moldovei — peste 300 de monahii trăiesc aici, în case albe risipite pe dealuri. Pictura interioară a fost realizată în 1858 de Nicolae Grigorescu, atunci tânăr de 20 de ani. La doar 30 de minute cu mașina, Vila Vaias Aparts este punctul ideal de pornire.",
-        "Spre deosebire de chiliile mănăstirești, la noi aveți un apartament propriu — pat Emperor moale, baie privată, bucătărie. Vă întoarceți din slujbă, vă faceți un ceai, vă liniștiți. A doua zi sunteți gata pentru un nou drum prin mănăstiri.",
+        "Spre deosebire de chiliile mănăstirești, la noi aveți un apartament propriu — pat confortabil, baie privată, bucătărie. Vă întoarceți din slujbă, vă faceți un ceai, vă liniștiți. A doua zi sunteți gata pentru un nou drum prin mănăstiri.",
         "Itinerarul recomandat pelerinilor: Agapia (30 min), Văratec (35 min), Sihăstria (45 min, mormântul Părintelui Cleopa), Mănăstirea Neamț (15 min). Vă putem da o foaie de drum în prima zi."
       ]
     },
@@ -256,7 +256,7 @@ export const landingPages: LandingPage[] = [
     meta: {
       title: "Cazare Mănăstirea Văratec — Vila Vaias Aparts | 35 min boutique 4★",
       description:
-        "Cazare la 35 min de Mănăstirea Văratec, cea mai mare mănăstire de maici din România. Vila Vaias Aparts — 7 apartamente boutique, Booking 9.4, animale acceptate.",
+        "Cazare la 35 min de Mănăstirea Văratec, cea mai mare mănăstire de maici din România. Vila Vaias Aparts — 7 apartamente boutique 4 stele, animale acceptate.",
       keywords: [
         "cazare Manastirea Varatec",
         "cazare langa Varatec",
@@ -317,7 +317,7 @@ export const landingPages: LandingPage[] = [
     meta: {
       title: "Cazare Mănăstirea Neamț — Vila Vaias Aparts | 15 min, boutique 4★",
       description:
-        "Cazare la 15 min de Mănăstirea Neamț, cea mai veche mănăstire din Moldova. Vila Vaias Aparts — boutique 4 stele, Booking 9.4, parcare gratuită, WiFi rapid.",
+        "Cazare la 15 min de Mănăstirea Neamț, cea mai veche mănăstire din Moldova. Vila Vaias Aparts — boutique 4 stele, parcare gratuită, WiFi rapid.",
       keywords: [
         "cazare Manastirea Neamt",
         "cazare langa Manastirea Neamt",
@@ -378,7 +378,7 @@ export const landingPages: LandingPage[] = [
     meta: {
       title: "Cazare aproape de Ceahlău — Vila Vaias Aparts | 45 min, 4★ boutique",
       description:
-        "Cazare la 45 min de masivul Ceahlău, muntele sfânt al dacilor. Vila Vaias Aparts — apartamente boutique 4 stele, parcare gratuită, WiFi rapid. Booking 9.4.",
+        "Cazare la 45 min de masivul Ceahlău, muntele sfânt al dacilor. Vila Vaias Aparts — apartamente boutique 4 stele, parcare gratuită, WiFi rapid.",
       keywords: [
         "cazare Ceahlau",
         "cazare aproape de Ceahlau",

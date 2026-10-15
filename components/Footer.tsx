@@ -154,11 +154,20 @@ export default function Footer() {
           <div>
             © {new Date().getFullYear()} Vila Vaias Aparts · Vaia Rustic SRL · CUI 36258605 · J27/603/2016 · Clasificare: 4 stele · Certificat nr. 35332/20.07.2023 · {t("footer.rights")}
           </div>
-          <div className="flex gap-6">
+          <div className="flex gap-6 flex-wrap">
             <Link href="/politica-confidentialitate" className="hover:text-cream-50">{t("footer.privacy")}</Link>
             <Link href="/termeni-conditii" className="hover:text-cream-50">{t("footer.terms")}</Link>
             <Link href="/politica-cookies" className="hover:text-cream-50">{t("footer.cookies")}</Link>
             <Link href="/credite-foto" className="hover:text-cream-50">{t("footer.photoCredits")}</Link>
+            <a
+              href="https://reclamatiisal.anpc.ro"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-cream-50"
+              title="Soluționarea alternativă a litigiilor — ANPC SAL"
+            >
+              SAL / ANPC
+            </a>
           </div>
         </div>
       </div>

@@ -334,7 +334,7 @@ export const airports: Airport[] = [
       {
         label: "Mașină",
         description:
-          "DN15 + DN15B prin Topliţa, Borsec, Vatra Dornei — 4h 30min. Drum spectaculos prin munți."
+          "DN15 + DN15B prin Toplița, Borsec, Vatra Dornei — 4h 30min. Drum spectaculos prin munți."
       },
       {
         label: "Rent-a-car",
@@ -988,7 +988,7 @@ export const cityBreakOrigins: CityBreakOrigin[] = [
     flag: "🇩🇪",
     airport: { iata: "IAS", slug: "iasi-ias", name: "Iași" },
     pitch:
-      "Lufthansa Frankfurt → Iași zilnic. Confort business class, pat Emperor 2×2m la Vaias.",
+      "Lufthansa Frankfurt → Iași zilnic. Confort business class. Cazare boutique la Vaias Aparts.",
     nights: "3–5 nopți",
     fromPriceEUR: 70,
     whatsappMessage:

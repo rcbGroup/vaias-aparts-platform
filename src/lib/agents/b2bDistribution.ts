@@ -94,7 +94,7 @@ export function outreachRomanianAgency(ctx: OutreachContext): { subject: string;
     subject: `Parteneriat ${ctx.partner.name} ↔ Vila Vaias Aparts — comision ${comm}%`,
     body: `${greet}
 
-Mă numesc Vasile Jiboc, fondator al Vilei Vaias Aparts — 7 apartamente boutique situate ultracentral în Târgu Neamț, la 15 minute de mănăstirile Agapia, Văratec și Neamț.
+Vă scriem din partea Echipei Vaias Aparts — 7 apartamente boutique situate ultracentral în Târgu Neamț, la 15 minute de mănăstirile Agapia, Văratec și Neamț.
 
 Vă scriu pentru că mulți dintre clienții ${ctx.partner.name} ar putea fi interesați de un sejur în zona noastră — circuit mănăstiri, weekend de relaxare, sau combinație Bicaz-Ceahlău.
 
@@ -111,9 +111,8 @@ ${url}
 
 Aș fi bucuros să stabilim un call de 15 minute săptămâna viitoare. Sau, dacă preferați, vă trimit imediat fișa tehnică și fotografii apartamente.
 
-Cu drag,
-Vasile Jiboc
-Vila Vaias Aparts — www.vaiasaparts.ro
+Cu respect,
+Echipa Vaias Aparts — www.vaiasaparts.ro
 WhatsApp: ${PHONE_PRIMARY_DISPLAY}
 Echipa Vaias Aparts`,
     tracking,
@@ -129,7 +128,7 @@ export function outreachDiasporaAgency(ctx: OutreachContext): { subject: string;
     subject: `Partnership ${ctx.partner.name} ↔ Vaias Aparts (Moldova, Romania) — ${comm}% commission`,
     body: `${greet}
 
-I'm Vasile Jiboc, founder of Vila Vaias Aparts — 7 boutique apartments in the heart of Târgu Neamț, Moldova, Romania. We host many Romanian-diaspora guests every year who return home for visits, weddings, or monastery pilgrimages.
+We are the team at Vila Vaias Aparts — 7 boutique apartments in the heart of Târgu Neamț, Moldova, Romania. We host many Romanian-diaspora guests every year who return home for visits, weddings, or monastery pilgrimages.
 
 Since your clients are exactly those families, I'd love to set up a partnership:
 
@@ -137,7 +136,7 @@ Since your clients are exactly those families, I'd love to set up a partnership:
   • Romanian-speaking concierge by WhatsApp (24/7)
   • Pre-arrival airport transfer (Iași) coordinated by us
   • Family-friendly + kids stay free under 3
-  • Best Rate Guarantee for direct bookings
+  • Cele mai bune condiții la rezervarea directă
   • ${comm}% commission on confirmed stays
   • Romanian fiscal invoicing for B2B partners
 
@@ -146,9 +145,8 @@ ${url}
 
 Could we schedule a 15-minute call next week? I'd be glad to send our partner pack — fact sheet, photo library, sample itineraries.
 
-Warmly,
-Vasile Jiboc
-Vila Vaias Aparts — www.vaiasaparts.ro
+With warm regards,
+Echipa Vaias Aparts / Vila Vaias Aparts Team — www.vaiasaparts.ro
 WhatsApp: ${PHONE_PRIMARY_DISPLAY}
 Echipa Vaias Aparts`,
     tracking,
@@ -186,7 +184,7 @@ ${url}
 Pot trimite oferta completă (fact sheet, foto, tarife B2B) la confirmarea interesului. Sau vă invit la un call scurt.
 
 Cu deosebită considerație,
-Vasile Jiboc
+Echipa Vaias Aparts
 Vila Vaias Aparts
 www.vaiasaparts.ro · ${PHONE_PRIMARY_DISPLAY}
 Echipa Vaias Aparts`,

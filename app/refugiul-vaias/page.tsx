@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     "Refugiul Vaias",
     "Moldova natură",
   ],
+  alternates: { canonical: "https://www.vaiasaparts.ro/refugiul-vaias" },
 };
 
 const activities = [

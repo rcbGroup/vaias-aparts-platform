@@ -18,14 +18,9 @@ export type DirectBenefit = {
 };
 
 export const DIRECT_BENEFITS: DirectBenefit[] = [
-  {
-    key: "best_rate_guarantee",
-    labelRO: "Best Rate Guarantee",
-    labelEN: "Best Rate Guarantee",
-    detailRO: "Garantăm cel mai mic preț disponibil. Dacă găsiți același apartament mai ieftin în altă parte, vă oferim diferența + 5%.",
-    detailEN: "We guarantee the lowest available price. Find the same apartment cheaper elsewhere and we refund the difference + 5%.",
-    estimatedValueRON: 0,
-  },
+  // WO4 WP3.3: Best Rate Guarantee removed — OUG 18/2026 requires any discount to be shown
+  // against the lowest price of the previous 30 days, and "garantat" near a price is flagged.
+  // Replace with "Cele mai bune condiții la rezervarea directă" once confirmed perks are set (§8 #14).
   {
     key: "no_ota_fees",
     labelRO: "Fără comisioane OTA (15–25%)",

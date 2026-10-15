@@ -9,7 +9,7 @@ type Message = { role: "user" | "assistant"; content: string };
 // Apartment details — single source of truth
 // ---------------------------------------------------------------------------
 const APARTMENT_DETAILS = `
-Apartamentele Vila Vaias Aparts (1–7, NU există apartament 8. NICIODATĂ nu menţiona Apartament 8):
+Apartamentele Vila Vaias Aparts (1–7, NU există apartament 8. NICIODATĂ nu menționa Apartament 8):
 
 | Nr | Capacitate standard | Capacitate max | Etaj   | Aer condiționat | Bucătărie privată    | Terasă  |
 |----|---------------------|----------------|--------|-----------------|----------------------|---------|
@@ -123,7 +123,7 @@ function ruleBasedResponse(messages: Message[], language: string): Response {
 💬 WhatsApp: https://wa.me/40752388388
 🌐 Rezervare online: https://vaiasaparts.ro/rezervare
 
-Răspundem rapid și vă oferim cel mai mic preț garantat! 🏡`
+Răspundem rapid și vă oferim cele mai bune condiții la rezervarea directă! 🏡`
       : isFr
       ? `Pour les réservations et les tarifs actuels, veuillez nous contacter directement:
 
@@ -154,7 +154,7 @@ Răspundem rapid și vă oferim cel mai mic preț garantat! 🏡`
 💬 WhatsApp: https://wa.me/40752388388
 🌐 Book online: https://vaiasaparts.ro/rezervare
 
-We reply fast and guarantee the lowest price! 🏡`;
+We reply fast and offer the best conditions for direct booking! 🏡`;
     return buildSSEResponse(reply);
   }
 
