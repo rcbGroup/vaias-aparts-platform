@@ -9,7 +9,7 @@ type Message = { role: "user" | "assistant"; content: string };
 // Apartment details — single source of truth
 // ---------------------------------------------------------------------------
 const APARTMENT_DETAILS = `
-Apartamentele Vila Vaias Aparts (1–7, NU există apartament 8. NICIODATĂ nu menţiona Apartament 8):
+Apartamentele Vila Vaias Aparts (1–7, NU există apartament 8. NICIODATĂ nu menționa Apartament 8):
 
 | Nr | Capacitate standard | Capacitate max | Etaj   | Aer condiționat | Bucătărie privată    | Terasă  |
 |----|---------------------|----------------|--------|-----------------|----------------------|---------|

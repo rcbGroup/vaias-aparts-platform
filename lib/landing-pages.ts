@@ -79,7 +79,7 @@ export const landingPages: LandingPage[] = [
       { title: "Cel mai bun preț — direct la noi", text: "Rezervând prin WhatsApp sau telefon, evitați comisionul OTA de 15–25%. Prețul rămâne între noi." },
       { title: "Confirmare în câteva ore", text: "Răspundem pe WhatsApp de regulă în câteva ore, între 08:00 și 22:00. Fără robot — direct cu familia care gestionează vila." },
       { title: "Self check-in cu ghidaj", text: "Veniți la orice oră după 14:00 — vă întâmpinăm sau vă transmitem instrucțiunile, cum vă este mai comod." },
-      { title: "Flexibilitate pentru cereri speciale", text: "Pat suplimentar pentru copil, transfer de la gara Paşcani, sfaturi despre mănăstiri — întrebați liber." }
+      { title: "Flexibilitate pentru cereri speciale", text: "Pat suplimentar pentru copil, transfer de la gara Pașcani, sfaturi despre mănăstiri — întrebați liber." }
     ],
     faqs: [
       {

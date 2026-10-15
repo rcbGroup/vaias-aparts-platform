@@ -404,7 +404,7 @@ export default function HomePage() {
                   {/* WO4 WP3.1: unverified "99 recenzii / 9.4" removed — will be re-added from property-facts.ts with date */
                 </div>
                 <h2 className="font-display text-2xl sm:text-3xl text-stone-900">
-                  {lang !== "en" ? "Ce spun oaspeţii noştri." : "What our guests say."}
+                  {lang !== "en" ? "Ce spun oaspeții noștri." : "What our guests say."}
                 </h2>
               </div>
               <Link href="/recenzii" className="text-walnut-600 text-sm font-medium hover:text-walnut-800 transition-colors whitespace-nowrap">

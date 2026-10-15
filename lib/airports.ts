@@ -334,7 +334,7 @@ export const airports: Airport[] = [
       {
         label: "Mașină",
         description:
-          "DN15 + DN15B prin Topliţa, Borsec, Vatra Dornei — 4h 30min. Drum spectaculos prin munți."
+          "DN15 + DN15B prin Toplița, Borsec, Vatra Dornei — 4h 30min. Drum spectaculos prin munți."
       },
       {
         label: "Rent-a-car",
