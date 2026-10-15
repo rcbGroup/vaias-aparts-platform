@@ -9,6 +9,7 @@ import { LanguageProvider } from "@/components/LanguageProvider";
 import MobileBookFab from "@/components/MobileBookFab";
 
 const ChatWidget = dynamic(() => import("@/components/ChatWidget"), { ssr: false });
+const CookieConsent = dynamic(() => import("@/components/CookieConsent").then(m => ({ default: m.CookieConsent })), { ssr: false });
 
 type Lang = "ro" | "en" | "fr" | "de" | "it" | "es";
 
@@ -171,6 +172,39 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="alternate" hrefLang="es" href="https://www.vaiasaparts.ro/es" />
         <link rel="alternate" hrefLang="x-default" href="https://www.vaiasaparts.ro" />
 
+        {/* WO4 WP4: Google Consent Mode v2 — default denied until user accepts */}
+        <Script
+          id="consent-mode-defaults"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('consent', 'default', {
+                analytics_storage: 'denied',
+                ad_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied',
+                wait_for_update: 500,
+              });
+              // Restore consent if user previously accepted
+              if (typeof window !== 'undefined') {
+                try {
+                  var c = localStorage.getItem('vaias_cookie_consent');
+                  if (c === 'accepted') {
+                    gtag('consent', 'update', {
+                      analytics_storage: 'granted',
+                      ad_storage: 'granted',
+                      ad_user_data: 'granted',
+                      ad_personalization: 'granted',
+                    });
+                  }
+                } catch(e) {}
+              }
+            `,
+          }}
+        />
+
         {/* Google Analytics 4 */}
         {GA_MEASUREMENT_ID && (
           <>
@@ -224,6 +258,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Footer />
           <MobileBookFab />
           <ChatWidget />
+          <CookieConsent />
         </LanguageProvider>
         <script
           type="application/ld+json"
