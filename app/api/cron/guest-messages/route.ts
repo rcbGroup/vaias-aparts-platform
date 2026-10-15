@@ -51,7 +51,7 @@ export async function GET(req: NextRequest) {
           channel: p.channel,
           languages: p.languages,
           scheduledFor: p.scheduledFor.toISOString(),
-          preview: p.preview,
+          previewLength: p.preview ? p.preview.length : 0, // WO4 WP1.0: body stripped — gate code never in cron preview response
         })),
       });
     }

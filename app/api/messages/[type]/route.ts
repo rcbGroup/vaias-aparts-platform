@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { getAdminSession } from "@/lib/auth";
 import { renderJourneyMessage, ALL_STAGES, type JourneyStage } from "@/src/lib/guest-journey/templates";
 
 const STAGE_KEYS = new Set<string>(ALL_STAGES);
@@ -21,6 +22,12 @@ const schema = z.object({
 });
 
 export async function POST(req: NextRequest, { params }: { params: { type: string } }) {
+  // WO4 WP1.0: Admin session required — this route renders message templates that include
+  // sensitive guest access information. Return 401 without a valid admin session.
+  if (!getAdminSession(req)) {
+    return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  }
+
   const stage = params.type as JourneyStage;
   if (!STAGE_KEYS.has(stage)) {
     return NextResponse.json(
@@ -65,7 +72,13 @@ export async function POST(req: NextRequest, { params }: { params: { type: strin
   });
 }
 
-export async function GET(_req: NextRequest, { params }: { params: { type: string } }) {
+export async function GET(req: NextRequest, { params }: { params: { type: string } }) {
+  // WO4 WP1.0: Admin session required — this route renders message templates that include
+  // sensitive guest access information. Return 401 without a valid admin session.
+  if (!getAdminSession(req)) {
+    return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  }
+
   if (params.type === "list") {
     return NextResponse.json({ ok: true, stages: ALL_STAGES });
   }
