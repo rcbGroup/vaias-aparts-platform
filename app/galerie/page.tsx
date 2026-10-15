@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Galerie Foto & Video | Vila Vaias Aparts Târgu Neamț — 7 Apartamente Boutique",
   description:
     "Galerie foto și video Vila Vaias Aparts — toate cele 7 apartamente boutique, tururi video, exterior, curte și facilitățile vilei din Târgu Neamț, la poalele Cetății Neamțului.",
+  alternates: { canonical: "https://www.vaiasaparts.ro/galerie" },
 };
 
 export default function GalleryPage() {

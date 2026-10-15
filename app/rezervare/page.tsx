@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Rezervare | Vila Vaias Aparts Târgu Neamț — Prețuri și Disponibilitate",
   description:
     "Rezervați direct la Vila Vaias Aparts — 7 apartamente boutique în Târgu Neamț. WhatsApp: +40 752 388 388. Cel mai bun preț direct, fără comision OTA."
+  alternates: { canonical: "https://www.vaiasaparts.ro/rezervare" },
 };
 
 const faqItems = [

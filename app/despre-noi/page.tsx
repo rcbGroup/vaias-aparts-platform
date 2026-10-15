@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Despre noi | Vila Vaias Aparts — Cazare Boutique în Târgu Neamț",
   description:
     "Vila Vaias Aparts — 7 apartamente boutique ultracentral în Târgu Neamț, clasificare 4 stele, certificat nr. 35332. Ospitalitate autentică moldovenească."
+  alternates: { canonical: "https://www.vaiasaparts.ro/despre-noi" },
 };
 
 const values = [

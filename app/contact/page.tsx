@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Contact și Rezervare | Vila Vaias Aparts Târgu Neamț — +40 752 388 388",
   description:
     "Contactați Vila Vaias Aparts direct pe WhatsApp sau telefon: +40 752 388 388. Rezervări, disponibilitate și oferte personalizate. Str. Sfântul Lazăr nr. 1, Târgu Neamț."
+  alternates: { canonical: "https://www.vaiasaparts.ro/contact" },
 };
 
 export default function ContactPage() {

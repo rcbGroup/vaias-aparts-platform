@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Cazare pelerini mănăstiri Moldova | Vaias Aparts Târgu Neamț",
   description: "Cazare boutique pentru pelerinii care vizitează mănăstirile Moldovei — Agapia, Văratec, Neamț, Secu, Sihăstria. La 30 de minute de mănăstirile din Neamț.",
   keywords: ["cazare pelerini Moldova", "mănăstiri Neamț cazare", "Agapia Văratec cazare", "pelerinaj Moldova", "retragere spirituală Neamț"]
+  alternates: { canonical: "https://www.vaiasaparts.ro/pelerini" },
 };
 
 const monasteries = [

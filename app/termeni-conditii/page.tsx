@@ -4,6 +4,7 @@ import PageHero from "@/components/PageHero";
 export const metadata: Metadata = {
   title: "Termeni și Condiții | Vila Vaias Aparts",
   description: "Termeni și condiții de rezervare și cazare la Vila Vaias Aparts Târgu Neamț. VAIA RUSTIC SRL, CUI 36258605."
+  alternates: { canonical: "https://www.vaiasaparts.ro/termeni-conditii" },
 };
 
 export default function TermsPage() {

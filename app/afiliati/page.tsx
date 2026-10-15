@@ -4,6 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Program afiliere | Câștigă comision | Vaias Aparts",
   description: "Devino afiliat Vaias Aparts și câștigă comision pentru fiecare rezervare adusă. 3 niveluri, comisioane de până la 8%, plăți lunare."
+  alternates: { canonical: "https://www.vaiasaparts.ro/afiliati" },
 };
 
 const tiers = [

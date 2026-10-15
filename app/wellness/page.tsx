@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     "retragere femei",
     "retragere cupluri Moldova",
   ],
+  alternates: { canonical: "https://www.vaiasaparts.ro/wellness" },
 };
 
 export default function WellnessPage() {

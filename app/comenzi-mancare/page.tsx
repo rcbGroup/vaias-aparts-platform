@@ -4,6 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Pre-comandă mâncare | Vaias Aparts Târgu Neamț",
   description: "Comandați mic dejun, cină sau coș de bun venit înainte de sosire. Pregătit de Maria, livrat direct în apartament."
+  alternates: { canonical: "https://www.vaiasaparts.ro/comenzi-mancare" },
 };
 
 const menuItems = [

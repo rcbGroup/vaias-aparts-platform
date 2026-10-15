@@ -1,5 +1,11 @@
 "use client";
 
+import type { Metadata } from "next";
+export const metadata: Metadata = {
+  alternates: { canonical: "https://www.vaiasaparts.ro/recenzii" },
+};
+
+
 import Link from "next/link";
 import { useLanguage } from "@/components/LanguageProvider";
 import ScrollFade from "@/components/ScrollFade";

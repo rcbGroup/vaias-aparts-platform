@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Vacanță acasă în România | Cazare Târgu Neamț | Vaias Aparts",
   description: "Ești în diaspora și vrei să te întorci acasă cu stil? Vaias Aparts — apartamente boutique în Moldova, la mănăstiri și munte. Rezervă direct și economisești 5%.",
   keywords: ["cazare România diaspora", "vacanță Moldova", "Târgu Neamț", "mănăstiri Moldova", "apartamente boutique România"]
+  alternates: { canonical: "https://www.vaiasaparts.ro/diaspora" },
 };
 
 const countries = [

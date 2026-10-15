@@ -137,8 +137,10 @@ export async function generateMetadata(): Promise<Metadata> {
       title: meta.ogTitle,
       description: meta.ogDesc
     },
+    // WO4 WP6: canonical removed from root layout — it was incorrectly setting all pages' canonical
+    // to the homepage URL. Each page must now define its own alternates.canonical.
+    // hreflang languages kept for site-wide signal (belt-and-suspenders alongside per-page hreflang).
     alternates: {
-      canonical: LANG_URLS[lang],
       languages: {
         ro: "https://www.vaiasaparts.ro",
         en: "https://www.vaiasaparts.ro/en",

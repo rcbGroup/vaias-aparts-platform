@@ -4,6 +4,7 @@ import PageHero from "@/components/PageHero";
 export const metadata: Metadata = {
   title: "Politica de Confidențialitate | Vila Vaias Aparts",
   description: "Politica de confidențialitate a site-ului Vila Vaias Aparts. Operator: VAIA RUSTIC SRL, CUI 36258605."
+  alternates: { canonical: "https://www.vaiasaparts.ro/politica-confidentialitate" },
 };
 
 export default function PrivacyPage() {

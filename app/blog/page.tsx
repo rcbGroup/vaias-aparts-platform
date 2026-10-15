@@ -1,5 +1,11 @@
 "use client";
 
+import type { Metadata } from "next";
+export const metadata: Metadata = {
+  alternates: { canonical: "https://www.vaiasaparts.ro/blog" },
+};
+
+
 import Image from "next/image";
 import Link from "next/link";
 import { blogPosts } from "@/lib/blog";

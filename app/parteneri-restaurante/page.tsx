@@ -4,6 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Restaurante partenere | Vaias Aparts Târgu Neamț",
   description: "Restaurantele noastre partenere din Târgu Neamț și împrejurimi — recomandate oaspeților Vaias Aparts cu reduceri exclusive."
+  alternates: { canonical: "https://www.vaiasaparts.ro/parteneri-restaurante" },
 };
 
 const restaurants = [
