@@ -193,7 +193,7 @@ function AirportCard({ a }: { a: Airport }) {
         {/* sidebar CTA */}
         <aside className="bg-forest-50 rounded-xl border border-forest-100 p-6 self-start sticky top-28">
           <div className="text-xs uppercase tracking-[0.28em] text-walnut-500 font-semibold mb-2">
-            Cazare 4★ ·  ⭐ 5.0 / 99 recenzii
+            Cazare 4★ · Certificat nr. 35332
           </div>
           <div className="font-display text-2xl text-forest-900 mb-2">
             De la 297 lei / noapte

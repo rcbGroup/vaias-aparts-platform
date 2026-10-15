@@ -358,7 +358,7 @@ export default function HomePage() {
             <SectionHeader
               eyebrow="De ce ne aleg oaspeții"
               title="Experiența Vila Vaias Aparts"
-              subtitle="99 recenzii Google cu 5.0 stele. Iată ce apreciază cel mai mult oaspeții noștri."
+              subtitle="Iată ce apreciază cel mai mult oaspeții care au ales Vila Vaias Aparts."
             />
           </ScrollFade>
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">

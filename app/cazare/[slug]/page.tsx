@@ -111,8 +111,7 @@ export default function LandingPage({ params }: { params: { slug: string } }) {
             {page.hero.subtitle}
           </p>
           <div className="mt-8 flex flex-wrap gap-3 items-center text-sm text-cream-100/80">
-            <span className="inline-flex items-center gap-1 rounded-full bg-cream-50/10 border border-cream-50/20 px-3 py-1">⭐ 9.4 Booking.com</span>
-            <span className="inline-flex items-center gap-1 rounded-full bg-cream-50/10 border border-cream-50/20 px-3 py-1">⭐ 5.0 · 99 Google</span>
+            {/* WO4 WP3: platform score badges removed — unverified; 4-star certificate kept */}
             <span className="inline-flex items-center gap-1 rounded-full bg-cream-50/10 border border-cream-50/20 px-3 py-1">🏛 4 stele · Cert. 35332</span>
             {page.distance !== "—" && (
               <span className="inline-flex items-center gap-1 rounded-full bg-cream-50/10 border border-cream-50/20 px-3 py-1">📍 {page.distance} · {page.drivingTime}</span>

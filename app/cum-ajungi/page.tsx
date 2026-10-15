@@ -197,8 +197,7 @@ export default function CumAjungiPage() {
             Indiferent unde ești în Europa — la noi e mai aproape decât crezi.
           </p>
           <div className="mt-8 flex flex-wrap gap-3 items-center text-sm text-cream-100/85">
-            <span className="inline-flex items-center gap-1 rounded-full bg-cream-50/10 border border-cream-50/20 px-3 py-1.5">⭐ Booking.com 9.4</span>
-            <span className="inline-flex items-center gap-1 rounded-full bg-cream-50/10 border border-cream-50/20 px-3 py-1.5">⭐ 5.0 · 99 Google</span>
+            {/* WO4 WP3: score badges removed — unverified */}
             <span className="inline-flex items-center gap-1 rounded-full bg-cream-50/10 border border-cream-50/20 px-3 py-1.5">🏛 4 stele · Cert. 35332</span>
             <span className="inline-flex items-center gap-1 rounded-full bg-walnut-500/90 border border-walnut-500 text-cream-50 px-3 py-1.5 font-semibold">✈ Cel mai apropiat aeroport: Suceava 60 km</span>
           </div>

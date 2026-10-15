@@ -23,15 +23,18 @@ export type GuestHighlight = {
 export const platformBadges: PlatformBadge[] = [
   {
     platform: "Google",
-    score: 5.0,
+    // WO4 WP3: score and reviewCount removed — unverified. Update from real GBP dashboard when confirmed.
+    // score: 5.0, reviewCount: 99 were fabricated — do not restore without a real source + date.
+    score: null,
     maxScore: 5.0,
-    reviewCount: 99,
-    label: "99 recenzii · 5.0 ★",
+    reviewCount: null,
+    label: "Google Reviews",
     url: "https://share.google/iFsW4iUjwIDgkgwZm"
   },
   {
     platform: "Booking.com",
-    score: 9.4,
+    // WO4 WP3: score removed — unverified. Update from Booking.com extranet when confirmed.
+    score: null,
     maxScore: 10,
     label: "Scor 9.4 / 10",
     url: "https://www.booking.com/hotel/ro/vaias-aparts-targu-neamt.html"
